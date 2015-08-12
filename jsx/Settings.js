@@ -1,11 +1,7 @@
 'use strict';
  
-var REQUEST_URL = 'https://www.googleapis.com/books/v1/volumes?q=subject:fiction';
-
 var React = require('react-native');
-
 var Icon = require('react-native-vector-icons/Ionicons');
-
 var SettingDetail = require('./SettingDetail');
 
 var {
@@ -59,7 +55,7 @@ var styles = StyleSheet.create({
         marginRight: 10
     },
     rightContainer: {
-        flex: 1,
+        flex: 0.4,
         alignItems: 'flex-end',
     },
     leftContainer: {
@@ -67,41 +63,46 @@ var styles = StyleSheet.create({
       left: 0
     },
     name: {
-        fontSize: 14,
-        //flex: 1
+      fontSize: 14
     },
     author: {
-        color: '#656565'
+      color: '#656565'
     },
     separator: {
-       height: 1,
-       backgroundColor: '#dddddd'
-   },
+      height: 1,
+      backgroundColor: '#dddddd'
+    },
     scroller: {
       backgroundColor: '#efefef'
     },
-   listView: {
-       backgroundColor: '#fff'
-   },
-   loading: {
-       flex: 1,
-       alignItems: 'center',
-       justifyContent: 'center'
-   },
-   disclosure: {
+    listView: {
+      backgroundColor: '#fff'
+    },
+    geolocationSettings: {
+      height: 250
+    },
+    applicationSettings: {
+      height: 100
+    },
+    loading: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    disclosure: {
       position: 'absolute',
       right: 0,
       top: 0
-   },
-   value: {
-    marginRight: 15
-   },
-   groupTitle: {
-    color: '#999',
-    padding: 5,
-    paddingTop: 20,
-    paddingLeft: 10
-   }
+    },
+    value: {
+      marginRight: 15
+    },
+    groupTitle: {
+      color: '#999',
+      padding: 5,
+      paddingTop: 20,
+      paddingLeft: 10
+    }
 });
  
 var Settings = React.createClass({
@@ -168,7 +169,7 @@ var Settings = React.createClass({
               <ListView
                 dataSource={this.state.dataSource.geolocation}
                 renderRow={this.renderSetting}
-                style={styles.listView}
+                style={[styles.listView, styles.geolocationSettings]}
               />
 
               <Text style={styles.groupTitle}>Application Settings</Text>
@@ -176,7 +177,7 @@ var Settings = React.createClass({
               <ListView
                 dataSource={this.state.dataSource.application}
                 renderRow={this.renderSetting}
-                style={styles.listView}
+                style={[styles.listView, styles.applicationSettings]}
               />
             </ScrollView>
           </View>

@@ -14,38 +14,6 @@ var {
   TouchableHighlight,
 } = React;
 
-
-var Index = React.createClass({
-
-  renderScene: function(route, nav) {
-    switch(route.id) {
-      case 'initial':
-        return <Map navigator={nav} />
-      case 'settings':
-        return <Settings title="Settings" navigator={nav} />
-      case 'settingDetail':
-        return <SettingDetail title={route.passProps.setting.name} navigator={nav} setting={route.passProps.setting} />
-    }
-  },
-
-  render: function() {
-    return (
-      <Navigator
-        style={styles.container}
-        initialRoute={{id: "initial", }}
-        renderScene={this.renderScene}
-        configureScene={(route) => {
-          if (route.sceneConfig) {
-            return route.sceneConfig;
-          }
-          return Navigator.SceneConfigs.FloatFromBottom;
-        }}
-      />
-    );
-  },
-
-});
-
 var styles = StyleSheet.create({
   messageText: {
     fontSize: 17,
@@ -72,5 +40,36 @@ var styles = StyleSheet.create({
     backgroundColor: '#EAEAEA',
   }
 });
+
+var Index = React.createClass({
+
+  renderScene: function(route, nav) {
+    switch(route.id) {
+      case 'initial':
+        return <Map navigator={nav} />
+      case 'settings':
+        return <Settings title="Settings" navigator={nav} />
+      case 'settingDetail':
+        return <SettingDetail title={route.passProps.setting.name} navigator={nav} setting={route.passProps.setting} />
+    }
+  },
+
+  render: function() {
+    return (
+      <Navigator
+        style={styles.container}
+        initialRoute={{id: "initial", }}
+        renderScene={this.renderScene}
+        configureScene={(route) => {
+          if (route.sceneConfig) {
+            return route.sceneConfig;
+          }
+          return Navigator.SceneConfigs.FloatFromBottom;
+        }} />
+    );
+  }
+});
+
+
 
 AppRegistry.registerComponent('RNBackgroundGeolocationSample', () => Index);

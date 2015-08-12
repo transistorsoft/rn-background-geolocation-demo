@@ -5,60 +5,60 @@ var Icon = require('react-native-vector-icons/Ionicons');
 var BackgroundGeolocation = require('react-native-background-geolocation');
 
 var {
-    StyleSheet,
-    Text,
-    View,
-    Component,
-    ListView,
-    Navigator,
-    TouchableHighlight
-   } = React;
+  StyleSheet,
+  Text,
+  View,
+  Component,
+  ListView,
+  Navigator,
+  TouchableHighlight
+} = React;
 
 var styles = StyleSheet.create({
-    container: {
-        marginTop: 0,
-        position: 'absolute',
-        top: 5,
-        left: 0,
-        bottom: 0,
-        right: 0,
-        flexDirection: 'column',
-        padding: 0,
-        backgroundColor: '#efefef'
-    },
-    toolbar: {
-      height: 50,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderBottomWidth: 1,
-      borderBottomColor: '#dddddd',
-      backgroundColor: 'white'
-    },
-    cancelButton: {
-      position: 'absolute',
-      left: 5,
-      top: 15
-    },
-    row: {
-      alignItems: 'center',
-      padding: 10,
-      flexDirection: 'row'
-    },
-    leftContainer: {
-      flex: 1,
-      left: 0
-    },
-    rightContainer: {
-        width: 24,
-        alignItems: 'flex-end',
-    },
-    listView: {
-      backgroundColor: '#fff'
-    },
-    separator: {
-       height: 1,
-       backgroundColor: '#dddddd'
-   }
+  container: {
+    marginTop: 0,
+    position: 'absolute',
+    top: 5,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    flexDirection: 'column',
+    padding: 0,
+    backgroundColor: '#efefef'
+  },
+  toolbar: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#dddddd',
+    backgroundColor: 'white'
+  },
+  cancelButton: {
+    position: 'absolute',
+    left: 5,
+    top: 15
+  },
+  row: {
+    alignItems: 'center',
+    padding: 10,
+    flexDirection: 'row'
+  },
+  leftContainer: {
+    flex: 1,
+    left: 0
+  },
+  rightContainer: {
+    width: 24,
+    alignItems: 'flex-end',
+  },
+  listView: {
+    backgroundColor: '#fff'
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#dddddd'
+  }
 });
  
 var SettingDetail = React.createClass({
@@ -79,10 +79,10 @@ var SettingDetail = React.createClass({
   },
   fetchData() {
     var setting = this.props.setting;
-
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(setting.values),
-      isLoading: false
+      isLoading: false,
+      value: setting.value
     });
   },
   renderRow(setting) {
@@ -94,7 +94,7 @@ var SettingDetail = React.createClass({
               <Text style={styles.title}>{setting}</Text>
             </View>
             <View style={styles.rightContainer}>
-              <Icon name="checkmark" size={15} color="#4f8ef7" style={styles.checkbox} />
+              {this.state.value == setting ? <Icon name="checkmark" size={15} color="#4f8ef7" style={styles.checkbox} /> : null}
             </View>
           </View>
           <View style={styles.separator} />
@@ -115,8 +115,7 @@ var SettingDetail = React.createClass({
             <ListView
               dataSource={this.state.dataSource}
               renderRow={this.renderRow}
-              style={styles.listView}
-            />
+              style={styles.listView} />
           </View>
         );
     },    
@@ -125,6 +124,9 @@ var SettingDetail = React.createClass({
       var setting = this.props.setting;
       var nav = this.props.navigator;
 
+      this.setState({
+        value: value
+      });
       this.settingsService.set(setting.name, value, function(config) {
         bgGeo.setConfig(config);
 
