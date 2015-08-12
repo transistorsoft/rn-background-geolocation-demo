@@ -7,7 +7,11 @@ var SettingsService = require('./SettingsService');
 var MapBox = require('react-native-mapbox-gl');
 
 var mapRef = 'mapRef';
-var locations = [];
+
+// Map annotations stack.  pretty ugly business here.
+// TODO MapboxGL doesn't handle annotations very well when we switch views (to Settings, for example), its annotations get all messed up.
+// This needs work.
+var annotations = [];
 
 var {
   StyleSheet,
@@ -30,42 +34,23 @@ var Map = React.createClass({
     
     AppStateIOS.addEventListener('change', this.onAppStateChange);
 
-    this.settings = SettingsService;
     this.bgGeo = BackgroundGeolocation;
 
-    var me = this;
-    this.settings.getValues(function(values) {
+    // Fetch bg-geo settings.
+    SettingsService.getValues(function(values) {
+
+      // Configure Background Geolocation.
       me.bgGeo.configure(values);
 
-      me.bgGeo.on('location', function(location) {
-        console.log('- location received: ', JSON.stringify(location));
-        
-        locations.push({
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          title: 'Foo',
-          annotationImage: {
-           url: 'https://cldup.com/7NLZklp8zS.png',
-           height: 25,
-           width: 25
-         }
-        });
-
-        me.addAnnotations(mapRef, locations);
-        /*
-        locations.push({
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          title: 'Foo'
-        });
-        */
-
-      });
-
+      // Listen to location events coming out.
+      me.bgGeo.on('location', me.onBackgroundGeolocation);
+      
+      // Listen to motionchange events.
       me.bgGeo.on('motionchange', function(location) {
         console.log('- motionchanged: ', JSON.stringify(location));
       });
 
+      // This fires after plugin successfully synced to server.
       me.bgGeo.on('sync', function(rs) {
         console.log('- sync complete: ', JSON.stringify(rs));
       })
@@ -95,15 +80,40 @@ var Map = React.createClass({
     this.setState({
       enabled: value
     });
-    locations = [];
+    annotations = [];
     if (value) {
-      this.bgGeo.start();
-      me.bgGeo.getCurrentPosition(function(location) {
-        me.setCenterCoordinateAnimated(mapRef, location.coords.latitude, location.coords.longitude);
+      this.bgGeo.start(function() {
+        // Successfully started.  Now fetch current position.
+        me.bgGeo.getCurrentPosition(function(location) {
+          me.setCenterCoordinateZoomLevelAnimated(mapRef, location.coords.latitude, location.coords.longitude, 14);
+        });
       });
     } else {
       this.bgGeo.stop();
     }
+  },
+  onBackgroundGeolocation(location) {
+    console.log('- [js] bgGeo location: ', JSON.stringify(location));
+    var me    = this,
+        now   = ((location.timestamp) ? new Date(location.timestamp) : new Date()),
+        label = [now.getHours(), now.getMinutes(), now.getSeconds()].join(':');
+    
+    // Push onto our annotations stack
+    annotations.push({
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      title: label,
+      annotationImage: {
+        // Can we provided svgs?
+        url: 'https://cldup.com/7NLZklp8zS.png',
+        height: 25,
+        width: 25
+      }
+    });
+
+    // Send annotations-stack to MapBoxGL.  Unfortunately, it has to destroy all existing then re-add...
+    // TODO this needs to work better.  We need existing annotations to persist.  And we need polylines too.
+    me.addAnnotations(mapRef, annotations);
   },
   onRegionChange(location) {
     //this.setState({ currentZoom: location.zoom });
@@ -112,8 +122,7 @@ var Map = React.createClass({
     //console.log(location);
   },
   onUpdateUserLocation(location) {
-    this.setCenterCoordinateAnimated(mapRef, location.latitude, location.longitude);
-    console.log('- onUpdateLocation: ', location);
+    this.setUserTrackingMode(mapRef, true);
   },
   onOpenAnnotation(annotation) {
     //console.log(annotation);
@@ -143,9 +152,9 @@ var Map = React.createClass({
           showsUserLocation={true}
           updateLocationInBackground={false}
           ref={mapRef}
-          accessToken={'pk.eyJ1IjoiY2hyaXN0b2NyYWN5IiwiYSI6ImVmM2Y2MDA1NzIyMjg1NTdhZGFlYmZiY2QyODVjNzI2In0.htaacx3ZhE5uAWN86-YNAQ'}
+          // This is a public-key provided for demo-purposes.  You should generate your own @ https://www.mapbox.com/account/apps/
+          accessToken={'pk.eyJ1IjoiY2hyaXN0b2NyYWN5IiwiYSI6IjgxNjA5ZmFiZWVkY2EwZDFlYzI4OGFjZWEwODg3ZjE4In0.oyHMi64jNuUw4QlRg37E2w'}
           styleURL={'asset://styles/mapbox-streets-v7.json'}
-          //centerCoordinate={this.state.center}
           userLocationVisible={true}
           zoomLevel={this.state.zoom}
           onRegionChange={this.onRegionChange}
@@ -189,7 +198,6 @@ var styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 5
-    //underlayColor: 'transparent'
   },
   text: {
     padding: 2
@@ -197,151 +205,3 @@ var styles = StyleSheet.create({
 });
 
 module.exports = Map;
-
-/** Native Map
-*
-
-var React = require('react-native');
-var StyleSheet = require('StyleSheet');
-var BackgroundGeolocation = require('react-native-background-geolocation');
-var SettingsService = require('./SettingsService');
-
-var MapBox = require('react-native-mapbox-gl');
-
-var {
-  StyleSheet,
-  MapView,
-  Text,
-  TextInput,
-  View,
-  SwitchIOS,
-  Navigator,
-  NavButton,
-  TouchableHighlight
-} = React;
-
-var Map = React.createClass({
-
-  getInitialState() {
-    var me = this;
-    
-    this.settings = SettingsService;
-    this.bgGeo = BackgroundGeolocation;
-
-    var locations = [];
-
-    this.settings.getValues(function(values) {
-      me.bgGeo.configure(values);
-
-      me.bgGeo.on('location', function(location) {
-        console.log('- location received: ', JSON.stringify(location));
-        locations.push({
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          title: 'Foo'
-        });
-      });
-
-      me.bgGeo.on('motionchange', function(location) {
-        console.log('- motionchanged: ', JSON.stringify(location));
-        if (location.is_moving == false) {
-          setTimeout(function() {
-            me.bgGeo.changePace(true);
-          }, 2000);
-        }
-      });
-
-      me.bgGeo.on('sync', function(rs) {
-        console.log('- sync complete: ', JSON.stringify(rs));
-      })
-    });
-
-    return {
-      isFirstLoad: true,
-      enabled: false,
-      annotations: null
-    };
-  },
-  
-  onClickSettings() {
-    console.log('onClickSettings', this.props.navigator);
-    this.props.navigator.push({
-      id: 'settings',
-      sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-    });
-  },
-  onToggleEnable(value) {
-    var me = this;
-
-    this.setState({
-      enabled: value
-    });
-    if (value) {
-      this.bgGeo.start();      
-    } else {
-      this.bgGeo.stop();
-    }
-  },
-  render() {
-    return (
-      <View style={styles.container}>        
-
-        <View style={styles.toolbar}>          
-          <TouchableHighlight style={styles.settingsButton} onPress={this.onClickSettings}>
-            <Text style={styles.buttonText}>Settings</Text>
-          </TouchableHighlight>
-          <Text>BG Geolocation</Text>
-          <SwitchIOS style={styles.toggleButton} value={this.state.enabled} onValueChange={this.onToggleEnable}></SwitchIOS>
-        </View>
-
-        <MapView
-          ref={"map"}
-          style={styles.map}
-          annotations={this.state.annotations}
-          showsUserLocation={true}
-        />
-        
-      </View>
-    );
-  }
-
-});
-
-var styles = StyleSheet.create({
-
-  container: {
-      flex: 1,
-      marginTop: 10,
-      backgroundColor: 'transparent',
-    },
-    map: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#F5FCFF',
-    },
-    toolbar: {
-      top: 0,
-      height: 50,
-      padding: 5,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    settingsButton: {
-      position: 'absolute',
-      left: 5,
-      top: 15
-    },
-    toggleButton: {
-      position: 'absolute',
-      top: 10,
-      right: 5
-      //underlayColor: 'transparent'
-    }
-});
-
-
-
-module.exports = Map;
-
-*/
