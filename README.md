@@ -23,6 +23,15 @@ $ npm install
 
 ![](https://dl.dropboxusercontent.com/u/2319755/react-native-background-geolocation-demo/simulate-location.png)
 
+**NOTE**: There's currently a bug (probably because I'm an `react-native` noob) when you flip to the settings screen, the `Mapbox GL` map goes haywire and loses track of any annotations added to map.  After changing settings, you'll have to restart the app currently -- the settings changes will have been persisted.  
+
+```
+2015-08-13 13:51:04.298 RNBackgroundGeolocationSample[429:105061] [INFO] {Worker}[Sprite]: Can't find sprite named 'com.mapbox.sprites.'
+2015-08-13 13:51:04.329 RNBackgroundGeolocationSample[429:105061] [INFO] {Worker}[Sprite]: Can't find sprite named 'com.mapbox.sprites.'
+2015-08-13 13:51:04.336 RNBackgroundGeolocationSample[429:105061] [INFO] {Worker}[Sprite]: Can't find sprite named 'com.mapbox.sprites.'
+2015-08-13 13:51:04.352 RNBackgroundGeolocationSample[429:105061] [INFO] {Worker}[Sprite]: Can't find sprite named 'com.mapbox.sprites.'
+```
+
 ## Adding Geofences
 
 **NOTE: NOT YET IMPLEMENTED**
