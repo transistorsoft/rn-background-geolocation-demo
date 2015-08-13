@@ -104,10 +104,9 @@ var Map = React.createClass({
       longitude: location.coords.longitude,
       title: label,
       annotationImage: {
-        // Can we provided svgs?
-        url: 'https://cldup.com/7NLZklp8zS.png',
-        height: 25,
-        width: 25
+        url: 'https://dl.dropboxusercontent.com/u/2319755/react-native-background-geolocation-demo/green-dot.png',
+        height: 20,
+        width: 20
       }
     });
 
@@ -123,6 +122,7 @@ var Map = React.createClass({
   },
   onUpdateUserLocation(location) {
     this.setUserTrackingMode(mapRef, true);
+    //console.log('[js]MapBox location: ', location);
   },
   onOpenAnnotation(annotation) {
     //console.log(annotation);
