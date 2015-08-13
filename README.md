@@ -1,4 +1,7 @@
-# Demo App for [react-native-background-geolocation plugin](http://transistorsoft.github.io/react-native-background-geolocation/)
+#[react-native-background-geolocation plugin](http://transistorsoft.github.io/react-native-background-geolocation/)
+-----------------------
+## Demo App
+
 
 Fully-featured, [](http://ionicframework.com/)-based sample-application for [React Native Background Geolocation](http://christocracy.github.io/cordova-background-geolocation/)
 
