@@ -16,6 +16,7 @@ $ npm install
 ```
 
 - Now open as an XCode project
+- Simulate location ![](https://dl.dropboxusercontent.com/u/2319755/react-native-background-geolocation-demo/simulate-location.png)
 
 ## Adding Geofences
 
