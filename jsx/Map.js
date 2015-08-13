@@ -111,7 +111,7 @@ var Map = React.createClass({
     });
 
     this.bgGeo.resetOdometer();
-    
+
     annotations = [];
     if (enabled) {
       this.bgGeo.start(function() {
@@ -190,11 +190,11 @@ var Map = React.createClass({
       <View style={styles.container}>        
 
         <View style={styles.toolbar}>          
-          <TouchableHighlight style={styles.leftButton} onPress={this.onClickSettings} underlayColor={"transparent"}>
+          <TouchableHighlight style={styles.settingsButton} onPress={this.onClickSettings} underlayColor={"transparent"}>
             <Text style={styles.buttonText}>Settings</Text>
           </TouchableHighlight>
           <Text>BG Geolocation</Text>
-          <SwitchIOS style={styles.rightButton} value={this.state.isEnabled} onValueChange={this.onToggleEnabled}></SwitchIOS>
+          <SwitchIOS style={styles.enabledButton} value={this.state.isEnabled} onValueChange={this.onToggleEnabled}></SwitchIOS>
         </View>
 
         <MapboxGLMap
@@ -219,12 +219,12 @@ var Map = React.createClass({
           onUpdateUserLocation={this.onUpdateUserLocation} />
 
         <View style={styles.toolbar}>
-          <TouchableHighlight style={styles.leftButton} underlayColor={"transparent"} onPress={this.onUpdatePosition}>
+          <TouchableHighlight style={[styles.locationButton, styles.iconButton]} underlayColor={"transparent"} onPress={this.onUpdatePosition}>
             <Icon name="navigate" size={24} color="#4f8ef7" />
           </TouchableHighlight>
           <Text>{this.state.odometer}km</Text>
 
-          <TouchableHighlight style={styles.rightButton} underlayColor={"transparent"} onPress={this.onToggleStationary}>
+          <TouchableHighlight style={[styles.stationaryButton, styles.iconButton]} underlayColor={"transparent"} onPress={this.onToggleStationary}>
             <Icon name={this.state.isStationary ? 'play' : 'stop'} size={24} color="#4f8ef7" />
           </TouchableHighlight>
 
@@ -253,15 +253,35 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  leftButton: {
+  settingsButton: {
     position: 'absolute',
     left: 10,
-    top: 15,
+    top: 15
   },
-  rightButton: {
+  buttonText: {
+    color: 'blue',
+    fontSize: 16
+  },
+  locationButton: {
+    position: 'absolute',
+    left: 0,
+    top: 0
+  },
+  iconButton: {
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  enabledButton: {
     position: 'absolute',
     top: 10,
     right: 10
+  },
+  stationaryButton: {
+    position: 'absolute',
+    top: 0,
+    right: 0
   },
   text: {
     padding: 2
