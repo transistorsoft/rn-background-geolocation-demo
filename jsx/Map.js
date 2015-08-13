@@ -1,10 +1,11 @@
 'use strict';
 
-var React = require('react-native');
-var MapboxGLMap = require('react-native-mapbox-gl');
+var React                 = require('react-native');
+var MapboxGLMap           = require('react-native-mapbox-gl');
+var Icon                  = require('react-native-vector-icons/Ionicons');
 var BackgroundGeolocation = require('react-native-background-geolocation');
-var SettingsService = require('./SettingsService');
-var MapBox = require('react-native-mapbox-gl');
+var SettingsService       = require('./SettingsService');
+var MapBox                = require('react-native-mapbox-gl');
 
 var mapRef = 'mapRef';
 
@@ -14,6 +15,7 @@ var mapRef = 'mapRef';
 var annotations = [];
 
 var {
+  AsyncStorage,
   StyleSheet,
   MapView,
   AppStateIOS,
@@ -32,6 +34,20 @@ var Map = React.createClass({
   getInitialState() {
     var me = this;
     
+    AsyncStorage.getItem("state")
+    .then((values) => {
+      if (values !== null){
+        values = JSON.parse(values);
+        values.isStationary = true;
+        me.setState(values);
+        if (values.isEnabled) {
+          me.onToggleEnabled(values.isEnabled);
+        }
+      } 
+    })
+    .catch((error) => console.error("- error: ", error.message))
+    .done();
+
     AppStateIOS.addEventListener('change', this.onAppStateChange);
 
     this.bgGeo = BackgroundGeolocation;
@@ -48,6 +64,9 @@ var Map = React.createClass({
       // Listen to motionchange events.
       me.bgGeo.on('motionchange', function(location) {
         console.log('- motionchanged: ', JSON.stringify(location));
+        me.setState({
+          isStationary: !location.is_moving
+        });
       });
 
       // This fires after plugin successfully synced to server.
@@ -57,7 +76,10 @@ var Map = React.createClass({
     });
 
     return {
-      zoom: 11
+      zoom: 11,
+      odometer: 0,
+      isEnabled: false,
+      isStationary: true
     };
   },
   onAppStateChange(state) {
@@ -74,14 +96,24 @@ var Map = React.createClass({
       sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
     });
   },
-  onToggleEnable(value) {
+  onToggleEnabled(enabled) {
     var me = this;
 
+    if (!enabled && !this.state.isStationary) {
+      this.onToggleStationary();
+    }
+
     this.setState({
-      enabled: value
+      isEnabled: enabled,
+      odometer: 0
+    }, function() {
+      AsyncStorage.setItem("state", JSON.stringify(me.state));
     });
+
+    this.bgGeo.resetOdometer();
+    
     annotations = [];
-    if (value) {
+    if (enabled) {
       this.bgGeo.start(function() {
         // Successfully started.  Now fetch current position.
         me.bgGeo.getCurrentPosition(function(location) {
@@ -92,12 +124,34 @@ var Map = React.createClass({
       this.bgGeo.stop();
     }
   },
+  onToggleStationary() {
+    var me = this;
+    var value = !this.state.isStationary;
+
+    this.setState({
+      isStationary: value
+    });
+
+    this.bgGeo.changePace(!value);
+  },
+  onUpdatePosition() {
+    var me = this;
+    me.bgGeo.getCurrentPosition(function(location) {
+      me.setCenterCoordinateAnimated(mapRef, location.coords.latitude, location.coords.longitude);
+    });
+  },
   onBackgroundGeolocation(location) {
     console.log('- [js] bgGeo location: ', JSON.stringify(location));
     var me    = this,
         now   = ((location.timestamp) ? new Date(location.timestamp) : new Date()),
         label = [now.getHours(), now.getMinutes(), now.getSeconds()].join(':');
     
+    me.bgGeo.getOdometer(function(distance) {
+      me.setState({
+        odometer: (distance/1000).toFixed(1)
+      });
+    });
+
     // Push onto our annotations stack
     annotations.push({
       latitude: location.coords.latitude,
@@ -121,7 +175,7 @@ var Map = React.createClass({
     //console.log(location);
   },
   onUpdateUserLocation(location) {
-    this.setUserTrackingMode(mapRef, true);
+    this.setUserTrackingMode(mapRef, 1);
     //console.log('[js]MapBox location: ', location);
   },
   onOpenAnnotation(annotation) {
@@ -136,11 +190,11 @@ var Map = React.createClass({
       <View style={styles.container}>        
 
         <View style={styles.toolbar}>          
-          <TouchableHighlight style={styles.settingsButton} onPress={this.onClickSettings}>
+          <TouchableHighlight style={styles.leftButton} onPress={this.onClickSettings} underlayColor={"transparent"}>
             <Text style={styles.buttonText}>Settings</Text>
           </TouchableHighlight>
           <Text>BG Geolocation</Text>
-          <SwitchIOS style={styles.toggleButton} value={this.state.enabled} onValueChange={this.onToggleEnable}></SwitchIOS>
+          <SwitchIOS style={styles.rightButton} value={this.state.isEnabled} onValueChange={this.onToggleEnabled}></SwitchIOS>
         </View>
 
         <MapboxGLMap
@@ -163,7 +217,18 @@ var Map = React.createClass({
           onOpenAnnotation={this.onOpenAnnotation}
           onRightAnnotationTapped={this.onRightAnnotationTapped}
           onUpdateUserLocation={this.onUpdateUserLocation} />
-        
+
+        <View style={styles.toolbar}>
+          <TouchableHighlight style={styles.leftButton} underlayColor={"transparent"} onPress={this.onUpdatePosition}>
+            <Icon name="navigate" size={24} color="#4f8ef7" />
+          </TouchableHighlight>
+          <Text>{this.state.odometer}km</Text>
+
+          <TouchableHighlight style={styles.rightButton} underlayColor={"transparent"} onPress={this.onToggleStationary}>
+            <Icon name={this.state.isStationary ? 'play' : 'stop'} size={24} color="#4f8ef7" />
+          </TouchableHighlight>
+
+        </View>
       </View>
     );
   }
@@ -188,15 +253,15 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  settingsButton: {
+  leftButton: {
     position: 'absolute',
-    left: 5,
-    top: 15
+    left: 10,
+    top: 15,
   },
-  toggleButton: {
+  rightButton: {
     position: 'absolute',
     top: 10,
-    right: 5
+    right: 10
   },
   text: {
     padding: 2
