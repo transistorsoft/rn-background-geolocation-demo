@@ -16,7 +16,7 @@ var {
 
 var styles = StyleSheet.create({
   container: {
-    marginTop: 0,
+    marginTop: 10,
     position: 'absolute',
     top: 5,
     left: 0,

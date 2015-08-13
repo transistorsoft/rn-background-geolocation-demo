@@ -19,15 +19,15 @@ var {
 
 var styles = StyleSheet.create({
     container: {
-        marginTop: 0,
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
-        flexDirection: 'column',
-        padding: 0,
-        paddingTop: 5
+      marginTop: 10,
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      flexDirection: 'column',
+      padding: 0,
+      paddingTop: 5
     },
     toolbar: {
       top: 0,
