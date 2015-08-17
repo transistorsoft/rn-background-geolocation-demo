@@ -14,6 +14,8 @@ var {
   TouchableHighlight
 } = React;
 
+var Settings = require('./Settings');
+
 var styles = StyleSheet.create({
   container: {
     marginTop: 10,
@@ -41,7 +43,7 @@ var styles = StyleSheet.create({
   },
   row: {
     alignItems: 'center',
-    padding: 10,
+    padding: 15,
     flexDirection: 'row'
   },
   leftContainer: {
@@ -51,6 +53,9 @@ var styles = StyleSheet.create({
   rightContainer: {
     width: 24,
     alignItems: 'flex-end',
+  },
+  title: {
+    fontSize: 16
   },
   listView: {
     backgroundColor: '#fff'
@@ -66,9 +71,9 @@ var SettingDetail = React.createClass({
     this.props.navigator.pop();
   },
   componentDidMount() {
+    this.settingsService = require('./SettingsService');
     this.bgGeo = BackgroundGeolocation;
     this.fetchData();
-    this.settingsService = require('./SettingsService');
   },
   
   getInitialState() {
@@ -78,11 +83,11 @@ var SettingDetail = React.createClass({
     };
   },
   fetchData() {
-    var setting = this.props.setting;
+    this.setting = this.props.setting;
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(setting.values),
+      dataSource: this.state.dataSource.cloneWithRows(this.setting.values),
       isLoading: false,
-      value: setting.value
+      value: this.settingsService.get(this.setting.name)
     });
   },
   renderRow(setting) {
@@ -100,41 +105,35 @@ var SettingDetail = React.createClass({
           <View style={styles.separator} />
         </View>
       </TouchableHighlight>
-     );
-   },
-    render() {
-       return (
-          <View style={styles.container}>
-            <View style={styles.toolbar}>
-              <TouchableHighlight style={styles.cancelButton} onPress={this.onCancel}>
-                <Text style={styles.buttonText}>Cancel</Text>
-              </TouchableHighlight>
-              <Text>{this.props.title}</Text>
-            </View>
-            
-            <ListView
-              dataSource={this.state.dataSource}
-              renderRow={this.renderRow}
-              style={styles.listView} />
-          </View>
-        );
-    },    
-    onSelectValue(value) {
-      var bgGeo = this.bgGeo;
-      var setting = this.props.setting;
-      var nav = this.props.navigator;
+    );
+  },
+  render() {
+    return (
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderRow}
+        style={styles.listView} />
+    );
+  },    
+  onSelectValue(value) {
+    var bgGeo = this.bgGeo;
+    var setting = this.props.setting;
+    var nav = this.props.navigator;
 
-      this.setState({
-        value: value
-      });
-      this.settingsService.set(setting.name, value, function(config) {
-        bgGeo.setConfig(config);
+    var Settings = require('./Settings');
 
-        nav.replacePrevious({
-          id: 'settings'
-        });
-        nav.pop();  
+    this.setState({
+      value: value
+    });
+    this.settingsService.set(setting.name, value, function(config) {
+      bgGeo.setConfig(config);
+
+      nav.replacePrevious({
+        component: Settings,
+        title: 'Settings'
       });
+      nav.pop();  
+    });
    }
 });
  

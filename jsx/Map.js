@@ -65,7 +65,8 @@ var Map = React.createClass({
       me.bgGeo.on('motionchange', function(location) {
         console.log('- motionchanged: ', JSON.stringify(location));
         me.setState({
-          isStationary: !location.is_moving
+          isStationary: !location.is_moving,
+          paceButtonStyle: (location.is_moving) ? styles.redButton : styles.greenButton
         });
       });
 
@@ -79,7 +80,9 @@ var Map = React.createClass({
       zoom: 11,
       odometer: 0,
       isEnabled: false,
-      isStationary: true
+      isStationary: true,
+      paceButtonStyle: styles.greenButton,
+      navigateButton: 'navigate'
     };
   },
   onAppStateChange(state) {
@@ -102,7 +105,6 @@ var Map = React.createClass({
     if (!enabled && !this.state.isStationary) {
       this.onToggleStationary();
     }
-
     this.setState({
       isEnabled: enabled,
       odometer: 0
@@ -124,20 +126,27 @@ var Map = React.createClass({
       this.bgGeo.stop();
     }
   },
-  onToggleStationary() {
+  onToggleStationary() {  
     var me = this;
     var value = !this.state.isStationary;
 
     this.setState({
-      isStationary: value
+      isStationary: value,
+      paceButtonStyle: (value) ? styles.greenButton : styles.redButton
     });
 
     this.bgGeo.changePace(!value);
   },
   onUpdatePosition() {
     var me = this;
+    this.setState({
+      navigateButton: 'load-d'
+    });
     me.bgGeo.getCurrentPosition(function(location) {
-      me.setCenterCoordinateAnimated(mapRef, location.coords.latitude, location.coords.longitude);
+      //me.setCenterCoordinateAnimated(mapRef, location.coords.latitude, location.coords.longitude);
+      me.setState({
+        navigateButton: 'navigate'
+      });
     });
   },
   onBackgroundGeolocation(location) {
@@ -175,7 +184,7 @@ var Map = React.createClass({
     //console.log(location);
   },
   onUpdateUserLocation(location) {
-    this.setUserTrackingMode(mapRef, 1);
+    this.setUserTrackingMode(mapRef, 5);
     //console.log('[js]MapBox location: ', location);
   },
   onOpenAnnotation(annotation) {
@@ -188,14 +197,6 @@ var Map = React.createClass({
     
     return (
       <View style={styles.container}>        
-
-        <View style={styles.toolbar}>          
-          <TouchableHighlight style={styles.settingsButton} onPress={this.onClickSettings} underlayColor={"transparent"}>
-            <Text style={styles.buttonText}>Settings</Text>
-          </TouchableHighlight>
-          <Text>BG Geolocation</Text>
-          <SwitchIOS style={styles.enabledButton} value={this.state.isEnabled} onValueChange={this.onToggleEnabled}></SwitchIOS>
-        </View>
 
         <MapboxGLMap
           style={styles.map}
@@ -220,12 +221,14 @@ var Map = React.createClass({
 
         <View style={styles.toolbar}>
           <TouchableHighlight style={[styles.locationButton, styles.iconButton]} underlayColor={"transparent"} onPress={this.onUpdatePosition}>
-            <Icon name="navigate" size={24} color="#4f8ef7" />
+            <Icon name={this.state.navigateButton} size={24} color="#4f8ef7" />
           </TouchableHighlight>
           <Text>{this.state.odometer}km</Text>
 
-          <TouchableHighlight style={[styles.stationaryButton, styles.iconButton]} underlayColor={"transparent"} onPress={this.onToggleStationary}>
-            <Icon name={this.state.isStationary ? 'play' : 'stop'} size={24} color="#4f8ef7" />
+          <SwitchIOS style={styles.enabledButton} value={this.state.isEnabled} onValueChange={this.onToggleEnabled}></SwitchIOS>
+
+          <TouchableHighlight style={[this.state.paceButtonStyle, styles.stationaryButton, styles.iconButton]} underlayColor={"transparent"} onPress={this.onToggleStationary}>
+            <Icon name={this.state.isStationary ? 'play' : 'pause'} size={24} />
           </TouchableHighlight>
 
         </View>
@@ -247,7 +250,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   toolbar: {
-    top: 0,
+    //top: 50,
     height: 50,
     padding: 5,
     justifyContent: 'center',
@@ -267,6 +270,11 @@ var styles = StyleSheet.create({
     left: 0,
     top: 0
   },
+  spinner: {
+    position: 'absolute',
+    top: 10,
+    left: 40
+  },
   iconButton: {
     width: 50,
     height: 50,
@@ -276,12 +284,21 @@ var styles = StyleSheet.create({
   enabledButton: {
     position: 'absolute',
     top: 10,
-    right: 10
+    right: 60
   },
   stationaryButton: {
     position: 'absolute',
     top: 0,
     right: 0
+  },
+  paceButton: {
+
+  },
+  redButton: {
+    backgroundColor: '#ff1300'
+  },
+  greenButton: {
+    backgroundColor: '#4cd964'
   },
   text: {
     padding: 2

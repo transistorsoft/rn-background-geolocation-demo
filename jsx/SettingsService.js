@@ -101,6 +101,9 @@ var SettingsService = (function() {
       //.catch((error) => console.error("- error: ", error.message))
       .done();
     },
+    get: function(key) {
+      return values[key];
+    },
     set: function(key, value, callback) {
       var me = this;
       this.getValues(function(_values) {
@@ -115,7 +118,7 @@ var SettingsService = (function() {
       .then(() => {
         callback.call(me, values);
       })
-      .catch((error) => console.error("- error: ", error))
+      //.catch((error) => console.error("- error: ", error))
       .done();
     }
   };

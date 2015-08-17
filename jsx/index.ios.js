@@ -6,6 +6,7 @@ var Settings = require('./Settings');
 var SettingDetail = require('./SettingDetail');
 
 var {
+  NavigatorIOS,
   Navigator,
   StyleSheet,
   AppRegistry,
@@ -43,23 +44,23 @@ var styles = StyleSheet.create({
 
 var Index = React.createClass({
 
-  renderScene: function(route, nav) {
-    switch(route.id) {
-      case 'initial':
-        return <Map navigator={nav} />
-      case 'settings':
-        return <Settings title="Settings" navigator={nav} />
-      case 'settingDetail':
-        return <SettingDetail title={route.passProps.setting.name} navigator={nav} setting={route.passProps.setting} />
-    }
-  },
-
   render: function() {
     return (
-      <Navigator
+      <NavigatorIOS
         style={styles.container}
-        initialRoute={{id: "initial", }}
-        renderScene={this.renderScene}
+        ref="nav"
+        initialRoute={{
+          component: Map,
+          title: "Map",
+          leftButtonTitle: 'Settings',
+          onLeftButtonPress: () => {
+            this.refs.nav.navigator.push({
+              component: Settings,
+              id: 'settings',
+              title: 'Settings'
+            })
+          }
+        }}
         configureScene={(route) => {
           if (route.sceneConfig) {
             return route.sceneConfig;
