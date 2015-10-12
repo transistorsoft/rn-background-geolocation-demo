@@ -1,11 +1,9 @@
 'use strict';
 
 var React                 = require('react-native');
-var MapboxGLMap           = require('react-native-mapbox-gl');
 var Icon                  = require('react-native-vector-icons/Ionicons');
 var BackgroundGeolocation = require('react-native-background-geolocation');
 var SettingsService       = require('./SettingsService');
-var MapBox                = require('react-native-mapbox-gl');
 
 var mapRef = 'mapRef';
 
@@ -29,8 +27,7 @@ var {
 } = React;
 
 var Map = React.createClass({
-  mixins: [MapboxGLMap.Mixin],
-
+  
   getInitialState() {
     var me = this;
     
@@ -112,14 +109,16 @@ var Map = React.createClass({
       AsyncStorage.setItem("state", JSON.stringify(me.state));
     });
 
-    this.bgGeo.resetOdometer();
+    this.bgGeo.resetOdometer(function() {
+      console.log('- resetOdometer success');
+    });
 
     annotations = [];
     if (enabled) {
       this.bgGeo.start(function() {
         // Successfully started.  Now fetch current position.
         me.bgGeo.getCurrentPosition(function(location) {
-          me.setCenterCoordinateZoomLevelAnimated(mapRef, location.coords.latitude, location.coords.longitude, 14);
+          //me.setCenterCoordinateZoomLevelAnimated(mapRef, location.coords.latitude, location.coords.longitude, 14);
         });
       });
     } else {
@@ -175,7 +174,7 @@ var Map = React.createClass({
 
     // Send annotations-stack to MapBoxGL.  Unfortunately, it has to destroy all existing then re-add...
     // TODO this needs to work better.  We need existing annotations to persist.  And we need polylines too.
-    me.addAnnotations(mapRef, annotations);
+    //me.addAnnotations(mapRef, annotations);
   },
   onRegionChange(location) {
     //this.setState({ currentZoom: location.zoom });
@@ -184,7 +183,6 @@ var Map = React.createClass({
     //console.log(location);
   },
   onUpdateUserLocation(location) {
-    this.setUserTrackingMode(mapRef, 5);
     //console.log('[js]MapBox location: ', location);
   },
   onOpenAnnotation(annotation) {
@@ -197,28 +195,7 @@ var Map = React.createClass({
     
     return (
       <View style={styles.container}>        
-
-        <MapboxGLMap
-          style={styles.map}
-          direction={0}
-          rotateEnabled={true}
-          scrollEnabled={true}
-          zoomEnabled={true}
-          showsUserLocation={true}
-          updateLocationInBackground={false}
-          ref={mapRef}
-          // This is a public-key provided for demo-purposes.  You should generate your own @ https://www.mapbox.com/account/apps/
-          accessToken={'pk.eyJ1IjoiY2hyaXN0b2NyYWN5IiwiYSI6IjgxNjA5ZmFiZWVkY2EwZDFlYzI4OGFjZWEwODg3ZjE4In0.oyHMi64jNuUw4QlRg37E2w'}
-          styleURL={'asset://styles/mapbox-streets-v7.json'}
-          userLocationVisible={true}
-          zoomLevel={this.state.zoom}
-          onRegionChange={this.onRegionChange}
-          onRegionWillChange={this.onRegionWillChange}
-          annotations={this.state.annotations}
-          onOpenAnnotation={this.onOpenAnnotation}
-          onRightAnnotationTapped={this.onRightAnnotationTapped}
-          onUpdateUserLocation={this.onUpdateUserLocation} />
-
+        <View style={styles.map}><Text>Map Goes Here</Text></View>
         <View style={styles.toolbar}>
           <TouchableHighlight style={[styles.locationButton, styles.iconButton]} underlayColor={"transparent"} onPress={this.onUpdatePosition}>
             <Icon name={this.state.navigateButton} size={24} color="#4f8ef7" />

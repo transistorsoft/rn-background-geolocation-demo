@@ -32,7 +32,7 @@
    */
 
   jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/jsx/index.ios.bundle"];
-
+  //jsCodeLocation = [NSURL URLWithString:@"http://192.168.11.128:8081/jsx/index.ios.bundle"];
   /**
    * OPTION 2
    * Load from pre-bundled file on disk. To re-generate the static bundle
@@ -44,10 +44,12 @@
    */
 
 //   jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-
+  
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"RNBackgroundGeolocationSample"
+                                               initialProperties:nil
                                                    launchOptions:launchOptions];
+  
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [[UIViewController alloc] init];
