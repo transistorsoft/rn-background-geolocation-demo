@@ -121,7 +121,7 @@ var Settings = React.createClass({
         rowHasChanged: (r1, r2) => r1 !== r2}
       );
 
-      var sections  = ['geolocation', 'application', 'http'],
+      var sections  = ['geolocation', 'activity recognition', 'application', 'http'],
           sectionIds = [],
           rowIds    = [],
           dataBlob  = {};
@@ -175,6 +175,7 @@ var Settings = React.createClass({
   },
 
   renderSetting(setting, sectionId, rowId) {
+
     return (
       <TouchableHighlight onPress={() => this.onSelectSetting(setting)}  underlayColor='#dddddd'>
         <View>
@@ -205,6 +206,8 @@ var Settings = React.createClass({
         );
     },    
     onSelectSetting(setting) {
+      console.log('setting: ', setting);
+
       this.props.navigator.push({
         id: 'settingDetail',
         title: setting.name,
