@@ -10,6 +10,6 @@
   },
   "devDependencies": {
     "react-native": "^0.13.2",
-    "react-native-background-geolocation": "file:../react-native-background-geolocation"
+    "react-native-background-geolocation": "0.0.13"
   }
 }
