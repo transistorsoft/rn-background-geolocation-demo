@@ -73,4 +73,4 @@ var Index = React.createClass({
 
 
 
-AppRegistry.registerComponent('RNBackgroundGeolocationSample', () => Index);
+AppRegistry.registerComponent('RNBackgroundGeolocationDemo', () => Index);

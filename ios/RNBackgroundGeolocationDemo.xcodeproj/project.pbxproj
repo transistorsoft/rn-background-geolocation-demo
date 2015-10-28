@@ -13,7 +13,7 @@
 		00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
-		00E356F31AD99517003FC87E /* RNBackgroundGeolocationSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* RNBackgroundGeolocationSampleTests.m */; };
+		00E356F31AD99517003FC87E /* RNBackgroundGeolocationDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* RNBackgroundGeolocationDemoTests.m */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -22,29 +22,18 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		8308EBB81BE1056500A2E27C /* libRNBackgroundGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83FF0BB21BCB68AA00831D47 /* libRNBackgroundGeolocation.a */; };
+		8308EBBA1BE1058000A2E27C /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8308EBB91BE1058000A2E27C /* TSLocationManager.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		8325DDA61B7C5988007F0853 /* libRNBackgroundGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8325DDA31B7C5977007F0853 /* libRNBackgroundGeolocation.a */; };
-		83BE502B1B7A4819007EF0D5 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83BE50231B7A4819007EF0D5 /* Entypo.ttf */; };
-		83BE502C1B7A4819007EF0D5 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83BE50241B7A4819007EF0D5 /* EvilIcons.ttf */; };
-		83BE502D1B7A4819007EF0D5 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83BE50251B7A4819007EF0D5 /* FontAwesome.ttf */; };
-		83BE502E1B7A4819007EF0D5 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83BE50261B7A4819007EF0D5 /* Foundation.ttf */; };
-		83BE502F1B7A4819007EF0D5 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83BE50271B7A4819007EF0D5 /* Ionicons.ttf */; };
-		83BE50301B7A4819007EF0D5 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83BE50281B7A4819007EF0D5 /* MaterialIcons.ttf */; };
-		83BE50311B7A4819007EF0D5 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83BE50291B7A4819007EF0D5 /* Octicons.ttf */; };
-		83BE50321B7A4819007EF0D5 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83BE502A1B7A4819007EF0D5 /* Zocial.ttf */; };
-		83BE504A1B7A48D9007EF0D5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BE50491B7A48D9007EF0D5 /* libsqlite3.dylib */; };
-		83BE50631B7A4F1C007EF0D5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BE50621B7A4F1C007EF0D5 /* CoreTelephony.framework */; };
-		83BE50651B7A4F25007EF0D5 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BE50641B7A4F25007EF0D5 /* GLKit.framework */; };
-		83BE50671B7A4F2D007EF0D5 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BE50661B7A4F2D007EF0D5 /* ImageIO.framework */; };
-		83BE50691B7A4F35007EF0D5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BE50681B7A4F35007EF0D5 /* MobileCoreServices.framework */; };
-		83BE506B1B7A4F3E007EF0D5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BE506A1B7A4F3E007EF0D5 /* QuartzCore.framework */; };
-		83BE506D1B7A4F48007EF0D5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BE506C1B7A4F48007EF0D5 /* SystemConfiguration.framework */; };
-		83BE506F1B7A4F54007EF0D5 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BE506E1B7A4F54007EF0D5 /* libc++.dylib */; };
-		83BE50711B7A4F67007EF0D5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BE50701B7A4F67007EF0D5 /* libz.dylib */; };
-		83BE507D1B7A60C1007EF0D5 /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83BE507A1B7A60B1007EF0D5 /* libRCTMapboxGL.a */; };
-		83BE507F1B7A60FC007EF0D5 /* MapboxGL.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 83BE507E1B7A60FC007EF0D5 /* MapboxGL.bundle */; };
-		83BE50811B7A6110007EF0D5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 83BE50801B7A6110007EF0D5 /* Settings.bundle */; };
-		83D4F18D1B7AFB2C00F13FA4 /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D4F18C1B7AFB2C00F13FA4 /* TSLocationManager.framework */; };
+		83FF0B431BCB603D00831D47 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 83FF0B421BCB603D00831D47 /* libsqlite3.tbd */; };
+		83FF0BD21BCB6B8500831D47 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83FF0BCA1BCB6B8500831D47 /* Entypo.ttf */; };
+		83FF0BD31BCB6B8500831D47 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83FF0BCB1BCB6B8500831D47 /* EvilIcons.ttf */; };
+		83FF0BD41BCB6B8500831D47 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83FF0BCC1BCB6B8500831D47 /* FontAwesome.ttf */; };
+		83FF0BD51BCB6B8500831D47 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83FF0BCD1BCB6B8500831D47 /* Foundation.ttf */; };
+		83FF0BD61BCB6B8500831D47 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83FF0BCE1BCB6B8500831D47 /* Ionicons.ttf */; };
+		83FF0BD71BCB6B8500831D47 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83FF0BCF1BCB6B8500831D47 /* MaterialIcons.ttf */; };
+		83FF0BD81BCB6B8500831D47 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83FF0BD01BCB6B8500831D47 /* Octicons.ttf */; };
+		83FF0BD91BCB6B8500831D47 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83FF0BD11BCB6B8500831D47 /* Zocial.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,7 +77,7 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = RNBackgroundGeolocationSample;
+			remoteInfo = RNBackgroundGeolocationDemo;
 		};
 		139105C01AF99BAD00B5F7CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -125,80 +114,56 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		8325DDA21B7C5977007F0853 /* PBXContainerItemProxy */ = {
+		83FF0BB11BCB68AA00831D47 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8325DD9D1B7C5977007F0853 /* RNBackgroundGeolocation.xcodeproj */;
+			containerPortal = 83FF0BAC1BCB68A900831D47 /* RNBackgroundGeolocation.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 83FF5F851AFD0D2B0016A13E;
 			remoteInfo = RNBackgroundGeolocation;
 		};
-		8325DDA41B7C5977007F0853 /* PBXContainerItemProxy */ = {
+		83FF0BB31BCB68AA00831D47 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8325DD9D1B7C5977007F0853 /* RNBackgroundGeolocation.xcodeproj */;
+			containerPortal = 83FF0BAC1BCB68A900831D47 /* RNBackgroundGeolocation.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 83FF5F901AFD0D2B0016A13E;
 			remoteInfo = RNBackgroundGeolocationTests;
 		};
-		83BE50791B7A60B1007EF0D5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83BE50741B7A60B1007EF0D5 /* RCTMapboxGL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C5DBB3401AF2EF2B00E611A9;
-			remoteInfo = RCTMapboxGL;
-		};
-		83BE507B1B7A60B1007EF0D5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83BE50741B7A60B1007EF0D5 /* RCTMapboxGL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C5DBB34B1AF2EF2B00E611A9;
-			remoteInfo = RCTMapboxGLTests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = iOS/main.jsbundle; sourceTree = "<group>"; };
-		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
-		00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
-		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
-		00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTNetwork.xcodeproj; path = "node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj"; sourceTree = "<group>"; };
-		00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* RNBackgroundGeolocationSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RNBackgroundGeolocationSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
+		00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "../node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
+		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
+		00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTNetwork.xcodeproj; path = "../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj"; sourceTree = "<group>"; };
+		00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
+		00E356EE1AD99517003FC87E /* RNBackgroundGeolocationDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RNBackgroundGeolocationDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* RNBackgroundGeolocationSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNBackgroundGeolocationSampleTests.m; sourceTree = "<group>"; };
-		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
-		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* RNBackgroundGeolocationSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RNBackgroundGeolocationSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = iOS/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = iOS/AppDelegate.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* RNBackgroundGeolocationDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNBackgroundGeolocationDemoTests.m; sourceTree = "<group>"; };
+		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
+		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* RNBackgroundGeolocationDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RNBackgroundGeolocationDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = RNBackgroundGeolocationDemo/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = RNBackgroundGeolocationDemo/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iOS/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/main.m; sourceTree = "<group>"; };
-		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
-		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		8325DD9D1B7C5977007F0853 /* RNBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundGeolocation.xcodeproj; path = "node_modules/react-native-background-geolocation/RNBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
-		83BE50231B7A4819007EF0D5 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
-		83BE50241B7A4819007EF0D5 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
-		83BE50251B7A4819007EF0D5 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
-		83BE50261B7A4819007EF0D5 /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Foundation.ttf; sourceTree = "<group>"; };
-		83BE50271B7A4819007EF0D5 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
-		83BE50281B7A4819007EF0D5 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
-		83BE50291B7A4819007EF0D5 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
-		83BE502A1B7A4819007EF0D5 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
-		83BE50491B7A48D9007EF0D5 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		83BE50621B7A4F1C007EF0D5 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		83BE50641B7A4F25007EF0D5 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		83BE50661B7A4F2D007EF0D5 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		83BE50681B7A4F35007EF0D5 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		83BE506A1B7A4F3E007EF0D5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		83BE506C1B7A4F48007EF0D5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		83BE506E1B7A4F54007EF0D5 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
-		83BE50701B7A4F67007EF0D5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		83BE50741B7A60B1007EF0D5 /* RCTMapboxGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMapboxGL.xcodeproj; path = "node_modules/react-native-mapbox-gl/RCTMapboxGL.xcodeproj"; sourceTree = "<group>"; };
-		83BE507E1B7A60FC007EF0D5 /* MapboxGL.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MapboxGL.bundle; path = "node_modules/react-native-mapbox-gl/RCTMapboxGL/MapboxGL.bundle"; sourceTree = "<group>"; };
-		83BE50801B7A6110007EF0D5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = "node_modules/react-native-mapbox-gl/RCTMapboxGL/Settings.bundle"; sourceTree = "<group>"; };
-		83D4F18C1B7AFB2C00F13FA4 /* TSLocationManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "node_modules/react-native-background-geolocation/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RNBackgroundGeolocationDemo/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RNBackgroundGeolocationDemo/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = RNBackgroundGeolocationDemo/main.m; sourceTree = "<group>"; };
+		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		8308EBB91BE1058000A2E27C /* TSLocationManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../node_modules/react-native-background-geolocation/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = "<group>"; };
+		8308EBBB1BE105B000A2E27C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		83FF0B421BCB603D00831D47 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		83FF0BAC1BCB68A900831D47 /* RNBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundGeolocation.xcodeproj; path = "../node_modules/react-native-background-geolocation/RNBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
+		83FF0BCA1BCB6B8500831D47 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
+		83FF0BCB1BCB6B8500831D47 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
+		83FF0BCC1BCB6B8500831D47 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
+		83FF0BCD1BCB6B8500831D47 /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Foundation.ttf; sourceTree = "<group>"; };
+		83FF0BCE1BCB6B8500831D47 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
+		83FF0BCF1BCB6B8500831D47 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		83FF0BD01BCB6B8500831D47 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
+		83FF0BD11BCB6B8500831D47 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,18 +178,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8325DDA61B7C5988007F0853 /* libRNBackgroundGeolocation.a in Frameworks */,
-				83D4F18D1B7AFB2C00F13FA4 /* TSLocationManager.framework in Frameworks */,
-				83BE507D1B7A60C1007EF0D5 /* libRCTMapboxGL.a in Frameworks */,
-				83BE50711B7A4F67007EF0D5 /* libz.dylib in Frameworks */,
-				83BE504A1B7A48D9007EF0D5 /* libsqlite3.dylib in Frameworks */,
-				83BE506F1B7A4F54007EF0D5 /* libc++.dylib in Frameworks */,
-				83BE506D1B7A4F48007EF0D5 /* SystemConfiguration.framework in Frameworks */,
-				83BE506B1B7A4F3E007EF0D5 /* QuartzCore.framework in Frameworks */,
-				83BE50691B7A4F35007EF0D5 /* MobileCoreServices.framework in Frameworks */,
-				83BE50671B7A4F2D007EF0D5 /* ImageIO.framework in Frameworks */,
-				83BE50651B7A4F25007EF0D5 /* GLKit.framework in Frameworks */,
-				83BE50631B7A4F1C007EF0D5 /* CoreTelephony.framework in Frameworks */,
+				8308EBBA1BE1058000A2E27C /* TSLocationManager.framework in Frameworks */,
+				8308EBB81BE1056500A2E27C /* libRNBackgroundGeolocation.a in Frameworks */,
+				83FF0B431BCB603D00831D47 /* libsqlite3.tbd in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -281,13 +237,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		00E356EF1AD99517003FC87E /* RNBackgroundGeolocationSampleTests */ = {
+		00E356EF1AD99517003FC87E /* RNBackgroundGeolocationDemoTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* RNBackgroundGeolocationSampleTests.m */,
+				00E356F21AD99517003FC87E /* RNBackgroundGeolocationDemoTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = RNBackgroundGeolocationSampleTests;
+			path = RNBackgroundGeolocationDemoTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -314,7 +270,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* RNBackgroundGeolocationSample */ = {
+		13B07FAE1A68108700A75B9A /* RNBackgroundGeolocationDemo */ = {
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -325,7 +281,7 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = RNBackgroundGeolocationSample;
+			name = RNBackgroundGeolocationDemo;
 			sourceTree = "<group>";
 		};
 		146834001AC3E56700842450 /* Products */ = {
@@ -347,8 +303,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				8325DD9D1B7C5977007F0853 /* RNBackgroundGeolocation.xcodeproj */,
-				83BE50741B7A60B1007EF0D5 /* RCTMapboxGL.xcodeproj */,
+				83FF0BAC1BCB68A900831D47 /* RNBackgroundGeolocation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -371,59 +326,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8325DD9E1B7C5977007F0853 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8325DDA31B7C5977007F0853 /* libRNBackgroundGeolocation.a */,
-				8325DDA51B7C5977007F0853 /* RNBackgroundGeolocationTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		83BE50221B7A4819007EF0D5 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				83BE50231B7A4819007EF0D5 /* Entypo.ttf */,
-				83BE50241B7A4819007EF0D5 /* EvilIcons.ttf */,
-				83BE50251B7A4819007EF0D5 /* FontAwesome.ttf */,
-				83BE50261B7A4819007EF0D5 /* Foundation.ttf */,
-				83BE50271B7A4819007EF0D5 /* Ionicons.ttf */,
-				83BE50281B7A4819007EF0D5 /* MaterialIcons.ttf */,
-				83BE50291B7A4819007EF0D5 /* Octicons.ttf */,
-				83BE502A1B7A4819007EF0D5 /* Zocial.ttf */,
-			);
-			name = Fonts;
-			path = "node_modules/react-native-vector-icons/Fonts";
-			sourceTree = "<group>";
-		};
-		83BE50751B7A60B1007EF0D5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				83BE507A1B7A60B1007EF0D5 /* libRCTMapboxGL.a */,
-				83BE507C1B7A60B1007EF0D5 /* RCTMapboxGLTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				83D4F18C1B7AFB2C00F13FA4 /* TSLocationManager.framework */,
-				83BE50801B7A6110007EF0D5 /* Settings.bundle */,
-				83BE507E1B7A60FC007EF0D5 /* MapboxGL.bundle */,
-				83BE50701B7A4F67007EF0D5 /* libz.dylib */,
-				83BE506E1B7A4F54007EF0D5 /* libc++.dylib */,
-				83BE506C1B7A4F48007EF0D5 /* SystemConfiguration.framework */,
-				83BE506A1B7A4F3E007EF0D5 /* QuartzCore.framework */,
-				83BE50681B7A4F35007EF0D5 /* MobileCoreServices.framework */,
-				83BE50661B7A4F2D007EF0D5 /* ImageIO.framework */,
-				83BE50641B7A4F25007EF0D5 /* GLKit.framework */,
-				83BE50621B7A4F1C007EF0D5 /* CoreTelephony.framework */,
-				83BE50491B7A48D9007EF0D5 /* libsqlite3.dylib */,
-				83BE50221B7A4819007EF0D5 /* Fonts */,
-				13B07FAE1A68108700A75B9A /* RNBackgroundGeolocationSample */,
+				8308EBBB1BE105B000A2E27C /* SystemConfiguration.framework */,
+				8308EBB91BE1058000A2E27C /* TSLocationManager.framework */,
+				83FF0BC91BCB6B8500831D47 /* Fonts */,
+				83FF0B421BCB603D00831D47 /* libsqlite3.tbd */,
+				13B07FAE1A68108700A75B9A /* RNBackgroundGeolocationDemo */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* RNBackgroundGeolocationSampleTests */,
+				00E356EF1AD99517003FC87E /* RNBackgroundGeolocationDemoTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 			);
 			indentWidth = 2;
@@ -433,18 +345,43 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* RNBackgroundGeolocationSample.app */,
-				00E356EE1AD99517003FC87E /* RNBackgroundGeolocationSampleTests.xctest */,
+				13B07F961A680F5B00A75B9A /* RNBackgroundGeolocationDemo.app */,
+				00E356EE1AD99517003FC87E /* RNBackgroundGeolocationDemoTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		83FF0BAD1BCB68A900831D47 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				83FF0BB21BCB68AA00831D47 /* libRNBackgroundGeolocation.a */,
+				83FF0BB41BCB68AA00831D47 /* RNBackgroundGeolocationTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		83FF0BC91BCB6B8500831D47 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				83FF0BCA1BCB6B8500831D47 /* Entypo.ttf */,
+				83FF0BCB1BCB6B8500831D47 /* EvilIcons.ttf */,
+				83FF0BCC1BCB6B8500831D47 /* FontAwesome.ttf */,
+				83FF0BCD1BCB6B8500831D47 /* Foundation.ttf */,
+				83FF0BCE1BCB6B8500831D47 /* Ionicons.ttf */,
+				83FF0BCF1BCB6B8500831D47 /* MaterialIcons.ttf */,
+				83FF0BD01BCB6B8500831D47 /* Octicons.ttf */,
+				83FF0BD11BCB6B8500831D47 /* Zocial.ttf */,
+			);
+			name = Fonts;
+			path = "../node_modules/react-native-vector-icons/Fonts";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* RNBackgroundGeolocationSampleTests */ = {
+		00E356ED1AD99517003FC87E /* RNBackgroundGeolocationDemoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "RNBackgroundGeolocationSampleTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "RNBackgroundGeolocationDemoTests" */;
 			buildPhases = (
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
@@ -455,14 +392,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = RNBackgroundGeolocationSampleTests;
-			productName = RNBackgroundGeolocationSampleTests;
-			productReference = 00E356EE1AD99517003FC87E /* RNBackgroundGeolocationSampleTests.xctest */;
+			name = RNBackgroundGeolocationDemoTests;
+			productName = RNBackgroundGeolocationDemoTests;
+			productReference = 00E356EE1AD99517003FC87E /* RNBackgroundGeolocationDemoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* RNBackgroundGeolocationSample */ = {
+		13B07F861A680F5B00A75B9A /* RNBackgroundGeolocationDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "RNBackgroundGeolocationSample" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "RNBackgroundGeolocationDemo" */;
 			buildPhases = (
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
@@ -472,9 +409,9 @@
 			);
 			dependencies = (
 			);
-			name = RNBackgroundGeolocationSample;
+			name = RNBackgroundGeolocationDemo;
 			productName = "Hello World";
-			productReference = 13B07F961A680F5B00A75B9A /* RNBackgroundGeolocationSample.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* RNBackgroundGeolocationDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -499,7 +436,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "RNBackgroundGeolocationSample" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "RNBackgroundGeolocationDemo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -528,10 +465,6 @@
 					ProjectRef = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
 				},
 				{
-					ProductGroup = 83BE50751B7A60B1007EF0D5 /* Products */;
-					ProjectRef = 83BE50741B7A60B1007EF0D5 /* RCTMapboxGL.xcodeproj */;
-				},
-				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
 				},
@@ -556,14 +489,14 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = 8325DD9E1B7C5977007F0853 /* Products */;
-					ProjectRef = 8325DD9D1B7C5977007F0853 /* RNBackgroundGeolocation.xcodeproj */;
+					ProductGroup = 83FF0BAD1BCB68A900831D47 /* Products */;
+					ProjectRef = 83FF0BAC1BCB68A900831D47 /* RNBackgroundGeolocation.xcodeproj */;
 				},
 			);
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* RNBackgroundGeolocationSample */,
-				00E356ED1AD99517003FC87E /* RNBackgroundGeolocationSampleTests */,
+				13B07F861A680F5B00A75B9A /* RNBackgroundGeolocationDemo */,
+				00E356ED1AD99517003FC87E /* RNBackgroundGeolocationDemoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -639,32 +572,18 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8325DDA31B7C5977007F0853 /* libRNBackgroundGeolocation.a */ = {
+		83FF0BB21BCB68AA00831D47 /* libRNBackgroundGeolocation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNBackgroundGeolocation.a;
-			remoteRef = 8325DDA21B7C5977007F0853 /* PBXContainerItemProxy */;
+			remoteRef = 83FF0BB11BCB68AA00831D47 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8325DDA51B7C5977007F0853 /* RNBackgroundGeolocationTests.xctest */ = {
+		83FF0BB41BCB68AA00831D47 /* RNBackgroundGeolocationTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = RNBackgroundGeolocationTests.xctest;
-			remoteRef = 8325DDA41B7C5977007F0853 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		83BE507A1B7A60B1007EF0D5 /* libRCTMapboxGL.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTMapboxGL.a;
-			remoteRef = 83BE50791B7A60B1007EF0D5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		83BE507C1B7A60B1007EF0D5 /* RCTMapboxGLTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RCTMapboxGLTests.xctest;
-			remoteRef = 83BE507B1B7A60B1007EF0D5 /* PBXContainerItemProxy */;
+			remoteRef = 83FF0BB31BCB68AA00831D47 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -681,19 +600,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83BE50811B7A6110007EF0D5 /* Settings.bundle in Resources */,
-				83BE507F1B7A60FC007EF0D5 /* MapboxGL.bundle in Resources */,
-				83BE50311B7A4819007EF0D5 /* Octicons.ttf in Resources */,
+				83FF0BD81BCB6B8500831D47 /* Octicons.ttf in Resources */,
 				008F07F31AC5B25A0029DE68 /* main.jsbundle in Resources */,
-				83BE502E1B7A4819007EF0D5 /* Foundation.ttf in Resources */,
-				83BE502F1B7A4819007EF0D5 /* Ionicons.ttf in Resources */,
-				83BE502B1B7A4819007EF0D5 /* Entypo.ttf in Resources */,
+				83FF0BD51BCB6B8500831D47 /* Foundation.ttf in Resources */,
+				83FF0BD61BCB6B8500831D47 /* Ionicons.ttf in Resources */,
+				83FF0BD21BCB6B8500831D47 /* Entypo.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				83BE50321B7A4819007EF0D5 /* Zocial.ttf in Resources */,
-				83BE50301B7A4819007EF0D5 /* MaterialIcons.ttf in Resources */,
-				83BE502C1B7A4819007EF0D5 /* EvilIcons.ttf in Resources */,
+				83FF0BD91BCB6B8500831D47 /* Zocial.ttf in Resources */,
+				83FF0BD71BCB6B8500831D47 /* MaterialIcons.ttf in Resources */,
+				83FF0BD31BCB6B8500831D47 /* EvilIcons.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				83BE502D1B7A4819007EF0D5 /* FontAwesome.ttf in Resources */,
+				83FF0BD41BCB6B8500831D47 /* FontAwesome.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -704,7 +621,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* RNBackgroundGeolocationSampleTests.m in Sources */,
+				00E356F31AD99517003FC87E /* RNBackgroundGeolocationDemoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -722,7 +639,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* RNBackgroundGeolocationSample */;
+			target = 13B07F861A680F5B00A75B9A /* RNBackgroundGeolocationDemo */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -734,7 +651,7 @@
 				13B07FB21A68108700A75B9A /* Base */,
 			);
 			name = LaunchScreen.xib;
-			path = iOS;
+			path = RNBackgroundGeolocationDemo;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -752,11 +669,11 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = RNBackgroundGeolocationSampleTests/Info.plist;
+				INFOPLIST_FILE = RNBackgroundGeolocationDemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RNBackgroundGeolocationSample.app/RNBackgroundGeolocationSample";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RNBackgroundGeolocationDemo.app/RNBackgroundGeolocationDemo";
 			};
 			name = Debug;
 		};
@@ -769,11 +686,11 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = RNBackgroundGeolocationSampleTests/Info.plist;
+				INFOPLIST_FILE = RNBackgroundGeolocationDemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RNBackgroundGeolocationSample.app/RNBackgroundGeolocationSample";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RNBackgroundGeolocationDemo.app/RNBackgroundGeolocationDemo";
 			};
 			name = Release;
 		};
@@ -781,19 +698,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/node_modules/react-native-background-geolocation/RNBackgroundGeolocation",
+					"$(PROJECT_DIR)/**",
+					"$(PROJECT_DIR)/react-native-background-geolocation/RNBackgroundGeolocation",
+					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/RNBackgroundGeolocation",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
-				INFOPLIST_FILE = iOS/Info.plist;
+				INFOPLIST_FILE = RNBackgroundGeolocationDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = RNBackgroundGeolocationSample;
+				PRODUCT_NAME = RNBackgroundGeolocationDemo;
 			};
 			name = Debug;
 		};
@@ -803,17 +722,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/node_modules/react-native-background-geolocation/RNBackgroundGeolocation",
+					"$(PROJECT_DIR)/react-native-background-geolocation/RNBackgroundGeolocation",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
-				INFOPLIST_FILE = iOS/Info.plist;
+				INFOPLIST_FILE = RNBackgroundGeolocationDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = RNBackgroundGeolocationSample;
+				PRODUCT_NAME = RNBackgroundGeolocationDemo;
 			};
 			name = Release;
 		};
@@ -854,12 +773,13 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRIP_BITCODE_FROM_COPIED_FILES = NO;
 			};
 			name = Debug;
 		};
@@ -894,11 +814,12 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				STRIP_BITCODE_FROM_COPIED_FILES = NO;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -906,7 +827,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "RNBackgroundGeolocationSampleTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "RNBackgroundGeolocationDemoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -915,7 +836,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "RNBackgroundGeolocationSample" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "RNBackgroundGeolocationDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -924,7 +845,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "RNBackgroundGeolocationSample" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "RNBackgroundGeolocationDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

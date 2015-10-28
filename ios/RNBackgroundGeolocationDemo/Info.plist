@@ -27,11 +27,15 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>App requires background location updates, motherfucker</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>I need location</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>FontAwesome.ttf</string>
-		<string>Ionicons.ttf</string>
 		<string>Foundation.ttf</string>
+		<string>Ionicons.ttf</string>
 		<string>MaterialDesign.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
@@ -53,7 +57,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>App requires background location tracking</string>
+	<key>NSLocationUsageDescription</key>
+	<string>I need location</string>
 </dict>
 </plist>

@@ -1,18 +1,11 @@
 'use strict';
 
 var React                 = require('react-native');
-var MapboxGLMap           = require('react-native-mapbox-gl');
 var Icon                  = require('react-native-vector-icons/Ionicons');
 var BackgroundGeolocation = require('react-native-background-geolocation');
 var SettingsService       = require('./SettingsService');
-var MapBox                = require('react-native-mapbox-gl');
 
 var mapRef = 'mapRef';
-
-// Map annotations stack.  pretty ugly business here.
-// TODO MapboxGL doesn't handle annotations very well when we switch views (to Settings, for example), its annotations get all messed up.
-// This needs work.
-var annotations = [];
 
 var {
   AsyncStorage,
@@ -29,8 +22,7 @@ var {
 } = React;
 
 var Map = React.createClass({
-  mixins: [MapboxGLMap.Mixin],
-
+  
   getInitialState() {
     var me = this;
     
@@ -58,30 +50,31 @@ var Map = React.createClass({
       // Configure Background Geolocation.
       me.bgGeo.configure(values);
 
+      me.bgGeo.getState(function(state) {
+        console.log('BackgroundGeolocation state: ', state);
+      });
+
       // Listen to location events coming out.
       me.bgGeo.on('location', me.onBackgroundGeolocation);
       
-      me.bgGeo.on('- [js]error', function(type, error) {
-
-      });
-
       // Listen to motionchange events.
       me.bgGeo.on('motionchange', function(location) {
-        console.log('- [js]motionchanged: ', JSON.stringify(location));
+        console.log('- motionchanged: ', JSON.stringify(location));
         me.setState({
           isStationary: !location.is_moving,
           paceButtonStyle: (location.is_moving) ? styles.redButton : styles.greenButton
         });
       });
 
-      me.bgGeo.on('http', function(response) {
-        console.log('- [js]HTTP response: ', response.status);
-      });
-
       // This fires after plugin successfully synced to server.
       me.bgGeo.on('sync', function(rs) {
-        console.log('- [js]sync complete: ', JSON.stringify(rs));
-      })
+        console.log('- sync complete: ', JSON.stringify(rs));
+      });
+
+      me.bgGeo.on('error', function(error) {
+        alert(error.type + ' error: ' + error.code);
+        console.log('- ERROR: ', error.type, error.code);
+      });
     });
 
     return {
@@ -97,10 +90,10 @@ var Map = React.createClass({
     if (state === 'active') {
       var me = this;
       me.bgGeo.getCurrentPosition({timeout: 1000}, function(location) {
-        //me.setCenterCoordinateAnimated(mapRef, location.coords.latitude, location.coords.longitude);  
+        console.log('- received current position: ', location);
       }, function(error) {
-        console.log('[js] Location error: ', arguments);
-      });      
+        alert('Location error: ' + error);
+      });
     }
   },
   onClickSettings() {
@@ -122,21 +115,17 @@ var Map = React.createClass({
       AsyncStorage.setItem("state", JSON.stringify(me.state));
     });
 
-    this.bgGeo.resetOdometer();
+    this.bgGeo.resetOdometer(function() {
+      console.log('- resetOdometer success');
+    });
 
-    annotations = [];
     if (enabled) {
       this.bgGeo.start(function() {
         // Successfully started.  Now fetch current position.
-<<<<<<< Updated upstream
-        me.bgGeo.getCurrentPosition(function(location) {
-          me.setCenterCoordinateZoomLevelAnimated(mapRef, location.coords.latitude, location.coords.longitude, 14);
-=======
         me.bgGeo.getCurrentPosition({timeout: 1000}, function(location) {
-          //me.setCenterCoordinateZoomLevelAnimated(mapRef, location.coords.latitude, location.coords.longitude, 14);
+          console.log('[js] received current position: ', location);  
         }, function(error) {
-          console.log('[js] Location error: ', arguments);
->>>>>>> Stashed changes
+          alert('Location error: ' + error);
         });
       });
     } else {
@@ -159,8 +148,16 @@ var Map = React.createClass({
     this.setState({
       navigateButton: 'load-d'
     });
-    me.bgGeo.getCurrentPosition(function(location) {
-      //me.setCenterCoordinateAnimated(mapRef, location.coords.latitude, location.coords.longitude);
+
+    me.bgGeo.getCurrentPosition({timeout: 1000}, function(location) {
+      me.bgGeo.getGeofences(function(rs) {
+        console.log('- current geofences: ', rs);
+      });
+      me.setState({
+        navigateButton: 'navigate'
+      });
+    }, function(error) {
+      alert('Location error: ' + error);
       me.setState({
         navigateButton: 'navigate'
       });
@@ -177,25 +174,6 @@ var Map = React.createClass({
         odometer: (distance/1000).toFixed(1)
       });
     });
-<<<<<<< Updated upstream
-
-    // Push onto our annotations stack
-    annotations.push({
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-      title: label,
-      annotationImage: {
-        url: 'https://dl.dropboxusercontent.com/u/2319755/react-native-background-geolocation-demo/green-dot.png',
-        height: 20,
-        width: 20
-      }
-    });
-
-    // Send annotations-stack to MapBoxGL.  Unfortunately, it has to destroy all existing then re-add...
-    // TODO this needs to work better.  We need existing annotations to persist.  And we need polylines too.
-    me.addAnnotations(mapRef, annotations);
-=======
->>>>>>> Stashed changes
   },
   onRegionChange(location) {
     //this.setState({ currentZoom: location.zoom });
@@ -204,7 +182,6 @@ var Map = React.createClass({
     //console.log(location);
   },
   onUpdateUserLocation(location) {
-    this.setUserTrackingMode(mapRef, 5);
     //console.log('[js]MapBox location: ', location);
   },
   onOpenAnnotation(annotation) {
@@ -217,28 +194,7 @@ var Map = React.createClass({
     
     return (
       <View style={styles.container}>        
-
-        <MapboxGLMap
-          style={styles.map}
-          direction={0}
-          rotateEnabled={true}
-          scrollEnabled={true}
-          zoomEnabled={true}
-          showsUserLocation={true}
-          updateLocationInBackground={false}
-          ref={mapRef}
-          // This is a public-key provided for demo-purposes.  You should generate your own @ https://www.mapbox.com/account/apps/
-          accessToken={'pk.eyJ1IjoiY2hyaXN0b2NyYWN5IiwiYSI6IjgxNjA5ZmFiZWVkY2EwZDFlYzI4OGFjZWEwODg3ZjE4In0.oyHMi64jNuUw4QlRg37E2w'}
-          styleURL={'asset://styles/mapbox-streets-v7.json'}
-          userLocationVisible={true}
-          zoomLevel={this.state.zoom}
-          onRegionChange={this.onRegionChange}
-          onRegionWillChange={this.onRegionWillChange}
-          annotations={this.state.annotations}
-          onOpenAnnotation={this.onOpenAnnotation}
-          onRightAnnotationTapped={this.onRightAnnotationTapped}
-          onUpdateUserLocation={this.onUpdateUserLocation} />
-
+        <View style={styles.map}><Text>Map Goes Here</Text></View>
         <View style={styles.toolbar}>
           <TouchableHighlight style={[styles.locationButton, styles.iconButton]} underlayColor={"transparent"} onPress={this.onUpdatePosition}>
             <Icon name={this.state.navigateButton} size={24} color="#4f8ef7" />
