@@ -7,11 +7,6 @@ var SettingsService       = require('./SettingsService');
 
 var mapRef = 'mapRef';
 
-// Map annotations stack.  pretty ugly business here.
-// TODO MapboxGL doesn't handle annotations very well when we switch views (to Settings, for example), its annotations get all messed up.
-// This needs work.
-var annotations = [];
-
 var {
   AsyncStorage,
   StyleSheet,
@@ -56,7 +51,7 @@ var Map = React.createClass({
       me.bgGeo.configure(values);
 
       me.bgGeo.getState(function(state) {
-        console.log('------------ state: ', state);
+        console.log('BackgroundGeolocation state: ', state);
       });
 
       // Listen to location events coming out.
@@ -74,7 +69,12 @@ var Map = React.createClass({
       // This fires after plugin successfully synced to server.
       me.bgGeo.on('sync', function(rs) {
         console.log('- sync complete: ', JSON.stringify(rs));
-      })
+      });
+
+      me.bgGeo.on('error', function(error) {
+        alert(error.type + ' error: ' + error.code);
+        console.log('- ERROR: ', error.type, error.code);
+      });
     });
 
     return {
@@ -89,10 +89,11 @@ var Map = React.createClass({
   onAppStateChange(state) {
     if (state === 'active') {
       var me = this;
-      me.bgGeo.getCurrentPosition(function(location) {
-        //me.setCenterCoordinateAnimated(mapRef, location.coords.latitude, location.coords.longitude);  
+      me.bgGeo.getCurrentPosition({timeout: 1000}, function(location) {
         console.log('- received current position: ', location);
-      })      
+      }, function(error) {
+        alert('Location error: ' + error);
+      });
     }
   },
   onClickSettings() {
@@ -118,12 +119,13 @@ var Map = React.createClass({
       console.log('- resetOdometer success');
     });
 
-    annotations = [];
     if (enabled) {
       this.bgGeo.start(function() {
         // Successfully started.  Now fetch current position.
-        me.bgGeo.getCurrentPosition(function(location) {
-          //me.setCenterCoordinateZoomLevelAnimated(mapRef, location.coords.latitude, location.coords.longitude, 14);
+        me.bgGeo.getCurrentPosition({timeout: 1000}, function(location) {
+          console.log('[js] received current position: ', location);  
+        }, function(error) {
+          alert('Location error: ' + error);
         });
       });
     } else {
@@ -146,8 +148,16 @@ var Map = React.createClass({
     this.setState({
       navigateButton: 'load-d'
     });
-    me.bgGeo.getCurrentPosition(function(location) {
-      //me.setCenterCoordinateAnimated(mapRef, location.coords.latitude, location.coords.longitude);
+
+    me.bgGeo.getCurrentPosition({timeout: 1000}, function(location) {
+      me.bgGeo.getGeofences(function(rs) {
+        console.log('- current geofences: ', rs);
+      });
+      me.setState({
+        navigateButton: 'navigate'
+      });
+    }, function(error) {
+      alert('Location error: ' + error);
       me.setState({
         navigateButton: 'navigate'
       });
@@ -164,22 +174,6 @@ var Map = React.createClass({
         odometer: (distance/1000).toFixed(1)
       });
     });
-
-    // Push onto our annotations stack
-    annotations.push({
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-      title: label,
-      annotationImage: {
-        url: 'https://dl.dropboxusercontent.com/u/2319755/react-native-background-geolocation-demo/green-dot.png',
-        height: 20,
-        width: 20
-      }
-    });
-
-    // Send annotations-stack to MapBoxGL.  Unfortunately, it has to destroy all existing then re-add...
-    // TODO this needs to work better.  We need existing annotations to persist.  And we need polylines too.
-    //me.addAnnotations(mapRef, annotations);
   },
   onRegionChange(location) {
     //this.setState({ currentZoom: location.zoom });
