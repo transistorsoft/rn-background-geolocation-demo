@@ -152,7 +152,6 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		8308EBB91BE1058000A2E27C /* TSLocationManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../node_modules/react-native-background-geolocation/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = "<group>"; };
-		8308EBBB1BE105B000A2E27C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		83FF0B421BCB603D00831D47 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		83FF0BAC1BCB68A900831D47 /* RNBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundGeolocation.xcodeproj; path = "../node_modules/react-native-background-geolocation/RNBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
@@ -329,7 +328,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				8308EBBB1BE105B000A2E27C /* SystemConfiguration.framework */,
 				8308EBB91BE1058000A2E27C /* TSLocationManager.framework */,
 				83FF0BC91BCB6B8500831D47 /* Fonts */,
 				83FF0B421BCB603D00831D47 /* libsqlite3.tbd */,
@@ -700,9 +698,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/**",
-					"$(PROJECT_DIR)/react-native-background-geolocation/RNBackgroundGeolocation",
-					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/RNBackgroundGeolocation",
+					"$(inherited)",
+					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -722,7 +719,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/react-native-background-geolocation/RNBackgroundGeolocation",
+					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
