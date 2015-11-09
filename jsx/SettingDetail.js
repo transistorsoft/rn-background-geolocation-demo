@@ -129,6 +129,7 @@ var SettingDetail = React.createClass({
       bgGeo.setConfig(config);
 
       nav.replacePrevious({
+        id: 'settings',
         component: Settings,
         title: 'Settings'
       });

@@ -116,12 +116,12 @@ var Settings = React.createClass({
     
     this.settingsService = require('./SettingsService');
 
-    this.settingsService.getSettings('iOS', function(values) {
+    this.settingsService.getSettings(function(values) {
       var ds = new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2}
       );
 
-      var sections  = ['geolocation', 'application', 'http'],
+      var sections  = ['geolocation', 'activity recognition', 'application', 'http'],
           sectionIds = [],
           rowIds    = [],
           dataBlob  = {};

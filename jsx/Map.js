@@ -5,6 +5,8 @@ var Icon                  = require('react-native-vector-icons/Ionicons');
 var BackgroundGeolocation = require('react-native-background-geolocation');
 var SettingsService       = require('./SettingsService');
 
+SettingsService.init('iOS');
+
 var mapRef = 'mapRef';
 
 var {
@@ -50,14 +52,58 @@ var Map = React.createClass({
       // Configure Background Geolocation.
       me.bgGeo.configure(values);
 
+      me.bgGeo.getState(function(s) {
+        console.log('----------- getState: ', s);
+      }, function(error) {
+        console.log('----------- ERROR: getState: ', error);
+      });
+      me.bgGeo.getOdometer(function(v) {
+        console.log('------------- getOdometer: ', v);
+      });
+      me.bgGeo.resetOdometer(function(v) {
+        console.log('------------- resetOdometer: ', v);
+      });
+
+      me.bgGeo.getCurrentPosition({}, function(location) {
+        console.log('------------- getCurrentPosition: ', JSON.stringify(location));
+        me.bgGeo.addGeofence({
+          identifier: 'Home',
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          radius: 200,
+          notifyOnExit: true
+        }, function(v) {
+          console.log('----------- addGeofence success');
+          me.bgGeo.getGeofences(function(rs) {
+            console.log('----------- geofences: ', JSON.stringify(rs));
+          }, function(error) {
+            console.log('----------- ERROR: getGeofences: ', error);
+          });
+        }, function(error) {
+          console.log('----------- ERROR: addGefence');
+        });
+      }, function(error) {
+        console.warn('------------ getCurrentPosition error: ', error);
+      });
+      me.bgGeo.on('geofence', function(geofence) {
+        console.log('----------- Event: geofence: ', JSON.stringify(geofence));
+        me.bgGeo.removeGeofence(geofence.identifier, function(v) {
+          console.log('---------------- removeGeofence SUCCESS');
+          me.bgGeo.getGeofences(function(rs) {
+            console.log('------------ getGeofences: ', JSON.stringify(rs));
+          });
+        }, function(error) {
+          conosle.log('---------------- ERROR: removeGeofence');
+        });
+      })
       me.bgGeo.getState(function(state) {
         console.log('BackgroundGeolocation state: ', state);
       });
 
-      // Listen to location events coming out.
+      // Event: location.  Listen to location events coming out.
       me.bgGeo.on('location', me.onBackgroundGeolocation);
       
-      // Listen to motionchange events.
+      // Event: motionchange. Listen to motionchange events.
       me.bgGeo.on('motionchange', function(location) {
         console.log('- motionchanged: ', JSON.stringify(location));
         me.setState({
@@ -66,14 +112,20 @@ var Map = React.createClass({
         });
       });
 
-      // This fires after plugin successfully synced to server.
+      // Event: sync:  This fires after plugin successfully synced to server.
       me.bgGeo.on('sync', function(rs) {
         console.log('- sync complete: ', JSON.stringify(rs));
       });
 
+      // Event: http
+      me.bgGeo.on('http', function(response) {
+        console.log('- EVENT: http', JSON.stringify(response));
+      });
+
+      // Event: error
       me.bgGeo.on('error', function(error) {
         alert(error.type + ' error: ' + error.code);
-        console.log('- ERROR: ', error.type, error.code);
+        console.log('- ERROR: ', JSON.stringify(error));
       });
     });
 
