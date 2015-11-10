@@ -41,45 +41,40 @@ var RNBackgroundGeolocationSample = React.createClass({
 
     // location event
     BackgroundGeolocation.on("location", function(location) {
-      console.log('*** location: ', JSON.stringify(location));
+      console.log('- location: ', JSON.stringify(location));
     });
     // http event
     BackgroundGeolocation.on("http", function(response) {
-      console.log('*** HTTP ' + response.status);
+      console.log('- http ' + response.status);
       console.log(response.responseText);
     });
     // geofence event
     BackgroundGeolocation.on("geofence", function(geofence) {
-      console.log('*** onGeofence: ', JSON.stringify(geofence));
+      console.log('- onGeofence: ', JSON.stringify(geofence));
     });
     // error event
     BackgroundGeolocation.on("error", function(error) {
-      console.log('*** ERROR: ', JSON.stringify(error));
+      console.log('- ERROR: ', JSON.stringify(error));
     });
     // motionchange event
     BackgroundGeolocation.on("motionchange", function(event) {
-      console.log("*** MOTIONCHANGE", JSON.stringify(event));
+      console.log("- motionchange", JSON.stringify(event));
     });
 
     // getGeofences
     BackgroundGeolocation.getGeofences(function(rs) {
-      console.log('-------------- getGeofences: ', JSON.stringify(rs));
+      console.log('- getGeofences: ', JSON.stringify(rs));
     }, function(error) {
-      console.log("---------- getGeofences ERROR", error);
+      console.log("- getGeofences ERROR", error);
     });
-
-    console.log('- mount: ', SettingsService.get)
+    
     this.setState({
       enabled: false,
       isMoving: false
     });
   },
 
-  onClickEnable: function() {
-    console.log('- onClickEnable: ', arguments);
-
-    console.log('- enable: ', this.state.enabled);
-
+  onClickEnable: function() {    
     if (!this.state.enabled) {
       BackgroundGeolocation.start(function() {
         console.log('- start success');
@@ -93,8 +88,6 @@ var RNBackgroundGeolocationSample = React.createClass({
     });
   },
   onClickPace: function() {
-    console.log('pace', this.state.isMoving);
-
     BackgroundGeolocation.changePace(!this.state.isMoving);
     
     this.setState({
@@ -102,7 +95,6 @@ var RNBackgroundGeolocationSample = React.createClass({
     });      
   },
   onClickLocate: function() {
-    console.log('locate');
     BackgroundGeolocation.getCurrentPosition(function(location) {
       console.log('- current position: ', JSON.stringify(location));
     });
