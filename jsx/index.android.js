@@ -24,79 +24,10 @@ var SettingsService       = require('./SettingsService');
 SettingsService.init('Android');
 
 SettingsService.getValues(function(values) {
-  values.license = "b4e71cead1c2331f5e6d5064becae65394778e6497941e71cac13693a21b2541";
-  values.orderId = "ch_15a08y2St3m92AMxRTxgHtuw";
+  values.license = "<your license>";
+  values.orderId = "<your order ID>";
   BackgroundGeolocation.configure(values);
 });
-
-
-
-
-/*
-BackgroundGeolocation.start(function() {
-  console.log('--------------- START');
-  BackgroundGeolocation.getCurrentPosition({timeout: 30}, function(location) {
-    console.log('------------- getCurrentPosition: ', JSON.stringify(location));
-
-    BackgroundGeolocation.addGeofence({
-      identifier: 'HOME',
-      radius: 200,
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-      notifyOnEntry: true,
-      notifyOnExit: true,
-    });
-
-    BackgroundGeolocation.getLocations(function(rs) {
-      console.log('------------- getLocations: ', JSON.stringify(rs));
-    }, function(error) {
-      console.log('------------- getLocations ERROR: ', error);
-    })
-
-    BackgroundGeolocation.sync(function(rs) {
-      console.log('------------- sync: ', JSON.stringify(rs));
-    }, function(error) {
-      console.log('------------- sync ERROR: ', error);
-    });
-
-    BackgroundGeolocation.getOdometer(function(distance) {
-      console.log('------------- odometer: ', distance);
-    }, function(error) {
-      console.log('------------- odometer ERROR: ', error);
-    });
-
-    BackgroundGeolocation.resetOdometer(function() {
-      console.log('------------- reset odometer');
-    }, function(error) {
-      console.log('------------- reset odometer ERROR: ', error);
-    });
-
-    BackgroundGeolocation.changePace(true, function(isMoving) {
-      console.log("-------------- changePace: ", isMoving);
-
-      setTimeout(function() {
-        BackgroundGeolocation.getCurrentPosition({timeout:0}, function(location) {
-          console.log('- location recevied: ', JSON.stringify(location));
-        }, function(error) {
-          console.log('-------------Location timeout: ' + JSON.stringify(error));
-        });
-
-        BackgroundGeolocation.changePace(false, function(isMoving) {
-          console.log('-------------- changePace: ', isMoving);
-        }, function(error) {
-          console.log('=============== changePace FAILURE: ', error);
-        });
-      }, 5000);
-    }, function(error) {
-      console.log('-------------- changePace FAILURE: ', error);
-    });
-  }, function(error) {
-    console.log('-------------- location error: ', error);
-  });
-
-  // getLocations
-});
-*/
 
 var RNBackgroundGeolocationSample = React.createClass({
   getInitialState: function() {
