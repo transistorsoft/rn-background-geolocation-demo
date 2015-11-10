@@ -34,3 +34,5 @@ android/build
 #
 node_modules/
 npm-debug.log
+
+.watchmanconfig
