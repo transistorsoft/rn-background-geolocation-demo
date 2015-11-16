@@ -154,6 +154,10 @@ var Map = React.createClass({
     });
 
     me.bgGeo.getCurrentPosition({timeout: 1000}, function(location) {
+      me.bgGeo.sync(function(locations) {
+        console.log(JSON.stringify(locations));
+      });
+
       me.bgGeo.getGeofences(function(rs) {
         console.log('- current geofences: ', rs);
       });
@@ -173,6 +177,24 @@ var Map = React.createClass({
         now   = ((location.timestamp) ? new Date(location.timestamp) : new Date()),
         label = [now.getHours(), now.getMinutes(), now.getSeconds()].join(':');
     
+    me.bgGeo.beginBackgroundTask(function(taskId) {
+      me.bgGeo.getLocations(function(rs) {
+        console.log('- locations: ', JSON.stringify(rs));
+        // sync
+        me.bgGeo.sync(function(rs) {
+          console.log('- sync: ', JSON.stringify(rs));
+          me.bgGeo.finish(taskId);
+        }, function(error) {
+          console.log('- sync ERROR: ', error);
+          me.bgGeo.finish(taskId);
+        });      
+      }, function(error) {
+        console.log('- getLocations ERROR: ', error);
+        me.bgGeo.finish(taskId);
+      });
+
+    });
+
     me.bgGeo.getOdometer(function(distance) {
       me.setState({
         odometer: (distance/1000).toFixed(1)

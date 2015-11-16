@@ -24,10 +24,20 @@ var SettingsService       = require('./SettingsService');
 SettingsService.init('Android');
 
 SettingsService.getValues(function(values) {
-  values.license = "<your license>";
-  values.orderId = "<your order ID>";
+  values.license = "eddbe81bbd86fa030ea466198e778ac78229454c31100295dae4bfc5c4d0f7e2";
+  values.orderId = 1;
+  values.stopTimeout = 0;
+  values.autoSync = false;
+  values.url = 'http://192.168.11.120:8080/locations';
+  values.params = {
+    device: {
+      uuid: 'TODO',
+      model: 'TODO'
+    }
+  };
   BackgroundGeolocation.configure(values);
 });
+
 
 var RNBackgroundGeolocationSample = React.createClass({
   getInitialState: function() {
