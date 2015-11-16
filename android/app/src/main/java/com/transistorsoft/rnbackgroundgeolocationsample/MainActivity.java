@@ -1,4 +1,4 @@
-package com.rnbackgroundgeolocationsample;
+package com.transistorsoft.rnbackgroundgeolocationsample;
 
 import com.transistorsoft.rnbackgroundgeolocation.*;
 import com.oblador.vectoricons.VectorIconsPackage;
