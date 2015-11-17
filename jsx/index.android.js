@@ -38,16 +38,33 @@ SettingsService.getValues(function(values) {
   BackgroundGeolocation.configure(values);
 });
 
+// UI Sounds.
+var SOUNDS = {
+  "LONG_PRESS_ACTIVATE_IOS": 1113,
+  "LONG_PRESS_ACTIVATE_ANDROID": 27,
+  "LONG_PRESS_CANCEL_IOS": 1075,
+  "LONG_PRESS_CANCEL_ANDROID": 94,
+  "ADD_GEOFENCE_IOS": 1114,
+  "ADD_GEOFENCE_ANDROID": 28,
+  "BUTTON_CLICK_IOS": 1104,
+  "BUTTON_CLICK_ANDROID": 89,
+  "MESSAGE_SENT_IOS": 1303,
+  "MESSAGE_SENT_ANDROID": 90,
+  "ERROR_IOS": 1006
+};
 
 var RNBackgroundGeolocationSample = React.createClass({
   getInitialState: function() {
     return {
       enabled: false,
-      isMoving: false
+      isMoving: false,
+      paceButtonStyle: styles.disabledButton,
+      paceButtonIcon: 'play'
     };
   },
 
   componentDidMount: function() {
+    var me = this;
 
     // location event
     BackgroundGeolocation.on("location", function(location) {
@@ -89,8 +106,10 @@ var RNBackgroundGeolocationSample = React.createClass({
       BackgroundGeolocation.start(function() {
         console.log('- start success');
       });
+      this.state.paceButtonStyle = (this.state.isMoving) ? styles.redButton : styles.greenButton;
     } else {
       BackgroundGeolocation.stop();
+      this.state.paceButtonStyle = styles.disabledButton;
     }
 
     this.setState({
@@ -98,10 +117,14 @@ var RNBackgroundGeolocationSample = React.createClass({
     });
   },
   onClickPace: function() {
-    BackgroundGeolocation.changePace(!this.state.isMoving);
+    if (!this.state.enabled) { return; }
+    var isMoving = !this.state.isMoving;
+    BackgroundGeolocation.changePace(isMoving);
     
     this.setState({
-      isMoving: !this.state.isMoving
+      isMoving: isMoving,
+      paceButtonStyle: (isMoving) ? styles.redButton : styles.greenButton,
+      paceButtonIcon: (isMoving) ? 'stop' : 'play'
     });      
   },
   onClickLocate: function() {
@@ -109,11 +132,19 @@ var RNBackgroundGeolocationSample = React.createClass({
       console.log('- current position: ', JSON.stringify(location));
     });
   },
+  onClickSync: function() {
+    BackgroundGeolocation.sync(function(rs) {
+      console.log('- sync success');
+      BackgroundGeolocation.playSound(SOUNDS.MESSAGE_SENT_ANDROID);
+    }, function(error) {
+      console.log('- sync error: ', error);
+    });
+  },
   render: function() {
     return (
       <View style={styles.container}>
         <View style={styles.topToolbar}>
-          <TouchableHighlight onPress={this.onClickMenu}><Icon name="navicon" size={30} style={styles.btnMenu} /></TouchableHighlight>
+          <TouchableHighlight onPress={this.onClickMenu} underlayColor={"transparent"}><Icon name="navicon" size={30} style={styles.btnMenu} /></TouchableHighlight>
 
           <Text style={{fontWeight: 'bold', fontSize: 18, flex: 1, textAlign: 'center'}}>Background Geolocation</Text>
           <SwitchAndroid onValueChange={this.onClickEnable} value={this.state.enabled} />
@@ -122,11 +153,13 @@ var RNBackgroundGeolocationSample = React.createClass({
           <Text style={{flex: 1, textAlign: 'center'}}>Map goes here</Text>
         </View>
         <View style={styles.bottomToolbar}>
-          <TouchableHighlight onPress={this.onClickLocate}><Icon name="navigate" size={30} style={styles.btnNavigate} /></TouchableHighlight>
+          <Icon.Button name="navigate" onPress={this.onClickLocate} color="#000" underlayColor="#ccc" backgroundColor="transparent" style={styles.btnNavigate} />
           <Text style={{fontWeight: 'bold', fontSize: 18, flex: 1, textAlign: 'center'}}></Text>
-          <TouchableHighlight onPress={this.onClickPace}><Icon name="play" size={30} style={styles.btnPace} color="#0c0" /></TouchableHighlight>
+          <Icon.Button name="android-upload" onPress={this.onClickSync} style={styles.btnSync}><Text>Sync</Text></Icon.Button>
+          <Text>&nbsp;</Text>
+          <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} style={[this.state.paceButtonStyle]}><Text>State</Text></Icon.Button>
+          <Text>&nbsp;</Text>
         </View>
-
       </View>
     );
   }
@@ -163,15 +196,33 @@ var styles = StyleSheet.create({
     height: 46,
     justifyContent: 'center'
   },
+  iconButton: {
+    width: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
+    
+  },
   btnMenu: {
 
   },
   btnNavigate: {
 
   },
+  disabledButton: {
+    backgroundColor: '#ccc'
+  },
   btnPace: {
-
-  }
+    backgroundColor: '#0c0'
+  },
+  btnSync: {
+    
+  },
+  redButton: {
+    backgroundColor: '#ff1300'
+  },
+  greenButton: {
+    backgroundColor: '#4cd964'
+  },
 });
 
 AppRegistry.registerComponent('RNBackgroundGeolocationSample', () => RNBackgroundGeolocationSample);
