@@ -8,7 +8,6 @@
   "dependencies": {
     "react-native": "^0.14.2",
     "react-native-background-geolocation": "^0.1.1",
-    "react-native-background-geolocation-android": "git+https://git@github.com:transistorsoft/react-native-background-geolocation-android.git",
     "react-native-vector-icons": "^0.8.5"
   }
 }
