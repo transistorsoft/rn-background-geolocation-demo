@@ -117,8 +117,6 @@ var SettingsService = (function() {
       return _values[key];
     },
     set: function(key, value, callback) {
-      console.log('SettingsService#set: ', key, value);
-      
       var me = this;
       this.getValues(function(mValues) {
         mValues[key] = value;

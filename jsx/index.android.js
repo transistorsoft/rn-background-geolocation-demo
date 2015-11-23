@@ -32,7 +32,9 @@ var Application = React.createClass({
 
   render: function() {
     return (
-      <Text>MOtherfucker</Text>
+      <Drawer ref="drawer" side="right" acceptPan={false} content={<Settings drawer={this.refs.drawer} />}>
+        <Home drawer={this.refs.drawer} />    
+      </Drawer>
     );
   }
 });

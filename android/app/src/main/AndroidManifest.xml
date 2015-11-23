@@ -23,6 +23,12 @@
       <service android:name="com.transistorsoft.locationmanager.ActivityRecognitionService" />
       <service android:name="com.transistorsoft.locationmanager.GeofenceService" />
         <!-- /background-location -->
+
+        <uses-library android:name="com.google.android.maps" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCx44mBvcd9vOgrRdqw0-ZhwwFJFh4sXDM"/>
+
     </application>
 
     <!-- background-geolocation 2 of 2 -->

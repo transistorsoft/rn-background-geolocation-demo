@@ -32,6 +32,8 @@ SettingsService.getValues(function(values) {
 });
 
 var Home = React.createClass({
+  locationIcon: 'green-circle.png',
+
   getInitialState: function() {
     return {
       enabled: false,
@@ -50,24 +52,15 @@ var Home = React.createClass({
       markers: []
     };
   },
-
+  
   componentDidMount: function() {
-    var me = this;    
+    var me = this,
+        gmap = this.refs.gmap;
+
     // location event
     BackgroundGeolocation.on("location", function(location) {
       console.log('- location: ', JSON.stringify(location));
-      var marker = {
-        title: location.timestamp,
-        coordinates: {
-          lat: location.coords.latitude, 
-          lng: location.coords.longitude
-        }
-      };
-      var markers = me.state.markers;
-      markers.push(marker);
-      me.setState({
-        markers: markers
-      });
+      gmap.addMarker(me._createMarker(location));
 
       // TODO MapBox for Android has no API for adding annotations at run-time.
     });
@@ -105,6 +98,17 @@ var Home = React.createClass({
       isMoving: false
     });
   },
+  _createMarker: function(location) {
+    return {
+        title: location.timestamp,
+        icon: this.locationIcon,
+        anchor: [0.5, 0.5],
+        coordinates: {
+          lat: location.coords.latitude,
+          lng: location.coords.longitude
+        }
+      };
+  },
   onClickMenu: function() {
     this.props.drawer.open();
   },
@@ -126,6 +130,9 @@ var Home = React.createClass({
       this.state.paceButtonStyle = (this.state.isMoving) ? commonStyles.redButton : commonStyles.greenButton;
     } else {
       BackgroundGeolocation.stop();
+      this.setState({
+        markers: [{}]
+      });
       this.setState({
         markers: []
       });
@@ -153,8 +160,15 @@ var Home = React.createClass({
       navigateButtonIcon: 'load-d'
     });
     BackgroundGeolocation.getCurrentPosition(function(location) {
-      me.setState({navigateButtonIcon: 'navigate'});
-      console.log('- current position: ', JSON.stringify(location));
+      me.setState({
+        navigateButtonIcon: 'navigate',
+        center: {
+          lat: location.coords.latitude,
+          lng: location.coords.longitude
+        },
+        zoom: 16
+      });
+      console.log('- current position: ', JSON.stringify(location));      
     });
   },
   onRegionChange: function() {
@@ -162,12 +176,10 @@ var Home = React.createClass({
   },
   
   onLayout: function() {
-    console.log('- onLayout');
     var me = this,
         gmap = this.refs.gmap;
 
     this.refs.workspace.measure(function(ox, oy, width, height, px, py) {
-      console.log('measure: ', width, height);
       me.setState({
         mapHeight: height,
         mapWidth: width
@@ -231,3 +243,16 @@ var styles = StyleSheet.create({
 });
 
 module.exports = Home;
+
+/* for RNGMapsAPI.java
+// TODO PolyLine API
+        if (polyline == null) {
+            polyline = map.addPolyline(new PolylineOptions()
+                    .width(15)
+                    .color(Color.parseColor("#2677FF")));
+        }
+        List points = polyline.getPoints();
+        points.add(options.getPosition());
+
+        polyline.setPoints(points);
+*/

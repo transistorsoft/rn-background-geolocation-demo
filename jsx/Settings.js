@@ -77,18 +77,12 @@ var Settings = React.createClass({
   },
   componentDidMount() {
     var me = this;
-    
-    console.log('Settings: ', this);
-
     this.settingsService = require('./SettingsService');
-
     this.createDataSource();
   },
   createDataSource: function() {
     var me = this;
     this.settingsService.getSettings(function(values) {
-      console.log('getSEttings: ', values);
-
       var getSectionData = (dataBlob, sectionID) => {
         return dataBlob[sectionID];
       };
