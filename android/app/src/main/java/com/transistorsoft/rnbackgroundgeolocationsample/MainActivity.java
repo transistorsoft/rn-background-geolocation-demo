@@ -2,9 +2,11 @@ package com.transistorsoft.rnbackgroundgeolocationsample;
 
 import com.transistorsoft.rnbackgroundgeolocation.*;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.rota.rngmaps.RNGMapsPackage;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import com.facebook.react.LifecycleState;
@@ -21,6 +23,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         mReactRootView = new ReactRootView(this);
 
@@ -30,7 +33,8 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .setJSMainModuleName("jsx/index.android")
                 .addPackage(new MainReactPackage())
                 .addPackage(new RNBackgroundGeolocation(this))  // <-- for background-geolocation
-                .addPackage(new VectorIconsPackage())
+                .addPackage(new VectorIconsPackage())   // react-native-vector-icons
+                .addPackage(new RNGMapsPackage()) // <-- Register package here
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();

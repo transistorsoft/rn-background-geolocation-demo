@@ -28,14 +28,6 @@ var styles = StyleSheet.create({
     padding: 0,
     backgroundColor: '#efefef'
   },
-  toolbar: {
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#dddddd',
-    backgroundColor: 'white'
-  },
   cancelButton: {
     position: 'absolute',
     left: 5,
@@ -51,7 +43,7 @@ var styles = StyleSheet.create({
     left: 0
   },
   rightContainer: {
-    width: 24,
+    width: 20,
     alignItems: 'flex-end',
   },
   title: {
@@ -73,21 +65,32 @@ var SettingDetail = React.createClass({
   componentDidMount() {
     this.settingsService = require('./SettingsService');
     this.bgGeo = BackgroundGeolocation;
-    this.fetchData();
+    this.load(this.props.setting);
   },
   
   getInitialState() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var ds = new ListView.DataSource({
+      rowHasChanged: function(r1, r2) {
+        return true;
+      }
+    });
     return {
       dataSource: ds.cloneWithRows([]),
+      setting: undefined
     };
   },
-  fetchData() {
-    this.setting = this.props.setting;
+  // Very N.B. for changing nature of list with each different setting.
+  componentWillReceiveProps: function( nextProps ) {
+    if (nextProps.setting) {
+      this.load(nextProps.setting);
+    }
+  },
+  load: function(setting) {
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(this.setting.values),
-      isLoading: false,
-      value: this.settingsService.get(this.setting.name)
+      setting: setting,
+      value: this.settingsService.get(setting.name),
+      dataSource: this.state.dataSource.cloneWithRows(setting.values),
+      isLoading: false
     });
   },
   renderRow(setting) {
@@ -96,7 +99,7 @@ var SettingDetail = React.createClass({
         <View>
           <View style={styles.row}>
             <View style={styles.leftContainer}>
-              <Text style={styles.title}>{setting}</Text>
+              <Text style={styles.title}>{setting.toString()}</Text>
             </View>
             <View style={styles.rightContainer}>
               {this.state.value == setting ? <Icon name="checkmark" size={15} color="#4f8ef7" style={styles.checkbox} /> : null}
@@ -110,30 +113,33 @@ var SettingDetail = React.createClass({
   render() {
     return (
       <ListView
+        ref="list"
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
         style={styles.listView} />
     );
   },    
   onSelectValue(value) {
-    var bgGeo = this.bgGeo;
+    var me      = this;
+    var bgGeo   = this.bgGeo;
     var setting = this.props.setting;
-    var nav = this.props.navigator;
-
-    var Settings = require('./Settings');
-
+    
     this.setState({
       value: value
     });
     this.settingsService.set(setting.name, value, function(config) {
       bgGeo.setConfig(config);
 
-      nav.replacePrevious({
-        id: 'settings',
-        component: Settings,
-        title: 'Settings'
-      });
-      nav.pop();  
+      if (typeof(me.props.onSelectValue) === 'function') {  // <-- Android
+        me.props.onSelectValue(value);
+      } else {
+        me.props.nav.replacePrevious({ // <-- iOS
+          id: 'settings',
+          component: Settings,
+          title: 'Settings'
+        });
+        nav.pop();  
+      }
     });
    }
 });

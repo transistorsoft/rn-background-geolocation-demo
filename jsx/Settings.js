@@ -19,26 +19,12 @@ var {
 
 var styles = StyleSheet.create({
     container: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
+      flex: 1,
       flexDirection: 'column',
       padding: 0
     },
-    toolbar: {
-      top: 0,
-      height: 50,
-      padding: 5,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderBottomWidth: 1,
-      borderBottomColor: '#dddddd'
-    },
     section: {
-      color: '#999',
-      backgroundColor: '#efefef',
+      backgroundColor: '#f5f5f5',
       paddingTop: 30,
       paddingLeft: 15,
       paddingBottom: 10,
@@ -48,11 +34,6 @@ var styles = StyleSheet.create({
       position: 'absolute',
       left: 5,
       top: 17
-    },
-    thumbnail: {
-        width: 53,
-        height: 81,
-        marginRight: 10
     },
     row: {
       alignItems: 'center',
@@ -75,34 +56,17 @@ var styles = StyleSheet.create({
       marginRight: 15,
       fontSize: 16
     },
-    author: {
-      color: '#656565'
-    },
     separator: {
       height: 1,
       backgroundColor: '#dddddd'
     },
-    scroller: {
-      backgroundColor: '#efefef'
-    },
     listView: {
       backgroundColor: '#fff'
     },
-    geolocationSettings: {
-      //height: 300
-    },
-    applicationSettings: {
-      height: 100
-    },
-    loading: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
     disclosure: {
       position: 'absolute',
-      right: 0,
-      top: 0
+      right: -10,
+      top: 3
     }
 });
  
@@ -113,13 +77,26 @@ var Settings = React.createClass({
   },
   componentDidMount() {
     var me = this;
-    
     this.settingsService = require('./SettingsService');
-
+    this.createDataSource();
+  },
+  createDataSource: function() {
+    var me = this;
     this.settingsService.getSettings(function(values) {
+      var getSectionData = (dataBlob, sectionID) => {
+        return dataBlob[sectionID];
+      };
+
+      var getRowData = (dataBlob, sectionID, rowID) => {
+        return dataBlob[sectionID + ':' + rowID];
+      };
+
       var ds = new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2}
-      );
+        getSectionData: getSectionData,
+        getRowData: getRowData,
+        rowHasChanged: (row1, row2) => row1 !== row2,
+        sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+      });
 
       var sections  = ['geolocation', 'activity recognition', 'application', 'http'],
           sectionIds = [],
@@ -142,11 +119,14 @@ var Settings = React.createClass({
 
       me.setState({
         loaded: true,
-        dataSource: me.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIds, rowIds)
+        dataSource: ds.cloneWithRowsAndSections(dataBlob, sectionIds, rowIds)
       });
     });
   },
-  
+  update: function(setting, value) {
+    this.createDataSource();
+  },
+
   getInitialState() {
     var getSectionData = (dataBlob, sectionID) => {
       return dataBlob[sectionID];
@@ -173,7 +153,6 @@ var Settings = React.createClass({
       </View>
     ); 
   },
-
   renderSetting(setting, sectionId, rowId) {
     return (
       <TouchableHighlight onPress={() => this.onSelectSetting(setting)}  underlayColor='#dddddd'>
@@ -183,7 +162,7 @@ var Settings = React.createClass({
               <Text style={styles.name}>{setting.name}</Text>
             </View>
             <View style={styles.rightContainer}>
-              <Text style={styles.value}>{this.settingsService.get(setting.name)}</Text>
+              <Text style={styles.value}>{this.settingsService.get(setting.name).toString()}</Text>
               <Icon name="chevron-right" size={16} color="#4f8ef7" style={styles.disclosure} />
             </View>
           </View>
@@ -191,28 +170,34 @@ var Settings = React.createClass({
         </View>
       </TouchableHighlight>
      );
-   },
-    render() {
-       return (
-          <View style={styles.container}>
-            <ListView
-              dataSource={this.state.dataSource}
-              renderRow={this.renderSetting}
-              renderSectionHeader={this.renderSectionHeader}
-              style={styles.listView}
-            />
-          </View>
-        );
-    },    
-    onSelectSetting(setting) {
-      this.props.navigator.push({
+  },
+  onSelectSetting(setting) {
+    if (typeof(this.props.onSelectSetting) === 'function') {  // <-- Android (@see Settings.android.js)
+      this.props.onSelectSetting(setting);
+    } else {
+      this.props.navigator.push({ // <-- iOS
         id: 'settingDetail',
         title: setting.name,
         sceneConfig: Navigator.SceneConfigs.FloatFromRight,
         component: SettingDetail,
         passProps: {setting}
       });
-   }
+    }
+  },
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderSetting}
+          renderSectionHeader={this.renderSectionHeader}
+          style={styles.listView}
+        />
+      </View>
+    );
+  },    
+    
 });
  
 module.exports = Settings;
