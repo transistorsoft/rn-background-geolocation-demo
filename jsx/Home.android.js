@@ -10,6 +10,8 @@ var {
 } = React;
 
 var RNGMap                = require('react-native-gmaps');
+var Polyline              = require('react-native-gmaps/Polyline');
+
 var BackgroundGeolocation = require('react-native-background-geolocation-android');
 var Icon                  = require('react-native-vector-icons/Ionicons');
 var SettingsService       = require('./SettingsService');
@@ -62,7 +64,10 @@ var Home = React.createClass({
       console.log('- location: ', JSON.stringify(location));
       gmap.addMarker(me._createMarker(location));
 
-      // TODO MapBox for Android has no API for adding annotations at run-time.
+      // Add a point to our tracking polyline
+      if (me.polyline) {
+        me.polyline.addPoint(location.coords.latitude, location.coords.longitude);
+      }
     });
     // http event
     BackgroundGeolocation.on("http", function(response) {
@@ -125,6 +130,17 @@ var Home = React.createClass({
               lng: location.coords.longitude
             }
           });
+          // Create our tracking Polyline
+          Polyline.create({
+            points: [
+              [location.coords.latitude, location.coords.longitude]
+            ],
+            geodesic: true,
+            color: '#2677FF',
+            width: 15
+          }, function(polyline) {
+            me.polyline = polyline;
+          });
         })
       });
       this.state.paceButtonStyle = (this.state.isMoving) ? commonStyles.redButton : commonStyles.greenButton;
@@ -137,6 +153,12 @@ var Home = React.createClass({
         markers: []
       });
       this.state.paceButtonStyle = styles.disabledButton;
+
+      if (this.polyline) {
+        this.polyline.remove(function(result) {
+          console.log('- remove polyline: ', result);
+        });
+      }
     }
 
     this.setState({
@@ -147,7 +169,7 @@ var Home = React.createClass({
     if (!this.state.enabled) { return; }
     var isMoving = !this.state.isMoving;
     BackgroundGeolocation.changePace(isMoving);
-    
+
     this.setState({
       isMoving: isMoving,
       paceButtonStyle: (isMoving) ? commonStyles.redButton : commonStyles.greenButton,
@@ -243,16 +265,3 @@ var styles = StyleSheet.create({
 });
 
 module.exports = Home;
-
-/* for RNGMapsAPI.java
-// TODO PolyLine API
-        if (polyline == null) {
-            polyline = map.addPolyline(new PolylineOptions()
-                    .width(15)
-                    .color(Color.parseColor("#2677FF")));
-        }
-        List points = polyline.getPoints();
-        points.add(options.getPosition());
-
-        polyline.setPoints(points);
-*/
