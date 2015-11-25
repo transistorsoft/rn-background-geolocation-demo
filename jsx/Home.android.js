@@ -18,29 +18,15 @@ var SettingsService       = require('./SettingsService');
 
 SettingsService.init('Android');
 
-SettingsService.getValues(function(values) {
-  values.license = "eddbe81bbd86fa030ea466198e778ac78229454c31100295dae4bfc5c4d0f7e2";
-  values.orderId = 1;
-  values.stopTimeout = 0;
-  values.autoSync = false;
-  values.url = 'http://192.168.11.120:8080/locations';
-  values.params = {
-    device: {
-      uuid: 'TODO',
-      model: 'TODO'
-    }
-  };
-  BackgroundGeolocation.configure(values);
-});
-
 var Home = React.createClass({
   locationIcon: 'green-circle.png',
+  currentLocation: undefined,
 
   getInitialState: function() {
     return {
       enabled: false,
       isMoving: false,
-      paceButtonStyle: styles.disabledButton,
+      paceButtonStyle: commonStyles.disabledButton,
       paceButtonIcon: 'play',
       navigateButtonIcon: 'navigate',
       mapHeight: 300,
@@ -62,6 +48,9 @@ var Home = React.createClass({
     // location event
     BackgroundGeolocation.on("location", function(location) {
       console.log('- location: ', JSON.stringify(location));
+      
+      me.setCenter(location);
+
       gmap.addMarker(me._createMarker(location));
 
       // Add a point to our tracking polyline
@@ -85,10 +74,7 @@ var Home = React.createClass({
     // motionchange event
     BackgroundGeolocation.on("motionchange", function(event) {
       console.log("- motionchange", JSON.stringify(event));
-      me.setState({
-        paceButtonStyle: (event.isMoving) ? commonStyles.redButton : commonStyles.greenButton,
-        paceButtonIcon: (event.isMoving) ? 'stop' : 'play'
-      });
+      me.updatePaceButtonStyle()
     });
 
     // getGeofences
@@ -97,7 +83,31 @@ var Home = React.createClass({
     }, function(error) {
       console.log("- getGeofences ERROR", error);
     });
-    
+
+    SettingsService.getValues(function(values) {
+      values.license = "eddbe81bbd86fa030ea466198e778ac78229454c31100295dae4bfc5c4d0f7e2";
+      values.orderId = 1;
+      values.stopTimeout = 0;
+      values.maxBatchSize = 2;
+      values.params = {
+        device: {
+          uuid: 'TODO',
+          model: 'TODO'
+        }
+      };
+      
+      BackgroundGeolocation.configure(values, function(state) {
+        console.log('- configure state: ', state);
+        me.setState({
+          enabled: state.enabled
+        });
+        if (state.enabled) {
+          me.initializePolyline();
+          me.updatePaceButtonStyle()
+        }
+      });
+    });
+
     this.setState({
       enabled: false,
       isMoving: false
@@ -114,36 +124,29 @@ var Home = React.createClass({
         }
       };
   },
+  initializePolyline: function() {
+    // Create our tracking Polyline
+    var me = this;
+    Polyline.create({
+      points: [],
+      geodesic: true,
+      color: '#2677FF',
+      width: 12
+    }, function(polyline) {
+      me.polyline = polyline;
+    });
+  },
+
   onClickMenu: function() {
     this.props.drawer.open();
   },
+
   onClickEnable: function() {    
     var me = this;
     if (!this.state.enabled) {
       BackgroundGeolocation.start(function() {
-        console.log('- start success');
-        BackgroundGeolocation.getCurrentPosition(function(location) {
-          me.setState({
-            zoom: 16,
-            center: {
-              lat: location.coords.latitude,
-              lng: location.coords.longitude
-            }
-          });
-          // Create our tracking Polyline
-          Polyline.create({
-            points: [
-              [location.coords.latitude, location.coords.longitude]
-            ],
-            geodesic: true,
-            color: '#2677FF',
-            width: 15
-          }, function(polyline) {
-            me.polyline = polyline;
-          });
-        })
+        me.initializePolyline();
       });
-      this.state.paceButtonStyle = (this.state.isMoving) ? commonStyles.redButton : commonStyles.greenButton;
     } else {
       BackgroundGeolocation.stop();
       this.setState({
@@ -152,11 +155,9 @@ var Home = React.createClass({
       this.setState({
         markers: []
       });
-      this.state.paceButtonStyle = styles.disabledButton;
-
       if (this.polyline) {
         this.polyline.remove(function(result) {
-          console.log('- remove polyline: ', result);
+          me.polyline = undefined;
         });
       }
     }
@@ -164,6 +165,7 @@ var Home = React.createClass({
     this.setState({
       enabled: !this.state.enabled
     });
+    this.updatePaceButtonStyle();
   },
   onClickPace: function() {
     if (!this.state.enabled) { return; }
@@ -171,32 +173,34 @@ var Home = React.createClass({
     BackgroundGeolocation.changePace(isMoving);
 
     this.setState({
-      isMoving: isMoving,
-      paceButtonStyle: (isMoving) ? commonStyles.redButton : commonStyles.greenButton,
-      paceButtonIcon: (isMoving) ? 'stop' : 'play'
+      isMoving: isMoving
     });      
+    this.updatePaceButtonStyle();
   },
   onClickLocate: function() {
     var me = this;
-    this.setState({
-      navigateButtonIcon: 'load-d'
-    });
-    BackgroundGeolocation.getCurrentPosition(function(location) {
-      me.setState({
-        navigateButtonIcon: 'navigate',
-        center: {
-          lat: location.coords.latitude,
-          lng: location.coords.longitude
-        },
-        zoom: 16
-      });
+
+    BackgroundGeolocation.getCurrentPosition({timeout: 30}, function(location) {
+      me.setCenter(location);
       console.log('- current position: ', JSON.stringify(location));      
+    }, function(error) {
+      console.error('ERROR: getCurrentPosition', error);
+      me.setState({navigateButtonIcon: 'navigate'});
     });
   },
   onRegionChange: function() {
     console.log('onRegionChange');
   },
-  
+  setCenter: function(location) {
+    this.setState({
+      navigateButtonIcon: 'navigate',
+      center: {
+        lat: location.coords.latitude,
+        lng: location.coords.longitude
+      },
+      zoom: 16
+    });
+  },
   onLayout: function() {
     var me = this,
         gmap = this.refs.gmap;
@@ -206,6 +210,16 @@ var Home = React.createClass({
         mapHeight: height,
         mapWidth: width
       });
+    });
+  },
+  updatePaceButtonStyle: function() {
+    var style = commonStyles.disabledButton;
+    if (this.state.enabled) {
+      style = (this.state.isMoving) ? commonStyles.redButton : commonStyles.greenButton;
+    }
+    this.setState({
+      paceButtonStyle: style,
+      paceButtonIcon: (this.state.enabled && this.state.isMoving) ? 'pause' : 'play'
     });
   },
   render: function() {
@@ -230,7 +244,7 @@ var Home = React.createClass({
         <View style={commonStyles.bottomToolbar}>
           <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={25} color="#000" underlayColor="#ccc" backgroundColor="transparent" style={styles.btnNavigate} />
           <Text style={{fontWeight: 'bold', fontSize: 18, flex: 1, textAlign: 'center'}}></Text>
-          <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} iconStyle={commonStyles.iconButton} style={[this.state.paceButtonStyle]}><Text>State</Text></Icon.Button>
+          <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} iconStyle={commonStyles.iconButton} style={this.state.paceButtonStyle}><Text>State</Text></Icon.Button>
           <Text>&nbsp;</Text>
         </View>
       </View>
@@ -244,22 +258,6 @@ var commonStyles = require('./Styles.common');
 
 var styles = StyleSheet.create({
   workspace: {
-    flex: 1
-  },
-  btnMenu: {
-
-  },
-  btnNavigate: {
-
-  },
-  disabledButton: {
-    backgroundColor: '#ccc'
-  },
-  btnPace: {
-    backgroundColor: '#0c0'
-  },
-  map: {
-    width: require('Dimensions').get('window').width,
     flex: 1
   }
 });

@@ -2,7 +2,7 @@
  
 var React = require('react-native');
 var Icon = require('react-native-vector-icons/Ionicons');
-var BackgroundGeolocation = require('react-native-background-geolocation');
+//var BackgroundGeolocation = require('react-native-background-geolocation');
 
 var {
   StyleSheet,
@@ -64,7 +64,6 @@ var SettingDetail = React.createClass({
   },
   componentDidMount() {
     this.settingsService = require('./SettingsService');
-    this.bgGeo = BackgroundGeolocation;
     this.load(this.props.setting);
   },
   
@@ -121,24 +120,25 @@ var SettingDetail = React.createClass({
   },    
   onSelectValue(value) {
     var me      = this;
-    var bgGeo   = this.bgGeo;
     var setting = this.props.setting;
     
     this.setState({
       value: value
     });
     this.settingsService.set(setting.name, value, function(config) {
-      bgGeo.setConfig(config);
-
       if (typeof(me.props.onSelectValue) === 'function') {  // <-- Android
         me.props.onSelectValue(value);
       } else {
+        // iOS TODO do like Android here, provivding onSelectValue handler.
+        /*
+        bgGeo.setConfig(config);
         me.props.nav.replacePrevious({ // <-- iOS
           id: 'settings',
           component: Settings,
           title: 'Settings'
         });
         nav.pop();  
+        */
       }
     });
    }

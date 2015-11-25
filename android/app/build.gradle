@@ -13,12 +13,20 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
-        multiDexEnabled true
+    }
+    signingConfigs {
+        release {
+            storeFile file(RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE)
+            storePassword RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_STORE_PASSWORD
+            keyAlias RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_KEY_ALIAS
+            keyPassword RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_KEY_PASSWORD
+        }
     }
     buildTypes {
         release {
-            minifyEnabled true  // Set this to true to enable Proguard
+            minifyEnabled false  // Set this to true to enable Proguard
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }

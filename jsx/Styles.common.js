@@ -38,6 +38,9 @@ var styles = StyleSheet.create({
   	textAlign: 'center', 
   	paddingLeft: -60
   },
+  disabledButton: {
+    backgroundColor: '#ccc'
+  },
   iconButton: {
     marginRight: 5
   },
