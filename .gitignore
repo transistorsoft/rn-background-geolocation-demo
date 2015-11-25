@@ -29,7 +29,7 @@ project.xcworkspace
 local.properties
 android/app/build
 android/build
-
+android/app/*.keystore
 # node.js
 #
 node_modules/

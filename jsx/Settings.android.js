@@ -51,6 +51,9 @@ var SettingsContainer = React.createClass({
   },
   onSelectValue: function(value) {
     this.refs.settings.update(this.state.setting, value);
+    var config = {};
+    config[this.state.setting.name] = value;
+    BackgroundGeolocation.setConfig(config);
     this.refs.drawer.close();
   },
   onClickSync: function() {
@@ -70,6 +73,7 @@ var SettingsContainer = React.createClass({
   },
 	render: function() {
     return (
+
       <Drawer ref="drawer" side="right" content={this.state.settingDetailView}>
         <View style={commonStyles.container}>
           <View style={commonStyles.topToolbar}>
