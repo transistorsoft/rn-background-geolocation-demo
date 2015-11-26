@@ -11,6 +11,7 @@ var Drawer                = require('react-native-drawer');
 var Home                  = require('./Home.android');
 var Settings              = require('./Settings.android');
 var Icon                  = require('react-native-vector-icons/Ionicons');
+var BackgroundGeolocation = require('react-native-background-geolocation-android');
 
 var Application = React.createClass({
   getInitialState: function() {
@@ -32,8 +33,8 @@ var Application = React.createClass({
 
   render: function() {
     return (
-      <Drawer ref="drawer" side="right" acceptPan={false} content={<Settings drawer={this.refs.drawer} />}>
-        <Home drawer={this.refs.drawer} />    
+      <Drawer ref="drawer" side="right" acceptPan={false} content={<Settings drawer={this.refs.drawer} locationManager={BackgroundGeolocation} />}>
+        <Home drawer={this.refs.drawer} locationManager={BackgroundGeolocation} />    
       </Drawer>
     );
   }
