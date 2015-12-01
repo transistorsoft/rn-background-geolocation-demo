@@ -8,14 +8,15 @@ var {
 } = React;
 
 var Icon                  = require('react-native-vector-icons/Ionicons');
-var Settings              = require('./Settings.js');
-var SettingDetail         = require('./SettingDetail');
 var Drawer                = require('react-native-drawer')
-var commonStyles          = require('./Styles.common');
-var config                = require('./config');
+var BackgroundGeolocation = require('react-native-background-geolocation-android');
+
+var Settings              = require('../Settings.js');
+var SettingDetail         = require('../SettingDetail');
+var commonStyles          = require('../styles');
+var config                = require('../config');
 
 var SettingsContainer = React.createClass({
-  locationManager: undefined,
   icons: {
     syncButton: 'android-upload',
     spinner: 'load-d'
@@ -23,17 +24,15 @@ var SettingsContainer = React.createClass({
 
   getInitialState: function() {
     return {
-      settingDetailView: <Text/>,
+      settingDetailView: null,
       syncButtonIcon: this.icons.syncButton
     };
-  },
-  componentDidMount: function() {
-    this.locationManager = this.props.locationManager;
   },
   onClickBack: function() {
     this.props.drawer.close();
   },
   onClickSettingDone: function() {
+    debugger;
     this.refs.drawer.close();
   },
   onSelectSetting: function(setting) {
@@ -45,6 +44,7 @@ var SettingsContainer = React.createClass({
             <Icon.Button name="chevron-left" onPress={this.onClickSettingDone} iconStyle={commonStyles.backButtonIcon} backgroundColor="transparent" size={30} color="#4f8ef7" underlayColor={"transparent"}><Text style={commonStyles.backButtonText}>Back</Text></Icon.Button>
             <Text style={commonStyles.toolbarTitle}>{setting.name}</Text>
             <Text style={{width: 60}}>&nbsp;</Text>
+            <Icon.Button name="android-done" onPress={this.onClickSettingsDone} color="#000000" size={25} backgroundColor="transparent" iconStyle={[commonStyles.iconButton, styles.doneButton]}/>
           </View>
           <SettingDetail setting={setting} onSelectValue={this.onSelectValue} />
         </View>
@@ -56,32 +56,26 @@ var SettingsContainer = React.createClass({
     this.refs.settings.update(this.state.setting, value);
     var config = {};
     config[this.state.setting.name] = value;
-    this.locationManager.setConfig(config);
+    BackgroundGeolocation.setConfig(config);
     this.refs.drawer.close();
   },
   onClickSync: function() {
-    var me = this,
-        locationManager = this.locationManager;
-
+    var me = this;
     this.setState({
       syncButtonIcon: this.icons.spinner
     });
-    locationManager.sync(function(rs) {
+    BackgroundGeolocation.sync(function(rs) {
       console.log('- sync success');
       me.setState({
         syncButtonIcon: me.icons.syncButton
       });
-      locationManager.playSound(config.sounds.MESSAGE_SENT_IOS);
+      BackgroundGeolocation.playSound(config.sounds.MESSAGE_SENT_ANDROID);
     }, function(error) {
       console.log('- sync error: ', error);
-      me.setState({
-        syncButtonIcon: me.icons.syncButton
-      });
     });
   },
 	render: function() {
     return (
-
       <Drawer ref="drawer" side="right" content={this.state.settingDetailView}>
         <View style={commonStyles.container}>
           <View style={commonStyles.topToolbar}>
@@ -103,6 +97,9 @@ var SettingsContainer = React.createClass({
 var styles = StyleSheet.create({
   btnSync: {
     
+  },
+  btnDone: {
+    color: '#000000'
   }
 });
 

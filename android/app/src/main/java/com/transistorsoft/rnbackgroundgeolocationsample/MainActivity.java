@@ -4,8 +4,13 @@ import com.transistorsoft.rnbackgroundgeolocation.*;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.rota.rngmaps.RNGMapsPackage;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 
@@ -23,8 +28,10 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        _askForOverlayPermission();
 
         super.onCreate(savedInstanceState);
+
         mReactRootView = new ReactRootView(this);
 
         mReactInstanceManager = ReactInstanceManager.builder()
@@ -42,6 +49,9 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
         mReactRootView.startReactApplication(mReactInstanceManager, "RNBackgroundGeolocationSample", null);
 
         setContentView(mReactRootView);
+
+        _askForLocationPermission();
+        
     }
 
     @Override
@@ -84,4 +94,32 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
             mReactInstanceManager.onResume(this);
         }
     }
+    private static final int OVERLAY_PERMISSION_REQUEST_CODE = 2;
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void _askForOverlayPermission() {
+        if (!BuildConfig.DEBUG || android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return;
+        }
+
+        if (!Settings.canDrawOverlays(this)) {
+            Intent settingsIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(settingsIntent, OVERLAY_PERMISSION_REQUEST_CODE);
+        }
+    }
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 3;
+    @TargetApi(Build.VERSION_CODES.M)
+    private void _askForLocationPermission() {
+        if (!BuildConfig.DEBUG || android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return;
+        }
+
+        if (!Settings.canDrawOverlays(this)) {
+            Intent settingsIntent = new Intent(Settings.ACTION_SECURITY_SETTINGS,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(settingsIntent, LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
 }

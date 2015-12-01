@@ -5,15 +5,22 @@ var {
   StyleSheet,
   Text,
   View,
-  SwitchIOS
+  SwitchAndroid
 } = React;
 
-//var RNGMap                = require('react-native-gmaps');
-//var Polyline              = require('react-native-gmaps/Polyline');
+var RNGMap                = require('react-native-gmaps');
+var Polyline              = require('react-native-gmaps/Polyline');
 var Icon                  = require('react-native-vector-icons/Ionicons');
-var SettingsService       = require('./SettingsService');
+var SettingsService       = require('../SettingsService');
+var commonStyles          = require('../styles');
 
-SettingsService.init('iOS');
+var styles = StyleSheet.create({
+  workspace: {
+    flex: 1
+  }
+});
+
+SettingsService.init('Android');
 
 var Home = React.createClass({
   locationIcon: 'green-circle.png',
@@ -49,14 +56,15 @@ var Home = React.createClass({
     // location event
     this.locationManager.on("location", function(location) {
       console.log('- location: ', JSON.stringify(location));
-      // Add a point to our tracking polyline
-      /*
+      
       me.setCenter(location);
+
       gmap.addMarker(me._createMarker(location));
+
+      // Add a point to our tracking polyline
       if (me.polyline) {
         me.polyline.addPoint(location.coords.latitude, location.coords.longitude);
       }
-      */
     });
     // http event
     this.locationManager.on("http", function(response) {
@@ -89,10 +97,11 @@ var Home = React.createClass({
       values.orderId = 1;
       values.stopTimeout = 0;
       values.maxBatchSize = 2;
+      values.url = 'http://192.168.11.120:8080/locations';
       values.params = {
         device: {
-          uuid: 'TODO',
-          model: 'TODO'
+          uuid: 'reactnative',
+          model: 'Nexus 5'
         }
       };
       
@@ -114,9 +123,6 @@ var Home = React.createClass({
     });
   },
   _createMarker: function(location) {
-    console.warn('#createMarker -- NO IMPLEMENTATION');
-    return {};
-    /*
     return {
         title: location.timestamp,
         icon: this.locationIcon,
@@ -126,12 +132,9 @@ var Home = React.createClass({
           lng: location.coords.longitude
         }
       };
-      */
   },
   initializePolyline: function() {
-    console.warn('#initializePolyline -- NO IMPLEMENTATION');
     // Create our tracking Polyline
-    /*
     var me = this;
     Polyline.create({
       points: [],
@@ -141,7 +144,6 @@ var Home = React.createClass({
     }, function(polyline) {
       me.polyline = polyline;
     });
-    */
   },
 
   onClickMenu: function() {
@@ -235,10 +237,17 @@ var Home = React.createClass({
         <View style={commonStyles.topToolbar}>
           <Icon.Button name="android-options" onPress={this.onClickMenu} backgroundColor="transparent" size={30} color="#000" style={styles.btnMenu} underlayColor={"transparent"} />
           <Text style={commonStyles.toolbarTitle}>Background Geolocation</Text>
-          <SwitchIOS onValueChange={this.onClickEnable} value={this.state.enabled} />
+          <SwitchAndroid onValueChange={this.onClickEnable} value={this.state.enabled} />
         </View>
         <View ref="workspace" style={styles.workspace} onLayout={this.onLayout}>
-          <Text>Map goes here</Text>
+          <RNGMap
+            ref={'gmap'}
+            style={{width: this.state.mapWidth, height: this.state.mapHeight}}
+            markers={this.state.markers}
+            zoomLevel={this.state.zoom}
+            onMapChange={(e) => console.log(e)}
+            onMapError={(e) => console.log('Map error --> ', e)}
+            center={this.state.center} />
 
         </View>
         <View style={commonStyles.bottomToolbar}>
@@ -252,13 +261,4 @@ var Home = React.createClass({
   }
 });
 
-var commonStyles = require('./Styles.common');
-
-var styles = StyleSheet.create({
-  workspace: {
-    flex: 1
-  }
-});
-
 module.exports = Home;
-

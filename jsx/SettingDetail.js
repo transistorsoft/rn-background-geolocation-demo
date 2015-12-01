@@ -2,11 +2,11 @@
  
 var React = require('react-native');
 var Icon = require('react-native-vector-icons/Ionicons');
-//var BackgroundGeolocation = require('react-native-background-geolocation');
 
 var {
   StyleSheet,
   Text,
+  TextInput,
   View,
   Component,
   ListView,
@@ -85,13 +85,29 @@ var SettingDetail = React.createClass({
     }
   },
   load: function(setting) {
-    this.setState({
+    var state = {
       setting: setting,
       value: this.settingsService.get(setting.name),
-      dataSource: this.state.dataSource.cloneWithRows(setting.values),
       isLoading: false
+    };
+    if (setting.inputType !== 'text') {
+      state.dataSource = this.state.dataSource.cloneWithRows(setting.values);
+    }
+
+    this.setState(state);
+  },
+  onSubmit: function(value) {
+    this.props.setting.value = this.refs.text.value;
+    if (typeof(this.props.onSelectValue) === 'function') {  // <-- Android
+        this.props.onSelectValue(this.state.text);    
+      }
+  },
+  onChangeText: function(value) {
+    this.setState({
+      text: value
     });
   },
+
   renderRow(setting) {
     return (
       <TouchableHighlight onPress={() => this.onSelectValue(setting)}  underlayColor='#dddddd'>
@@ -110,14 +126,25 @@ var SettingDetail = React.createClass({
     );
   },
   render() {
-    return (
+    return this.props.setting.inputType !== 'text' ? (
       <ListView
         ref="list"
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
         style={styles.listView} />
+    ) : (
+      <TextInput
+        ref="text"
+        style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+        defaultValue={this.props.setting.value}
+        editable={true}
+        autoCorrect={false}
+        blurOnSubmit={true}
+        onSubmitEditing={this.onSubmit}
+        onChangeText={this.onChangeText}
+        keyboardType="url"/>
     );
-  },    
+  },
   onSelectValue(value) {
     var me      = this;
     var setting = this.props.setting;
@@ -127,18 +154,7 @@ var SettingDetail = React.createClass({
     });
     this.settingsService.set(setting.name, value, function(config) {
       if (typeof(me.props.onSelectValue) === 'function') {  // <-- Android
-        me.props.onSelectValue(value);
-      } else {
-        // iOS TODO do like Android here, provivding onSelectValue handler.
-        /*
-        bgGeo.setConfig(config);
-        me.props.nav.replacePrevious({ // <-- iOS
-          id: 'settings',
-          component: Settings,
-          title: 'Settings'
-        });
-        nav.pop();  
-        */
+        me.props.onSelectValue(value);    
       }
     });
    }
