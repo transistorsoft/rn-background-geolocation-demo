@@ -12,7 +12,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#F5FCFF'
   },
   topToolbar: {
-    paddingLeft: 10,
+    //paddingLeft: 10,
     backgroundColor: '#ffd700',  //ff d7 00
     borderBottomColor: '#E6BE00',
     borderBottomWidth: 1,
@@ -35,8 +35,7 @@ var styles = StyleSheet.create({
   	fontWeight: 'bold', 
   	fontSize: 18, 
   	flex: 1, 
-  	textAlign: 'center', 
-  	paddingLeft: -60
+  	textAlign: 'center'
   },
   disabledButton: {
     backgroundColor: '#ccc'

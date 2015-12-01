@@ -104,8 +104,6 @@ var SettingsService = (function() {
         _values.params = {};
         _values.maxDaysToPersist = 1;
         _values.useSignificantChangesOnly = 0;
-        _values.activityRecognitionInterval = 10000;
-        _values.stopTimeout = 5;
         _values.stopDetectionDelay = 0;
 
         callback.call(this, _values);

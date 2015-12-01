@@ -8,10 +8,11 @@ var {
 } = React;
 
 var Drawer                = require('react-native-drawer');
-var Home                  = require('./Home.android');
-var Settings              = require('./Settings.android');
 var Icon                  = require('react-native-vector-icons/Ionicons');
 var BackgroundGeolocation = require('react-native-background-geolocation-android');
+
+var Home                  = require('./android/Home.android');
+var Settings              = require('./android/Settings.android');
 
 var Application = React.createClass({
   getInitialState: function() {

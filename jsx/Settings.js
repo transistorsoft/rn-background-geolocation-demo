@@ -124,7 +124,11 @@ var Settings = React.createClass({
     });
   },
   update: function(setting, value) {
-    this.createDataSource();
+    var me = this;
+    var settings = this.settingsService;
+    settings.set(setting.name, value, function(s, values) {
+      me.createDataSource();
+    });
   },
 
   getInitialState() {
