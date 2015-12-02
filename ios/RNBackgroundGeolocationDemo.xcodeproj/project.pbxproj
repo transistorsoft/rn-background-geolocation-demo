@@ -36,6 +36,7 @@
 		831F3E0C1C07B92000CF40A2 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 831F3E0B1C07B92000CF40A2 /* libc++.tbd */; };
 		831F3E0E1C07B93E00CF40A2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 831F3E0D1C07B93E00CF40A2 /* libz.tbd */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		83B7E0671C0F628A00D11D0E /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83B7E0661C0F627A00D11D0E /* libRNDeviceInfo.a */; };
 		83FF0B431BCB603D00831D47 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 83FF0B421BCB603D00831D47 /* libsqlite3.tbd */; };
 		83FF0BD21BCB6B8500831D47 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83FF0BCA1BCB6B8500831D47 /* Entypo.ttf */; };
 		83FF0BD31BCB6B8500831D47 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83FF0BCB1BCB6B8500831D47 /* EvilIcons.ttf */; };
@@ -139,6 +140,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		83B7E0651C0F627A00D11D0E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83B7E0531C0F627A00D11D0E /* RNDeviceInfo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DA5891D81BA9A9FC002B4DB2;
+			remoteInfo = RNDeviceInfo;
+		};
 		83FF0BB11BCB68AA00831D47 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83FF0BAC1BCB68A900831D47 /* RNBackgroundGeolocation.xcodeproj */;
@@ -189,6 +197,7 @@
 		831F3E0B1C07B92000CF40A2 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		831F3E0D1C07B93E00CF40A2 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		83B7E0531C0F627A00D11D0E /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		83FF0B421BCB603D00831D47 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		83FF0BAC1BCB68A900831D47 /* RNBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundGeolocation.xcodeproj; path = "../node_modules/react-native-background-geolocation/RNBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		83FF0BCA1BCB6B8500831D47 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
@@ -213,6 +222,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83B7E0671C0F628A00D11D0E /* libRNDeviceInfo.a in Frameworks */,
 				831F3E0E1C07B93E00CF40A2 /* libz.tbd in Frameworks */,
 				83FF0B431BCB603D00831D47 /* libsqlite3.tbd in Frameworks */,
 				831F3E0C1C07B92000CF40A2 /* libc++.tbd in Frameworks */,
@@ -356,6 +366,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				83B7E0531C0F627A00D11D0E /* RNDeviceInfo.xcodeproj */,
 				831F3DE51C07B83100CF40A2 /* RCTMapboxGL.xcodeproj */,
 				83FF0BAC1BCB68A900831D47 /* RNBackgroundGeolocation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -376,6 +387,14 @@
 			isa = PBXGroup;
 			children = (
 				832341B51AAA6A8300B99B32 /* libRCTText.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		83B7E0541C0F627A00D11D0E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				83B7E0661C0F627A00D11D0E /* libRNDeviceInfo.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -559,6 +578,10 @@
 					ProductGroup = 83FF0BAD1BCB68A900831D47 /* Products */;
 					ProjectRef = 83FF0BAC1BCB68A900831D47 /* RNBackgroundGeolocation.xcodeproj */;
 				},
+				{
+					ProductGroup = 83B7E0541C0F627A00D11D0E /* Products */;
+					ProjectRef = 83B7E0531C0F627A00D11D0E /* RNDeviceInfo.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -651,6 +674,13 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		83B7E0661C0F627A00D11D0E /* libRNDeviceInfo.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNDeviceInfo.a;
+			remoteRef = 83B7E0651C0F627A00D11D0E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		83FF0BB21BCB68AA00831D47 /* libRNBackgroundGeolocation.a */ = {

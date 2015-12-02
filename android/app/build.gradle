@@ -45,4 +45,5 @@ dependencies {
     compile(name: 'tslocationmanager', ext: 'aar')
     compile project(':react-native-vector-icons')
     compile project(':react-native-gmaps')
+    compile project(':RNDeviceInfo')
 }

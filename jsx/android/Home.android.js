@@ -12,6 +12,7 @@ var RNGMap                = require('react-native-gmaps');
 var Polyline              = require('react-native-gmaps/Polyline');
 var Icon                  = require('react-native-vector-icons/Ionicons');
 var SettingsService       = require('../SettingsService');
+
 var commonStyles          = require('../styles');
 
 var styles = StyleSheet.create({
@@ -91,19 +92,12 @@ var Home = React.createClass({
     }, function(error) {
       console.log("- getGeofences ERROR", error);
     });
-
+  
     SettingsService.getValues(function(values) {
       values.license = "eddbe81bbd86fa030ea466198e778ac78229454c31100295dae4bfc5c4d0f7e2";
       values.orderId = 1;
       values.stopTimeout = 0;
-      values.maxBatchSize = 2;
       values.url = 'http://192.168.11.120:8080/locations';
-      values.params = {
-        device: {
-          uuid: 'reactnative',
-          model: 'Nexus 5'
-        }
-      };
       
       me.locationManager.configure(values, function(state) {
         console.log('- configure state: ', state);
