@@ -3,6 +3,7 @@ package com.transistorsoft.rnbackgroundgeolocationsample;
 import com.transistorsoft.rnbackgroundgeolocation.*;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.rota.rngmaps.RNGMapsPackage;
+import com.learnium.RNDeviceInfo.*;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -41,7 +42,8 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .addPackage(new MainReactPackage())
                 .addPackage(new RNBackgroundGeolocation(this))  // <-- for background-geolocation
                 .addPackage(new VectorIconsPackage())   // react-native-vector-icons
-                .addPackage(new RNGMapsPackage()) // <-- Register package here
+                .addPackage(new RNGMapsPackage())       // react-native-gmaps
+                .addPackage(new RNDeviceInfo())         // react-native-device-info
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();

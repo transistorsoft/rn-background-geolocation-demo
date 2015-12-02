@@ -1,15 +1,24 @@
 
 'use strict';
 
-var React = require('react-native');
-
+var React       = require('react-native');
 var {
   AsyncStorage,
 } = React;
 
+var DeviceInfo  = require('react-native-device-info');
 
 var SettingsService = (function() {
   var STORAGE_KEY = "@TSLocationManager:settings";
+
+  // react-native-device-info
+  var deviceInfo = {
+    uuid: DeviceInfo.getUniqueID(),
+    model: DeviceInfo.getModel(),
+    platform: DeviceInfo.getSystemName(),
+    manufacturer: DeviceInfo.getManufacturer(),
+    version: DeviceInfo.getSystemVersion()
+  };
 
 	var _settings = {
     common: [
@@ -100,8 +109,12 @@ var SettingsService = (function() {
         } else {
           _values = _defaultValues;
           AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(_defaultValues));
-        }  
-        _values.params = {};
+        }
+        // Append react-native-device-info
+        _values.params = {
+          device: deviceInfo
+        };
+
         _values.maxDaysToPersist = 1;
         _values.useSignificantChangesOnly = 0;
         _values.stopDetectionDelay = 0;
