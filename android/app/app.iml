@@ -64,6 +64,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/build/.DS_Store" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/blame" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
@@ -103,6 +104,7 @@
     <orderEntry type="library" exported="" name="support-v4-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="fresco-0.6.1" level="project" />
+    <orderEntry type="module" module-name="RNDeviceInfo" exported="" />
     <orderEntry type="module" module-name="RNBackgroundGeolocation" exported="" />
     <orderEntry type="module" module-name="react-native-gmaps" exported="" />
     <orderEntry type="module" module-name="react-native-vector-icons" exported="" />
