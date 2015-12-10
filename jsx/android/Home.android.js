@@ -97,7 +97,7 @@ var Home = React.createClass({
       values.license = "eddbe81bbd86fa030ea466198e778ac78229454c31100295dae4bfc5c4d0f7e2";
       values.orderId = 1;
       values.stopTimeout = 0;
-      values.url = 'http://192.168.11.120:8080/locations';
+      //values.url = 'http://192.168.11.120:8080/locations';
       
       me.locationManager.configure(values, function(state) {
         console.log('- configure state: ', state);
