@@ -133,13 +133,14 @@ var Home = React.createClass({
   },
   createMarker: function(location) {
     return {
+        id: location.timestamp,
         type: 'point',
         title: location.timestamp,
         coordinates: [location.coords.latitude, location.coords.longitude]
       };
   },
   initializePolyline: function() {
-    console.warn('#initializePolyline -- NO IMPLEMENTATION');
+    console.log('#initializePolyline -- NO IMPLEMENTATION');
     // Create our tracking Polyline
     /*
     var me = this;
