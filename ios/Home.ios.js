@@ -46,14 +46,8 @@ var Home = React.createClass({
       navigateButtonIcon: 'navigate',
       mapHeight: 300,
       mapWidth: 300,
-      // mapbox
-      center: {
-        lat: 40.7223,
-        lng: -73.9878
-      },
       zoom: 10,
-      markers: [],
-
+      annotations: [],
       center: {
         latitude: 40.72052634,
         longitude: -73.97686958312988

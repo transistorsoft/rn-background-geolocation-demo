@@ -11,6 +11,9 @@ var Drawer                = require('react-native-drawer');
 var Icon                  = require('react-native-vector-icons/Ionicons');
 var BackgroundGeolocation = require('react-native-background-geolocation-android');
 
+global.bgGeo = BackgroundGeolocation;
+
+
 var Home                  = require('./android/Home.android');
 var Settings              = require('./android/Settings.android');
 
