@@ -14,6 +14,8 @@ var Drawer                = require('react-native-drawer');
 var Icon                  = require('react-native-vector-icons/Ionicons');
 var BackgroundGeolocation = require('react-native-background-geolocation');
 
+global.bgGeo = BackgroundGeolocation;
+
 var Home                  = require('./ios/Home.ios');
 var Settings              = require('./ios/Settings.ios');
 
@@ -38,7 +40,7 @@ var Application = React.createClass({
   },
   render: function() {
     return (
-      <View style={{paddingTop: 20, backgroundColor: "#ffd700", flex: 1}}>
+      <View style={{backgroundColor: "#ffd700", flex: 1}}>
         <Drawer ref="drawer" side="right" acceptPan={false} content={<Settings drawer={this.refs.drawer} locationManager={BackgroundGeolocation} />}>
           <Home drawer={this.state.drawer} locationManager={BackgroundGeolocation} />    
         </Drawer>
@@ -47,4 +49,4 @@ var Application = React.createClass({
   }
 });
 
-AppRegistry.registerComponent('RNBackgroundGeolocationDemo', () => Application);
+AppRegistry.registerComponent('RNBackgroundGeolocationSample', () => Application);

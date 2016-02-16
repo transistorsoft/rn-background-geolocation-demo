@@ -4,13 +4,16 @@ var React = require('react-native');
 var {
   StyleSheet,
   Text,
-  View
+  View,
+  AlertIOS,
+  SwitchIOS
 } = React;
 
 var Drawer                = require('react-native-drawer')
 var Icon                  = require('react-native-vector-icons/Ionicons');
 
 var Settings              = require('../Settings.js');
+var SettingsService       = require('../SettingsService');
 var SettingDetail         = require('../SettingDetail');
 var commonStyles          = require('../styles');
 var config                = require('../config');
@@ -32,11 +35,18 @@ var SettingsContainer = React.createClass({
   getInitialState: function() {
     return {
       settingDetailView: <Text/>,
-      syncButtonIcon: this.icons.syncButton
+      syncButtonIcon: this.icons.syncButton,
+      debug: false
     };
   },
   componentDidMount: function() {
+    var me = this;
     this.locationManager = this.props.locationManager;
+    SettingsService.getValues(function(settings) {
+      me.setState({
+        debug: settings.debug
+      });
+    });
   },
   onClickBack: function() {
     this.props.drawer.close();
@@ -56,11 +66,11 @@ var SettingsContainer = React.createClass({
       setting: setting,
       settingDetailView: (
         <View style={commonStyles.container}>
+          <View style={commonStyles.iosStatusBar} />
           <View style={commonStyles.topToolbar}>
             <Icon.Button name="ios-arrow-back" onPress={this.onClickSettingDone} iconStyle={commonStyles.iconButton} backgroundColor="transparent" size={30} color="#4f8ef7" underlayColor={"transparent"}><Text style={[commonStyles.backButtonText, styles.backButtonText]}>Back</Text></Icon.Button>
             <Text style={commonStyles.toolbarTitle}>{setting.name}</Text>
-            <Text style={{width: 60}}>&nbsp;</Text>
-            <Icon.Button name="android-done" onPress={this.onClickSettingDone} color="#000000" size={25} backgroundColor="transparent" iconStyle={[commonStyles.iconButton, this.state.doneButtonStyle]}/>
+            <Text style={{width: 80}}>&nbsp;</Text>        
           </View>
           <SettingDetail setting={setting} onSelectValue={this.onSelectValue} />
         </View>
@@ -74,6 +84,11 @@ var SettingsContainer = React.createClass({
     config[this.state.setting.name] = value;
     this.locationManager.setConfig(config);
     this.refs.drawer.close();
+    if (this.state.setting.name === "debug") {
+      this.setState({
+        debug: value
+      });
+    }
   },
   onClickSync: function() {
     var me = this,
@@ -95,18 +110,56 @@ var SettingsContainer = React.createClass({
       });
     });
   },
+  onClickDebug: function(value) {
+    SettingsService.set('debug', value);
+    this.setState({
+      debug: value
+    });
+    this.locationManager.setConfig({
+      debug: value
+    });
+  },
+
+  onClickLogs: function() {
+    var me = this,
+      locationManager = this.locationManager;
+
+    AlertIOS.prompt(
+      'Send application logs',
+      'Email address', [{
+        text: 'Send', 
+        onPress: function(email) {
+          console.log('Text: ', email);
+          locationManager.emailLog(email, function() {
+            console.log('- emailed logs');
+          });
+        }, 
+        type: 'plain-text'
+      }, {
+        text: 'Cancel', 
+        onPress: function() {}, 
+        style: 'cancel'
+      }]
+    );
+  },
+
 	render: function() {
     return (
 
       <Drawer ref="drawer" side="right" content={this.state.settingDetailView}>
         <View style={commonStyles.container}>
+          <View style={commonStyles.iosStatusBar} />
           <View style={commonStyles.topToolbar}>
             <Icon.Button name="ios-arrow-back" onPress={this.onClickBack} iconStyle={commonStyles.iconButton} backgroundColor="transparent" size={40} color="#4f8ef7" underlayColor={"transparent"}><Text style={[commonStyles.backButtonText, styles.backButtonText]}>Back</Text></Icon.Button>
-            <Text style={commonStyles.toolbarTitle}>Settings</Text>
-            <Icon.Button name={this.state.syncButtonIcon} onPress={this.onClickSync} iconStyle={commonStyles.iconButton} style={[styles.btnSync, commonStyles.redButton]}><Text>Sync</Text></Icon.Button>
-            <Text>&nbsp;</Text>
+            <Text style={[commonStyles.toolbarTitle, {marginLeft: 20}]}>Settings</Text>
+            <Text>Debug&nbsp;</Text><SwitchIOS onValueChange={this.onClickDebug} value={this.state.debug} />
           </View>
           <Settings ref="settings" onSelectSetting={this.onSelectSetting} />
+          <View style={commonStyles.bottomToolbar}>
+            <Icon.Button name="share" iconStyle={commonStyles.iconButton} onPress={this.onClickLogs}>Logs</Icon.Button>
+            <View style={{flex: 1}} />
+            <Icon.Button name={this.state.syncButtonIcon} onPress={this.onClickSync} iconStyle={commonStyles.iconButton}>Sync</Icon.Button>            
+          </View>
         </View>
       </Drawer>
 

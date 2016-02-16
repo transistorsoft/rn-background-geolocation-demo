@@ -16,13 +16,19 @@ var styles = StyleSheet.create({
     backgroundColor: '#ffd700',  //ff d7 00
     borderBottomColor: '#E6BE00',
     borderBottomWidth: 1,
+    paddingRight: 5,
     alignSelf: 'stretch',
     flexDirection: 'row',
     alignItems: 'center',
     height: 46
   },
+  iosStatusBar: {
+    height: 20,
+    backgroundColor: '#ffd700'
+  },
   bottomToolbar: {
-  	paddingLeft: 10,
+  	paddingLeft: 5,
+    paddingRight: 5,
     backgroundColor: '#efefef',
     borderTopColor: '#d6d6d6',
     borderTopWidth: 1,
@@ -41,7 +47,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#ccc'
   },
   iconButton: {
-    marginRight: 5
+    
   },
   backButtonIcon: {
   	marginRight: -10

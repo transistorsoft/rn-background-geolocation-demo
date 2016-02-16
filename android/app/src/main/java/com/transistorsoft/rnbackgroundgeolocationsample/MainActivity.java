@@ -30,7 +30,9 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .setApplication(getApplication())
                 .setBundleAssetName("index.android.bundle")
                 .setJSMainModuleName("index.android")
-                .addPackage(new MainReactPackage())
+                .addPackage(new MainReactPackage(),
+        new ReactNativeMapboxGLPackage(),
+        new RNDeviceInfo())
                 
                 .addPackage(new RNBackgroundGeolocation(this))  // <-- for background-geolocation
                 .addPackage(new VectorIconsPackage())   // react-native-vector-icons
