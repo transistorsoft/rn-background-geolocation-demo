@@ -40,7 +40,7 @@ var Application = React.createClass({
   },
   render: function() {
     return (
-      <View style={{paddingTop: 20, backgroundColor: "#ffd700", flex: 1}}>
+      <View style={{backgroundColor: "#ffd700", flex: 1}}>
         <Drawer ref="drawer" side="right" acceptPan={false} content={<Settings drawer={this.refs.drawer} locationManager={BackgroundGeolocation} />}>
           <Home drawer={this.state.drawer} locationManager={BackgroundGeolocation} />    
         </Drawer>

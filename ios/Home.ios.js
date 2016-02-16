@@ -44,7 +44,7 @@ var Home = React.createClass({
       paceButtonStyle: commonStyles.disabledButton,
       paceButtonIcon: 'play',
       navigateButtonIcon: 'navigate',
-      mapHeight: 300,
+      mapHeight: 280,
       mapWidth: 300,
       zoom: 10,
       annotations: [],
@@ -65,16 +65,16 @@ var Home = React.createClass({
 
     // location event
     this.locationManager.on("location", function(location) {
-      if (location.sample) {
-        console.log('------------- SAMPLE ---------------');
-        return;
-      } else {
-        me.locationManager.getOdometer(function(distance) {
-          console.log('- odometer: ', distance);
-        });
-      }
-      console.log('- location: ', JSON.stringify(location));
       
+      console.log('- location: ', JSON.stringify(location));
+      if (location.sample) {
+        console.log('<sample location>');
+        return;
+      }
+      // get odometer.
+      me.locationManager.getOdometer(function(distance) {
+        console.log('- odometer: ', distance);
+      });
       me.addMarker(location);
       me.setCenter(location);
     });
@@ -211,17 +211,6 @@ var Home = React.createClass({
   setCenter: function(location) {
     this.setCenterCoordinateAnimated(mapRef, location.coords.latitude, location.coords.longitude)
   },
-  onLayout: function() {
-    var me = this,
-        gmap = this.refs.gmap;
-
-    this.refs.workspace.measure(function(ox, oy, width, height, px, py) {
-      me.setState({
-        mapHeight: height,
-        mapWidth: width
-      });
-    });
-  },
   updatePaceButtonStyle: function() {
     var style = commonStyles.disabledButton;
     if (this.state.enabled) {
@@ -252,12 +241,13 @@ var Home = React.createClass({
   render: function() {
     return (
       <View style={commonStyles.container}>
+        <View style={commonStyles.iosStatusBar} />
         <View style={commonStyles.topToolbar}>
           <Icon.Button name="ios-settings" onPress={this.onClickMenu} backgroundColor="transparent" size={30} color="#000" style={styles.btnMenu} underlayColor={"transparent"} />
           <Text style={commonStyles.toolbarTitle}>Background Geolocation</Text>
           <SwitchIOS onValueChange={this.onClickEnable} value={this.state.enabled} />
         </View>
-        <View ref="workspace" style={styles.workspace} onLayout={this.onLayout}>
+        <View ref="workspace" style={styles.workspace}>
           <Mapbox
             style={styles.map}
             direction={0}
@@ -283,7 +273,6 @@ var Home = React.createClass({
           <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={25} color="#000" underlayColor="#ccc" backgroundColor="transparent" style={styles.btnNavigate} />
           <Text style={{fontWeight: 'bold', fontSize: 18, flex: 1, textAlign: 'center'}}></Text>
           <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} iconStyle={commonStyles.iconButton} style={this.state.paceButtonStyle}><Text>State</Text></Icon.Button>
-          <Text>&nbsp;</Text>
         </View>
       </View>
     );
