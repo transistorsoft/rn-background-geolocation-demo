@@ -1,6 +1,6 @@
 {
   "name": "RNBackgroundGeolocationSample",
-  "version": "0.1.2",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "start": "node_modules/react-native/packager/packager.sh"
