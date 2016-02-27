@@ -5,48 +5,24 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 
 import com.facebook.react.LifecycleState;
+import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactInstanceManager;
+import com.facebook.react.ReactPackage;
 import com.facebook.react.ReactRootView;
-import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
-import com.facebook.soloader.SoLoader;
 
 import com.transistorsoft.rnbackgroundgeolocation.*;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.rota.rngmaps.RNGMapsPackage;
 import com.learnium.RNDeviceInfo.*;
 
-public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
+import java.util.Arrays;
+import java.util.List;
+
+public class MainActivity extends ReactActivity {
 
     private ReactInstanceManager mReactInstanceManager;
     private ReactRootView mReactRootView;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mReactRootView = new ReactRootView(this);
-
-        mReactInstanceManager = ReactInstanceManager.builder()
-                .setApplication(getApplication())
-                .setBundleAssetName("index.android.bundle")
-                .setJSMainModuleName("index.android")
-                .addPackage(new MainReactPackage(),
-        new ReactNativeMapboxGLPackage(),
-        new RNDeviceInfo())
-                
-                .addPackage(new RNBackgroundGeolocation(this))  // <-- for background-geolocation
-                .addPackage(new VectorIconsPackage())   // react-native-vector-icons
-                .addPackage(new RNGMapsPackage())       // react-native-gmaps
-                .addPackage(new RNDeviceInfo())         // react-native-device-info
-
-                .setUseDeveloperSupport(BuildConfig.DEBUG)
-                .setInitialLifecycleState(LifecycleState.RESUMED)
-                .build();
-
-        mReactRootView.startReactApplication(mReactInstanceManager, "RNBackgroundGeolocationSample", null);
-
-        setContentView(mReactRootView);
-    }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
@@ -87,5 +63,38 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
         if (mReactInstanceManager != null) {
             mReactInstanceManager.onResume(this, this);
         }
+    }
+
+    /**
+     * Returns the name of the main component registered from JavaScript.
+     * This is used to schedule rendering of the component.
+     */
+    @Override
+    protected String getMainComponentName() {
+        return "RNBackgroundGeolocationSample";
+    }
+
+    /**
+     * Returns whether dev mode should be enabled.
+     * This enables e.g. the dev menu.
+     */
+    @Override
+    protected boolean getUseDeveloperSupport() {
+        return BuildConfig.DEBUG;
+    }
+
+    /**
+     * A list of packages used by the app. If the app uses additional views
+     * or modules besides the default ones, add more packages here.
+     */
+    @Override
+    protected List<ReactPackage> getPackages() {
+        return Arrays.<ReactPackage>asList(
+                new RNBackgroundGeolocation(this),      // <-- for background-geolocation
+                new VectorIconsPackage(),               // react-native-vector-icons
+                new RNGMapsPackage(),                   // react-native-gmaps
+                new RNDeviceInfo(),                     // react-native-device-info
+                new MainReactPackage()
+        );
     }
 }
