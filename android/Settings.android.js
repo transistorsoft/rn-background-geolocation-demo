@@ -32,7 +32,6 @@ var SettingsContainer = React.createClass({
     this.props.drawer.close();
   },
   onClickSettingDone: function() {
-    debugger;
     this.refs.drawer.close();
   },
   onSelectSetting: function(setting) {
@@ -44,7 +43,6 @@ var SettingsContainer = React.createClass({
             <Icon.Button name="chevron-left" onPress={this.onClickSettingDone} iconStyle={commonStyles.backButtonIcon} backgroundColor="transparent" size={30} color="#4f8ef7" underlayColor={"transparent"}><Text style={commonStyles.backButtonText}>Back</Text></Icon.Button>
             <Text style={commonStyles.toolbarTitle}>{setting.name}</Text>
             <Text style={{width: 60}}>&nbsp;</Text>
-            <Icon.Button name="android-done" onPress={this.onClickSettingsDone} color="#000000" size={25} backgroundColor="transparent" iconStyle={[commonStyles.iconButton, styles.doneButton]}/>
           </View>
           <SettingDetail setting={setting} onSelectValue={this.onSelectValue} />
         </View>

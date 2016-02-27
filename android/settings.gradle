@@ -2,9 +2,9 @@ rootProject.name = 'RNBackgroundGeolocationSample'
 
 include ':app'
 
+
 include ':RNBackgroundGeolocation'
 project(':RNBackgroundGeolocation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-background-geolocation-android/android')
-
 
 include ':react-native-vector-icons'
 project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
@@ -14,7 +14,6 @@ project(':react-native-gmaps').projectDir = new File(rootProject.projectDir, '..
 
 include ':RNDeviceInfo'
 project(':RNDeviceInfo').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')
-include ':react-native-device-info'
-project(':react-native-device-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')
+
 include ':react-native-mapbox-gl'
 project(':react-native-mapbox-gl').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-mapbox-gl/android')

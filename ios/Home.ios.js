@@ -66,15 +66,11 @@ var Home = React.createClass({
     // location event
     this.locationManager.on("location", function(location) {
       
-      console.log('- location: ', JSON.stringify(location));
+      console.log('- location: ', JSON.stringify(location, null, 2));
       if (location.sample) {
         console.log('<sample location>');
         return;
       }
-      // get odometer.
-      me.locationManager.getOdometer(function(distance) {
-        console.log('- odometer: ', distance);
-      });
       me.addMarker(location);
       me.setCenter(location);
     });
@@ -93,7 +89,7 @@ var Home = React.createClass({
     });
     // motionchange event
     this.locationManager.on("motionchange", function(event) {
-      console.log("- motionchange", JSON.stringify(event));
+      console.log("- motionchange", JSON.stringify(event, null, 2));
       me.updatePaceButtonStyle()
     });
 
