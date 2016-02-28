@@ -58,14 +58,12 @@ var Home = React.createClass({
     // location event
     this.locationManager.on("location", function(location) {
       console.log('- location: ', JSON.stringify(location));
-      me.locationManager.getOdometer(function(distance) {
-        me.setState({
-          odometer: (distance/1000).toFixed(1)
-        });
-      });
       me.setCenter(location);
-
       gmap.addMarker(me._createMarker(location));
+
+      me.setState({
+        odometer: (location.odometer/1000).toFixed(1)
+      });
 
       // Add a point to our tracking polyline
       if (me.polyline) {
@@ -88,7 +86,7 @@ var Home = React.createClass({
     // motionchange event
     this.locationManager.on("motionchange", function(event) {
       console.log("- motionchange", JSON.stringify(event));
-      me.updatePaceButtonStyle()
+      me.updatePaceButtonStyle();
     });
 
     // getGeofences
