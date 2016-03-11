@@ -26,7 +26,9 @@ import com.android.build.OutputFile
  *
  *   // whether to bundle JS and assets in another build variant (if configured).
  *   // See http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Build-Variants
- *   // The configuration property is in the format 'bundleIn${productFlavor}${buildType}'
+ *   // The configuration property can be in the following formats
+ *   //         'bundleIn${productFlavor}${buildType}'
+ *   //         'bundleIn${buildType}'
  *   // bundleInFreeDebug: true,
  *   // bundleInPaidRelease: true,
  *   // bundleInBeta: true,
@@ -72,26 +74,11 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = true
+def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
-
-    signingConfigs {
-        release {
-            /**
-            * My signing configs for publishing SampleApp to play store.  You won't need this
-            *
-            storeFile file(RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE)
-            storePassword RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_STORE_PASSWORD
-            keyAlias RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_KEY_ALIAS
-            keyPassword RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_KEY_PASSWORD
-            *
-            *
-            */
-        }
-    }
 
     defaultConfig {
         applicationId "com.transistorsoft.rnbackgroundgeolocationsample"
@@ -105,9 +92,9 @@ android {
     }
     splits {
         abi {
-            enable enableSeparateBuildPerCPUArchitecture
-            universalApk false  // Also generate an universal APK
             reset()
+            enable enableSeparateBuildPerCPUArchitecture
+            universalApk false  // If true, also generate a universal APK
             include "armeabi-v7a", "x86"
         }
     }
@@ -115,7 +102,6 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release
@@ -146,6 +132,6 @@ dependencies {
     compile project(':react-native-vector-icons')
     compile project(':react-native-gmaps')
     compile project(':RNDeviceInfo')
-    compile "com.android.support:appcompat-v7:23.1.1"
-    compile "com.facebook.react:react-native:0.19.+"
+    compile "com.android.support:appcompat-v7:23.0.1"
+    compile "com.facebook.react:react-native:+"  // From node_modules
 }

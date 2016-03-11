@@ -24,47 +24,6 @@ public class MainActivity extends ReactActivity {
     private ReactInstanceManager mReactInstanceManager;
     private ReactRootView mReactRootView;
 
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_MENU && mReactInstanceManager != null) {
-            mReactInstanceManager.showDevOptionsDialog();
-            return true;
-        }
-        return super.onKeyUp(keyCode, event);
-    }
-
-    @Override
-    public void onBackPressed() {
-      if (mReactInstanceManager != null) {
-        mReactInstanceManager.onBackPressed();
-      } else {
-        super.onBackPressed();
-      }
-    }
-
-    @Override
-    public void invokeDefaultOnBackPressed() {
-      super.onBackPressed();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        if (mReactInstanceManager != null) {
-            mReactInstanceManager.onPause();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (mReactInstanceManager != null) {
-            mReactInstanceManager.onResume(this, this);
-        }
-    }
-
     /**
      * Returns the name of the main component registered from JavaScript.
      * This is used to schedule rendering of the component.
