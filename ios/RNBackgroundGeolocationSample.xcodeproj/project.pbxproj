@@ -30,8 +30,8 @@
 		835035F01C823A13000DE4BA /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 835035EF1C823A0D000DE4BA /* libRNVectorIcons.a */; };
 		835035F21C823A83000DE4BA /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 835035F11C823A83000DE4BA /* Fonts */; };
 		835035FF1C82543E000DE4BA /* libRNBackgroundGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 835035E11C823997000DE4BA /* libRNBackgroundGeolocation.a */; };
-		835036401C825917000DE4BA /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8350363F1C825917000DE4BA /* TSLocationManager.framework */; };
-		835036411C825917000DE4BA /* TSLocationManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8350363F1C825917000DE4BA /* TSLocationManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		835037011C8EA0B2000DE4BA /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835037001C8EA0B2000DE4BA /* TSLocationManager.framework */; };
+		835037021C8EA0B2000DE4BA /* TSLocationManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 835037001C8EA0B2000DE4BA /* TSLocationManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,7 +163,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				835036411C825917000DE4BA /* TSLocationManager.framework in Embed Frameworks */,
+				835037021C8EA0B2000DE4BA /* TSLocationManager.framework in Embed Frameworks */,
 				835035D01C8238C0000DE4BA /* Mapbox.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -200,7 +200,7 @@
 		835035E81C8239CC000DE4BA /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		835035EA1C823A0D000DE4BA /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		835035F11C823A83000DE4BA /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
-		8350363F1C825917000DE4BA /* TSLocationManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TSLocationManager.framework; sourceTree = "<group>"; };
+		835037001C8EA0B2000DE4BA /* TSLocationManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TSLocationManager.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,7 +224,7 @@
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
-				835036401C825917000DE4BA /* TSLocationManager.framework in Frameworks */,
+				835037011C8EA0B2000DE4BA /* TSLocationManager.framework in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
@@ -407,7 +407,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				8350363F1C825917000DE4BA /* TSLocationManager.framework */,
+				835037001C8EA0B2000DE4BA /* TSLocationManager.framework */,
 				835035F11C823A83000DE4BA /* Fonts */,
 				835035E81C8239CC000DE4BA /* libsqlite3.tbd */,
 				835035CE1C8238C0000DE4BA /* Mapbox.framework */,
