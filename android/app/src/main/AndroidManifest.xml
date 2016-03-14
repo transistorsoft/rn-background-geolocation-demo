@@ -16,6 +16,7 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
       <!-- background-location 1 of 2 -->
       <service android:name="com.transistorsoft.locationmanager.BackgroundGeolocationService" />

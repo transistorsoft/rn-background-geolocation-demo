@@ -16,8 +16,8 @@ var BackgroundGeolocation = require('react-native-background-geolocation');
 
 global.bgGeo = BackgroundGeolocation;
 
-var Home                  = require('./ios/Home.ios');
-var Settings              = require('./ios/Settings.ios');
+var Home                  = require('./ios/components/Home.ios');
+var Settings              = require('./ios/components/Settings.ios');
 
 var Application = React.createClass({
   getInitialState: function() {

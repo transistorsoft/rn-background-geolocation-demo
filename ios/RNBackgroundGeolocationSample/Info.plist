@@ -28,7 +28,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>App requires background location tracking</string>
+	<string>Background location tracking required.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Fonts/Ionicons.ttf</string>
