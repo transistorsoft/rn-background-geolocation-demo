@@ -29,7 +29,7 @@ var styles = StyleSheet.create({
   bottomToolbar: {
   	paddingLeft: 5,
     paddingRight: 5,
-    backgroundColor: '#efefef',
+    backgroundColor: '#eee',
     borderTopColor: '#d6d6d6',
     borderTopWidth: 1,
     alignSelf: 'stretch',
@@ -50,7 +50,7 @@ var styles = StyleSheet.create({
     
   },
   backButtonIcon: {
-  	marginRight: -10
+  	//marginRight: 
   },
   backButtonText: {
   	fontSize: 18,

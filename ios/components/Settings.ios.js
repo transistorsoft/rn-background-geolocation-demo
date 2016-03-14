@@ -12,11 +12,11 @@ var {
 var Drawer                = require('react-native-drawer')
 var Icon                  = require('react-native-vector-icons/Ionicons');
 
-var Settings              = require('../Settings.js');
-var SettingsService       = require('../SettingsService');
-var SettingDetail         = require('../SettingDetail');
-var commonStyles          = require('../styles');
-var config                = require('../config');
+var Settings              = require('../../components/Settings.js');
+var SettingsService       = require('../../components/SettingsService');
+var SettingDetail         = require('../../components/SettingDetail');
+var commonStyles          = require('../../components/styles');
+var config                = require('../../components/config');
 
 
 var styles = StyleSheet.create({

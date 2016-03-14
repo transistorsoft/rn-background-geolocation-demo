@@ -14,8 +14,8 @@ var BackgroundGeolocation = require('react-native-background-geolocation-android
 global.bgGeo = BackgroundGeolocation;
 
 
-var Home                  = require('./android/Home.android');
-var Settings              = require('./android/Settings.android');
+var Home                  = require('./android/components/Home.android');
+var Settings              = require('./android/components/Settings.android');
 
 var Application = React.createClass({
   getInitialState: function() {
