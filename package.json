@@ -1,13 +1,13 @@
 {
   "name": "RNBackgroundGeolocationSample",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "scripts": {
     "start": "node_modules/react-native/packager/packager.sh"
   },
   "dependencies": {
     "react-native": "^0.21.0",
-    "react-native-background-geolocation": "^0.4.3",
+    "react-native-background-geolocation": "^0.4.4",
     "react-native-device-info": "^0.8.3",
     "react-native-drawer": "^1.16.7",
     "react-native-gmaps": "git+ssh://git@github.com/transistorsoft/react-native-gmaps.git",
