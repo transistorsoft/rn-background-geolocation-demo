@@ -161,19 +161,9 @@ var Home = React.createClass({
     } else {
       this.locationManager.stop();
       this.locationManager.resetOdometer();
-      this.setState({
-        markers: [{}]
-      });
-      this.setState({
-        markers: []
-      });
-      if (this.polyline) {
-        this.polyline.remove(function(result) {
-          me.polyline = undefined;
-        });
-      }
+      this.removeAllAnnotations(mapRef);
+      this.polyline = null;
     }
-
     this.setState({
       enabled: !this.state.enabled
     });
