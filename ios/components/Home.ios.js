@@ -121,8 +121,11 @@ var Home = React.createClass({
     });
   },
   addMarker :function(location) {
-    this.annotations.push(this.createMarker(location));
-    this.addAnnotations(mapRef, this.annotations);
+    this.addAnnotations(mapRef, [this.createMarker(location)]);
+    if (this.polyline) {
+      this.polyline.coordinates.push([location.coords.latitude, location.coords.longitude]);
+      this.updateAnnotation(mapRef, this.polyline);
+    }
   },
   createMarker: function(location) {
     return {
@@ -133,19 +136,16 @@ var Home = React.createClass({
       };
   },
   initializePolyline: function() {
-    console.log('#initializePolyline -- NO IMPLEMENTATION');
-    // Create our tracking Polyline
-    /*
-    var me = this;
-    Polyline.create({
-      points: [],
-      geodesic: true,
-      color: '#2677FF',
-      width: 12
-    }, function(polyline) {
-      me.polyline = polyline;
-    });
-    */
+    this.polyline = {
+      type: "polyline",
+      coordinates: [],
+      title: "Route",
+      strokeColor: '#2677FF',
+      strokeWidth: 5,
+      strokeAlpha: 0.5,
+      id: "route"
+    };
+    this.addAnnotations(mapRef, [this.polyline]);
   },
 
   onClickMenu: function() {
