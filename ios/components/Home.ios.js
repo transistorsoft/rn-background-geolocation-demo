@@ -66,6 +66,7 @@ var Home = React.createClass({
     // location event
     this.locationManager.on("location", function(location) {
       console.log('- location: ', JSON.stringify(location, null, 2));
+
       if (location.sample) {
         console.log('<sample location>');
         return;
@@ -81,6 +82,7 @@ var Home = React.createClass({
     // geofence event
     this.locationManager.on("geofence", function(geofence) {
       console.log('- onGeofence: ', JSON.stringify(geofence));
+      me.locationManager.removeGeofence(geofence.identifier);
     });
     // error event
     this.locationManager.on("error", function(error) {
@@ -159,6 +161,7 @@ var Home = React.createClass({
         me.initializePolyline();
       });
     } else {
+      this.locationManager.removeGeofences();
       this.locationManager.stop();
       this.locationManager.resetOdometer();
       this.removeAllAnnotations(mapRef);

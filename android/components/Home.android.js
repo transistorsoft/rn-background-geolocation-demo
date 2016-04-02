@@ -78,6 +78,9 @@ var Home = React.createClass({
     // geofence event
     this.locationManager.on("geofence", function(geofence) {
       console.log('- onGeofence: ', JSON.stringify(geofence));
+      me.locationManager.removeGeofence(geofence.identifier, function() {
+        console.log('- Remove geofence success');
+      });
     });
     // error event
     this.locationManager.on("error", function(error) {
@@ -98,7 +101,7 @@ var Home = React.createClass({
   
     SettingsService.getValues(function(values) {
       values.license = "686053fd88dcd5df60b56c5690e990a176a0fb2be3ab9c8953e4a2cc09ba7179";
-      values.stopTimeout = 0;
+      values.foregroundService = true;
       //values.url = 'http://192.168.11.120:8080/locations';
       
       me.locationManager.configure(values, function(state) {
@@ -155,7 +158,9 @@ var Home = React.createClass({
       });
     } else {
       this.locationManager.resetOdometer();
+      this.locationManager.removeGeofences();
       this.locationManager.stop();
+
       this.setState({
         markers: [{}],
         odometer: 0

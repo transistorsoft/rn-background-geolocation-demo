@@ -31,6 +31,7 @@
 		8350375F1C9631F4000DE4BA /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8350375E1C9631F4000DE4BA /* Mapbox.framework */; };
 		835037601C9631F4000DE4BA /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8350375E1C9631F4000DE4BA /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		835038811C9CA4F4000DE4BA /* libRNBackgroundGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 835038181C9B4A81000DE4BA /* libRNBackgroundGeolocation.a */; };
+		8359A6E61CA58BA6008F13B7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8359A6E51CA58BA6008F13B7 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -214,6 +215,7 @@
 		8350375E1C9631F4000DE4BA /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		835038121C9B4A81000DE4BA /* RNBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundGeolocation.xcodeproj; path = "../node_modules/react-native-background-geolocation/RNBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		835038751C9CA352000DE4BA /* RNBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundGeolocation.xcodeproj; path = "../node_modules/react-native-background-geolocation/RNBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
+		8359A6E51CA58BA6008F13B7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +230,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8359A6E61CA58BA6008F13B7 /* SystemConfiguration.framework in Frameworks */,
 				833770A61C9DA17A00347777 /* TSLocationManager.framework in Frameworks */,
 				835038811C9CA4F4000DE4BA /* libRNBackgroundGeolocation.a in Frameworks */,
 				8350375D1C962ECA000DE4BA /* libsqlite3.tbd in Frameworks */,
@@ -429,6 +432,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				8359A6E51CA58BA6008F13B7 /* SystemConfiguration.framework */,
 				833770A51C9DA17A00347777 /* TSLocationManager.framework */,
 				8350375E1C9631F4000DE4BA /* Mapbox.framework */,
 				835038121C9B4A81000DE4BA /* RNBackgroundGeolocation.xcodeproj */,
