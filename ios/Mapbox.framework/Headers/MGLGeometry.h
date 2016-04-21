@@ -72,8 +72,7 @@ NS_INLINE MGLCoordinateBounds MGLCoordinateBoundsOffset(MGLCoordinateBounds boun
 }
 
 /** Returns `YES` if the coordinate bounds covers no area.
-
-    Note that a bounds may be empty but have a non-zero coordinate span (e.g., when its northeast point lies due north of its southwest point). */
+  Note that a bounds may be empty but have a non-zero coordinate span (e.g., when its northeast point lies due north of its southwest point). */
 NS_INLINE BOOL MGLCoordinateBoundsIsEmpty(MGLCoordinateBounds bounds) {
     MGLCoordinateSpan span = MGLCoordinateBoundsGetCoordinateSpan(bounds);
     return span.latitudeDelta == 0 || span.longitudeDelta == 0;
@@ -81,7 +80,7 @@ NS_INLINE BOOL MGLCoordinateBoundsIsEmpty(MGLCoordinateBounds bounds) {
 
 /** Returns a formatted string for the given coordinate bounds. */
 NS_INLINE NSString *MGLStringFromCoordinateBounds(MGLCoordinateBounds bounds) {
-    return [NSString stringWithFormat:@"{{%.1f, %.1f}, {%.1f, %.1f}}",
+    return [NSString stringWithFormat:@"{ sw = {%.1f, %.1f}, ne = {%.1f, %.1f}}",
             bounds.sw.latitude, bounds.sw.longitude,
             bounds.ne.latitude, bounds.ne.longitude];
 }

@@ -8,12 +8,21 @@
     #define nullable
     #define nonnull
     #define null_resettable
+    #define _Nullable
+    #define _Nonnull
 #endif
 
 NS_ASSUME_NONNULL_BEGIN
 
 /** Indicates an error occurred in the Mapbox SDK. */
 extern NSString * const MGLErrorDomain;
+
+typedef NS_ENUM(NSInteger, MGLErrorCode) {
+    MGLErrorCodeUnknown = -1,
+    MGLErrorCodeNotFound = 1,
+    MGLErrorCodeBadServerResponse = 2,
+    MGLErrorCodeConnectionFailed = 3,
+};
 
 /** The mode used to track the user location on the map. */
 typedef NS_ENUM(NSUInteger, MGLUserTrackingMode) {
