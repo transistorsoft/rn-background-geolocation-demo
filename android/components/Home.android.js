@@ -58,6 +58,10 @@ var Home = React.createClass({
     // location event
     this.locationManager.on("location", function(location) {
       console.log('- location: ', JSON.stringify(location));
+      me.locationManager.getCount(function(count) {
+        console.log('- count: ', count);
+      });
+
       me.setCenter(location);
       gmap.addMarker(me._createMarker(location));
 
@@ -82,6 +86,11 @@ var Home = React.createClass({
         console.log('- Remove geofence success');
       });
     });
+    // heartbeat event
+    this.locationManager.on("heartbeat", function(params) {
+      console.log("- heartbeat: ", params.location);
+    });
+
     // error event
     this.locationManager.on("error", function(error) {
       console.log('- ERROR: ', JSON.stringify(error));
@@ -91,21 +100,47 @@ var Home = React.createClass({
       console.log("- motionchange", JSON.stringify(event));
       me.updatePaceButtonStyle();
     });
-
+    // schedule event
+    this.locationManager.on("schedule", function(state) {
+      console.log("- schedule", state.enabled, state);
+      me.setState({
+        enabled: state.enabled
+      });
+      me.updatePaceButtonStyle();
+    });
     // getGeofences
     this.locationManager.getGeofences(function(rs) {
       console.log('- getGeofences: ', JSON.stringify(rs));
     }, function(error) {
       console.log("- getGeofences ERROR", error);
     });
-  
+    
+
     SettingsService.getValues(function(values) {
       values.license = "686053fd88dcd5df60b56c5690e990a176a0fb2be3ab9c8953e4a2cc09ba7179";
-      values.foregroundService = true;
-      //values.url = 'http://192.168.11.120:8080/locations';
+      values.stopOnTerminate = false;
       
+      // OPTIONAL:  Optionally generate a test schedule here.
+      //  1: how many schedules?
+      //  2: delay (minutes) from now to start generating schedules
+      //  3: schedule duration (minutes); how long to stay ON.
+      //  4: OFF time between (minutes) generated schedule events.
+      //
+      // UNCOMMENT TO AUTO-GENERATE A SERIES OF SCHEDULE EVENTS BASED UPON CURRENT TIME:
+      // values.schedule = SettingsService.generateSchedule(24, 1, 30, 30);
+
+      //values.url = 'http://192.168.11.120:8080/locations';
+
       me.locationManager.configure(values, function(state) {
         console.log('- configure state: ', state);
+        
+        // Start the scheduler if configured with one.
+        if (state.schedule) {
+          me.locationManager.startSchedule(function() {
+            console.info('- Scheduler started');
+          });
+        }
+
         me.setState({
           enabled: state.enabled
         });
@@ -193,10 +228,6 @@ var Home = React.createClass({
   onClickLocate: function() {
     var me = this;
 
-    this.locationManager.getState(function(state) {
-      console.log('state: ', state);
-    });
-    
     this.locationManager.getCurrentPosition({timeout: 30}, function(location) {
       me.setCenter(location);
       console.log('- current position: ', JSON.stringify(location));

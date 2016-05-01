@@ -96,6 +96,20 @@ var Home = React.createClass({
       });
       me.updatePaceButtonStyle()
     });
+    // heartbeat event
+    this.locationManager.on("heartbeat", function(params) {
+      console.log("- heartbeat: ", params.location);
+    });
+    // schedule event
+    // heartbeat event
+    this.locationManager.on("schedule", function(state) {
+      console.log("- schedule fired: ", state.enabled, state);
+      me.setState({
+        isMoving: state.isMoving,
+        enabled: state.enabled
+      });
+      me.updatePaceButtonStyle();
+    });
 
     // getGeofences
     this.locationManager.getGeofences(function(rs) {
@@ -104,9 +118,19 @@ var Home = React.createClass({
       console.log("- getGeofences ERROR", error);
     });
 
+    // Fetch settings and configure.
     SettingsService.getValues(function(values) {
+
+      values.schedule = SettingsService.generateSchedule(24, 1, 1, 1);
+
+      // Configure BackgroundGeolocaiton!
       me.locationManager.configure(values, function(state) {
         console.log('- configure, current state: ', state);
+
+        me.locationManager.startSchedule(function() {
+          console.log('- Schedule start success');
+        });
+
         me.setState({
           enabled: state.enabled
         });
