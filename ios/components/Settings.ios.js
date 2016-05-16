@@ -1,35 +1,41 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, { Component } from 'react';
+import {
   StyleSheet,
   Text,
   View,
   AlertIOS,
   SwitchIOS
-} = React;
+ } from 'react-native';
 
-var Drawer                = require('react-native-drawer')
-var Icon                  = require('react-native-vector-icons/Ionicons');
+import Drawer from 'react-native-drawer';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-var Settings              = require('../../components/Settings.js');
-var SettingsService       = require('../../components/SettingsService');
-var SettingDetail         = require('../../components/SettingDetail');
-var commonStyles          = require('../../components/styles');
-var config                = require('../../components/config');
+import Settings from '../../components/Settings.js';
+import SettingsService from '../../components/SettingsService';
+import SettingDetail from '../../components/SettingDetail';
+import commonStyles from '../../components/styles';
+import config from '../../components/config';
 
 
 var styles = StyleSheet.create({
   backButtonText: {
     marginBottom: 3
+  },
+  toolbarButton: {
+    width: 100
+  },
+  red: {
+    color: '#EF473A'
   }
 });
 
 var SettingsContainer = React.createClass({
   locationManager: undefined,
   icons: {
-    syncButton: 'android-upload',
-    spinner: 'load-d'
+    syncButton: 'ios-cloud-upload',
+    spinner: 'ios-load-d'
   },
 
   getInitialState: function() {
@@ -94,9 +100,11 @@ var SettingsContainer = React.createClass({
     var me = this,
         locationManager = this.locationManager;
 
+    /*
     this.setState({
       syncButtonIcon: this.icons.spinner
     });
+    */
     locationManager.sync(function(rs) {
       console.log('- sync success');
       me.setState({
@@ -145,7 +153,6 @@ var SettingsContainer = React.createClass({
 
 	render: function() {
     return (
-
       <Drawer ref="drawer" side="right" content={this.state.settingDetailView}>
         <View style={commonStyles.container}>
           <View style={commonStyles.iosStatusBar} />
@@ -156,13 +163,12 @@ var SettingsContainer = React.createClass({
           </View>
           <Settings ref="settings" onSelectSetting={this.onSelectSetting} />
           <View style={commonStyles.bottomToolbar}>
-            <Icon.Button name="share" iconStyle={commonStyles.iconButton} onPress={this.onClickLogs}>Logs</Icon.Button>
+            <Icon.Button name="ios-share-alt" iconStyle={commonStyles.iconButton} style={{width:100}} onPress={this.onClickLogs}>Logs</Icon.Button>
             <View style={{flex: 1}} />
-            <Icon.Button name={this.state.syncButtonIcon} onPress={this.onClickSync} iconStyle={commonStyles.iconButton}>Sync</Icon.Button>            
+            <Icon.Button name={this.state.syncButtonIcon} onPress={this.onClickSync} style={commonStyles.redButton} iconStyle={commonStyles.iconButton}>Sync</Icon.Button>            
           </View>
         </View>
       </Drawer>
-
     );
   }
 });

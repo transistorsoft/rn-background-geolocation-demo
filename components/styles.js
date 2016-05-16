@@ -57,10 +57,12 @@ var styles = StyleSheet.create({
   	color: '#4f8ef7'
   },
   redButton: {
-    backgroundColor: '#D9534F'
+    backgroundColor: '#D9534F',
+    width: 100
   },
   greenButton: {
-    backgroundColor: '#5CB85C'
+    backgroundColor: '#5CB85C',
+    width: 100
   }
   
 });

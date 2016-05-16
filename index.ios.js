@@ -1,23 +1,23 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, { Component } from 'react';
+import {
   AppRegistry,
   StyleSheet,
   View,
   TouchableHighlight,
-  StatusBarIOS,
+  StatusBar,
   Text
-} = React;
+ } from 'react-native';
 
-var Drawer                = require('react-native-drawer');
-var Icon                  = require('react-native-vector-icons/Ionicons');
-var BackgroundGeolocation = require('react-native-background-geolocation');
+import Drawer from 'react-native-drawer';
+import Icon from 'react-native-vector-icons/Ionicons';
+import BackgroundGeolocation from 'react-native-background-geolocation';
 
 global.bgGeo = BackgroundGeolocation;
 
-var Home                  = require('./ios/components/Home.ios');
-var Settings              = require('./ios/components/Settings.ios');
+import Home from './ios/components/Home.ios';
+import Settings from './ios/components/Settings.ios';
 
 var Application = React.createClass({
   getInitialState: function() {
@@ -27,7 +27,7 @@ var Application = React.createClass({
   },
   componentDidMount: function() {
     var me = this;
-    StatusBarIOS.setStyle('default');
+    StatusBar.setBarStyle('default');
     this.setState({
       drawer: this.refs.drawer
     });

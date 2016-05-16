@@ -1,23 +1,26 @@
 'use strict';
 
-var React = require('react-native');
-var {
+
+import SettingDetail from '../../components/SettingDetail';
+
+import React, { Component } from 'react';
+import {
   StyleSheet,
   Text,
   View,
   SwitchIOS
-} = React;
+ } from 'react-native';
 
-var Mapbox                = require('react-native-mapbox-gl');
+import Mapbox from 'react-native-mapbox-gl';
 
 var mapRef = 'mapRef';
 
 
 //var RNGMap                = require('react-native-gmaps');
 //var Polyline              = require('react-native-gmaps/Polyline');
-var Icon                  = require('react-native-vector-icons/Ionicons');
-var SettingsService       = require('../../components/SettingsService');
-var commonStyles          = require('../../components/styles');
+import Icon from 'react-native-vector-icons/Ionicons';
+import SettingsService from '../../components/SettingsService';
+import commonStyles from '../../components/styles';
 
 var styles = StyleSheet.create({
   workspace: {
@@ -42,8 +45,8 @@ var Home = React.createClass({
       enabled: false,
       isMoving: false,
       paceButtonStyle: commonStyles.disabledButton,
-      paceButtonIcon: 'play',
-      navigateButtonIcon: 'navigate',
+      paceButtonIcon: 'md-play',
+      navigateButtonIcon: 'md-locate',
       mapHeight: 280,
       mapWidth: 300,
       zoom: 10,
@@ -121,8 +124,8 @@ var Home = React.createClass({
     // Fetch settings and configure.
     SettingsService.getValues(function(values) {
 
-      values.schedule = SettingsService.generateSchedule(24, 1, 1, 1);
-
+      //values.schedule = SettingsService.generateSchedule(24, 1, 1, 1);
+      
       // Configure BackgroundGeolocaiton!
       me.locationManager.configure(values, function(state) {
         console.log('- configure, current state: ', state);
@@ -233,7 +236,7 @@ var Home = React.createClass({
     }
     this.setState({
       paceButtonStyle: style,
-      paceButtonIcon: (this.state.enabled && this.state.isMoving) ? 'pause' : 'play'
+      paceButtonIcon: (this.state.enabled && this.state.isMoving) ? 'md-pause' : 'md-play'
     });
   },
   // MapBox
@@ -258,7 +261,7 @@ var Home = React.createClass({
       <View style={commonStyles.container}>
         <View style={commonStyles.iosStatusBar} />
         <View style={commonStyles.topToolbar}>
-          <Icon.Button name="ios-settings" onPress={this.onClickMenu} backgroundColor="transparent" size={30} color="#000" style={styles.btnMenu} underlayColor={"transparent"} />
+          <Icon.Button name="ios-options" onPress={this.onClickMenu} backgroundColor="transparent" size={30} color="#000" style={styles.btnMenu} underlayColor={"transparent"} />
           <Text style={commonStyles.toolbarTitle}>Background Geolocation</Text>
           <SwitchIOS onValueChange={this.onClickEnable} value={this.state.enabled} />
         </View>
@@ -285,7 +288,7 @@ var Home = React.createClass({
         </View>
 
         <View style={commonStyles.bottomToolbar}>
-          <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={25} color="#000" underlayColor="#ccc" backgroundColor="transparent" style={styles.btnNavigate} />
+          <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={30} color="#000" underlayColor="#ccc" backgroundColor="#eee" style={styles.btnNavigate} />
           <Text style={{fontWeight: 'bold', fontSize: 18, flex: 1, textAlign: 'center'}}></Text>
           <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} iconStyle={commonStyles.iconButton} style={this.state.paceButtonStyle}><Text>State</Text></Icon.Button>
         </View>

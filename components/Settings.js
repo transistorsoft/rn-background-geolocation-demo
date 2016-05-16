@@ -1,21 +1,20 @@
 'use strict';
  
-var React = require('react-native');
-var Icon = require('react-native-vector-icons/Ionicons');
-var SettingDetail = require('./SettingDetail');
+import Icon from 'react-native-vector-icons/Ionicons';
+import SettingDetail from './SettingDetail';
 
-var {
-    StyleSheet,
-    Text,
-    View,
-    Component,
-    ListView,
-    ScrollView,
-    Navigator,
-    TouchableHighlight,
-    AsyncStorage,
-    SettingsService
-   } = React;
+import React, { Component } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ListView,
+  ScrollView,
+  Navigator,
+  TouchableHighlight,
+  AsyncStorage,
+  SettingsService
+ } from 'react-native';
 
 var styles = StyleSheet.create({
     container: {
@@ -66,7 +65,7 @@ var styles = StyleSheet.create({
     disclosure: {
       position: 'absolute',
       right: -10,
-      top: 3
+      top: 0
     }
 });
  
@@ -98,7 +97,7 @@ var Settings = React.createClass({
         sectionHeaderHasChanged: (s1, s2) => s1 !== s2
       });
 
-      var sections  = ['geolocation', 'activity recognition', 'application', 'http'],
+      var sections  = ['geolocation', 'activity recognition', 'application', 'persistence', 'http'],
           sectionIds = [],
           rowIds    = [],
           dataBlob  = {};
@@ -167,7 +166,7 @@ var Settings = React.createClass({
             </View>
             <View style={styles.rightContainer}>
               <Text style={styles.value}>{this.settingsService.get(setting.name).toString()}</Text>
-              <Icon name="chevron-right" size={16} color="#4f8ef7" style={styles.disclosure} />
+              <Icon name="ios-arrow-forward" size={22} color="#4f8ef7" style={styles.disclosure} />
             </View>
           </View>
           <View style={styles.separator} />
