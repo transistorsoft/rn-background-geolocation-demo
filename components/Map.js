@@ -1,15 +1,7 @@
 'use strict';
 
-var React                 = require('react-native');
-var Icon                  = require('react-native-vector-icons/Ionicons');
-var BackgroundGeolocation = require('react-native-background-geolocation');
-var SettingsService       = require('./SettingsService');
-
-SettingsService.init('iOS');
-
-var mapRef = 'mapRef';
-
-var {
+import React, { Component } from 'react';
+import {
   AsyncStorage,
   StyleSheet,
   MapView,
@@ -21,7 +13,15 @@ var {
   Navigator,
   NavButton,
   TouchableHighlight
-} = React;
+ } from 'react-native';
+
+import Icon from 'react-native-vector-icons/Ionicons';
+import BackgroundGeolocation from 'react-native-background-geolocation';
+import SettingsService from './SettingsService';
+
+SettingsService.init('iOS');
+
+var mapRef = 'mapRef';
 
 var Map = React.createClass({
   
@@ -48,7 +48,7 @@ var Map = React.createClass({
 
     // Fetch bg-geo settings.
     SettingsService.getValues(function(values) {
-
+      values.url = 'http://192.168.11.120:8080';
       // Configure Background Geolocation.
       me.bgGeo.configure(values);
 

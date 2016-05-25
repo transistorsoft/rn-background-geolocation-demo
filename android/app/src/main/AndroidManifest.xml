@@ -22,7 +22,7 @@
       <service android:name="com.transistorsoft.locationmanager.BackgroundGeolocationService" />
       <service android:name="com.transistorsoft.locationmanager.LocationService" />
       <service android:name="com.transistorsoft.locationmanager.ActivityRecognitionService" />
-      <service android:name="com.transistorsoft.locationmanager.GeofenceService" />
+      <service android:name="com.transistorsoft.locationmanager.geofence.GeofenceService" />
         <service android:name="com.transistorsoft.locationmanager.scheduler.ScheduleService" />
         <service android:name="com.transistorsoft.locationmanager.scheduler.ScheduleAlarmService" />
 

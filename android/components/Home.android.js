@@ -1,19 +1,18 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, { Component } from 'react';
+import {
   StyleSheet,
   Text,
   View,
   SwitchAndroid
-} = React;
+ } from 'react-native';
 
-var RNGMap                = require('react-native-gmaps');
-var Polyline              = require('react-native-gmaps/Polyline');
-var Icon                  = require('react-native-vector-icons/Ionicons');
-var SettingsService       = require('../../components/SettingsService');
-
-var commonStyles          = require('../../components/styles');
+import RNGMap from 'react-native-gmaps';
+import Polyline from 'react-native-gmaps/Polyline';
+import Icon from 'react-native-vector-icons/Ionicons';
+import SettingsService from '../../components/SettingsService';
+import commonStyles from '../../components/styles';
 
 var styles = StyleSheet.create({
   workspace: {
@@ -34,8 +33,8 @@ var Home = React.createClass({
       isMoving: false,
       odometer: 0,
       paceButtonStyle: commonStyles.disabledButton,
-      paceButtonIcon: 'play',
-      navigateButtonIcon: 'navigate',
+      paceButtonIcon: 'md-play',
+      navigateButtonIcon: 'md-locate',
       mapHeight: 300,
       mapWidth: 300,
       // mapbox
@@ -233,7 +232,7 @@ var Home = React.createClass({
       console.log('- current position: ', JSON.stringify(location));
     }, function(error) {
       console.error('ERROR: getCurrentPosition', error);
-      me.setState({navigateButtonIcon: 'navigate'});
+      me.setState({navigateButtonIcon: 'md-locate'});
     });
   },
   onRegionChange: function() {
@@ -241,7 +240,7 @@ var Home = React.createClass({
   },
   setCenter: function(location) {
     this.setState({
-      navigateButtonIcon: 'navigate',
+      navigateButtonIcon: 'md-locate',
       center: {
         lat: location.coords.latitude,
         lng: location.coords.longitude
@@ -267,14 +266,14 @@ var Home = React.createClass({
     }
     this.setState({
       paceButtonStyle: style,
-      paceButtonIcon: (this.state.enabled && this.state.isMoving) ? 'pause' : 'play'
+      paceButtonIcon: (this.state.enabled && this.state.isMoving) ? 'md-pause' : 'md-play'
     });
   },
   render: function() {
     return (
       <View style={commonStyles.container}>
         <View style={commonStyles.topToolbar}>
-          <Icon.Button name="android-options" onPress={this.onClickMenu} backgroundColor="transparent" size={30} color="#000" style={styles.btnMenu} underlayColor={"transparent"} />
+          <Icon.Button name="ios-options" onPress={this.onClickMenu} backgroundColor="transparent" size={30} color="#000" style={styles.btnMenu} underlayColor={"transparent"} />
           <Text style={commonStyles.toolbarTitle}>Background Geolocation</Text>
           <SwitchAndroid onValueChange={this.onClickEnable} value={this.state.enabled} />
         </View>

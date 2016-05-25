@@ -1,8 +1,5 @@
 'use strict';
  
-import Icon from 'react-native-vector-icons/Ionicons';
-import SettingDetail from './SettingDetail';
-
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -15,6 +12,9 @@ import {
   AsyncStorage,
   SettingsService
  } from 'react-native';
+
+import Icon from 'react-native-vector-icons/Ionicons';
+import SettingDetail from './SettingDetail';
 
 var styles = StyleSheet.create({
     container: {

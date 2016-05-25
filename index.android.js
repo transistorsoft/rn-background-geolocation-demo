@@ -1,26 +1,28 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, { Component } from 'react';
+import {
   AppRegistry,
   StyleSheet,
+  View,
+  TouchableHighlight,
+  StatusBar,
   Text
-} = React;
+ } from 'react-native';
 
-var Drawer                = require('react-native-drawer');
-var Icon                  = require('react-native-vector-icons/Ionicons');
-var BackgroundGeolocation = require('react-native-background-geolocation-android');
+import Drawer from 'react-native-drawer';
+import Icon from 'react-native-vector-icons/Ionicons';
+import BackgroundGeolocation from 'react-native-background-geolocation-android';
 
 global.bgGeo = BackgroundGeolocation;
 
-
-var Home                  = require('./android/components/Home.android');
-var Settings              = require('./android/components/Settings.android');
+import Home from './android/components/Home.android';
+import Settings from './android/components/Settings.android';
 
 var Application = React.createClass({
   getInitialState: function() {
     return {
-      
+      drawer: undefined
     };
   },
 

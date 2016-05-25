@@ -1,29 +1,28 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, { Component } from 'react';
+import {
   StyleSheet,
   Text,
   View,
   TextInput,
   TouchableHighlight,
   SwitchAndroid
-} = React;
+ } from 'react-native';
 
-var Icon                  = require('react-native-vector-icons/Ionicons');
-var Drawer                = require('react-native-drawer')
-var BackgroundGeolocation = require('react-native-background-geolocation-android');
-var Modal                 = require('react-native-modalbox');
-
-var SettingsService       = require('../../components/SettingsService');
-var Settings              = require('../../components/Settings.js');
-var SettingDetail         = require('../../components/SettingDetail');
-var commonStyles          = require('../../components/styles');
-var config                = require('../../components/config');
+import Icon from 'react-native-vector-icons/Ionicons';
+import Drawer from 'react-native-drawer';
+import BackgroundGeolocation from 'react-native-background-geolocation-android';
+import Modal from 'react-native-modalbox';
+import SettingsService from '../../components/SettingsService';
+import Settings from '../../components/Settings.js';
+import SettingDetail from '../../components/SettingDetail';
+import commonStyles from '../../components/styles';
+import config from '../../components/config';
 
 var SettingsContainer = React.createClass({
   icons: {
-    syncButton: 'android-upload',
+    syncButton: 'ios-cloud-upload',
     spinner: 'load-d'
   },
 
@@ -80,7 +79,7 @@ var SettingsContainer = React.createClass({
       settingDetailView: (
         <View style={commonStyles.container}>
           <View style={commonStyles.topToolbar}>
-            <Icon.Button name="chevron-left" onPress={this.onClickSettingDone} iconStyle={commonStyles.backButtonIcon} backgroundColor="transparent" size={30} color="#4f8ef7" underlayColor={"transparent"}><Text>Back</Text></Icon.Button>
+            <Icon.Button name="ios-arrow-back" onPress={this.onClickSettingDone} iconStyle={commonStyles.backButtonIcon} backgroundColor="transparent" size={30} color="#4f8ef7" underlayColor={"transparent"}><Text>Back</Text></Icon.Button>
             <Text style={commonStyles.toolbarTitle}>{setting.name}</Text>
             <Text style={{width: 60}}>&nbsp;</Text>
           </View>
@@ -117,7 +116,7 @@ var SettingsContainer = React.createClass({
       <Drawer ref="drawer" side="right" content={this.state.settingDetailView}>
         <View style={commonStyles.container}>
           <View style={commonStyles.topToolbar}>
-            <Icon.Button name="chevron-left" onPress={this.onClickBack} iconStyle={commonStyles.backButtonIcon} backgroundColor="transparent" size={30} color="#4f8ef7" underlayColor={"transparent"}><Text style={commonStyles.backButtonText}>Back</Text></Icon.Button>
+            <Icon.Button name="ios-arrow-back" onPress={this.onClickBack} iconStyle={commonStyles.backButtonIcon} backgroundColor="transparent" size={30} color="#4f8ef7" underlayColor={"transparent"}><Text style={commonStyles.backButtonText}>Back</Text></Icon.Button>
             <Text style={commonStyles.toolbarTitle}>Settings</Text>
             <Text>Debug</Text>
             <SwitchAndroid onValueChange={this.onToggleDebug} value={this.state.debug} />
@@ -125,7 +124,7 @@ var SettingsContainer = React.createClass({
           <Settings ref="settings" onSelectSetting={this.onSelectSetting} />
 
           <View style={commonStyles.bottomToolbar}>
-            <Icon.Button name="share" onPress={this.onClickEmailLogs}><Text style={{color: "#fff"}}>Logs</Text></Icon.Button>
+            <Icon.Button name="ios-share-alt" onPress={this.onClickEmailLogs}><Text style={{color: "#fff"}}>Logs</Text></Icon.Button>
             <Text style={{flex: 1, textAlign: 'center'}}>&nbsp;</Text>
             <Icon.Button name={this.state.syncButtonIcon} onPress={this.onClickSync} iconStyle={commonStyles.iconButton} style={[styles.btnSync, commonStyles.redButton]}><Text style={{color: "#fff"}}>Sync</Text></Icon.Button>
           </View>        
