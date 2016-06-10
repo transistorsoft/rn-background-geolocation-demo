@@ -104,7 +104,6 @@ var Home = React.createClass({
       console.log("- heartbeat: ", params.location);
     });
     // schedule event
-    // heartbeat event
     this.locationManager.on("schedule", function(state) {
       console.log("- schedule fired: ", state.enabled, state);
       me.setState({
@@ -112,6 +111,10 @@ var Home = React.createClass({
         enabled: state.enabled
       });
       me.updatePaceButtonStyle();
+    });
+    // activitychange event
+    this.locationManager.on("activitychange", function(activityName) {
+      console.log("- activitychange fired: ", activityName);
     });
 
     // getGeofences
@@ -215,7 +218,13 @@ var Home = React.createClass({
       console.log('- state: ', state);
     });
 
-    this.locationManager.getCurrentPosition({timeout: 30}, function(location) {
+    this.locationManager.getCurrentPosition({
+      timeout: 10,
+      persist: false,
+      desiredAccuracy: 10,
+      samples: 5,
+      maximumAge: 5000
+    }, function(location) {
       me.setCenter(location);
       console.log('- current position: ', JSON.stringify(location));
     }, function(error) {

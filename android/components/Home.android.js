@@ -107,6 +107,11 @@ var Home = React.createClass({
       });
       me.updatePaceButtonStyle();
     });
+    // activitychange event
+    this.locationManager.on("activitychange", function(activityName) {
+      console.log('- activitychange: ', activityName);
+    });
+
     // getGeofences
     this.locationManager.getGeofences(function(rs) {
       console.log('- getGeofences: ', JSON.stringify(rs));
@@ -117,7 +122,6 @@ var Home = React.createClass({
 
     SettingsService.getValues(function(values) {
       values.license = "686053fd88dcd5df60b56c5690e990a176a0fb2be3ab9c8953e4a2cc09ba7179";
-      values.stopOnTerminate = false;
       
       // OPTIONAL:  Optionally generate a test schedule here.
       //  1: how many schedules?
@@ -134,7 +138,7 @@ var Home = React.createClass({
         console.log('- configure state: ', state);
         
         // Start the scheduler if configured with one.
-        if (state.schedule) {
+        if (state.schedulerEnabled) {
           me.locationManager.startSchedule(function() {
             console.info('- Scheduler started');
           });
@@ -227,7 +231,12 @@ var Home = React.createClass({
   onClickLocate: function() {
     var me = this;
 
-    this.locationManager.getCurrentPosition({timeout: 30}, function(location) {
+    this.locationManager.getCurrentPosition({
+      timeout: 30,
+      samples: 5,
+      desiredAccuracy: 5,
+      persist: false
+    }, function(location) {
       me.setCenter(location);
       console.log('- current position: ', JSON.stringify(location));
     }, function(error) {

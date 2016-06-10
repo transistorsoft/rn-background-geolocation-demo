@@ -8,7 +8,7 @@
   "dependencies": {
     "react-native": "^0.25.1",
     "react": "^0.14.5",
-    "react-native-background-geolocation": "^1.0.1",
+    "react-native-background-geolocation": "^1.1.0",
     "react-native-device-info": "^0.8.3",
     "react-native-drawer": "^2.2.2",
     "react-native-gmaps": "git+ssh://git@github.com/transistorsoft/react-native-gmaps.git",
