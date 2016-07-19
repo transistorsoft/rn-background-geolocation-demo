@@ -121,7 +121,7 @@ var Home = React.createClass({
     
 
     SettingsService.getValues(function(values) {
-      values.license = "686053fd88dcd5df60b56c5690e990a176a0fb2be3ab9c8953e4a2cc09ba7179";
+      values.license = "1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774";
       
       // OPTIONAL:  Optionally generate a test schedule here.
       //  1: how many schedules?
