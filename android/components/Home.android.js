@@ -8,8 +8,6 @@ import {
   SwitchAndroid
  } from 'react-native';
 
-import RNGMap from 'react-native-gmaps';
-import Polyline from 'react-native-gmaps/Polyline';
 import Icon from 'react-native-vector-icons/Ionicons';
 import SettingsService from '../../components/SettingsService';
 import commonStyles from '../../components/styles';
@@ -49,8 +47,7 @@ var Home = React.createClass({
   
   componentDidMount: function() {
 
-    var me = this,
-        gmap = this.refs.gmap;
+    var me = this;
 
     this.locationManager = this.props.locationManager;
 
@@ -62,7 +59,7 @@ var Home = React.createClass({
       });
 
       me.setCenter(location);
-      gmap.addMarker(me._createMarker(location));
+      //gmap.addMarker(me._createMarker(location));
 
       me.setState({
         odometer: (location.odometer/1000).toFixed(1)
@@ -111,7 +108,10 @@ var Home = React.createClass({
     this.locationManager.on("activitychange", function(activityName) {
       console.log('- activitychange: ', activityName);
     });
-
+    // providerchange event
+    this.locationManager.on("providerchange", function(provider) {
+      console.log('- providerchange: ', provider.enabled, provider);
+    });
     // getGeofences
     this.locationManager.getGeofences(function(rs) {
       console.log('- getGeofences: ', JSON.stringify(rs));
@@ -174,6 +174,7 @@ var Home = React.createClass({
   initializePolyline: function() {
     // Create our tracking Polyline
     var me = this;
+    /*
     Polyline.create({
       points: [],
       geodesic: true,
@@ -182,6 +183,7 @@ var Home = React.createClass({
     }, function(polyline) {
       me.polyline = polyline;
     });
+    */
   },
 
   onClickMenu: function() {
@@ -194,10 +196,17 @@ var Home = React.createClass({
       this.locationManager.start(function() {
         me.initializePolyline();
       });
+      this.locationManager.watchPosition(function(location) {
+        console.log('- Watch: ', location);
+      }, {
+        locationUpdateInterval: 5000
+      });
+
     } else {
       this.locationManager.resetOdometer();
       this.locationManager.removeGeofences();
       this.locationManager.stop();
+      this.locationManager.stopWatchPosition();
 
       this.setState({
         markers: [{}],
@@ -243,6 +252,9 @@ var Home = React.createClass({
       console.error('ERROR: getCurrentPosition', error);
       me.setState({navigateButtonIcon: 'md-locate'});
     });
+    this.locationManager.stopWatchPosition(function() {
+      console.info('- Stopped watching position');
+    });
   },
   onRegionChange: function() {
     console.log('onRegionChange');
@@ -287,15 +299,7 @@ var Home = React.createClass({
           <SwitchAndroid onValueChange={this.onClickEnable} value={this.state.enabled} />
         </View>
         <View ref="workspace" style={styles.workspace} onLayout={this.onLayout}>
-          <RNGMap
-            ref={'gmap'}
-            style={{width: this.state.mapWidth, height: this.state.mapHeight}}
-            markers={this.state.markers}
-            zoomLevel={this.state.zoom}
-            onMapChange={(e) => console.log(e)}
-            onMapError={(e) => console.log('Map error --> ', e)}
-            center={this.state.center} />
-
+          <Text>Map Here</Text>
         </View>
         <View style={commonStyles.bottomToolbar}>
           <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={25} color="#000" underlayColor="#ccc" backgroundColor="transparent" style={styles.btnNavigate} />

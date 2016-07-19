@@ -26,7 +26,7 @@
         <service android:name="com.transistorsoft.locationmanager.scheduler.ScheduleService" />
         <service android:name="com.transistorsoft.locationmanager.scheduler.ScheduleAlarmService" />
 
-        <receiver android:enabled="true" android:exported="false" android:name="com.transistorsoft.rnbackgroundgeolocation.BootReceiver">
+        <receiver android:enabled="true" android:exported="false" android:name="com.transistorsoft.locationmanager.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -52,5 +52,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
     <!-- /background-geolocation -->
 </manifest>

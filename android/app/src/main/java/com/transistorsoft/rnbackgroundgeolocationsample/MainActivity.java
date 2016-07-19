@@ -6,7 +6,6 @@ import com.facebook.react.shell.MainReactPackage;
 
 import com.transistorsoft.rnbackgroundgeolocation.*;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.rota.rngmaps.RNGMapsPackage;
 import com.learnium.RNDeviceInfo.*;
 
 import java.util.Arrays;
@@ -39,9 +38,8 @@ public class MainActivity extends ReactActivity {
     @Override
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
-                new RNBackgroundGeolocation(this),      // <-- for background-geolocation
+                new RNBackgroundGeolocation(),      // <-- for background-geolocation
                 new VectorIconsPackage(),               // react-native-vector-icons
-                new RNGMapsPackage(),                   // react-native-gmaps
                 new RNDeviceInfo(),                     // react-native-device-info
                 new MainReactPackage()
         );
