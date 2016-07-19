@@ -15,6 +15,24 @@ import commonStyles from '../../components/styles';
 var styles = StyleSheet.create({
   workspace: {
     flex: 1
+  },
+  labelActivity: {
+    alignItems: "center",
+    justifyContent: "center",    
+    borderRadius: 3,
+    width: 40,
+    padding: 3
+  },
+  label: {
+    padding: 3,
+    width: 75
+  },
+  labelText: {
+    fontSize: 14,
+    textAlign: 'center'
+  },
+  labelOdometer: {
+    padding: 3
   }
 });
 
@@ -24,7 +42,18 @@ var Home = React.createClass({
   locationIcon: require("image!green_circle"),
   currentLocation: undefined,
   locationManager: undefined,
-
+  icons: {
+    disabled: <Icon name="ios-alert" size={30} style={{color: "#D9534F", marginRight:5}} />,
+    network: <Icon name="ios-wifi" size={20} style={{marginRight:5}}/>,
+    gps: <Icon name="ios-locate" size={20} style={{marginRight:5}}/>,
+    on_foot: <Icon name="ios-walk" size={20} style={{color:"#fff"}} />,
+    still: <Icon name="ios-man" size={20} style={{color:"#fff"}}/>,
+    walking: <Icon name="ios-walk" size={20} style={{color:"#fff"}}/>,
+    running: <Icon name="ios-walk" size={20} style={{color:"#fff"}}/>,
+    in_vehicle: <Icon name="ios-car" size={20}style={{color:"#fff"}}/>,
+    on_bicycle: <Icon name="ios-bicycle" size={20} style={{color:"#fff"}} />,
+    unknown: <Icon name="ios-help-circle" size={20} style={{color:"#fff"}}/>
+  },
   getInitialState: function() {
     return {
       enabled: false,
@@ -32,7 +61,7 @@ var Home = React.createClass({
       odometer: 0,
       paceButtonStyle: commonStyles.disabledButton,
       paceButtonIcon: 'md-play',
-      navigateButtonIcon: 'md-locate',
+      navigateButtonIcon: 'ios-navigate',
       mapHeight: 300,
       mapWidth: 300,
       // mapbox
@@ -41,7 +70,9 @@ var Home = React.createClass({
         lng: -73.9878
       },
       zoom: 10,
-      markers: []
+      markers: [],
+      currentActivity: 'unknown',
+      currentProvider: undefined
     };
   },
   
@@ -94,6 +125,9 @@ var Home = React.createClass({
     // motionchange event
     this.locationManager.on("motionchange", function(event) {
       console.log("- motionchange", JSON.stringify(event));
+      me.setState({
+        isMoving: event.isMoving
+      });
       me.updatePaceButtonStyle();
     });
     // schedule event
@@ -104,9 +138,15 @@ var Home = React.createClass({
       });
       me.updatePaceButtonStyle();
     });
+    this.locationManager.on("providerchange", function(provider) {
+      me.setState({
+        currentProvider: provider
+      });
+    });
+
     // activitychange event
     this.locationManager.on("activitychange", function(activityName) {
-      console.log('- activitychange: ', activityName);
+      me.setState({currentActivity: activityName});
     });
     // providerchange event
     this.locationManager.on("providerchange", function(provider) {
@@ -156,7 +196,8 @@ var Home = React.createClass({
 
     this.setState({
       enabled: false,
-      isMoving: false
+      isMoving: false,
+      //currentActivity: "in_vehicle"
     });
   },
   _createMarker: function(location) {
@@ -184,8 +225,71 @@ var Home = React.createClass({
       me.polyline = polyline;
     });
     */
+  },  
+  getCurrentProvider: function() {
+    var text = [];
+    if (this.state.currentProvider) {
+      if (!this.state.currentProvider.enabled) {
+        text.push("disabled");
+      } else {
+        if (this.state.currentProvider.gps) {
+          text.push("gps");
+        }
+        if (this.state.currentProvider.network) {
+          text.push("network");
+        }
+      }
+    }
+    return text.join(',');
   },
+  getActivityIcon: function() {
+    var icon = this.icons[this.state.currentActivity];
+    var activityName = this.state.currentActivity;
+    var bgColor;
+    switch(activityName) {
+      case 'still':
+        bgColor = commonStyles.redButton;
+        break;
+      case 'unknonwn':
+        bgColor = {backgroundColor: "#ccc"}
+        break;
+      default:
+        bgColor = commonStyles.greenButton;
+    }
+    
+    return (
+      <View style={[styles.labelActivity, bgColor]}>
+        {icon}
+      </View>
+    );
+  },
+  getProviderIcons: function() {
+    
+    var iconGps = undefined;
+    var iconNetwork = undefined;
+    var iconDisabled = undefined;
 
+    if (this.state.currentProvider) {
+      var provider = this.state.currentProvider;
+      if (!provider.enabled) {
+        iconDisabled = this.icons.disabled;
+      } else {
+        if (provider.gps) {
+          iconGps = this.icons.gps;
+        }
+        if (provider.network) {
+          iconNetwork = this.icons.network
+        }
+      }
+    }
+    return (
+      <View style={{flexDirection:"row", alignItems: "center"}}>
+        {iconDisabled}
+        {iconGps}
+        {iconNetwork}
+      </View>
+    )
+  },
   onClickMenu: function() {
     this.props.drawer.open();
   },
@@ -250,7 +354,7 @@ var Home = React.createClass({
       console.log('- current position: ', JSON.stringify(location));
     }, function(error) {
       console.error('ERROR: getCurrentPosition', error);
-      me.setState({navigateButtonIcon: 'md-locate'});
+      me.setState({navigateButtonIcon: 'ios-navigate'});
     });
     this.locationManager.stopWatchPosition(function() {
       console.info('- Stopped watching position');
@@ -261,7 +365,7 @@ var Home = React.createClass({
   },
   setCenter: function(location) {
     this.setState({
-      navigateButtonIcon: 'md-locate',
+      navigateButtonIcon: 'ios-navigate',
       center: {
         lat: location.coords.latitude,
         lng: location.coords.longitude
@@ -302,9 +406,15 @@ var Home = React.createClass({
           <Text>Map Here</Text>
         </View>
         <View style={commonStyles.bottomToolbar}>
-          <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={25} color="#000" underlayColor="#ccc" backgroundColor="transparent" style={styles.btnNavigate} />
-          <Text style={{fontWeight: 'bold', fontSize: 18, flex: 1, textAlign: 'center'}}>{this.state.odometer} km</Text>
-          <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} iconStyle={commonStyles.iconButton} style={this.state.paceButtonStyle}><Text>State</Text></Icon.Button>
+          <View style={{flex:1, flexDirection:"row", justifyContent:"flex-start", alignItems:"center"}}>
+            <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={30} color="#000" underlayColor="#ccc" backgroundColor="transparent" style={styles.btnNavigate} />
+            {this.getProviderIcons()}
+          </View>
+          <View style={{flex:1, flexDirection: "row", alignItems:"center", justifyContent: "center"}}>            
+            {this.getActivityIcon()}
+            <View style={styles.label}><Text style={styles.labelText}>{this.state.odometer}km</Text></View>
+          </View>
+          <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} style={[this.state.paceButtonStyle, {width:75}]}></Icon.Button>
           <Text>&nbsp;</Text>
         </View>
       </View>
