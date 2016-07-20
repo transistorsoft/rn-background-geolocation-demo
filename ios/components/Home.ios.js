@@ -323,7 +323,7 @@ var Home = React.createClass({
             <View style={commonStyles.label}>
               <Text style={commonStyles.labelText}>{this.state.odometer}km</Text>
             </View>
-          </View>          
+          </View>
           <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} style={[this.state.paceButtonStyle, {paddingLeft:18}]}></Icon.Button>
         </View>
       </View>

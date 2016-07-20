@@ -5,42 +5,17 @@ import {
   StyleSheet,
   Text,
   View,
-  SwitchAndroid
+  SwitchAndroid,
+  AppState
  } from 'react-native';
 
 var Mapbox = require('react-native-mapbox-gl');
 var mapRef = 'mapRef';
 
+import Config from '../../components/config';
 import Icon from 'react-native-vector-icons/Ionicons';
 import SettingsService from '../../components/SettingsService';
 import commonStyles from '../../components/styles';
-
-var styles = StyleSheet.create({
-  workspace: {
-    flex: 1
-  },
-  labelActivity: {
-    alignItems: "center",
-    justifyContent: "center",    
-    borderRadius: 3,
-    width: 40,
-    padding: 3
-  },
-  label: {
-    padding: 3,
-    width: 75
-  },
-  labelText: {
-    fontSize: 14,
-    textAlign: 'center'
-  },
-  labelOdometer: {
-    padding: 3
-  },
-  mapBox: {
-    flex: 1
-  }
-});
 
 SettingsService.init('Android');
 
@@ -49,20 +24,10 @@ var Home = React.createClass({
   locationIcon: require("image!green_circle"),
   currentLocation: undefined,
   locationManager: undefined,
-  icons: {
-    disabled: <Icon name="ios-alert" size={30} style={{color: "#D9534F", marginRight:5}} />,
-    network: <Icon name="ios-wifi" size={20} style={{marginRight:5}}/>,
-    gps: <Icon name="ios-locate" size={20} style={{marginRight:5}}/>,
-    on_foot: <Icon name="ios-walk" size={20} style={{color:"#fff"}} />,
-    still: <Icon name="ios-man" size={20} style={{color:"#fff"}}/>,
-    walking: <Icon name="ios-walk" size={20} style={{color:"#fff"}}/>,
-    running: <Icon name="ios-walk" size={20} style={{color:"#fff"}}/>,
-    in_vehicle: <Icon name="ios-car" size={20}style={{color:"#fff"}}/>,
-    on_bicycle: <Icon name="ios-bicycle" size={20} style={{color:"#fff"}} />,
-    unknown: <Icon name="ios-help-circle" size={20} style={{color:"#fff"}}/>
-  },
+
   getInitialState: function() {
     return {
+      currentState: AppState.currentState,
       enabled: false,
       isMoving: false,
       odometer: 0,
@@ -75,7 +40,8 @@ var Home = React.createClass({
       center: {
         latitude: 40.7223,
         longitude: -73.9878
-      },      
+      },
+      showsUserLocation: true,
       zoomLevel: 10,
       annotations: [],
       currentActivity: 'unknown',
@@ -84,9 +50,56 @@ var Home = React.createClass({
   },
   
   componentDidMount: function() {
-
     var me = this;
 
+    AppState.addEventListener('change', this._handleAppStateChange);
+
+    this.configureBackgroundGeolocation();
+    
+
+    SettingsService.getValues(function(values) {
+      values.license = "1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774";
+      
+      // OPTIONAL:  Optionally generate a test schedule here.
+      //  1: how many schedules?
+      //  2: delay (minutes) from now to start generating schedules
+      //  3: schedule duration (minutes); how long to stay ON.
+      //  4: OFF time between (minutes) generated schedule events.
+      //
+      // UNCOMMENT TO AUTO-GENERATE A SERIES OF SCHEDULE EVENTS BASED UPON CURRENT TIME:
+      // values.schedule = SettingsService.generateSchedule(24, 1, 30, 30);
+
+      //values.url = 'http://192.168.11.120:8080/locations';
+
+      me.locationManager.configure(values, function(state) {
+        console.log('- configure state: ', state);
+        
+        // Start the scheduler if configured with one.
+        if (state.schedulerEnabled) {
+          me.locationManager.startSchedule(function() {
+            console.info('- Scheduler started');
+          });
+        }
+
+        me.setState({
+          enabled: state.enabled
+        });
+        if (state.enabled) {
+          //me.initializePolyline();
+          me.updatePaceButtonStyle()
+        }
+      });
+    });
+
+    this.setState({
+      enabled: false,
+      isMoving: false
+    });
+  },
+  componentWillUnmount: function() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  },
+  configureBackgroundGeolocation: function() {
     this.locationManager = this.props.locationManager;
 
     // location event
@@ -98,7 +111,6 @@ var Home = React.createClass({
       }
 
       me.setCenter(location);
-      //gmap.addMarker(me._createMarker(location));
 
       me.setState({
         odometer: (location.odometer/1000).toFixed(1)
@@ -147,7 +159,6 @@ var Home = React.createClass({
         currentProvider: provider
       });
     });
-
     // activitychange event
     this.locationManager.on("activitychange", function(activityName) {
       me.setState({currentActivity: activityName});
@@ -162,46 +173,16 @@ var Home = React.createClass({
     }, function(error) {
       console.log("- getGeofences ERROR", error);
     });
-    
-
-    SettingsService.getValues(function(values) {
-      values.license = "1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774";
-      
-      // OPTIONAL:  Optionally generate a test schedule here.
-      //  1: how many schedules?
-      //  2: delay (minutes) from now to start generating schedules
-      //  3: schedule duration (minutes); how long to stay ON.
-      //  4: OFF time between (minutes) generated schedule events.
-      //
-      // UNCOMMENT TO AUTO-GENERATE A SERIES OF SCHEDULE EVENTS BASED UPON CURRENT TIME:
-      // values.schedule = SettingsService.generateSchedule(24, 1, 30, 30);
-
-      //values.url = 'http://192.168.11.120:8080/locations';
-
-      me.locationManager.configure(values, function(state) {
-        console.log('- configure state: ', state);
-        
-        // Start the scheduler if configured with one.
-        if (state.schedulerEnabled) {
-          me.locationManager.startSchedule(function() {
-            console.info('- Scheduler started');
-          });
-        }
-
-        me.setState({
-          enabled: state.enabled
-        });
-        if (state.enabled) {
-          //me.initializePolyline();
-          me.updatePaceButtonStyle()
-        }
-      });
-    });
-
+  },
+  /**
+  * MapBox is evil.  It keeps the location running in background when showsUserLocation is enabled
+  * BE SURE TO SHUT THAT OFF IN BACKGROUND OR GPS IS ON FOREVER.  Bye bye battery.
+  */
+  _handleAppStateChange: function(currentAppState) {
+    var showsUserLocation = (currentAppState === 'background') ? false : true;
     this.setState({
-      enabled: false,
-      isMoving: false,
-      //currentActivity: "in_vehicle"
+      currentAppState: currentAppState,
+      showsUserLocation: showsUserLocation
     });
   },
   _createMarker: function(location) {
@@ -228,70 +209,7 @@ var Home = React.createClass({
     };
     this.addAnnotations(mapRef, [this.polyline]);
   },
-  getCurrentProvider: function() {
-    var text = [];
-    if (this.state.currentProvider) {
-      if (!this.state.currentProvider.enabled) {
-        text.push("disabled");
-      } else {
-        if (this.state.currentProvider.gps) {
-          text.push("gps");
-        }
-        if (this.state.currentProvider.network) {
-          text.push("network");
-        }
-      }
-    }
-    return text.join(',');
-  },
-  getActivityIcon: function() {
-    var icon = this.icons[this.state.currentActivity];
-    var activityName = this.state.currentActivity;
-    var bgColor;
-    switch(activityName) {
-      case 'still':
-        bgColor = commonStyles.redButton;
-        break;
-      case 'unknonwn':
-        bgColor = {backgroundColor: "#ccc"}
-        break;
-      default:
-        bgColor = commonStyles.greenButton;
-    }
-    
-    return (
-      <View style={[styles.labelActivity, bgColor]}>
-        {icon}
-      </View>
-    );
-  },
-  getProviderIcons: function() {
-    
-    var iconGps = undefined;
-    var iconNetwork = undefined;
-    var iconDisabled = undefined;
 
-    if (this.state.currentProvider) {
-      var provider = this.state.currentProvider;
-      if (!provider.enabled) {
-        iconDisabled = this.icons.disabled;
-      } else {
-        if (provider.gps) {
-          iconGps = this.icons.gps;
-        }
-        if (provider.network) {
-          iconNetwork = this.icons.network
-        }
-      }
-    }
-    return (
-      <View style={{flexDirection:"row", alignItems: "center"}}>
-        {iconDisabled}
-        {iconGps}
-        {iconNetwork}
-      </View>
-    )
-  },
   onClickMenu: function() {
     this.props.drawer.open();
   },
@@ -418,7 +336,7 @@ var Home = React.createClass({
             rotateEnabled={true}
             scrollEnabled={true}
             style={styles.mapBox}
-            showsUserLocation={true}
+            showsUserLocation={this.state.showsUserLocation}
             styleURL={this.mapStyles.emerald}
             userTrackingMode={this.userTrackingMode.none}
             zoomEnabled={true}
@@ -431,11 +349,11 @@ var Home = React.createClass({
         </View>
         <View style={commonStyles.bottomToolbar}>
           <View style={{flex:1, flexDirection:"row", justifyContent:"flex-start", alignItems:"center"}}>
-            <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={30} color="#000" underlayColor="#ccc" backgroundColor="transparent" style={styles.btnNavigate} />
-            {this.getProviderIcons()}
+            <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={30} color="#000" underlayColor="#eee" backgroundColor="transparent" style={styles.btnNavigate} />
+            {Config.getLocationProviders(this.state.currentProvider)}
           </View>
           <View style={{flex:1, flexDirection: "row", alignItems:"center", justifyContent: "center"}}>            
-            {this.getActivityIcon()}
+            {Config.getActivityIcon(this.state.currentActivity)}
             <View style={styles.label}><Text style={styles.labelText}>{this.state.odometer}km</Text></View>
           </View>
           <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} style={[this.state.paceButtonStyle, {width:75}]}></Icon.Button>
@@ -443,6 +361,33 @@ var Home = React.createClass({
         </View>
       </View>
     );
+  }
+});
+
+var styles = StyleSheet.create({
+  workspace: {
+    flex: 1
+  },
+  labelActivity: {
+    alignItems: "center",
+    justifyContent: "center",    
+    borderRadius: 3,
+    width: 40,
+    padding: 3
+  },
+  label: {
+    padding: 3,
+    width: 75
+  },
+  labelText: {
+    fontSize: 14,
+    textAlign: 'center'
+  },
+  labelOdometer: {
+    padding: 3
+  },
+  mapBox: {
+    flex: 1
   }
 });
 
