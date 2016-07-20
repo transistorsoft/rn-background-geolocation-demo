@@ -54,41 +54,10 @@ var Home = React.createClass({
 
     AppState.addEventListener('change', this._handleAppStateChange);
 
-    this.configureBackgroundGeolocation();
     
-
     SettingsService.getValues(function(values) {
       values.license = "1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774";
-      
-      // OPTIONAL:  Optionally generate a test schedule here.
-      //  1: how many schedules?
-      //  2: delay (minutes) from now to start generating schedules
-      //  3: schedule duration (minutes); how long to stay ON.
-      //  4: OFF time between (minutes) generated schedule events.
-      //
-      // UNCOMMENT TO AUTO-GENERATE A SERIES OF SCHEDULE EVENTS BASED UPON CURRENT TIME:
-      // values.schedule = SettingsService.generateSchedule(24, 1, 30, 30);
-
-      //values.url = 'http://192.168.11.120:8080/locations';
-
-      me.locationManager.configure(values, function(state) {
-        console.log('- configure state: ', state);
-        
-        // Start the scheduler if configured with one.
-        if (state.schedulerEnabled) {
-          me.locationManager.startSchedule(function() {
-            console.info('- Scheduler started');
-          });
-        }
-
-        me.setState({
-          enabled: state.enabled
-        });
-        if (state.enabled) {
-          //me.initializePolyline();
-          me.updatePaceButtonStyle()
-        }
-      });
+      me.configureBackgroundGeolocation(values);
     });
 
     this.setState({
@@ -99,9 +68,12 @@ var Home = React.createClass({
   componentWillUnmount: function() {
     AppState.removeEventListener('change', this._handleAppStateChange);
   },
-  configureBackgroundGeolocation: function() {
-    this.locationManager = this.props.locationManager;
+  configureBackgroundGeolocation: function(config) {
+    var me = this;
+    this.locationManager = this.props.locationManager;  // @see Index.android.js 
 
+    // 1. Set up listeners on event
+    //
     // location event
     this.locationManager.on("location", function(location) {
       console.log('- location: ', JSON.stringify(location));
@@ -172,6 +144,44 @@ var Home = React.createClass({
       console.log('- getGeofences: ', JSON.stringify(rs));
     }, function(error) {
       console.log("- getGeofences ERROR", error);
+    });
+
+    // 2. Configure it
+    //
+    // OPTIONAL:  Optionally generate a test schedule here.
+    //  1: how many schedules?
+    //  2: delay (minutes) from now to start generating schedules
+    //  3: schedule duration (minutes); how long to stay ON.
+    //  4: OFF time between (minutes) generated schedule events.
+    //  
+    //  eg:
+    //  schedule: [
+    //    '1-6 9:00-17:00',
+    //    '7 10:00-18:00'
+    //  ]
+    // UNCOMMENT TO AUTO-GENERATE A SERIES OF SCHEDULE EVENTS BASED UPON CURRENT TIME:
+    // config.schedule = SettingsService.generateSchedule(24, 1, 30, 30);
+
+    //config.url = 'http://192.168.11.100:8080/locations';
+
+    this.locationManager.configure(config, function(state) {
+      console.log('- configure success.  Current state: ', state);
+      
+      // Start the scheduler if configured with one.
+      if (state.schedulerEnabled) {
+        me.locationManager.startSchedule(function() {
+          console.info('- Scheduler started');
+        });
+      }
+
+      // Update UI
+      me.setState({
+        enabled: state.enabled
+      });
+      if (state.enabled) {
+        //me.initializePolyline();
+        me.updatePaceButtonStyle()
+      }
     });
   },
   /**
