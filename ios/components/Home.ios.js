@@ -15,12 +15,10 @@ import Mapbox from 'react-native-mapbox-gl';
 
 var mapRef = 'mapRef';
 
-
-//var RNGMap                = require('react-native-gmaps');
-//var Polyline              = require('react-native-gmaps/Polyline');
 import Icon from 'react-native-vector-icons/Ionicons';
 import SettingsService from '../../components/SettingsService';
 import commonStyles from '../../components/styles';
+import Config from '../../components/config';
 
 var styles = StyleSheet.create({
   workspace: {
@@ -28,6 +26,16 @@ var styles = StyleSheet.create({
   },
   map: {
     flex: 1
+  },
+  btnNavigate: {
+    width: 44
+  },
+  provider: {
+
+  },
+  toolbarContainer: {
+    flexDirection: "row",
+    alignItems: "center"
   }
 });
 
@@ -36,7 +44,6 @@ SettingsService.init('iOS');
 var Home = React.createClass({
   mixins: [Mapbox.Mixin],
   annotations: [],
-  locationIcon: 'green-circle.png',
   currentLocation: undefined,
   locationManager: undefined,
 
@@ -44,9 +51,16 @@ var Home = React.createClass({
     return {
       enabled: false,
       isMoving: false,
+      currentActivity: 'unknown',
+      currentProvider: {
+        enabled: true,
+        gps: true,
+        network: true
+      },
+      odometer: 0,
       paceButtonStyle: commonStyles.disabledButton,
-      paceButtonIcon: 'md-play',
-      navigateButtonIcon: 'md-locate',
+      navigateButtonIcon: Config.icons.navigate,
+      paceButtonIcon: Config.icons.play,
       mapHeight: 280,
       mapWidth: 300,
       zoom: 10,
@@ -69,7 +83,9 @@ var Home = React.createClass({
     // location event
     this.locationManager.on("location", function(location) {
       console.log('- location: ', JSON.stringify(location, null, 2));
-
+      me.setState({
+        odometer: (location.odometer/1000).toFixed(0)
+      });
       if (location.sample) {
         console.log('<sample location>');
         return;
@@ -115,6 +131,7 @@ var Home = React.createClass({
     // activitychange event
     this.locationManager.on("activitychange", function(activityName) {
       console.log("- activitychange fired: ", activityName);
+      me.setState({currentActivity: activityName});
     });
 
     // getGeofences
@@ -229,7 +246,7 @@ var Home = React.createClass({
       console.log('- current position: ', JSON.stringify(location));
     }, function(error) {
       console.error('ERROR: getCurrentPosition', error);
-      me.setState({navigateButtonIcon: 'navigate'});
+      me.setState({navigateButtonIcon: Config.icons.navigate});
     });
   },
   onRegionChange: function() {
@@ -245,7 +262,7 @@ var Home = React.createClass({
     }
     this.setState({
       paceButtonStyle: style,
-      paceButtonIcon: (this.state.enabled && this.state.isMoving) ? 'md-pause' : 'md-play'
+      paceButtonIcon: (this.state.enabled && this.state.isMoving) ? Config.icons.play : Config.icons.pause
     });
   },
   // MapBox
@@ -264,7 +281,7 @@ var Home = React.createClass({
   onRightAnnotationTapped:function(e) {
     console.log(e);
   },
-
+  
   render: function() {
     return (
       <View style={commonStyles.container}>
@@ -297,9 +314,17 @@ var Home = React.createClass({
         </View>
 
         <View style={commonStyles.bottomToolbar}>
-          <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={30} color="#000" underlayColor="#ccc" backgroundColor="#eee" style={styles.btnNavigate} />
-          <Text style={{fontWeight: 'bold', fontSize: 18, flex: 1, textAlign: 'center'}}></Text>
-          <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} iconStyle={commonStyles.iconButton} style={this.state.paceButtonStyle}><Text>State</Text></Icon.Button>
+          <View style={{flexDirection:"row", alignItems:"center"}}>
+            <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={30} color="#666" underlayColor="#ccc" backgroundColor="#eee" style={styles.btnNavigate} />
+            {Config.getLocationProviders(this.state.currentProvider)}
+          </View>
+          <View style={[styles.toolbarContainer, {flex: 1, justifyContent: "center"}]}>
+            {Config.getActivityIcon(this.state.currentActivity)}
+            <View style={commonStyles.label}>
+              <Text style={commonStyles.labelText}>{this.state.odometer}km</Text>
+            </View>
+          </View>          
+          <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} style={[this.state.paceButtonStyle, {paddingLeft:18}]}></Icon.Button>
         </View>
       </View>
     );

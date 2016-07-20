@@ -23,7 +23,7 @@ import config from '../../components/config';
 var SettingsContainer = React.createClass({
   icons: {
     syncButton: 'ios-cloud-upload',
-    spinner: 'load-d'
+    spinner: 'md-sync'
   },
 
   getInitialState: function() {
@@ -99,7 +99,7 @@ var SettingsContainer = React.createClass({
   onClickSync: function() {
     var me = this;
     this.setState({
-      syncButtonIcon: this.icons.spinner
+      syncButtonIcon: me.icons.spinner
     });
     BackgroundGeolocation.sync(function(rs) {
       console.log('- sync success');
@@ -124,9 +124,9 @@ var SettingsContainer = React.createClass({
           <Settings ref="settings" onSelectSetting={this.onSelectSetting} />
 
           <View style={commonStyles.bottomToolbar}>
-            <Icon.Button name="ios-share-alt" onPress={this.onClickEmailLogs}><Text style={{color: "#fff"}}>Logs</Text></Icon.Button>
+            <Icon.Button name="ios-share-alt" onPress={this.onClickEmailLogs}><Text style={[styles.btnLog, commonStyles.iconButton]}>Logs</Text></Icon.Button>
             <Text style={{flex: 1, textAlign: 'center'}}>&nbsp;</Text>
-            <Icon.Button name={this.state.syncButtonIcon} onPress={this.onClickSync} iconStyle={commonStyles.iconButton} style={[styles.btnSync, commonStyles.redButton]}><Text style={{color: "#fff"}}>Sync</Text></Icon.Button>
+            <Icon.Button name={this.state.syncButtonIcon} onPress={this.onClickSync} style={commonStyles.redButton}><Text style={[styles.btnSync, commonStyles.iconButton, {color: "#fff"}]}>Sync</Text></Icon.Button>
           </View>        
         </View>
 
@@ -194,7 +194,11 @@ var styles = StyleSheet.create({
     padding: 15
   },
   btnSync: {
-    
+    width: 50
+  },
+  btnLog: {
+    color: "#fff",
+    width: 50
   },
   btnDone: {
     color: '#000000'

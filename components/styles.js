@@ -47,7 +47,23 @@ var styles = StyleSheet.create({
     backgroundColor: '#ccc'
   },
   iconButton: {
-    
+    width: 50,
+    flex: 1
+  },
+  labelActivity: {
+    alignItems: "center",
+    justifyContent: "center",    
+    borderRadius: 3,
+    width: 40,
+    padding: 3
+  },
+  label: {
+    padding: 3,
+    width: 75
+  },
+  labelText: {
+    fontSize: 14,
+    textAlign: 'center'
   },
   backButtonIcon: {
   	//marginRight: 
@@ -56,13 +72,12 @@ var styles = StyleSheet.create({
   	fontSize: 18,
   	color: '#4f8ef7'
   },
+
   redButton: {
-    backgroundColor: '#D9534F',
-    width: 100
+    backgroundColor: '#D9534F'
   },
   greenButton: {
-    backgroundColor: '#5CB85C',
-    width: 100
+    backgroundColor: '#5CB85C'
   }
   
 });
