@@ -1,13 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.transistorsoft.rnbackgroundgeolocationsample">
+    package="com.transistorsoft.backgroundgeolocation.react">
 
     <application
+      android:name=".MainApplication"
       android:allowBackup="true"
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
       android:theme="@style/AppTheme">
 
-        <activity
+
+      <activity
         android:name=".MainActivity"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
         android:label="@string/app_name">
@@ -17,7 +19,8 @@
         </intent-filter>
       </activity>
 
-        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+      
       <!-- background-location 1 of 2 -->
       <service android:name="com.transistorsoft.locationmanager.BackgroundGeolocationService" />
       <service android:name="com.transistorsoft.locationmanager.LocationService" />

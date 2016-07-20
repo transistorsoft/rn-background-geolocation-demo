@@ -1,5 +1,15 @@
 'use strict';
 
+import React, { Component } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View
+ } from 'react-native';
+
+import Icon from 'react-native-vector-icons/Ionicons';
+import Styles from './styles';
+
 var config = (function() {
   
   return {
@@ -15,6 +25,67 @@ var config = (function() {
       "MESSAGE_SENT_IOS": 1303,
       "MESSAGE_SENT_ANDROID": 90,
       "ERROR_IOS": 1006
+    },
+
+    icons: {
+      play: 'md-play',
+      pause: 'md-pause',
+      navigate: 'ios-navigate',
+
+      disabled: <Icon name="ios-alert" size={30} style={{color: "#D9534F", marginRight:5}} />,
+      network: <Icon name="ios-wifi" size={20} style={{marginRight:5}}/>,
+      gps: <Icon name="ios-locate" size={20} style={{marginRight:5}}/>,
+      on_foot: <Icon name="ios-walk" size={20} style={{color:"#fff"}} />,
+      still: <Icon name="ios-man" size={20} style={{color:"#fff"}}/>,
+      walking: <Icon name="ios-walk" size={20} style={{color:"#fff"}}/>,
+      running: <Icon name="ios-walk" size={20} style={{color:"#fff"}}/>,
+      in_vehicle: <Icon name="ios-car" size={20}style={{color:"#fff"}}/>,
+      on_bicycle: <Icon name="ios-bicycle" size={20} style={{color:"#fff"}} />,
+      unknown: <Icon name="ios-help-circle" size={20} style={{color:"#666"}}/>
+    },
+    getActivityIcon(activityName) {
+      var icon = this.icons[activityName];
+      var bgColor;
+      switch(activityName) {
+        case 'still':
+          bgColor = Styles.redButton;
+          break;
+        case 'unknown':
+          bgColor = {backgroundColor: "#ccc"}
+          break;
+        default:
+          bgColor = Styles.greenButton;
+      }
+      return (
+        <View style={[Styles.labelActivity, bgColor]}>
+          {icon}
+        </View>
+      );
+    },
+    getLocationProviders(provider) {
+      var iconGps = undefined;
+      var iconNetwork = undefined;
+      var iconDisabled = undefined;
+
+      if (provider) {
+        if (!provider.enabled) {
+          iconDisabled = config.icons.disabled;
+        } else {
+          if (provider.gps) {
+            iconGps = config.icons.gps;
+          }
+          if (provider.network) {
+            iconNetwork = config.icons.network
+          }
+        }
+      }
+      return (
+        <View style={{flexDirection:"row", alignItems: "center"}}>
+          {iconDisabled}
+          {iconGps}
+          {iconNetwork}
+        </View>
+      )
     }
   }
 })();

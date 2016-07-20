@@ -14,6 +14,7 @@ import Drawer from 'react-native-drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BackgroundGeolocation from 'react-native-background-geolocation-android';
 
+// For development console access to BackgroundGeolocation API
 global.bgGeo = BackgroundGeolocation;
 
 import Home from './android/components/Home.android';
