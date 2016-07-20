@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.transistorsoft.rnbackgroundgeolocation.*;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.mapbox.reactnativemapboxgl.ReactNativeMapboxGLPackage;
 import com.learnium.RNDeviceInfo.*;
 
 public class MainApplication extends Application implements ReactApplication {
@@ -26,11 +27,12 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-          new RNBackgroundGeolocation(),      // <-- for background-geolocation
-          new VectorIconsPackage(),               // react-native-vector-icons
-          new RNDeviceInfo()                     // react-native-device-info
+        return Arrays.<ReactPackage>asList(
+                new MainReactPackage(),
+                new RNBackgroundGeolocation(),      // <-- for background-geolocation
+                new VectorIconsPackage(),
+                new ReactNativeMapboxGLPackage(),
+                new RNDeviceInfo()                     // react-native-device-info
       );
     }
   };

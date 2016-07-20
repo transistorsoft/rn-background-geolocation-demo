@@ -8,6 +8,9 @@ import {
   SwitchAndroid
  } from 'react-native';
 
+var Mapbox = require('react-native-mapbox-gl');
+var mapRef = 'mapRef';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import SettingsService from '../../components/SettingsService';
 import commonStyles from '../../components/styles';
@@ -33,12 +36,16 @@ var styles = StyleSheet.create({
   },
   labelOdometer: {
     padding: 3
+  },
+  mapBox: {
+    flex: 1
   }
 });
 
 SettingsService.init('Android');
 
 var Home = React.createClass({
+  mixins: [Mapbox.Mixin],
   locationIcon: require("image!green_circle"),
   currentLocation: undefined,
   locationManager: undefined,
@@ -66,11 +73,11 @@ var Home = React.createClass({
       mapWidth: 300,
       // mapbox
       center: {
-        lat: 40.7223,
-        lng: -73.9878
-      },
-      zoom: 10,
-      markers: [],
+        latitude: 40.7223,
+        longitude: -73.9878
+      },      
+      zoomLevel: 10,
+      annotations: [],
       currentActivity: 'unknown',
       currentProvider: undefined
     };
@@ -85,9 +92,10 @@ var Home = React.createClass({
     // location event
     this.locationManager.on("location", function(location) {
       console.log('- location: ', JSON.stringify(location));
-      me.locationManager.getCount(function(count) {
-        console.log('- count: ', count);
-      });
+      
+      if (!location.sample) {
+        me.addMarker(location);
+      }
 
       me.setCenter(location);
       //gmap.addMarker(me._createMarker(location));
@@ -96,10 +104,6 @@ var Home = React.createClass({
         odometer: (location.odometer/1000).toFixed(1)
       });
 
-      // Add a point to our tracking polyline
-      if (me.polyline) {
-        me.polyline.addPoint(location.coords.latitude, location.coords.longitude);
-      }
     });
     // http event
     this.locationManager.on("http", function(response) {
@@ -188,7 +192,7 @@ var Home = React.createClass({
           enabled: state.enabled
         });
         if (state.enabled) {
-          me.initializePolyline();
+          //me.initializePolyline();
           me.updatePaceButtonStyle()
         }
       });
@@ -213,19 +217,17 @@ var Home = React.createClass({
       };
   },
   initializePolyline: function() {
-    // Create our tracking Polyline
-    var me = this;
-    /*
-    Polyline.create({
-      points: [],
-      geodesic: true,
-      color: '#2677FF',
-      width: 12
-    }, function(polyline) {
-      me.polyline = polyline;
-    });
-    */
-  },  
+    this.polyline = {
+      type: "polyline",
+      coordinates: [],
+      title: "Route",
+      strokeColor: '#2677FF',
+      strokeWidth: 5,
+      strokeAlpha: 0.5,
+      id: "route"
+    };
+    this.addAnnotations(mapRef, [this.polyline]);
+  },
   getCurrentProvider: function() {
     var text = [];
     if (this.state.currentProvider) {
@@ -300,12 +302,6 @@ var Home = React.createClass({
       this.locationManager.start(function() {
         me.initializePolyline();
       });
-      this.locationManager.watchPosition(function(location) {
-        console.log('- Watch: ', location);
-      }, {
-        locationUpdateInterval: 5000
-      });
-
     } else {
       this.locationManager.resetOdometer();
       this.locationManager.removeGeofences();
@@ -313,16 +309,12 @@ var Home = React.createClass({
       this.locationManager.stopWatchPosition();
 
       this.setState({
-        markers: [{}],
+        annotations: [{}],
         odometer: 0
       });
-      this.setState({
-        markers: []
-      });
+
       if (this.polyline) {
-        this.polyline.remove(function(result) {
-          me.polyline = undefined;
-        });
+        this.polyline = null;
       }
     }
 
@@ -367,22 +359,35 @@ var Home = React.createClass({
     this.setState({
       navigateButtonIcon: 'ios-navigate',
       center: {
-        lat: location.coords.latitude,
-        lng: location.coords.longitude
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
       },
-      zoom: 16
+      zoomLevel: 16
     });
+  },  
+  onUserLocationChange: function(location) {
+    console.log('[MapBox] #onUserLocationChange: ', location);
   },
-  onLayout: function() {
-    var me = this,
-        gmap = this.refs.gmap;
-
-    this.refs.workspace.measure(function(ox, oy, width, height, px, py) {
-      me.setState({
-        mapHeight: height,
-        mapWidth: width
-      });
-    });
+  onLongPress: function() {
+    console.log('[MapBox] #onLongPress');
+  },
+  onOpenAnnotation: function(annotation) {
+    console.log('[MapBox] #onOpenAnnotation');
+  },
+  addMarker :function(location) {
+    this.addAnnotations(mapRef, [this.createMarker(location)]);
+    if (this.polyline) {
+      this.polyline.coordinates.push([location.coords.latitude, location.coords.longitude]);
+      this.addAnnotations(mapRef, this.polyline);
+    }
+  },
+  createMarker: function(location) {
+    return {
+        id: location.timestamp,
+        type: 'point',
+        title: location.timestamp,
+        coordinates: [location.coords.latitude, location.coords.longitude]
+      };
   },
   updatePaceButtonStyle: function() {
     var style = commonStyles.disabledButton;
@@ -402,8 +407,27 @@ var Home = React.createClass({
           <Text style={commonStyles.toolbarTitle}>Background Geolocation</Text>
           <SwitchAndroid onValueChange={this.onClickEnable} value={this.state.enabled} />
         </View>
-        <View ref="workspace" style={styles.workspace} onLayout={this.onLayout}>
-          <Text>Map Here</Text>
+        <View ref="workspace" style={styles.workspace}>
+          <Mapbox
+            annotations={this.state.annotations}
+            accessToken={'pk.eyJ1IjoiY2hyaXN0b2NyYWN5IiwiYSI6ImVmM2Y2MDA1NzIyMjg1NTdhZGFlYmZiY2QyODVjNzI2In0.htaacx3ZhE5uAWN86-YNAQ'}
+            centerCoordinate={this.state.center}
+            debugActive={false}
+            direction={10}
+            ref={mapRef}
+            rotateEnabled={true}
+            scrollEnabled={true}
+            style={styles.mapBox}
+            showsUserLocation={true}
+            styleURL={this.mapStyles.emerald}
+            userTrackingMode={this.userTrackingMode.none}
+            zoomEnabled={true}
+            zoomLevel={this.state.zoomLevel}
+            compassIsHidden={true}
+            onUserLocationChange={this.onUserLocationChange}
+            onLongPress={this.onLongPress}
+            onOpenAnnotation={this.onOpenAnnotation}
+          />
         </View>
         <View style={commonStyles.bottomToolbar}>
           <View style={{flex:1, flexDirection:"row", justifyContent:"flex-start", alignItems:"center"}}>

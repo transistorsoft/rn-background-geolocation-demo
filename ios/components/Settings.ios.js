@@ -157,15 +157,15 @@ var SettingsContainer = React.createClass({
         <View style={commonStyles.container}>
           <View style={commonStyles.iosStatusBar} />
           <View style={commonStyles.topToolbar}>
-            <Icon.Button name="ios-arrow-back" onPress={this.onClickBack} iconStyle={commonStyles.iconButton} backgroundColor="transparent" size={40} color="#4f8ef7" underlayColor={"transparent"}><Text style={[commonStyles.backButtonText, styles.backButtonText]}>Back</Text></Icon.Button>
-            <Text style={[commonStyles.toolbarTitle, {marginLeft: 20}]}>Settings</Text>
+            <Icon.Button name="ios-arrow-back" onPress={this.onClickBack} backgroundColor="transparent" size={30} color="#4f8ef7" underlayColor={"transparent"}></Icon.Button>
+            <Text style={[commonStyles.toolbarTitle, {marginLeft: 65}]}>Settings</Text>
             <Text>Debug&nbsp;</Text><SwitchIOS onValueChange={this.onClickDebug} value={this.state.debug} />
           </View>
           <Settings ref="settings" onSelectSetting={this.onSelectSetting} />
           <View style={commonStyles.bottomToolbar}>
-            <Icon.Button name="ios-share-alt" iconStyle={commonStyles.iconButton} style={{width:100}} onPress={this.onClickLogs}>Logs</Icon.Button>
+            <Icon.Button name="ios-share-alt" onPress={this.onClickLogs}><Text style={{width:40, color:"#fff"}}>Logs</Text></Icon.Button>
             <View style={{flex: 1}} />
-            <Icon.Button name={this.state.syncButtonIcon} onPress={this.onClickSync} style={commonStyles.redButton} iconStyle={commonStyles.iconButton}>Sync</Icon.Button>            
+            <Icon.Button name={this.state.syncButtonIcon} onPress={this.onClickSync} style={commonStyles.redButton}><Text style={{width:40, color: "#fff"}}>Sync</Text></Icon.Button>            
           </View>
         </View>
       </Drawer>

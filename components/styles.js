@@ -47,7 +47,23 @@ var styles = StyleSheet.create({
     backgroundColor: '#ccc'
   },
   iconButton: {
-    width: 50
+    width: 50,
+    flex: 1
+  },
+  labelActivity: {
+    alignItems: "center",
+    justifyContent: "center",    
+    borderRadius: 3,
+    width: 40,
+    padding: 3
+  },
+  label: {
+    padding: 3,
+    width: 75
+  },
+  labelText: {
+    fontSize: 14,
+    textAlign: 'center'
   },
   backButtonIcon: {
   	//marginRight: 

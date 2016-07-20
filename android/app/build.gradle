@@ -139,6 +139,7 @@ dependencies {
     compile project(':react-native-background-geolocation')
     compile(name: 'tslocationmanager', ext: 'aar')
     compile project(':react-native-vector-icons')
+    compile project(':reactnativemapboxgl')
     compile project(':RNDeviceInfo')
 }
 
