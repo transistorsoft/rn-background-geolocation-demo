@@ -18,7 +18,7 @@ import SettingsService from '../../components/SettingsService';
 import Settings from '../../components/Settings.js';
 import SettingDetail from '../../components/SettingDetail';
 import commonStyles from '../../components/styles';
-import config from '../../components/config';
+import Config from '../../components/config';
 
 var SettingsContainer = React.createClass({
   icons: {
@@ -36,22 +36,25 @@ var SettingsContainer = React.createClass({
   },
   componentDidMount: function() {
     var me = this;
-    SettingsService.getValues(function(config) {
+    BackgroundGeolocation.getState(function(state) {
       me.setState({
-        debug: config.debug
+        debug: state.debug
       });
     });
   },
   onClickBack: function() {
+    BackgroundGeolocation.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     this.props.drawer.close();
   },
   onClickSettingDone: function() {
     this.refs.drawer.close();
   },
   onClickEmailLogs: function() {
+    BackgroundGeolocation.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     this.refs.modal.open();
   },
   onToggleDebug: function(value) {
+    BackgroundGeolocation.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     this.setState({debug: value});
     BackgroundGeolocation.setConfig({
       debug: value
@@ -74,6 +77,7 @@ var SettingsContainer = React.createClass({
     this.setState({email: email});
   },
   onSelectSetting: function(setting) {
+    BackgroundGeolocation.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     this.setState({
       setting: setting,
       settingDetailView: (
@@ -90,6 +94,7 @@ var SettingsContainer = React.createClass({
     this.refs.drawer.open();
   },
   onSelectValue: function(value) {
+    BackgroundGeolocation.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     this.refs.settings.update(this.state.setting, value);
     var config = {};
     config[this.state.setting.name] = value;
@@ -97,16 +102,17 @@ var SettingsContainer = React.createClass({
     this.refs.drawer.close();
   },
   onClickSync: function() {
+    BackgroundGeolocation.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     var me = this;
     this.setState({
       syncButtonIcon: me.icons.spinner
     });
     BackgroundGeolocation.sync(function(rs) {
-      console.log('- sync success');
+      console.log('- sync success', rs.length);
       me.setState({
         syncButtonIcon: me.icons.syncButton
       });
-      BackgroundGeolocation.playSound(config.sounds.MESSAGE_SENT_ANDROID);
+      BackgroundGeolocation.playSound(Config.sounds.MESSAGE_SENT_ANDROID);
     }, function(error) {
       console.log('- sync error: ', error);
     });

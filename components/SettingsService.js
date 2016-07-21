@@ -141,6 +141,8 @@ var SettingsService = (function() {
     get: function(key) {
       if (typeof(_values[key]) === 'undefined') {
         return _defaultValues[key];
+      } else if (_values[key] === null) {
+        return '';
       } else {
         return _values[key];  
       }

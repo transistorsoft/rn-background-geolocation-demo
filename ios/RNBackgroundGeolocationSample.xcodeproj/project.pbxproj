@@ -30,7 +30,6 @@
 		837651021D3ECA1000268B87 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 837651011D3ECA1000268B87 /* Mapbox.framework */; };
 		837651031D3ECA1000268B87 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 837651011D3ECA1000268B87 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		837651061D3ECA1E00268B87 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 837651051D3ECA1E00268B87 /* libsqlite3.tbd */; };
-		837651081D3ECA3B00268B87 /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 837651071D3ECA3B00268B87 /* TSLocationManager.framework */; };
 		837651141D3ECBED00268B87 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8376510C1D3ECBED00268B87 /* Entypo.ttf */; };
 		837651151D3ECBED00268B87 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8376510D1D3ECBED00268B87 /* EvilIcons.ttf */; };
 		837651161D3ECBED00268B87 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8376510E1D3ECBED00268B87 /* FontAwesome.ttf */; };
@@ -39,6 +38,7 @@
 		837651191D3ECBED00268B87 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 837651111D3ECBED00268B87 /* MaterialIcons.ttf */; };
 		8376511A1D3ECBED00268B87 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 837651121D3ECBED00268B87 /* Octicons.ttf */; };
 		8376511B1D3ECBED00268B87 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 837651131D3ECBED00268B87 /* Zocial.ttf */; };
+		8376514A1D3FE15200268B87 /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 837651481D3FB92800268B87 /* TSLocationManager.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -205,7 +205,6 @@
 		837650F71D3EC93200268B87 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		837651011D3ECA1000268B87 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		837651051D3ECA1E00268B87 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		837651071D3ECA3B00268B87 /* TSLocationManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../node_modules/react-native-background-geolocation/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = "<group>"; };
 		8376510C1D3ECBED00268B87 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
 		8376510D1D3ECBED00268B87 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
 		8376510E1D3ECBED00268B87 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
@@ -214,6 +213,7 @@
 		837651111D3ECBED00268B87 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		837651121D3ECBED00268B87 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		837651131D3ECBED00268B87 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
+		837651481D3FB92800268B87 /* TSLocationManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../../../react-native-background-geolocation/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,7 +229,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				837651081D3ECA3B00268B87 /* TSLocationManager.framework in Frameworks */,
+				8376514A1D3FE15200268B87 /* TSLocationManager.framework in Frameworks */,
 				837651061D3ECA1E00268B87 /* libsqlite3.tbd in Frameworks */,
 				837650FD1D3EC95300268B87 /* libRCTMapboxGL.a in Frameworks */,
 				837650FE1D3EC95300268B87 /* libRNBackgroundGeolocation.a in Frameworks */,
@@ -436,8 +436,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				837651481D3FB92800268B87 /* TSLocationManager.framework */,
 				8376510B1D3ECBED00268B87 /* Fonts */,
-				837651071D3ECA3B00268B87 /* TSLocationManager.framework */,
 				837651051D3ECA1E00268B87 /* libsqlite3.tbd */,
 				837651011D3ECA1000268B87 /* Mapbox.framework */,
 				13B07FAE1A68108700A75B9A /* RNBackgroundGeolocationSample */,

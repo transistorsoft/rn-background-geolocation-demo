@@ -30,9 +30,10 @@ var config = (function() {
     icons: {
       play: 'md-play',
       pause: 'md-pause',
-      navigate: 'ios-navigate',
+      navigate: 'md-navigate',
+      load: 'ios-sync',
 
-      disabled: <Icon name="ios-alert" size={30} style={{color: "#D9534F", marginRight:5}} />,
+      disabled: <Icon name="ios-warning" size={20} style={{color: "#D9534F"}} />,
       network: <Icon name="ios-wifi" size={20} style={{marginRight:5}}/>,
       gps: <Icon name="ios-locate" size={20} style={{marginRight:5}}/>,
       on_foot: <Icon name="ios-walk" size={20} style={{color:"#fff"}} />,
@@ -80,7 +81,7 @@ var config = (function() {
         }
       }
       return (
-        <View style={{flexDirection:"row", alignItems: "center"}}>
+        <View style={{flexDirection:"row", alignItems: "center", marginLeft:3}}>
           {iconDisabled}
           {iconGps}
           {iconNetwork}
