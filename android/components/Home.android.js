@@ -32,8 +32,8 @@ var Home = React.createClass({
       isMoving: false,
       odometer: 0,
       paceButtonStyle: commonStyles.disabledButton,
-      paceButtonIcon: 'md-play',
-      navigateButtonIcon: 'ios-navigate',
+      paceButtonIcon: Config.icons.play,
+      navigateButtonIcon: Config.icons.navigate,
       mapHeight: 300,
       mapWidth: 300,
       // mapbox
@@ -56,7 +56,6 @@ var Home = React.createClass({
 
     
     SettingsService.getValues(function(values) {
-      values.license = "1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774";
       me.configureBackgroundGeolocation(values);
     });
 
@@ -146,7 +145,8 @@ var Home = React.createClass({
       console.log("- getGeofences ERROR", error);
     });
 
-    // 2. Configure it
+    ////
+    // 2. Configure it.
     //
     // OPTIONAL:  Optionally generate a test schedule here.
     //  1: how many schedules?
@@ -161,8 +161,10 @@ var Home = React.createClass({
     //  ]
     // UNCOMMENT TO AUTO-GENERATE A SERIES OF SCHEDULE EVENTS BASED UPON CURRENT TIME:
     // config.schedule = SettingsService.generateSchedule(24, 1, 30, 30);
-
     //config.url = 'http://192.168.11.100:8080/locations';
+
+    // Set the license key
+    config.license = "1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774";
 
     this.locationManager.configure(config, function(state) {
       console.log('- configure success.  Current state: ', state);
@@ -221,6 +223,7 @@ var Home = React.createClass({
   },
 
   onClickMenu: function() {
+    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     this.props.drawer.open();
   },
 
@@ -228,7 +231,7 @@ var Home = React.createClass({
     var me = this;
     if (!this.state.enabled) {
       this.locationManager.start(function() {
-        me.initializePolyline();
+        //me.initializePolyline();
       });
     } else {
       this.locationManager.resetOdometer();
@@ -253,6 +256,7 @@ var Home = React.createClass({
   },
   onClickPace: function() {
     if (!this.state.enabled) { return; }
+    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     var isMoving = !this.state.isMoving;
     this.locationManager.changePace(isMoving);
 
@@ -263,7 +267,7 @@ var Home = React.createClass({
   },
   onClickLocate: function() {
     var me = this;
-
+    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     this.locationManager.getCurrentPosition({
       timeout: 30,
       samples: 5,
@@ -273,8 +277,8 @@ var Home = React.createClass({
       me.setCenter(location);
       console.log('- current position: ', JSON.stringify(location));
     }, function(error) {
-      console.error('ERROR: getCurrentPosition', error);
-      me.setState({navigateButtonIcon: 'ios-navigate'});
+      console.info('ERROR: Could not get current position', error);
+      //me.setState({navigateButtonIcon: 'ios-navigate'});
     });
     this.locationManager.stopWatchPosition(function() {
       console.info('- Stopped watching position');
@@ -285,7 +289,6 @@ var Home = React.createClass({
   },
   setCenter: function(location) {
     this.setState({
-      navigateButtonIcon: 'ios-navigate',
       center: {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude
@@ -324,7 +327,7 @@ var Home = React.createClass({
     }
     this.setState({
       paceButtonStyle: style,
-      paceButtonIcon: (this.state.enabled && this.state.isMoving) ? 'md-pause' : 'md-play'
+      paceButtonIcon: (this.state.enabled && this.state.isMoving) ? Config.icons.pause : Config.icons.play
     });
   },
   render: function() {
@@ -358,15 +361,16 @@ var Home = React.createClass({
           />
         </View>
         <View style={commonStyles.bottomToolbar}>
-          <View style={{flex:1, flexDirection:"row", justifyContent:"flex-start", alignItems:"center"}}>
-            <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={30} color="#000" underlayColor="#eee" backgroundColor="transparent" style={styles.btnNavigate} />
+          <View style={{flex:0.3,flexDirection:"row", justifyContent:"flex-start", alignItems:"center"}}>
+            <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={30} color="#000" backgroundColor="#eee" underlayColor="green" style={styles.btnNavigate} />
             {Config.getLocationProviders(this.state.currentProvider)}
           </View>
-          <View style={{flex:1, flexDirection: "row", alignItems:"center", justifyContent: "center"}}>            
+          <View style={{flex:1, flexDirection: "row", alignItems:"center", justifyContent: "center"}}>
+            <Text style={{marginRight:5}}>Activity</Text>
             {Config.getActivityIcon(this.state.currentActivity)}
-            <View style={styles.label}><Text style={styles.labelText}>{this.state.odometer}km</Text></View>
+            <Text style={{marginLeft:5}}>{this.state.odometer}km</Text>
           </View>
-          <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} style={[this.state.paceButtonStyle, {width:75}]}></Icon.Button>
+          <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} iconStyle={{marginLeft:12}} style={[this.state.paceButtonStyle, {paddingLeft:5}]} />
           <Text>&nbsp;</Text>
         </View>
       </View>
@@ -375,6 +379,10 @@ var Home = React.createClass({
 });
 
 var styles = StyleSheet.create({
+  btnNavigate: {
+    padding: 3,
+    paddingLeft: 10
+  },
   workspace: {
     flex: 1
   },

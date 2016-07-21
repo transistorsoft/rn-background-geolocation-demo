@@ -133,7 +133,10 @@ var Home = React.createClass({
       console.log("- activitychange fired: ", activityName);
       me.setState({currentActivity: activityName});
     });
-
+    this.locationManager.on("providerchange", function(provider) {
+      console.log("- providerchange fired: ", provider);
+      me.setState({currentProvider: provider});
+    });
     // getGeofences
     this.locationManager.getGeofences(function(rs) {
       console.log('- getGeofences: ', JSON.stringify(rs));
@@ -314,15 +317,14 @@ var Home = React.createClass({
         </View>
 
         <View style={commonStyles.bottomToolbar}>
-          <View style={{flexDirection:"row", alignItems:"center"}}>
+          <View style={{flexDirection:"row", flex:0.3, alignItems:"center"}}>
             <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={30} color="#666" underlayColor="#ccc" backgroundColor="#eee" style={styles.btnNavigate} />
             {Config.getLocationProviders(this.state.currentProvider)}
           </View>
           <View style={[styles.toolbarContainer, {flex: 1, justifyContent: "center"}]}>
+            <Text style={{marginRight:5}}>Activity</Text>
             {Config.getActivityIcon(this.state.currentActivity)}
-            <View style={commonStyles.label}>
-              <Text style={commonStyles.labelText}>{this.state.odometer}km</Text>
-            </View>
+            <Text style={{marginLeft:5}}>{this.state.odometer}km</Text>
           </View>
           <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} style={[this.state.paceButtonStyle, {paddingLeft:18}]}></Icon.Button>
         </View>
