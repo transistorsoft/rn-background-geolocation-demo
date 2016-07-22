@@ -9,6 +9,8 @@ import {
   AppState
  } from 'react-native';
 
+import EventEmitter from 'EventEmitter';
+
 var Mapbox = require('react-native-mapbox-gl');
 var mapRef = 'mapRef';
 
@@ -16,6 +18,7 @@ import Config from '../../components/config';
 import Icon from 'react-native-vector-icons/Ionicons';
 import SettingsService from '../../components/SettingsService';
 import commonStyles from '../../components/styles';
+import BottomToolbar from '../../components/BottomToolbar';
 
 SettingsService.init('Android');
 
@@ -24,18 +27,13 @@ var Home = React.createClass({
   locationIcon: require("image!green_circle"),
   currentLocation: undefined,
   locationManager: undefined,
+  eventEmitter: new EventEmitter(),
 
   getInitialState: function() {
     return {
       currentState: AppState.currentState,
       enabled: false,
-      isMoving: false,
-      odometer: 0,
-      paceButtonStyle: commonStyles.disabledButton,
-      paceButtonIcon: Config.icons.play,
-      navigateButtonIcon: Config.icons.navigate,
-      mapHeight: 300,
-      mapWidth: 300,
+      isMoving: false,      
       // mapbox
       center: {
         latitude: 40.7223,
@@ -43,9 +41,7 @@ var Home = React.createClass({
       },
       showsUserLocation: true,
       zoomLevel: 10,
-      annotations: [],
-      currentActivity: 'unknown',
-      currentProvider: undefined
+      annotations: []      
     };
   },
   
@@ -71,7 +67,7 @@ var Home = React.createClass({
     var me = this;
     this.locationManager = this.props.locationManager;  // @see Index.android.js 
 
-    // 1. Set up listeners on event
+    // 1. Set up listeners on BackgroundGeolocation events
     //
     // location event
     this.locationManager.on("location", function(location) {
@@ -80,13 +76,7 @@ var Home = React.createClass({
       if (!location.sample) {
         me.addMarker(location);
       }
-
       me.setCenter(location);
-
-      me.setState({
-        odometer: (location.odometer/1000).toFixed(1)
-      });
-
     });
     // http event
     this.locationManager.on("http", function(response) {
@@ -115,7 +105,7 @@ var Home = React.createClass({
       me.setState({
         isMoving: event.isMoving
       });
-      me.updatePaceButtonStyle();
+      //me.updatePaceButtonStyle();
     });
     // schedule event
     this.locationManager.on("schedule", function(state) {
@@ -123,21 +113,9 @@ var Home = React.createClass({
       me.setState({
         enabled: state.enabled
       });
-      me.updatePaceButtonStyle();
+      //me.updatePaceButtonStyle();
     });
-    this.locationManager.on("providerchange", function(provider) {
-      me.setState({
-        currentProvider: provider
-      });
-    });
-    // activitychange event
-    this.locationManager.on("activitychange", function(activityName) {
-      me.setState({currentActivity: activityName});
-    });
-    // providerchange event
-    this.locationManager.on("providerchange", function(provider) {
-      console.log('- providerchange: ', provider.enabled, provider);
-    });
+    
     // getGeofences
     this.locationManager.getGeofences(function(rs) {
       console.log('- getGeofences: ', JSON.stringify(rs));
@@ -169,6 +147,9 @@ var Home = React.createClass({
     this.locationManager.configure(config, function(state) {
       console.log('- configure success.  Current state: ', state);
       
+      // Broadcast to child components.
+      this.eventEmitter.emit('enabled', state.enabled);
+
       // Start the scheduler if configured with one.
       if (state.schedulerEnabled) {
         me.locationManager.startSchedule(function() {
@@ -180,11 +161,7 @@ var Home = React.createClass({
       me.setState({
         enabled: state.enabled
       });
-      if (state.enabled) {
-        //me.initializePolyline();
-        me.updatePaceButtonStyle()
-      }
-    });
+    }.bind(this));
   },
   /**
   * MapBox is evil.  It keeps the location running in background when showsUserLocation is enabled
@@ -229,19 +206,20 @@ var Home = React.createClass({
 
   onClickEnable: function() {    
     var me = this;
-    if (!this.state.enabled) {
+    var enabled = !this.state.enabled;
+
+    if (enabled) {
       this.locationManager.start(function() {
-        //me.initializePolyline();
-      });
+      }.bind(this));
     } else {
       this.locationManager.resetOdometer();
       this.locationManager.removeGeofences();
       this.locationManager.stop();
       this.locationManager.stopWatchPosition();
-
+      this.removeAllAnnotations(mapRef);
       this.setState({
-        annotations: [{}],
-        odometer: 0
+        odometer: (0/1).toFixed(1),
+        currentActivity: 'unknown'
       });
 
       if (this.polyline) {
@@ -249,40 +227,12 @@ var Home = React.createClass({
       }
     }
 
-    this.setState({
-      enabled: !this.state.enabled
-    });
-    this.updatePaceButtonStyle();
-  },
-  onClickPace: function() {
-    if (!this.state.enabled) { return; }
-    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
-    var isMoving = !this.state.isMoving;
-    this.locationManager.changePace(isMoving);
+    this.eventEmitter.emit('enabled', enabled);
 
     this.setState({
-      isMoving: isMoving
-    });      
-    this.updatePaceButtonStyle();
-  },
-  onClickLocate: function() {
-    var me = this;
-    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
-    this.locationManager.getCurrentPosition({
-      timeout: 30,
-      samples: 5,
-      desiredAccuracy: 5,
-      persist: false
-    }, function(location) {
-      me.setCenter(location);
-      console.log('- current position: ', JSON.stringify(location));
-    }, function(error) {
-      console.info('ERROR: Could not get current position', error);
-      //me.setState({navigateButtonIcon: 'ios-navigate'});
+      enabled: enabled
     });
-    this.locationManager.stopWatchPosition(function() {
-      console.info('- Stopped watching position');
-    });
+    //this.updatePaceButtonStyle();
   },
   onRegionChange: function() {
     console.log('onRegionChange');
@@ -320,16 +270,6 @@ var Home = React.createClass({
         coordinates: [location.coords.latitude, location.coords.longitude]
       };
   },
-  updatePaceButtonStyle: function() {
-    var style = commonStyles.disabledButton;
-    if (this.state.enabled) {
-      style = (this.state.isMoving) ? commonStyles.redButton : commonStyles.greenButton;
-    }
-    this.setState({
-      paceButtonStyle: style,
-      paceButtonIcon: (this.state.enabled && this.state.isMoving) ? Config.icons.pause : Config.icons.play
-    });
-  },
   render: function() {
     return (
       <View style={commonStyles.container}>
@@ -360,49 +300,15 @@ var Home = React.createClass({
             onOpenAnnotation={this.onOpenAnnotation}
           />
         </View>
-        <View style={commonStyles.bottomToolbar}>
-          <View style={{flex:0.3,flexDirection:"row", justifyContent:"flex-start", alignItems:"center"}}>
-            <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={30} color="#000" backgroundColor="#eee" underlayColor="green" style={styles.btnNavigate} />
-            {Config.getLocationProviders(this.state.currentProvider)}
-          </View>
-          <View style={{flex:1, flexDirection: "row", alignItems:"center", justifyContent: "center"}}>
-            <Text style={{marginRight:5}}>Activity</Text>
-            {Config.getActivityIcon(this.state.currentActivity)}
-            <Text style={{marginLeft:5}}>{this.state.odometer}km</Text>
-          </View>
-          <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} iconStyle={{marginLeft:12}} style={[this.state.paceButtonStyle, {paddingLeft:5}]} />
-          <Text>&nbsp;</Text>
-        </View>
+        <BottomToolbar locationManager={this.props.locationManager} eventEmitter={this.eventEmitter} enabled={this.state.enabled} />
       </View>
     );
   }
 });
 
-var styles = StyleSheet.create({
-  btnNavigate: {
-    padding: 3,
-    paddingLeft: 10
-  },
+var styles = StyleSheet.create({  
   workspace: {
     flex: 1
-  },
-  labelActivity: {
-    alignItems: "center",
-    justifyContent: "center",    
-    borderRadius: 3,
-    width: 40,
-    padding: 3
-  },
-  label: {
-    padding: 3,
-    width: 75
-  },
-  labelText: {
-    fontSize: 14,
-    textAlign: 'center'
-  },
-  labelOdometer: {
-    padding: 3
   },
   mapBox: {
     flex: 1

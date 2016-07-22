@@ -33,6 +33,7 @@ var config = (function() {
       navigate: 'md-navigate',
       load: 'ios-sync',
 
+      spinner: <Icon name="ios-sync" size={20} style={{marginRight:3}} />,
       disabled: <Icon name="ios-warning" size={20} style={{color: "#D9534F"}} />,
       network: <Icon name="ios-wifi" size={20} style={{marginRight:5}}/>,
       gps: <Icon name="ios-locate" size={20} style={{marginRight:5}}/>,

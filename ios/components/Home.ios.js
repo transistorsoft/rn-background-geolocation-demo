@@ -2,7 +2,6 @@
 
 
 import SettingDetail from '../../components/SettingDetail';
-
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -12,6 +11,7 @@ import {
  } from 'react-native';
 
 import Mapbox from 'react-native-mapbox-gl';
+import EventEmitter from 'EventEmitter';
 
 var mapRef = 'mapRef';
 
@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import SettingsService from '../../components/SettingsService';
 import commonStyles from '../../components/styles';
 import Config from '../../components/config';
+import BottomToolbar from '../../components/BottomToolbar';
 
 var styles = StyleSheet.create({
   workspace: {
@@ -26,12 +27,6 @@ var styles = StyleSheet.create({
   },
   map: {
     flex: 1
-  },
-  btnNavigate: {
-    width: 44
-  },
-  provider: {
-
   },
   toolbarContainer: {
     flexDirection: "row",
@@ -46,23 +41,11 @@ var Home = React.createClass({
   annotations: [],
   currentLocation: undefined,
   locationManager: undefined,
+  eventEmitter: new EventEmitter(),
 
   getInitialState: function() {
     return {
       enabled: false,
-      isMoving: false,
-      currentActivity: 'unknown',
-      currentProvider: {
-        enabled: true,
-        gps: true,
-        network: true
-      },
-      odometer: 0,
-      paceButtonStyle: commonStyles.disabledButton,
-      navigateButtonIcon: Config.icons.navigate,
-      paceButtonIcon: Config.icons.play,
-      mapHeight: 280,
-      mapWidth: 300,
       zoom: 10,
       annotations: [],
       center: {
@@ -83,9 +66,6 @@ var Home = React.createClass({
     // location event
     this.locationManager.on("location", function(location) {
       console.log('- location: ', JSON.stringify(location, null, 2));
-      me.setState({
-        odometer: (location.odometer/1000).toFixed(0)
-      });
       if (location.sample) {
         console.log('<sample location>');
         return;
@@ -110,10 +90,6 @@ var Home = React.createClass({
     // motionchange event
     this.locationManager.on("motionchange", function(event) {
       console.log("- motionchange", JSON.stringify(event, null, 2));
-      me.setState({
-        isMoving: event.is_moving
-      });
-      me.updatePaceButtonStyle()
     });
     // heartbeat event
     this.locationManager.on("heartbeat", function(params) {
@@ -123,19 +99,8 @@ var Home = React.createClass({
     this.locationManager.on("schedule", function(state) {
       console.log("- schedule fired: ", state.enabled, state);
       me.setState({
-        isMoving: state.isMoving,
         enabled: state.enabled
-      });
-      me.updatePaceButtonStyle();
-    });
-    // activitychange event
-    this.locationManager.on("activitychange", function(activityName) {
-      console.log("- activitychange fired: ", activityName);
-      me.setState({currentActivity: activityName});
-    });
-    this.locationManager.on("providerchange", function(provider) {
-      console.log("- providerchange fired: ", provider);
-      me.setState({currentProvider: provider});
+      });      
     });
     // getGeofences
     this.locationManager.getGeofences(function(rs) {
@@ -152,7 +117,7 @@ var Home = React.createClass({
       // Configure BackgroundGeolocaiton!
       me.locationManager.configure(values, function(state) {
         console.log('- configure, current state: ', state);
-
+        me.eventEmitter.emit('enabled', state.enabled);
         me.locationManager.startSchedule(function() {
           console.log('- Schedule start success');
         });
@@ -160,16 +125,15 @@ var Home = React.createClass({
         me.setState({
           enabled: state.enabled
         });
+
         if (state.enabled) {
           me.initializePolyline();
-          me.updatePaceButtonStyle()
         }
       });
     });
 
     this.setState({
-      enabled: false,
-      isMoving: false
+      enabled: false
     });
   },
   addMarker :function(location) {
@@ -206,7 +170,9 @@ var Home = React.createClass({
 
   onClickEnable: function() {
     var me = this;
-    if (!this.state.enabled) {
+    var enabled = !this.state.enabled;
+
+    if (enabled) {
       this.locationManager.start(function() {
         me.initializePolyline();
       });
@@ -218,55 +184,15 @@ var Home = React.createClass({
       this.polyline = null;
     }
     this.setState({
-      enabled: !this.state.enabled
+      enabled: enabled
     });
-    this.updatePaceButtonStyle();
-  },
-  onClickPace: function() {
-    if (!this.state.enabled) { return; }
-    var isMoving = !this.state.isMoving;
-    this.locationManager.changePace(isMoving);
-
-    this.setState({
-      isMoving: isMoving
-    });
-    this.updatePaceButtonStyle();
-  },
-  onClickLocate: function() {
-    var me = this;
-    this.locationManager.getState(function(state) {
-      console.log('- state: ', state);
-    });
-
-    this.locationManager.getCurrentPosition({
-      timeout: 10,
-      persist: false,
-      desiredAccuracy: 10,
-      samples: 5,
-      maximumAge: 5000
-    }, function(location) {
-      me.setCenter(location);
-      console.log('- current position: ', JSON.stringify(location));
-    }, function(error) {
-      console.error('ERROR: getCurrentPosition', error);
-      me.setState({navigateButtonIcon: Config.icons.navigate});
-    });
-  },
+    this.eventEmitter.emit('enabled', enabled);
+  },  
   onRegionChange: function() {
     console.log('onRegionChange');
   },
   setCenter: function(location) {
     this.setCenterCoordinateAnimated(mapRef, location.coords.latitude, location.coords.longitude)
-  },
-  updatePaceButtonStyle: function() {
-    var style = commonStyles.disabledButton;
-    if (this.state.enabled) {
-      style = (this.state.isMoving) ? commonStyles.redButton : commonStyles.greenButton;
-    }
-    this.setState({
-      paceButtonStyle: style,
-      paceButtonIcon: (this.state.enabled && this.state.isMoving) ? Config.icons.play : Config.icons.pause
-    });
   },
   // MapBox
   onRegionChange: function(location) {
@@ -315,19 +241,7 @@ var Home = React.createClass({
             onRightAnnotationTapped={this.onRightAnnotationTapped}
             onUpdateUserLocation={this.onUpdateUserLocation} />
         </View>
-
-        <View style={commonStyles.bottomToolbar}>
-          <View style={{flexDirection:"row", flex:0.3, alignItems:"center"}}>
-            <Icon.Button name={this.state.navigateButtonIcon} onPress={this.onClickLocate} size={30} color="#666" underlayColor="#ccc" backgroundColor="#eee" style={styles.btnNavigate} />
-            {Config.getLocationProviders(this.state.currentProvider)}
-          </View>
-          <View style={[styles.toolbarContainer, {flex: 1, justifyContent: "center"}]}>
-            <Text style={{marginRight:5}}>Activity</Text>
-            {Config.getActivityIcon(this.state.currentActivity)}
-            <Text style={{marginLeft:5}}>{this.state.odometer}km</Text>
-          </View>
-          <Icon.Button name={this.state.paceButtonIcon} onPress={this.onClickPace} style={[this.state.paceButtonStyle, {paddingLeft:18}]}></Icon.Button>
-        </View>
+        <BottomToolbar locationManager={this.props.locationManager} eventEmitter={this.eventEmitter} enabled={this.state.enabled} />
       </View>
     );
   }
