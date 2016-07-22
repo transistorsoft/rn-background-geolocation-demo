@@ -33,7 +33,6 @@ var Home = React.createClass({
     return {
       currentState: AppState.currentState,
       enabled: false,
-      isMoving: false,      
       // mapbox
       center: {
         latitude: 40.7223,
@@ -56,8 +55,7 @@ var Home = React.createClass({
     });
 
     this.setState({
-      enabled: false,
-      isMoving: false
+      enabled: false
     });
   },
   componentWillUnmount: function() {
@@ -101,11 +99,7 @@ var Home = React.createClass({
     });
     // motionchange event
     this.locationManager.on("motionchange", function(event) {
-      console.log("- motionchange", JSON.stringify(event));
-      me.setState({
-        isMoving: event.isMoving
-      });
-      //me.updatePaceButtonStyle();
+      console.log("- motionchange", JSON.stringify(event));      
     });
     // schedule event
     this.locationManager.on("schedule", function(state) {
@@ -113,7 +107,6 @@ var Home = React.createClass({
       me.setState({
         enabled: state.enabled
       });
-      //me.updatePaceButtonStyle();
     });
     
     // getGeofences
@@ -217,22 +210,16 @@ var Home = React.createClass({
       this.locationManager.stop();
       this.locationManager.stopWatchPosition();
       this.removeAllAnnotations(mapRef);
-      this.setState({
-        odometer: (0/1).toFixed(1),
-        currentActivity: 'unknown'
-      });
 
       if (this.polyline) {
         this.polyline = null;
       }
     }
 
-    this.eventEmitter.emit('enabled', enabled);
-
     this.setState({
       enabled: enabled
     });
-    //this.updatePaceButtonStyle();
+    this.eventEmitter.emit('enabled', enabled);
   },
   onRegionChange: function() {
     console.log('onRegionChange');
