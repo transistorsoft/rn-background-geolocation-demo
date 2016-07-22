@@ -55,7 +55,7 @@ var BottomToolbar = React.createClass({
 
     bgGeo.on("motionchange", function(event) {
       me.setState({
-        isMoving: event.isMoving
+        isMoving: event.is_moving
       });
     });
 
@@ -93,13 +93,9 @@ var BottomToolbar = React.createClass({
       isMoving: isMoving,
       isChangingPace: true
     });
-
-    // Play a beep sound
-    bgGeo.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
   },
   onClickLocate: function() {
     var bgGeo = this.props.locationManager;
-    bgGeo.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     bgGeo.getCurrentPosition({
       timeout: 30,
       samples: 3,
