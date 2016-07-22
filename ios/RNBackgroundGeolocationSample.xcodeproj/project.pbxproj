@@ -23,6 +23,7 @@
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		83290C451D412C0000DAD517 /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83290C441D412C0000DAD517 /* TSLocationManager.framework */; };
 		837650FD1D3EC95300268B87 /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 837650EB1D3EC90A00268B87 /* libRCTMapboxGL.a */; };
 		837650FE1D3EC95300268B87 /* libRNBackgroundGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 837650F41D3EC92000268B87 /* libRNBackgroundGeolocation.a */; };
 		837650FF1D3EC95300268B87 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 837650E41D3EC8FA00268B87 /* libRNDeviceInfo.a */; };
@@ -38,7 +39,6 @@
 		837651191D3ECBED00268B87 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 837651111D3ECBED00268B87 /* MaterialIcons.ttf */; };
 		8376511A1D3ECBED00268B87 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 837651121D3ECBED00268B87 /* Octicons.ttf */; };
 		8376511B1D3ECBED00268B87 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 837651131D3ECBED00268B87 /* Zocial.ttf */; };
-		8376514A1D3FE15200268B87 /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 837651481D3FB92800268B87 /* TSLocationManager.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,6 +199,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		83290C441D412C0000DAD517 /* TSLocationManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../../../react-native-background-geolocation/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = "<group>"; };
 		837650D51D3EC8F500268B87 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		837650E51D3EC90A00268B87 /* RCTMapboxGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMapboxGL.xcodeproj; path = "../node_modules/react-native-mapbox-gl/ios/RCTMapboxGL.xcodeproj"; sourceTree = "<group>"; };
 		837650EE1D3EC91F00268B87 /* RNBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundGeolocation.xcodeproj; path = "../node_modules/react-native-background-geolocation/RNBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
@@ -213,7 +214,6 @@
 		837651111D3ECBED00268B87 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		837651121D3ECBED00268B87 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		837651131D3ECBED00268B87 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
-		837651481D3FB92800268B87 /* TSLocationManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../../../react-native-background-geolocation/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,7 +229,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8376514A1D3FE15200268B87 /* TSLocationManager.framework in Frameworks */,
+				83290C451D412C0000DAD517 /* TSLocationManager.framework in Frameworks */,
 				837651061D3ECA1E00268B87 /* libsqlite3.tbd in Frameworks */,
 				837650FD1D3EC95300268B87 /* libRCTMapboxGL.a in Frameworks */,
 				837650FE1D3EC95300268B87 /* libRNBackgroundGeolocation.a in Frameworks */,
@@ -436,7 +436,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				837651481D3FB92800268B87 /* TSLocationManager.framework */,
+				83290C441D412C0000DAD517 /* TSLocationManager.framework */,
 				8376510B1D3ECBED00268B87 /* Fonts */,
 				837651051D3ECA1E00268B87 /* libsqlite3.tbd */,
 				837651011D3ECA1000268B87 /* Mapbox.framework */,
