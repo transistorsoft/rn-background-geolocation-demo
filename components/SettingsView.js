@@ -12,7 +12,6 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import Drawer from 'react-native-drawer';
-import BackgroundGeolocation from 'react-native-background-geolocation-android';
 import Modal from 'react-native-modalbox';
 import SettingsService from './SettingsService';
 import SettingsListView from './SettingsListView.js';
@@ -36,34 +35,36 @@ var SettingsView = React.createClass({
   },
   componentDidMount: function() {
     var me = this;
-    BackgroundGeolocation.getState(function(state) {
+    this.locationManager = this.props.locationManager;  // @see index.<platform>.js 
+
+    this.locationManager.getState(function(state) {
       me.setState({
         debug: state.debug
       });
     });
   },
   onClickBack: function() {
-    BackgroundGeolocation.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
+    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     this.props.drawer.close();
   },
   onClickSettingDone: function() {
     this.refs.drawer.close();
   },
   onClickEmailLogs: function() {
-    BackgroundGeolocation.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
+    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     this.refs.modal.open();
   },
   onToggleDebug: function(value) {
-    BackgroundGeolocation.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
+    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     this.setState({debug: value});
-    BackgroundGeolocation.setConfig({
+    this.locationManager.setConfig({
       debug: value
     });
     SettingsService.set('debug', value);
   },
   onClickSubmitLogs: function() {
     var modal = this.refs.modal;
-    BackgroundGeolocation.emailLog(this.state.email, function() {
+    this.locationManager.emailLog(this.state.email, function() {
       modal.close();
     }, function(error) {
       modal.close();
@@ -77,7 +78,7 @@ var SettingsView = React.createClass({
     this.setState({email: email});
   },
   onSelectSetting: function(setting) {
-    BackgroundGeolocation.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
+    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     this.setState({
       setting: setting,
       settingDetailView: (
@@ -94,25 +95,25 @@ var SettingsView = React.createClass({
     this.refs.drawer.open();
   },
   onSelectValue: function(value) {
-    BackgroundGeolocation.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
+    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     this.refs.settings.update(this.state.setting, value);
     var config = {};
     config[this.state.setting.name] = value;
-    BackgroundGeolocation.setConfig(config);
+    this.locationManager.setConfig(config);
     this.refs.drawer.close();
   },
   onClickSync: function() {
-    BackgroundGeolocation.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
+    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     var me = this;
     this.setState({
       syncButtonIcon: me.icons.spinner
     });
-    BackgroundGeolocation.sync(function(rs) {
+    this.locationManager.sync(function(rs) {
       console.log('- sync success', rs.length);
       me.setState({
         syncButtonIcon: me.icons.syncButton
       });
-      BackgroundGeolocation.playSound(Config.sounds.MESSAGE_SENT_ANDROID);
+      this.locationManager.playSound(Config.sounds.MESSAGE_SENT_ANDROID);
     }, function(error) {
       console.log('- sync error: ', error);
     });
