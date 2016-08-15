@@ -50,6 +50,7 @@ var MyMapView = React.createClass({
 
     AppState.addEventListener('change', this._handleAppStateChange);
 
+    this.locationManager = this.props.locationManager;  // @see index.<platfrom>.js 
     SettingsService.getValues(function(values) {
       me.configureBackgroundGeolocation(values);
     });
@@ -63,8 +64,7 @@ var MyMapView = React.createClass({
   },
   configureBackgroundGeolocation: function(config) {
     var me = this;
-    this.locationManager = this.props.locationManager;  // @see Index.android.js 
-
+    
     this.locationManager.removeGeofence("DROPOFF::ba094962-cf32-4f69-be81-69c0d63aa766::f0c23053-52c0-4270-9e79-11601d45b710", function(identifier) {
       console.log("*** removeGeofence SUCCESS: ", identifier);
     }, function(error) {
