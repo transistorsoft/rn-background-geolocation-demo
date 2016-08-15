@@ -7,20 +7,20 @@ import {
   View,
   TextInput,
   TouchableHighlight,
-  SwitchAndroid
+  Switch
  } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import Drawer from 'react-native-drawer';
 import BackgroundGeolocation from 'react-native-background-geolocation-android';
 import Modal from 'react-native-modalbox';
-import SettingsService from '../../components/SettingsService';
-import Settings from '../../components/Settings.js';
-import SettingDetail from '../../components/SettingDetail';
-import commonStyles from '../../components/styles';
-import Config from '../../components/config';
+import SettingsService from './SettingsService';
+import SettingsListView from './SettingsListView.js';
+import SettingDetailView from './SettingDetailView';
+import commonStyles from './styles';
+import Config from './config';
 
-var SettingsContainer = React.createClass({
+var SettingsView = React.createClass({
   icons: {
     syncButton: 'ios-cloud-upload',
     spinner: 'md-sync'
@@ -87,7 +87,7 @@ var SettingsContainer = React.createClass({
             <Text style={commonStyles.toolbarTitle}>{setting.name}</Text>
             <Text style={{width: 60}}>&nbsp;</Text>
           </View>
-          <SettingDetail setting={setting} onSelectValue={this.onSelectValue} />
+          <SettingDetailView setting={setting} onSelectValue={this.onSelectValue} />
         </View>
       )
     });
@@ -117,7 +117,7 @@ var SettingsContainer = React.createClass({
       console.log('- sync error: ', error);
     });
   },
-	render: function() {
+  render: function() {
     return (
       <Drawer ref="drawer" side="right" content={this.state.settingDetailView}>
         <View style={commonStyles.container}>
@@ -125,9 +125,9 @@ var SettingsContainer = React.createClass({
             <Icon.Button name="ios-arrow-back" onPress={this.onClickBack} iconStyle={commonStyles.backButtonIcon} backgroundColor="transparent" size={30} color="#4f8ef7" underlayColor={"transparent"}><Text style={commonStyles.backButtonText}>Back</Text></Icon.Button>
             <Text style={commonStyles.toolbarTitle}>Settings</Text>
             <Text>Debug</Text>
-            <SwitchAndroid onValueChange={this.onToggleDebug} value={this.state.debug} />
+            <Switch onValueChange={this.onToggleDebug} value={this.state.debug} />
           </View>
-          <Settings ref="settings" onSelectSetting={this.onSelectSetting} />
+          <SettingsListView ref="settings" onSelectSetting={this.onSelectSetting} />
 
           <View style={commonStyles.bottomToolbar}>
             <Icon.Button name="ios-share-alt" onPress={this.onClickEmailLogs}><Text style={[styles.btnLog, commonStyles.iconButton]}>Logs</Text></Icon.Button>
@@ -211,4 +211,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = SettingsContainer;
+module.exports = SettingsView;

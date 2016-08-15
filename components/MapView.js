@@ -5,41 +5,42 @@ import {
   StyleSheet,
   Text,
   View,
-  SwitchAndroid,
+  Switch,
   AppState
  } from 'react-native';
 
 import EventEmitter from 'EventEmitter';
 
-var Mapbox = require('react-native-mapbox-gl');
-var mapRef = 'mapRef';
+import Mapbox, { MapView } from 'react-native-mapbox-gl';
+Mapbox.setAccessToken('pk.eyJ1IjoiY2hyaXN0b2NyYWN5IiwiYSI6ImVmM2Y2MDA1NzIyMjg1NTdhZGFlYmZiY2QyODVjNzI2In0.htaacx3ZhE5uAWN86-YNAQ');
 
-import Config from '../../components/config';
+import Config from './config';
 import Icon from 'react-native-vector-icons/Ionicons';
-import SettingsService from '../../components/SettingsService';
-import commonStyles from '../../components/styles';
-import BottomToolbar from '../../components/BottomToolbar';
+import commonStyles from './styles';
+import BottomToolbarView from './BottomToolbarView';
+import SettingsService from './SettingsService';
+import GeofenceView from './GeofenceView';
+import Modal from 'react-native-modalbox';
 
-SettingsService.init('Android');
+SettingsService.init();
 
-var Home = React.createClass({
-  mixins: [Mapbox.Mixin],
+var MyMapView = React.createClass({
   locationIcon: require("image!green_circle"),
   currentLocation: undefined,
   locationManager: undefined,
   eventEmitter: new EventEmitter(),
-
+  coordinates: [],
   getInitialState: function() {
     return {
       currentState: AppState.currentState,
       enabled: false,
       // mapbox
-      center: {
+      initialCenterCoordinate: {
         latitude: 40.7223,
         longitude: -73.9878
       },
       showsUserLocation: true,
-      zoomLevel: 10,
+      initialZoomLevel: 15,
       annotations: []      
     };
   },
@@ -49,7 +50,6 @@ var Home = React.createClass({
 
     AppState.addEventListener('change', this._handleAppStateChange);
 
-    
     SettingsService.getValues(function(values) {
       me.configureBackgroundGeolocation(values);
     });
@@ -65,17 +65,22 @@ var Home = React.createClass({
     var me = this;
     this.locationManager = this.props.locationManager;  // @see Index.android.js 
 
+    this.locationManager.removeGeofence("DROPOFF::ba094962-cf32-4f69-be81-69c0d63aa766::f0c23053-52c0-4270-9e79-11601d45b710", function(identifier) {
+      console.log("*** removeGeofence SUCCESS: ", identifier);
+    }, function(error) {
+      console.log("*** removeGeofenceFailure: ", error);
+    });
+
     // 1. Set up listeners on BackgroundGeolocation events
     //
     // location event
     this.locationManager.on("location", function(location) {
-      console.log('- location: ', JSON.stringify(location));
-      
+      console.log('- location: ', JSON.stringify(location));    
       if (!location.sample) {
         me.addMarker(location);
       }
       me.setCenter(location);
-    });
+    }.bind(this));
     // http event
     this.locationManager.on("http", function(response) {
       console.log('- http ' + response.status);
@@ -84,9 +89,6 @@ var Home = React.createClass({
     // geofence event
     this.locationManager.on("geofence", function(geofence) {
       console.log('- onGeofence: ', JSON.stringify(geofence));
-      me.locationManager.removeGeofence(geofence.identifier, function() {
-        console.log('- Remove geofence success');
-      });
     });
     // heartbeat event
     this.locationManager.on("heartbeat", function(params) {
@@ -99,8 +101,9 @@ var Home = React.createClass({
     });
     // motionchange event
     this.locationManager.on("motionchange", function(event) {
+      var location = event.location;      
       console.log("- motionchange", JSON.stringify(event));      
-    });
+    }.bind(this));
     // schedule event
     this.locationManager.on("schedule", function(state) {
       console.log("- schedule", state.enabled, state);
@@ -108,14 +111,7 @@ var Home = React.createClass({
         enabled: state.enabled
       });
     });
-    
-    // getGeofences
-    this.locationManager.getGeofences(function(rs) {
-      console.log('- getGeofences: ', JSON.stringify(rs));
-    }, function(error) {
-      console.log("- getGeofences ERROR", error);
-    });
-
+        
     ////
     // 2. Configure it.
     //
@@ -131,11 +127,12 @@ var Home = React.createClass({
     //    '7 10:00-18:00'
     //  ]
     // UNCOMMENT TO AUTO-GENERATE A SERIES OF SCHEDULE EVENTS BASED UPON CURRENT TIME:
-    // config.schedule = SettingsService.generateSchedule(24, 1, 30, 30);
+    //config.schedule = SettingsService.generateSchedule(24, 1, 1, 1);
     //config.url = 'http://192.168.11.100:8080/locations';
 
     // Set the license key
     config.license = "1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774";
+    config.locationTimeout = 5;
 
     this.locationManager.configure(config, function(state) {
       console.log('- configure success.  Current state: ', state);
@@ -144,7 +141,7 @@ var Home = React.createClass({
       this.eventEmitter.emit('enabled', state.enabled);
 
       // Start the scheduler if configured with one.
-      if (state.schedulerEnabled) {
+      if (state.schedule) {
         me.locationManager.startSchedule(function() {
           console.info('- Scheduler started');
         });
@@ -167,31 +164,7 @@ var Home = React.createClass({
       showsUserLocation: showsUserLocation
     });
   },
-  _createMarker: function(location) {
-    return {
-        title: location.timestamp,
-        id: location.uuid,
-        icon: this.locationIcon,
-        anchor: [0.5, 0.5],
-        coordinates: {
-          lat: location.coords.latitude,
-          lng: location.coords.longitude
-        }
-      };
-  },
-  initializePolyline: function() {
-    this.polyline = {
-      type: "polyline",
-      coordinates: [],
-      title: "Route",
-      strokeColor: '#2677FF',
-      strokeWidth: 5,
-      strokeAlpha: 0.5,
-      id: "route"
-    };
-    this.addAnnotations(mapRef, [this.polyline]);
-  },
-
+  
   onClickMenu: function() {
     this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     this.props.drawer.open();
@@ -208,12 +181,13 @@ var Home = React.createClass({
       this.locationManager.resetOdometer();
       this.locationManager.removeGeofences();
       this.locationManager.stop();
+      this.coordinates = [];
       this.locationManager.stopWatchPosition();
-      this.removeAllAnnotations(mapRef);
 
-      if (this.polyline) {
-        this.polyline = null;
-      }
+      //this.removeAllAnnotations(mapRef);
+      this.setState({
+        annotations: []
+      });
     }
 
     this.setState({
@@ -221,33 +195,52 @@ var Home = React.createClass({
     });
     this.eventEmitter.emit('enabled', enabled);
   },
+  onMapLoaded: function() {
+    // Create geofences polygons
+    this.locationManager.getGeofences(function(geofences) {
+      var rs = [];
+      for (var n=0,len=geofences.length;n<len;n++) {
+        this.setState({
+          annotations: [ ...this.state.annotations, this.createGeofenceMarker(geofences[n])]
+        });
+      }
+    }.bind(this));
+  },
   onRegionChange: function() {
     console.log('onRegionChange');
   },
   setCenter: function(location) {
-    this.setState({
-      center: {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude
-      },
-      zoomLevel: 16
-    });
+    if (location.event === 'motionchange') {
+      this._map.setCenterCoordinateZoomLevel(location.coords.latitude, location.coords.longitude, 15);
+    } else {
+      this._map.setCenterCoordinate(location.coords.latitude, location.coords.longitude);
+    }
   },  
   onUserLocationChange: function(location) {
     console.log('[MapBox] #onUserLocationChange: ', location);
   },
-  onLongPress: function() {
-    console.log('[MapBox] #onLongPress');
+  onLongPress: function(params) {
+    this.refs.geofenceModal.open(params);    
   },
   onOpenAnnotation: function(annotation) {
-    console.log('[MapBox] #onOpenAnnotation');
+    console.log('[MapBox] #onOpenAnnotation', annotation);
+    if (annotation.title === 'geofence') {
+      this.refs.geofenceModal.load(annotation);
+    }
   },
   addMarker :function(location) {
-    this.addAnnotations(mapRef, [this.createMarker(location)]);
-    if (this.polyline) {
-      this.polyline.coordinates.push([location.coords.latitude, location.coords.longitude]);
-      this.addAnnotations(mapRef, this.polyline);
-    }
+    // Remove the route polyline.  We have to regenerate it from scratch each time.  
+    // Wish we could just update it with new coords
+    this.state.annotations = this.state.annotations.filter(function(annotation) {
+      return (annotation.type === 'polyline' && annotation.id === 'route') ? false : true;
+    });
+
+    this.setState({
+      annotations: [ ...this.state.annotations, this.createMarker(location)]
+    });
+    this.setState({
+      annotations: [ ...this.state.annotations, this.createPolyline(location) ]
+    });
   },
   createMarker: function(location) {
     return {
@@ -257,37 +250,99 @@ var Home = React.createClass({
         coordinates: [location.coords.latitude, location.coords.longitude]
       };
   },
+  createPolyline: function(location) {
+    this.coordinates.push([location.coords.latitude, location.coords.longitude]);
+    return {
+      type: "polyline",
+      coordinates: this.coordinates,
+      title: "Route",
+      strokeColor: '#2677FF',
+      strokeWidth: 5,
+      strokeAlpha: 0.5,
+      id: "route"
+    };  
+  },
+  createGeofenceMarker: function(params) {
+    // Too bad MapBox doesn't support a simple Circle...ugh.
+    var lat = params.latitude;
+    var lng = params.longitude;
+    var radius = params.radius;
+    var degreesBetweenPoints = 8;
+    var numberOfPoints = Math.floor(360/degreesBetweenPoints);
+    var distRadians = radius/6371000;
+    var centerLatRadians = lat * Math.PI / 180
+    var centerLngRadians = lng * Math.PI / 180;
+    var polygons = [];
+
+    var degrees, degreesRadians, pointLatRadians, pointLngRadians, pointLat, pointLng;
+    for (var i=0;i<numberOfPoints;i++) {
+      degrees = i * degreesBetweenPoints;
+      degreesRadians = degrees * Math.PI / 180;
+      pointLatRadians = Math.asin(Math.sin(centerLatRadians) * Math.cos(distRadians) + Math.cos(centerLatRadians) * Math.sin(distRadians) * Math.cos(degreesRadians));
+      pointLngRadians = centerLngRadians + Math.atan2(Math.sin(degreesRadians) * Math.sin(distRadians) * Math.cos(centerLatRadians), Math.cos(distRadians) - Math.sin(centerLatRadians) * Math.sin(pointLatRadians));
+      pointLat = pointLatRadians * 180 / Math.PI;
+      pointLng = pointLngRadians * 180 / Math.PI;
+      polygons.push([pointLat, pointLng]);
+    }
+
+    return {
+      id: params.identifier,
+      title: 'geofence',
+      type: 'polygon',
+      coordinates: polygons,
+      strokeAlpha: 0.9,      
+      strokeColor: '#11b700',
+      strokeWidth: 2,
+      fillAlpha:  0.2,
+      alpha: 0.2,
+      fillColor: '#11b700'      
+    };
+  },
+  onCloseGeofenceModal: function() {
+    alert('close geofence modal');
+  },
+  onSubmitGeofence: function(params) {    
+    this.locationManager.addGeofence(params, function(identifier) {
+      this.setState({
+        annotations: [ ...this.state.annotations, this.createGeofenceMarker(params)]
+      });
+    }.bind(this), function(error) {
+      console.warn('- addGeofence error: ', error);
+    }.bind(this))
+  },
+
   render: function() {
     return (
       <View style={commonStyles.container}>
         <View style={commonStyles.topToolbar}>
           <Icon.Button name="ios-options" onPress={this.onClickMenu} backgroundColor="transparent" size={30} color="#000" style={styles.btnMenu} underlayColor={"transparent"} />
           <Text style={commonStyles.toolbarTitle}>Background Geolocation</Text>
-          <SwitchAndroid onValueChange={this.onClickEnable} value={this.state.enabled} />
+          <Switch onValueChange={this.onClickEnable} value={this.state.enabled} />
         </View>
         <View ref="workspace" style={styles.workspace}>
-          <Mapbox
+          <MapView
+            ref={map => {this._map = map;}}
             annotations={this.state.annotations}
-            accessToken={'pk.eyJ1IjoiY2hyaXN0b2NyYWN5IiwiYSI6ImVmM2Y2MDA1NzIyMjg1NTdhZGFlYmZiY2QyODVjNzI2In0.htaacx3ZhE5uAWN86-YNAQ'}
-            centerCoordinate={this.state.center}
+            annotationsAreImmutable
+            initialCenterCoordinate={this.state.initialCenterCoordinate}
             debugActive={false}
             direction={10}
-            ref={mapRef}
             rotateEnabled={true}
             scrollEnabled={true}
             style={styles.mapBox}
             showsUserLocation={this.state.showsUserLocation}
-            styleURL={this.mapStyles.emerald}
-            userTrackingMode={this.userTrackingMode.none}
+            styleURL={Mapbox.mapStyles.dark}
+            userTrackingMode={Mapbox.userTrackingMode.none}
             zoomEnabled={true}
-            zoomLevel={this.state.zoomLevel}
+            initialZoomLevel={this.state.initialZoomLevel}
             compassIsHidden={true}
             onUserLocationChange={this.onUserLocationChange}
             onLongPress={this.onLongPress}
             onOpenAnnotation={this.onOpenAnnotation}
-          />
+            onFinishLoadingMap={this.onMapLoaded} />
         </View>
-        <BottomToolbar locationManager={this.props.locationManager} eventEmitter={this.eventEmitter} enabled={this.state.enabled} />
+        <BottomToolbarView locationManager={this.props.locationManager} eventEmitter={this.eventEmitter} enabled={this.state.enabled} />
+        <GeofenceView ref={"geofenceModal"} onSubmit={this.onSubmitGeofence}/>
       </View>
     );
   }
@@ -302,4 +357,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = Home;
+module.exports = MyMapView;

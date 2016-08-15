@@ -20,7 +20,9 @@
       </activity>
 
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-      
+
+        <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService"/>
+
       <!-- background-location 1 of 2 -->
       <service android:name="com.transistorsoft.locationmanager.BackgroundGeolocationService" />
       <service android:name="com.transistorsoft.locationmanager.LocationService" />

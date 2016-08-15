@@ -14,62 +14,9 @@ import {
  } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import SettingDetail from './SettingDetail';
-
-var styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: 'column',
-      padding: 0
-    },
-    section: {
-      backgroundColor: '#f5f5f5',
-      paddingTop: 30,
-      paddingLeft: 15,
-      paddingBottom: 10,
-      paddingRight: 15
-    },
-    cancelButton: {
-      position: 'absolute',
-      left: 5,
-      top: 17
-    },
-    row: {
-      alignItems: 'center',
-      flex: 1,
-      padding: 15,
-      flexDirection: 'row'
-    },
-    leftContainer: {
-      flex: 1,
-      left: 0
-    },
-    rightContainer: {
-        flex: 0.4,
-        alignItems: 'flex-end',
-    },
-    name: {
-      fontSize: 16
-    },
-    value: {
-      marginRight: 15,
-      fontSize: 16
-    },
-    separator: {
-      height: 1,
-      backgroundColor: '#dddddd'
-    },
-    listView: {
-      backgroundColor: '#fff'
-    },
-    disclosure: {
-      position: 'absolute',
-      right: -10,
-      top: 0
-    }
-});
+import SettingDetail from './SettingDetailView';
  
-var Settings = React.createClass({
+var SettingsListView = React.createClass({
     
   onCancel() {
     this.props.navigator.pop();
@@ -202,5 +149,58 @@ var Settings = React.createClass({
   },    
     
 });
- 
-module.exports = Settings;
+
+var styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      flexDirection: 'column',
+      padding: 0
+    },
+    section: {
+      backgroundColor: '#f5f5f5',
+      paddingTop: 30,
+      paddingLeft: 15,
+      paddingBottom: 10,
+      paddingRight: 15
+    },
+    cancelButton: {
+      position: 'absolute',
+      left: 5,
+      top: 17
+    },
+    row: {
+      alignItems: 'center',
+      flex: 1,
+      padding: 15,
+      flexDirection: 'row'
+    },
+    leftContainer: {
+      flex: 1,
+      left: 0
+    },
+    rightContainer: {
+        flex: 0.4,
+        alignItems: 'flex-end',
+    },
+    name: {
+      fontSize: 16
+    },
+    value: {
+      marginRight: 15,
+      fontSize: 16
+    },
+    separator: {
+      height: 1,
+      backgroundColor: '#dddddd'
+    },
+    listView: {
+      backgroundColor: '#fff'
+    },
+    disclosure: {
+      position: 'absolute',
+      right: -10,
+      top: 0
+    }
+});
+
+module.exports = SettingsListView;

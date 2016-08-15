@@ -13,7 +13,7 @@ import commonStyles from './styles';
 * via #props.  It manages the #changePace, #getCurrentPosition buttons, #odometer, #activity
 * and location #provider.
 */
-var BottomToolbar = React.createClass({
+var BottomToolbarView = React.createClass({
   
   getInitialState: function() {
     return {
@@ -54,8 +54,10 @@ var BottomToolbar = React.createClass({
     });
 
     bgGeo.on("motionchange", function(event) {
+      console.log('motionchange: ', event);
+
       me.setState({
-        isMoving: event.is_moving
+        isMoving: event.isMoving
       });
     });
 
@@ -78,7 +80,12 @@ var BottomToolbar = React.createClass({
     var isMoving = !this.state.isMoving;
     var bgGeo = this.props.locationManager;    
 
-    bgGeo.changePace(isMoving, function(location) {
+    this.setState({
+      isMoving: isMoving,
+      isChangingPace: true
+    });
+
+    bgGeo.changePace(isMoving, function(state) {
       this.setState({
         isChangingPace: false
       });
@@ -87,12 +94,7 @@ var BottomToolbar = React.createClass({
       this.setState({
         isMoving: !isMoving // <-- reset state back
       });
-    });
-    
-    this.setState({
-      isMoving: isMoving,
-      isChangingPace: true
-    });
+    }.bind(this));
   },
   onClickLocate: function() {
     var bgGeo = this.props.locationManager;
@@ -100,6 +102,7 @@ var BottomToolbar = React.createClass({
       timeout: 30,
       samples: 3,
       desiredAccuracy: 10,
+      maximumAge: 5000,
       persist: false
     }, function(location) {
       console.log('- current position: ', JSON.stringify(location));
@@ -126,21 +129,21 @@ var BottomToolbar = React.createClass({
       spinner = Config.icons.spinner;
     }
     return (
-      <View style={{flex:0.3, flexDirection:"row", alignItems:"center", justifyContent:"flex-end"}}>{spinner}{button}</View>
+      <View style={styles.paceButtonContainer}>{spinner}{button}</View>
     );
   },
 
   render: function() {
     return (
       <View style={commonStyles.bottomToolbar}>
-        <View style={{flex:0.3,flexDirection:"row", justifyContent:"flex-start", alignItems:"center"}}>
+        <View style={styles.navigateContainer}>
           <Icon.Button name={Config.icons.navigate} onPress={this.onClickLocate} size={30} color="#000" backgroundColor="#eee" underlayColor="green" style={styles.btnNavigate} />
           {Config.getLocationProviders(this.state.currentProvider)}
         </View>
-        <View style={{flex:1, flexDirection: "row", alignItems:"center", justifyContent: "center"}}>
-          <Text style={{marginRight:5}}>Activity</Text>
+        <View style={styles.statusContainer}>
+          <Text style={styles.statusLabel}>Activity</Text>
           {Config.getActivityIcon(this.state.currentActivity)}
-          <Text style={{marginLeft:5}}>{this.state.odometer}km</Text>
+          <Text style={styles.statusLabel}>{this.state.odometer}km</Text>
         </View>        
         {this.getPaceButton()}
         <Text>&nbsp;</Text>
@@ -149,10 +152,28 @@ var BottomToolbar = React.createClass({
   }
 });
 
-var styles = {
+var styles = StyleSheet.create({
+  navigateContainer: {
+    flex:0.3,
+    flexDirection:"row", 
+    justifyContent:"flex-start", 
+    alignItems:"center"
+  },
+  paceButtonContainer: {
+    flex:0.3, 
+    flexDirection:"row", 
+    alignItems:"center", 
+    justifyContent:"flex-end"
+  },
   btnNavigate: {
     padding: 3,
     paddingLeft: 10
+  },
+  statusContainer: {
+    flex:1, 
+    flexDirection: "row", 
+    alignItems:"center", 
+    justifyContent: "center"
   },
   labelActivity: {
     alignItems: "center",
@@ -161,17 +182,9 @@ var styles = {
     width: 40,
     padding: 3
   },
-  label: {
-    padding: 3,
-    width: 75
-  },
-  labelText: {
-    fontSize: 14,
-    textAlign: 'center'
-  },
-  labelOdometer: {
-    padding: 3
+  statusLabel: {
+    marginLeft:5
   }
-};
+});
 
-module.exports = BottomToolbar;
+module.exports = BottomToolbarView;

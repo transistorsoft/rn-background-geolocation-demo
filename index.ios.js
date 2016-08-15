@@ -16,8 +16,8 @@ import BackgroundGeolocation from 'react-native-background-geolocation';
 
 global.bgGeo = BackgroundGeolocation;
 
-import Home from './ios/components/Home.ios';
-import Settings from './ios/components/Settings.ios';
+import MapView from './components/MapView';
+import SettingsView from './components/SettingsView';
 
 var Application = React.createClass({
   getInitialState: function() {
@@ -40,9 +40,9 @@ var Application = React.createClass({
   },
   render: function() {
     return (
-      <View style={{backgroundColor: "#ffd700", flex: 1}}>
-        <Drawer ref="drawer" side="right" acceptPan={false} content={<Settings drawer={this.refs.drawer} locationManager={BackgroundGeolocation} />}>
-          <Home drawer={this.state.drawer} locationManager={BackgroundGeolocation} />    
+      <View style={{backgroundColor: "#ffd700", flex: 1, paddingTop:17}}>
+        <Drawer ref="drawer" side="right" acceptPan={false} content={<SettingsView drawer={this.refs.drawer} locationManager={BackgroundGeolocation} />}>
+          <MapView drawer={this.state.drawer} locationManager={BackgroundGeolocation} />    
         </Drawer>
       </View>
     );

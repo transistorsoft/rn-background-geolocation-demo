@@ -17,8 +17,8 @@ import BackgroundGeolocation from 'react-native-background-geolocation-android';
 // For development console access to BackgroundGeolocation API
 global.bgGeo = BackgroundGeolocation;
 
-import Home from './android/components/Home.android';
-import Settings from './android/components/Settings.android';
+import MapView from './components/MapView';
+import SettingsView from './components/SettingsView';
 
 var Application = React.createClass({
   getInitialState: function() {
@@ -40,8 +40,8 @@ var Application = React.createClass({
 
   render: function() {
     return (
-      <Drawer ref="drawer" side="right" acceptPan={false} content={<Settings drawer={this.refs.drawer} locationManager={BackgroundGeolocation} />}>
-        <Home drawer={this.refs.drawer} locationManager={BackgroundGeolocation} />    
+      <Drawer ref="drawer" side="right" acceptPan={false} content={<SettingsView drawer={this.refs.drawer} locationManager={BackgroundGeolocation} />}>
+        <MapView drawer={this.refs.drawer} locationManager={BackgroundGeolocation} />    
       </Drawer>
     );
   }
