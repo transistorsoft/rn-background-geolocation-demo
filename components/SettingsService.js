@@ -91,9 +91,13 @@ var SettingsService = (function() {
   };
 
   return {
-    init: function(platform) {
-      _platform = platform;
-      _items = [].concat(_settings[platform]).concat(_settings.common);
+    init: function() {
+      _platform = DeviceInfo.getSystemName();
+      if (_platform.match(/iPhone/)) {
+        _platform = 'iOS'
+      };
+
+      _items = [].concat(_settings[_platform]).concat(_settings.common);
       for (var n=0,len=_items.length;n<len;n++) {
         var setting = _items[n];
         _defaultValues[setting.name] = setting.defaultValue;
@@ -180,6 +184,8 @@ var SettingsService = (function() {
       // Start 2min from now
       var now = new Date();
       var start = new Date(now.getTime() + delay*60000);
+
+      console.log('---------- generateSchedule: ', now, start);
 
       var rs = [];
       for (var n=0,len=count;n<len;n++) {

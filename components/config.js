@@ -37,12 +37,12 @@ var config = (function() {
       disabled: <Icon name="ios-warning" size={20} style={{color: "#D9534F"}} />,
       network: <Icon name="ios-wifi" size={20} style={{marginRight:5}}/>,
       gps: <Icon name="ios-locate" size={20} style={{marginRight:5}}/>,
-      on_foot: <Icon name="ios-walk" size={20} style={{color:"#fff"}} />,
-      still: <Icon name="ios-man" size={20} style={{color:"#fff"}}/>,
-      walking: <Icon name="ios-walk" size={20} style={{color:"#fff"}}/>,
-      running: <Icon name="ios-walk" size={20} style={{color:"#fff"}}/>,
-      in_vehicle: <Icon name="ios-car" size={20}style={{color:"#fff"}}/>,
-      on_bicycle: <Icon name="ios-bicycle" size={20} style={{color:"#fff"}} />,
+      on_foot: <Icon name="ios-walk" size={20} style={{color:"#000"}} />,
+      still: <Icon name="ios-man" size={20} style={{color:"#000"}}/>,
+      walking: <Icon name="ios-walk" size={20} style={{color:"#000"}}/>,
+      running: <Icon name="ios-walk" size={20} style={{color:"#000"}}/>,
+      in_vehicle: <Icon name="ios-car" size={20}style={{color:"#000"}}/>,
+      on_bicycle: <Icon name="ios-bicycle" size={20} style={{color:"#000"}} />,
       unknown: <Icon name="ios-help-circle" size={20} style={{color:"#666"}}/>
     },
     getActivityIcon(activityName) {
@@ -59,7 +59,7 @@ var config = (function() {
           bgColor = Styles.greenButton;
       }
       return (
-        <View style={[Styles.labelActivity, bgColor]}>
+        <View style={[Styles.labelActivity]}>
           {icon}
         </View>
       );

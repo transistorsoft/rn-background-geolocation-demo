@@ -1,20 +1,20 @@
 'use strict';
- 
-var React = require('react-native');
-var Icon = require('react-native-vector-icons/Ionicons');
 
-var {
+
+import React, { Component } from 'react';
+import {
   StyleSheet,
   Text,
   TextInput,
   View,
-  Component,
   ListView,
   Navigator,
   TouchableHighlight
-} = React;
+ } from 'react-native';
 
-var Settings = require('./Settings');
+import Icon from 'react-native-vector-icons/Ionicons';
+
+import SettingsView from './SettingsView';
 
 var styles = StyleSheet.create({
   container: {
@@ -55,10 +55,13 @@ var styles = StyleSheet.create({
   separator: {
     height: 1,
     backgroundColor: '#dddddd'
+  },
+  checkmark: {
+
   }
 });
  
-var SettingDetail = React.createClass({
+var SettingDetailView = React.createClass({
   onCancel() {
     this.props.navigator.pop();
   },
@@ -117,7 +120,7 @@ var SettingDetail = React.createClass({
               <Text style={styles.title}>{setting.toString()}</Text>
             </View>
             <View style={styles.rightContainer}>
-              {this.state.value == setting ? <Icon name="checkmark" size={15} color="#4f8ef7" style={styles.checkbox} /> : null}
+              {this.state.value == setting ? <Icon name="md-checkmark" size={20} color="#4f8ef7" style={styles.checkbox} /> : null}
             </View>
           </View>
           <View style={styles.separator} />
@@ -131,6 +134,7 @@ var SettingDetail = React.createClass({
         ref="list"
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
+        enableEmptySections={true}
         style={styles.listView} />
     ) : (
       <TextInput
@@ -160,4 +164,4 @@ var SettingDetail = React.createClass({
    }
 });
  
-module.exports = SettingDetail;
+module.exports = SettingDetailView;

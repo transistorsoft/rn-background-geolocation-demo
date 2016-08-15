@@ -11,8 +11,7 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#F5FCFF'    
   },
-  topToolbar: {
-    //paddingLeft: 10,
+  topToolbar: {    
     backgroundColor: '#ffd700',  //ff d7 00
     borderBottomColor: '#E6BE00',
     borderBottomWidth: 1,
