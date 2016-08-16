@@ -102,7 +102,7 @@ var BottomToolbarView = React.createClass({
       timeout: 30,
       samples: 3,
       desiredAccuracy: 10,
-      maximumAge: 5000,
+      maximumAge: 0,
       persist: false
     }, function(location) {
       console.log('- current position: ', JSON.stringify(location));

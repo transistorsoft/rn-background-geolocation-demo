@@ -173,6 +173,9 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     height: 46
   },
+  form: {
+    
+  },
   formItem: {
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
@@ -180,7 +183,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    height: 0
+    height: 50
   },
   label: {
     flex: 0.5,

@@ -14,6 +14,8 @@ import EventEmitter from 'EventEmitter';
 import Mapbox, { MapView } from 'react-native-mapbox-gl';
 Mapbox.setAccessToken('pk.eyJ1IjoiY2hyaXN0b2NyYWN5IiwiYSI6ImVmM2Y2MDA1NzIyMjg1NTdhZGFlYmZiY2QyODVjNzI2In0.htaacx3ZhE5uAWN86-YNAQ');
 
+console.log('Mapbox: ', Mapbox, MapView);
+
 import Config from './config';
 import Icon from 'react-native-vector-icons/Ionicons';
 import commonStyles from './styles';
@@ -24,13 +26,17 @@ import Modal from 'react-native-modalbox';
 
 SettingsService.init();
 
-var MyMapView = React.createClass({
+var HomeView = React.createClass({
   locationIcon: require("image!green_circle"),
   currentLocation: undefined,
   locationManager: undefined,
   eventEmitter: new EventEmitter(),
   coordinates: [],
   getInitialState: function() {
+    console.log('----------initial: this.props', this.props.locationManager);
+
+    this.locationManager = this.props.locationManager;  // @see index.<platfrom>.js 
+
     return {
       currentState: AppState.currentState,
       enabled: false,
@@ -47,13 +53,9 @@ var MyMapView = React.createClass({
   
   componentDidMount: function() {
     var me = this;
+    console.log('------------ componentDidMount');
 
     AppState.addEventListener('change', this._handleAppStateChange);
-
-    this.locationManager = this.props.locationManager;  // @see index.<platfrom>.js 
-    SettingsService.getValues(function(values) {
-      me.configureBackgroundGeolocation(values);
-    });
 
     this.setState({
       enabled: false
@@ -62,14 +64,33 @@ var MyMapView = React.createClass({
   componentWillUnmount: function() {
     AppState.removeEventListener('change', this._handleAppStateChange);
   },
+  onMapLoaded: function() {
+    // Create geofences polygons
+    var me = this;
+    SettingsService.getValues(function(values) {
+      me.configureBackgroundGeolocation(values);
+    });
+  },
   configureBackgroundGeolocation: function(config) {
     var me = this;
     
+    this.locationManager.getGeofences(function(geofences) {
+      var rs = [];
+      console.log('----------- getGeofences: ', geofences);
+      for (var n=0,len=geofences.length;n<len;n++) {
+        this.setState({
+          annotations: [ ...this.state.annotations, this.createGeofenceMarker(geofences[n])]
+        });
+      }
+    }.bind(this));
+
+    /*
     this.locationManager.removeGeofence("DROPOFF::ba094962-cf32-4f69-be81-69c0d63aa766::f0c23053-52c0-4270-9e79-11601d45b710", function(identifier) {
       console.log("*** removeGeofence SUCCESS: ", identifier);
     }, function(error) {
       console.log("*** removeGeofenceFailure: ", error);
     });
+    */
 
     // 1. Set up listeners on BackgroundGeolocation events
     //
@@ -77,9 +98,9 @@ var MyMapView = React.createClass({
     this.locationManager.on("location", function(location) {
       console.log('- location: ', JSON.stringify(location));    
       if (!location.sample) {
-        me.addMarker(location);
+        this.addMarker(location);
       }
-      me.setCenter(location);
+      this.setCenter(location);
     }.bind(this));
     // http event
     this.locationManager.on("http", function(response) {
@@ -107,10 +128,10 @@ var MyMapView = React.createClass({
     // schedule event
     this.locationManager.on("schedule", function(state) {
       console.log("- schedule", state.enabled, state);
-      me.setState({
+      this.setState({
         enabled: state.enabled
       });
-    });
+    }.bind(this));
         
     ////
     // 2. Configure it.
@@ -182,7 +203,6 @@ var MyMapView = React.createClass({
       this.locationManager.removeGeofences();
       this.locationManager.stop();
       this.coordinates = [];
-      this.locationManager.stopWatchPosition();
 
       //this.removeAllAnnotations(mapRef);
       this.setState({
@@ -195,17 +215,7 @@ var MyMapView = React.createClass({
     });
     this.eventEmitter.emit('enabled', enabled);
   },
-  onMapLoaded: function() {
-    // Create geofences polygons
-    this.locationManager.getGeofences(function(geofences) {
-      var rs = [];
-      for (var n=0,len=geofences.length;n<len;n++) {
-        this.setState({
-          annotations: [ ...this.state.annotations, this.createGeofenceMarker(geofences[n])]
-        });
-      }
-    }.bind(this));
-  },
+
   onRegionChange: function() {
     console.log('onRegionChange');
   },
@@ -357,4 +367,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = MyMapView;
+module.exports = HomeView;

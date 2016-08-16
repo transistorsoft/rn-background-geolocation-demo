@@ -113,7 +113,7 @@ var SettingsView = React.createClass({
       me.setState({
         syncButtonIcon: me.icons.syncButton
       });
-      this.locationManager.playSound(Config.sounds.MESSAGE_SENT_ANDROID);
+      me.locationManager.playSound(Config.sounds.MESSAGE_SENT_ANDROID);
     }, function(error) {
       console.log('- sync error: ', error);
     });
