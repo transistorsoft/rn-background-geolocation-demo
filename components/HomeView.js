@@ -33,8 +33,6 @@ var HomeView = React.createClass({
   eventEmitter: new EventEmitter(),
   coordinates: [],
   getInitialState: function() {
-    console.log('----------initial: this.props', this.props.locationManager);
-
     this.locationManager = this.props.locationManager;  // @see index.<platfrom>.js 
 
     return {
@@ -53,7 +51,6 @@ var HomeView = React.createClass({
   
   componentDidMount: function() {
     var me = this;
-    console.log('------------ componentDidMount');
 
     AppState.addEventListener('change', this._handleAppStateChange);
 
@@ -76,7 +73,6 @@ var HomeView = React.createClass({
     
     this.locationManager.getGeofences(function(geofences) {
       var rs = [];
-      console.log('----------- getGeofences: ', geofences);
       for (var n=0,len=geofences.length;n<len;n++) {
         this.setState({
           annotations: [ ...this.state.annotations, this.createGeofenceMarker(geofences[n])]
