@@ -44,18 +44,19 @@ var SettingsView = React.createClass({
     });
   },
   onClickBack: function() {
-    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
+    this.locationManager.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
     this.props.drawer.close();
   },
   onClickSettingDone: function() {
+    this.locationManager.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
     this.refs.drawer.close();
   },
   onClickEmailLogs: function() {
-    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
+    this.locationManager.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
     this.refs.modal.open();
   },
   onToggleDebug: function(value) {
-    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
+    this.locationManager.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
     this.setState({debug: value});
     this.locationManager.setConfig({
       debug: value
@@ -78,13 +79,13 @@ var SettingsView = React.createClass({
     this.setState({email: email});
   },
   onSelectSetting: function(setting) {
-    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
+    this.locationManager.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
     this.setState({
       setting: setting,
       settingDetailView: (
         <View style={commonStyles.container}>
           <View style={commonStyles.topToolbar}>
-            <Icon.Button name="ios-arrow-back" onPress={this.onClickSettingDone} iconStyle={commonStyles.backButtonIcon} backgroundColor="transparent" size={30} color="#4f8ef7" underlayColor={"transparent"}><Text>Back</Text></Icon.Button>
+            <Icon.Button name="ios-arrow-back" onPress={this.onClickSettingDone} iconStyle={commonStyles.backButtonIcon} backgroundColor="transparent" size={30} color="#4f8ef7" underlayColor={"transparent"}><Text style={commonStyles.backButtonText}>Back</Text></Icon.Button>
             <Text style={commonStyles.toolbarTitle}>{setting.name}</Text>
             <Text style={{width: 60}}>&nbsp;</Text>
           </View>
@@ -95,7 +96,7 @@ var SettingsView = React.createClass({
     this.refs.drawer.open();
   },
   onSelectValue: function(value) {
-    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
+    this.locationManager.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
     this.refs.settings.update(this.state.setting, value);
     var config = {};
     config[this.state.setting.name] = value;
@@ -103,7 +104,7 @@ var SettingsView = React.createClass({
     this.refs.drawer.close();
   },
   onClickSync: function() {
-    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
+    this.locationManager.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
     var me = this;
     this.setState({
       syncButtonIcon: me.icons.spinner
@@ -113,7 +114,7 @@ var SettingsView = React.createClass({
       me.setState({
         syncButtonIcon: me.icons.syncButton
       });
-      me.locationManager.playSound(Config.sounds.MESSAGE_SENT_ANDROID);
+      me.locationManager.playSound(SettingsService.getSoundId('MESSAGE_SENT'));
     }, function(error) {
       console.log('- sync error: ', error);
     });

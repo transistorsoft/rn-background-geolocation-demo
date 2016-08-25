@@ -38,6 +38,7 @@ var HomeView = React.createClass({
     return {
       currentState: AppState.currentState,
       enabled: false,
+      title: 'Background Geolocation',
       // mapbox
       initialCenterCoordinate: {
         latitude: 40.7223,
@@ -226,7 +227,8 @@ var HomeView = React.createClass({
     console.log('[MapBox] #onUserLocationChange: ', location);
   },
   onLongPress: function(params) {
-    this.refs.geofenceModal.open(params);    
+    this.locationManager.playSound(SettingsService.getSoundId('LONG_PRESS_ACTIVATE'));
+    this.refs.geofenceModal.open(params);
   },
   onOpenAnnotation: function(annotation) {
     console.log('[MapBox] #onOpenAnnotation', annotation);
@@ -305,9 +307,10 @@ var HomeView = React.createClass({
     };
   },
   onCloseGeofenceModal: function() {
-    alert('close geofence modal');
+    
   },
-  onSubmitGeofence: function(params) {    
+  onSubmitGeofence: function(params) {
+    this.locationManager.playSound(SettingsService.getSoundId('ADD_GEOFENCE'));
     this.locationManager.addGeofence(params, function(identifier) {
       this.setState({
         annotations: [ ...this.state.annotations, this.createGeofenceMarker(params)]
@@ -322,7 +325,7 @@ var HomeView = React.createClass({
       <View style={commonStyles.container}>
         <View style={commonStyles.topToolbar}>
           <Icon.Button name="ios-options" onPress={this.onClickMenu} backgroundColor="transparent" size={30} color="#000" style={styles.btnMenu} underlayColor={"transparent"} />
-          <Text style={commonStyles.toolbarTitle}>Background Geolocation</Text>
+          <Text style={commonStyles.toolbarTitle}>{this.state.title}</Text>
           <Switch onValueChange={this.onClickEnable} value={this.state.enabled} />
         </View>
         <View ref="workspace" style={styles.workspace}>

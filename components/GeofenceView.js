@@ -14,6 +14,8 @@ import Modal from 'react-native-modalbox';
 import Icon from 'react-native-vector-icons/Ionicons';
 import commonStyles from './styles';
 
+var dismissKeyboard = require('dismissKeyboard');
+
 class GeofenceView extends React.Component {
   propTypes: {
     onSubmit: React.PropTypes.func
@@ -50,14 +52,17 @@ class GeofenceView extends React.Component {
     this.refs.modal.open();
   }
   close() {
-    this.refs.modal.close();
+    dismissKeyboard();
+    this.refs.modal.close();    
   }
   onDone() {
+    dismissKeyboard();
     this.refs.modal.close();
     this.props.onSubmit(this.state);
   }
   onCancel() {
-    this.refs.modal.close();    
+    dismissKeyboard();
+    this.refs.modal.close();   
   }
   render() {
     return (

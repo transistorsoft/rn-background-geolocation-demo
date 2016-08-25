@@ -21,6 +21,20 @@ var SettingsService = (function() {
     version: DeviceInfo.getSystemVersion()
   };
 
+  var SOUNDS = {
+    "LONG_PRESS_ACTIVATE_IOS": 1113,
+    "LONG_PRESS_ACTIVATE_ANDROID": 27,
+    "LONG_PRESS_CANCEL_IOS": 1075,
+    "LONG_PRESS_CANCEL_ANDROID": 94,
+    "ADD_GEOFENCE_IOS": 1114,
+    "ADD_GEOFENCE_ANDROID": 28,
+    "BUTTON_CLICK_IOS": 1104,
+    "BUTTON_CLICK_ANDROID": 89,
+    "MESSAGE_SENT_IOS": 1303,
+    "MESSAGE_SENT_ANDROID": 90,
+    "ERROR_IOS": 1006
+  };
+
 	var _settings = {
     common: [
       {name: 'url', group: 'http', inputType: 'text', dataType: 'string', defaultValue: 'http://posttestserver.com/post.php?dir=ionic-cordova-background-geolocation'},
@@ -169,6 +183,14 @@ var SettingsService = (function() {
       })
       //.catch((error) => console.error("- error: ", error))
       .done();
+    },
+    getSoundId: function(key) {
+      var id = SOUNDS[key + "_" + deviceInfo.platform.toUpperCase()];
+      if (!id) {
+        console.warn('Failed to find sound ID for ', key);
+        id = 0;
+      }
+      return id;
     },
     /**
     * Auto-build a scheule based upon current time.
