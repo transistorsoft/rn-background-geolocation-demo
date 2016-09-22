@@ -98,6 +98,7 @@ var BottomToolbarView = React.createClass({
   },
   onClickLocate: function() {
     var bgGeo = this.props.locationManager;
+
     bgGeo.getCurrentPosition({
       timeout: 30,
       samples: 3,

@@ -32,6 +32,7 @@ var HomeView = React.createClass({
   locationManager: undefined,
   eventEmitter: new EventEmitter(),
   coordinates: [],
+
   getInitialState: function() {
     this.locationManager = this.props.locationManager;  // @see index.<platfrom>.js 
 
@@ -149,12 +150,11 @@ var HomeView = React.createClass({
     //config.url = 'http://192.168.11.100:8080/locations';
 
     // Set the license key
-    config.license = "1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774";
-    config.locationTimeout = 5;
+    config.license = "1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774";    
 
     this.locationManager.configure(config, function(state) {
       console.log('- configure success.  Current state: ', state);
-      
+
       // Broadcast to child components.
       this.eventEmitter.emit('enabled', state.enabled);
 
@@ -175,8 +175,9 @@ var HomeView = React.createClass({
   * MapBox is evil.  It keeps the location running in background when showsUserLocation is enabled
   * BE SURE TO SHUT THAT OFF IN BACKGROUND OR GPS IS ON FOREVER.  Bye bye battery.
   */
-  _handleAppStateChange: function(currentAppState) {
+  _handleAppStateChange: function(currentAppState) {    
     var showsUserLocation = (currentAppState === 'background') ? false : true;
+
     this.setState({
       currentAppState: currentAppState,
       showsUserLocation: showsUserLocation
@@ -198,7 +199,9 @@ var HomeView = React.createClass({
     } else {
       this.locationManager.resetOdometer();
       this.locationManager.removeGeofences();
-      this.locationManager.stop();
+      this.locationManager.stop(function() {
+        console.log('- stopped');
+      });
       this.coordinates = [];
 
       //this.removeAllAnnotations(mapRef);

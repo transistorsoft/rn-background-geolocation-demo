@@ -80,7 +80,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 android {
     compileSdkVersion 23
@@ -96,6 +96,25 @@ android {
             abiFilters "armeabi-v7a", "x86"
         }
     }
+    signingConfigs {
+        release {
+            /**
+            * My signing configs for publishing SampleApp to play store.  You won't need this
+            *
+            storeFile file(RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE)
+            storePassword RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_STORE_PASSWORD
+            keyAlias RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_KEY_ALIAS
+            keyPassword RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_KEY_PASSWORD
+            */
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
+        }
+    }
     splits {
         abi {
             reset()
@@ -104,12 +123,7 @@ android {
             include "armeabi-v7a", "x86"
         }
     }
-    buildTypes {
-        release {
-            minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-        }
-    }
+    
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
@@ -135,7 +149,6 @@ dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
-
     compile project(':react-native-background-geolocation')
     compile(name: 'tslocationmanager', ext: 'aar')
     compile project(':react-native-vector-icons')
