@@ -28,8 +28,6 @@ $ npm install git+https://git@github.com:transistorsoft/react-native-background-
 
 ## Adding Geofences
 
-**NOTE: NOT YET IMPLEMENTED**
-
 The app implements a **longtap** event on the map.  Simply **tap & hold** the map to initiate adding a geofence.
 
 ![Tap-hold to add geofence](https://www.dropbox.com/s/9qif3rvznwkbphd/Screenshot%202015-06-06%2017.12.41.png?dl=1)
