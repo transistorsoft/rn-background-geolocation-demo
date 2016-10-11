@@ -30,18 +30,22 @@ var SettingsView = React.createClass({
       settingDetailView: null,
       syncButtonIcon: this.icons.syncButton,
       debug: false,
-      email: null
+      email: ''
     };
   },
   componentDidMount: function() {
     var me = this;
-    this.locationManager = this.props.locationManager;  // @see index.<platform>.js 
+    this.locationManager = this.props.locationManager;  // @see index.<platform>.js
 
-    this.locationManager.getState(function(state) {
-      me.setState({
-        debug: state.debug
+    // TSLocationManager should fire a "ready" event to signal to sub-components that the plugin
+    // has been #configured.  Hack it for now with a setTimeout to #getState
+    setTimeout(function() {
+      me.locationManager.getState(function(state) {
+        me.setState({
+          debug: state.debug
+        });
       });
-    });
+    }, 1000);
   },
   onClickBack: function() {
     this.locationManager.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
@@ -135,23 +139,27 @@ var SettingsView = React.createClass({
             <Icon.Button name="ios-share-alt" onPress={this.onClickEmailLogs}><Text style={[styles.btnLog, commonStyles.iconButton]}>Logs</Text></Icon.Button>
             <Text style={{flex: 1, textAlign: 'center'}}>&nbsp;</Text>
             <Icon.Button name={this.state.syncButtonIcon} onPress={this.onClickSync} style={commonStyles.redButton}><Text style={[styles.btnSync, commonStyles.iconButton, {color: "#fff"}]}>Sync</Text></Icon.Button>
-          </View>        
+          </View>
         </View>
 
         <Modal style={styles.modal} ref={"modal"}>
           <View style={styles.modalContainer}>
             <View style={styles.modalHeader}>
               <Text style={{textAlign: "center", fontWeight: "bold"}}>Email application logs</Text>
+              <TextInput editable={true} maxLength={50}/>
             </View>
             <View style={styles.modalBody}>
               <Text style={{textAlign: "center"}}>Recipient email</Text>
               <TextInput
+                style={{marginTop: 5,padding:10, height: 40}}
                 ref="email"
                 value={this.state.email}
                 onChangeText={this.onChangeEmail}
+                placeholder="foo@bar.com"
                 editable={true}
                 keyboardType="email-address"
                 autoCorrect={false}
+                autoCapitalize="none"
                 blurOnSubmit={true} />
             </View>
             <View style={styles.modalFooter}>
@@ -177,7 +185,7 @@ var styles = StyleSheet.create({
   },
   modalContainer: {
     backgroundColor: "#fff",
-    flex: 1, 
+    flex: 1,
     alignSelf: "stretch"
   },
   modalHeader: {
@@ -187,18 +195,18 @@ var styles = StyleSheet.create({
     flex: 1
   },
   modalFooter: {
-    flexDirection: "row", 
+    flexDirection: "row",
     backgroundColor: "#fff",
     alignItems: "stretch"
   },
   modalButtonSubmit: {
-    backgroundColor: "#3879e2",    
-    flex: 1, 
+    backgroundColor: "#3879e2",
+    flex: 1,
     padding: 15
   },
   modalButtonCancel: {
     backgroundColor: "#efefef",
-    flex: 1, 
+    flex: 1,
     padding: 15
   },
   btnSync: {
