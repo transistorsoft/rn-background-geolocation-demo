@@ -14,8 +14,6 @@ import EventEmitter from 'EventEmitter';
 import Mapbox, { MapView } from 'react-native-mapbox-gl';
 Mapbox.setAccessToken('pk.eyJ1IjoiY2hyaXN0b2NyYWN5IiwiYSI6ImVmM2Y2MDA1NzIyMjg1NTdhZGFlYmZiY2QyODVjNzI2In0.htaacx3ZhE5uAWN86-YNAQ');
 
-console.log('Mapbox: ', Mapbox, MapView);
-
 import Config from './config';
 import Icon from 'react-native-vector-icons/Ionicons';
 import commonStyles from './styles';
@@ -34,7 +32,7 @@ var HomeView = React.createClass({
   coordinates: [],
 
   getInitialState: function() {
-    this.locationManager = this.props.locationManager;  // @see index.<platfrom>.js 
+    this.locationManager = this.props.locationManager;  // @see index.<platfrom>.js
 
     return {
       currentState: AppState.currentState,
@@ -47,10 +45,10 @@ var HomeView = React.createClass({
       },
       showsUserLocation: true,
       initialZoomLevel: 15,
-      annotations: []      
+      annotations: []
     };
   },
-  
+
   componentDidMount: function() {
     var me = this;
 
@@ -72,29 +70,12 @@ var HomeView = React.createClass({
   },
   configureBackgroundGeolocation: function(config) {
     var me = this;
-    
-    this.locationManager.getGeofences(function(geofences) {
-      var rs = [];
-      for (var n=0,len=geofences.length;n<len;n++) {
-        this.setState({
-          annotations: [ ...this.state.annotations, this.createGeofenceMarker(geofences[n])]
-        });
-      }
-    }.bind(this));
-
-    /*
-    this.locationManager.removeGeofence("DROPOFF::ba094962-cf32-4f69-be81-69c0d63aa766::f0c23053-52c0-4270-9e79-11601d45b710", function(identifier) {
-      console.log("*** removeGeofence SUCCESS: ", identifier);
-    }, function(error) {
-      console.log("*** removeGeofenceFailure: ", error);
-    });
-    */
 
     // 1. Set up listeners on BackgroundGeolocation events
     //
     // location event
     this.locationManager.on("location", function(location) {
-      console.log('- location: ', JSON.stringify(location));    
+      console.log('- location: ', JSON.stringify(location));
       if (!location.sample) {
         this.addMarker(location);
       }
@@ -120,8 +101,8 @@ var HomeView = React.createClass({
     });
     // motionchange event
     this.locationManager.on("motionchange", function(event) {
-      var location = event.location;      
-      console.log("- motionchange", JSON.stringify(event));      
+      var location = event.location;
+      console.log("- motionchange", JSON.stringify(event));
     }.bind(this));
     // schedule event
     this.locationManager.on("schedule", function(state) {
@@ -130,7 +111,27 @@ var HomeView = React.createClass({
         enabled: state.enabled
       });
     }.bind(this));
-        
+    // geofenceschange
+    this.locationManager.on("geofenceschange", function(event) {
+      console.log('- geofenceshcange: ', event);
+      var on = event.on;
+      var off = event.off;
+      var rs = me.state.annotations.filter(function(annotation) {
+        return (annotation.title === 'geofence') ? off.indexOf(annotation.id) <= 0 : true;
+      });
+      on.forEach(function(geofence) {
+        rs.push(me.createGeofenceMarker(geofence));
+      });
+      me.setState({
+        annotations: [...rs]
+      });
+      /*
+      his.setState({
+        annotations: [ ...this.state.annotations, this.createGeofenceMarker(geofences[n])]
+      });
+      */
+
+    })
     ////
     // 2. Configure it.
     //
@@ -139,7 +140,7 @@ var HomeView = React.createClass({
     //  2: delay (minutes) from now to start generating schedules
     //  3: schedule duration (minutes); how long to stay ON.
     //  4: OFF time between (minutes) generated schedule events.
-    //  
+    //
     //  eg:
     //  schedule: [
     //    '1-6 9:00-17:00',
@@ -150,7 +151,7 @@ var HomeView = React.createClass({
     //config.url = 'http://192.168.11.100:8080/locations';
 
     // Set the license key
-    config.license = "1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774";    
+    config.license = "1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774";
 
     this.locationManager.configure(config, function(state) {
       console.log('- configure success.  Current state: ', state);
@@ -175,7 +176,7 @@ var HomeView = React.createClass({
   * MapBox is evil.  It keeps the location running in background when showsUserLocation is enabled
   * BE SURE TO SHUT THAT OFF IN BACKGROUND OR GPS IS ON FOREVER.  Bye bye battery.
   */
-  _handleAppStateChange: function(currentAppState) {    
+  _handleAppStateChange: function(currentAppState) {
     var showsUserLocation = (currentAppState === 'background') ? false : true;
 
     this.setState({
@@ -183,13 +184,13 @@ var HomeView = React.createClass({
       showsUserLocation: showsUserLocation
     });
   },
-  
+
   onClickMenu: function() {
     this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     this.props.drawer.open();
   },
 
-  onClickEnable: function() {    
+  onClickEnable: function() {
     var me = this;
     var enabled = !this.state.enabled;
 
@@ -198,7 +199,6 @@ var HomeView = React.createClass({
       }.bind(this));
     } else {
       this.locationManager.resetOdometer();
-      this.locationManager.removeGeofences();
       this.locationManager.stop(function() {
         console.log('- stopped');
       });
@@ -225,7 +225,7 @@ var HomeView = React.createClass({
     } else {
       this._map.setCenterCoordinate(location.coords.latitude, location.coords.longitude);
     }
-  },  
+  },
   onUserLocationChange: function(location) {
     console.log('[MapBox] #onUserLocationChange: ', location);
   },
@@ -240,7 +240,7 @@ var HomeView = React.createClass({
     }
   },
   addMarker :function(location) {
-    // Remove the route polyline.  We have to regenerate it from scratch each time.  
+    // Remove the route polyline.  We have to regenerate it from scratch each time.
     // Wish we could just update it with new coords
     this.state.annotations = this.state.annotations.filter(function(annotation) {
       return (annotation.type === 'polyline' && annotation.id === 'route') ? false : true;
@@ -271,7 +271,7 @@ var HomeView = React.createClass({
       strokeWidth: 5,
       strokeAlpha: 0.5,
       id: "route"
-    };  
+    };
   },
   createGeofenceMarker: function(params) {
     // Too bad MapBox doesn't support a simple Circle...ugh.
@@ -301,16 +301,16 @@ var HomeView = React.createClass({
       title: 'geofence',
       type: 'polygon',
       coordinates: polygons,
-      strokeAlpha: 0.9,      
+      strokeAlpha: 0.9,
       strokeColor: '#11b700',
       strokeWidth: 2,
       fillAlpha:  0.2,
       alpha: 0.2,
-      fillColor: '#11b700'      
+      fillColor: '#11b700'
     };
   },
   onCloseGeofenceModal: function() {
-    
+
   },
   onSubmitGeofence: function(params) {
     this.locationManager.playSound(SettingsService.getSoundId('ADD_GEOFENCE'));
@@ -360,7 +360,7 @@ var HomeView = React.createClass({
   }
 });
 
-var styles = StyleSheet.create({  
+var styles = StyleSheet.create({
   workspace: {
     flex: 1
   },
