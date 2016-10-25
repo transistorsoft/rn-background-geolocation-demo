@@ -14,8 +14,8 @@ import Drawer from 'react-native-drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BackgroundGeolocation from 'react-native-background-geolocation-android';
 
-// For development console access to BackgroundGeolocation API
-global.bgGeo = BackgroundGeolocation;
+
+global.BackgroundGeolocation = BackgroundGeolocation;
 
 import HomeView from './components/HomeView';
 import SettingsView from './components/SettingsView';
@@ -31,7 +31,7 @@ var Application = React.createClass({
     var me = this;
 
     this.setState({
-      
+
     });
   },
   onClickMenu: function() {
@@ -41,7 +41,7 @@ var Application = React.createClass({
   render: function() {
     return (
       <Drawer ref="drawer" side="right" acceptPan={false} content={<SettingsView drawer={this.refs.drawer} locationManager={BackgroundGeolocation} />}>
-        <HomeView drawer={this.refs.drawer} locationManager={BackgroundGeolocation} />    
+        <HomeView drawer={this.refs.drawer} />
       </Drawer>
     );
   }
@@ -49,7 +49,7 @@ var Application = React.createClass({
 
 
 var styles = StyleSheet.create({
-  
+
 });
 
 AppRegistry.registerComponent('RNBackgroundGeolocationSample', () => Application);

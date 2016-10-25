@@ -90,8 +90,8 @@ android {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "1.5"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -100,12 +100,11 @@ android {
         release {
             /**
             * My signing configs for publishing SampleApp to play store.  You won't need this
-            *
-            storeFile file(RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE)
-            storePassword RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_STORE_PASSWORD
-            keyAlias RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_KEY_ALIAS
-            keyPassword RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_KEY_PASSWORD
             */
+            //storeFile file(RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE)
+            //storePassword RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_STORE_PASSWORD
+            //keyAlias RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_KEY_ALIAS
+            //keyPassword RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_KEY_PASSWORD
         }
     }
     buildTypes {

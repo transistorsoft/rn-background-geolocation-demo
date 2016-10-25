@@ -27,13 +27,10 @@ SettingsService.init();
 var HomeView = React.createClass({
   locationIcon: require("image!green_circle"),
   currentLocation: undefined,
-  locationManager: undefined,
   eventEmitter: new EventEmitter(),
   coordinates: [],
 
   getInitialState: function() {
-    this.locationManager = this.props.locationManager;  // @see index.<platfrom>.js
-
     return {
       currentState: AppState.currentState,
       enabled: false,
@@ -50,8 +47,6 @@ var HomeView = React.createClass({
   },
 
   componentDidMount: function() {
-    var me = this;
-
     AppState.addEventListener('change', this._handleAppStateChange);
 
     this.setState({
@@ -60,9 +55,19 @@ var HomeView = React.createClass({
   },
   componentWillUnmount: function() {
     AppState.removeEventListener('change', this._handleAppStateChange);
+    var bgGeo = global.BackgroundGeolocation;
+
+    // Unregister BackgroundGeolocation event-listeners!
+    bgGeo.un("location", this.onLocation);
+    bgGeo.un("http", this.onHttp);
+    bgGeo.un("geofence", this.onGeofence);
+    bgGeo.un("heartbeat", this.onHeartbeat);
+    bgGeo.un("error", this.onError);
+    bgGeo.un("motionchange", this.onMotionChange);
+    bgGeo.un("schedule", this.onSchedule);
+    bgGeo.un("geofenceschange", this.onGeofencesChange);
   },
   onMapLoaded: function() {
-    // Create geofences polygons
     var me = this;
     SettingsService.getValues(function(values) {
       me.configureBackgroundGeolocation(values);
@@ -70,68 +75,27 @@ var HomeView = React.createClass({
   },
   configureBackgroundGeolocation: function(config) {
     var me = this;
-
+    var bgGeo = global.BackgroundGeolocation;
+    ////
     // 1. Set up listeners on BackgroundGeolocation events
     //
     // location event
-    this.locationManager.on("location", function(location) {
-      console.log('- location: ', JSON.stringify(location));
-      if (!location.sample) {
-        this.addMarker(location);
-      }
-      this.setCenter(location);
-    }.bind(this));
+    bgGeo.on("location", this.onLocation);
     // http event
-    this.locationManager.on("http", function(response) {
-      console.log('- http ' + response.status);
-      console.log(response.responseText);
-    });
+    bgGeo.on("http", this.onHttp);
     // geofence event
-    this.locationManager.on("geofence", function(geofence) {
-      console.log('- onGeofence: ', JSON.stringify(geofence));
-    });
+    bgGeo.on("geofence", this.onGeofence);
     // heartbeat event
-    this.locationManager.on("heartbeat", function(params) {
-      console.log("- heartbeat: ", params.location);
-    });
-
+    bgGeo.on("heartbeat", this.onHeartbeat);
     // error event
-    this.locationManager.on("error", function(error) {
-      console.log('- ERROR: ', JSON.stringify(error));
-    });
+    bgGeo.on("error", this.onError);
     // motionchange event
-    this.locationManager.on("motionchange", function(event) {
-      var location = event.location;
-      console.log("- motionchange", JSON.stringify(event));
-    }.bind(this));
+    bgGeo.on("motionchange", this.onMotionChange);
     // schedule event
-    this.locationManager.on("schedule", function(state) {
-      console.log("- schedule", state.enabled, state);
-      this.setState({
-        enabled: state.enabled
-      });
-    }.bind(this));
+    bgGeo.on("schedule", this.onSchedule);
     // geofenceschange
-    this.locationManager.on("geofenceschange", function(event) {
-      console.log('- geofenceshcange: ', event);
-      var on = event.on;
-      var off = event.off;
-      var rs = me.state.annotations.filter(function(annotation) {
-        return (annotation.title === 'geofence') ? off.indexOf(annotation.id) <= 0 : true;
-      });
-      on.forEach(function(geofence) {
-        rs.push(me.createGeofenceMarker(geofence));
-      });
-      me.setState({
-        annotations: [...rs]
-      });
-      /*
-      his.setState({
-        annotations: [ ...this.state.annotations, this.createGeofenceMarker(geofences[n])]
-      });
-      */
+    bgGeo.on("geofenceschange", this.onGeofencesChange);
 
-    })
     ////
     // 2. Configure it.
     //
@@ -148,12 +112,13 @@ var HomeView = React.createClass({
     //  ]
     // UNCOMMENT TO AUTO-GENERATE A SERIES OF SCHEDULE EVENTS BASED UPON CURRENT TIME:
     //config.schedule = SettingsService.generateSchedule(24, 1, 1, 1);
+    //
     //config.url = 'http://192.168.11.100:8080/locations';
 
     // Set the license key
     config.license = "1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774";
 
-    this.locationManager.configure(config, function(state) {
+    bgGeo.configure(config, function(state) {
       console.log('- configure success.  Current state: ', state);
 
       // Broadcast to child components.
@@ -161,16 +126,60 @@ var HomeView = React.createClass({
 
       // Start the scheduler if configured with one.
       if (state.schedule) {
-        me.locationManager.startSchedule(function() {
+        bgGeo.startSchedule(function() {
           console.info('- Scheduler started');
         });
       }
 
       // Update UI
-      me.setState({
+      this.setState({
         enabled: state.enabled
       });
     }.bind(this));
+  },
+  onError: function(error) {
+    console.log('- ERROR: ', JSON.stringify(error));
+  },
+  onMotionChange: function(event) {
+    var location = event.location;
+    console.log("- motionchange", JSON.stringify(event));
+  },
+  onLocation: function(location) {
+    console.log('- location: ', JSON.stringify(location));
+    if (!location.sample) {
+      this.addMarker(location);
+    }
+    this.setCenter(location);
+  },
+  onGeofencesChange: function(event) {
+    console.log('- geofenceshcange: ', event);
+    var on = event.on;
+    var off = event.off;
+    var rs = this.state.annotations.filter(function(annotation) {
+      return (annotation.title === 'geofence') ? off.indexOf(annotation.id) <= 0 : true;
+    });
+    on.forEach(function(geofence) {
+      rs.push(this.createGeofenceMarker(geofence));
+    }.bind(this));
+    this.setState({
+      annotations: [...rs]
+    });
+  },
+  onHeartbeat: function(params) {
+    console.log("- heartbeat: ", params.location);
+  },
+  onHttp: function(response) {
+    console.log('- http ' + response.status);
+    console.log(response.responseText);
+  },
+  onGeofence: function(geofence) {
+    console.log('- onGeofence: ', JSON.stringify(geofence));
+  },
+  onSchedule: function(state) {
+    console.log("- schedule", state.enabled, state);
+    this.setState({
+      enabled: state.enabled
+    });
   },
   /**
   * MapBox is evil.  It keeps the location running in background when showsUserLocation is enabled
@@ -186,20 +195,21 @@ var HomeView = React.createClass({
   },
 
   onClickMenu: function() {
-    this.locationManager.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
+    global.BackgroundGeolocation.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
     this.props.drawer.open();
   },
 
   onClickEnable: function() {
     var me = this;
     var enabled = !this.state.enabled;
+    var bgGeo = global.BackgroundGeolocation;
 
     if (enabled) {
-      this.locationManager.start(function() {
+      bgGeo.start(function() {
       }.bind(this));
     } else {
-      this.locationManager.resetOdometer();
-      this.locationManager.stop(function() {
+      bgGeo.resetOdometer();
+      bgGeo.stop(function() {
         console.log('- stopped');
       });
       this.coordinates = [];
@@ -220,6 +230,8 @@ var HomeView = React.createClass({
     console.log('onRegionChange');
   },
   setCenter: function(location) {
+    if (!this._map) { return;}
+
     if (location.event === 'motionchange') {
       this._map.setCenterCoordinateZoomLevel(location.coords.latitude, location.coords.longitude, 15);
     } else {
@@ -230,7 +242,7 @@ var HomeView = React.createClass({
     console.log('[MapBox] #onUserLocationChange: ', location);
   },
   onLongPress: function(params) {
-    this.locationManager.playSound(SettingsService.getSoundId('LONG_PRESS_ACTIVATE'));
+    global.BackgroundGeolocation.playSound(SettingsService.getSoundId('LONG_PRESS_ACTIVATE'));
     this.refs.geofenceModal.open(params);
   },
   onOpenAnnotation: function(annotation) {
@@ -313,8 +325,9 @@ var HomeView = React.createClass({
 
   },
   onSubmitGeofence: function(params) {
-    this.locationManager.playSound(SettingsService.getSoundId('ADD_GEOFENCE'));
-    this.locationManager.addGeofence(params, function(identifier) {
+    var bgGeo = global.BackgroundGeolocation;
+    bgGeo.playSound(SettingsService.getSoundId('ADD_GEOFENCE'));
+    bgGeo.addGeofence(params, function(identifier) {
       this.setState({
         annotations: [ ...this.state.annotations, this.createGeofenceMarker(params)]
       });
@@ -353,7 +366,7 @@ var HomeView = React.createClass({
             onOpenAnnotation={this.onOpenAnnotation}
             onFinishLoadingMap={this.onMapLoaded} />
         </View>
-        <BottomToolbarView locationManager={this.props.locationManager} eventEmitter={this.eventEmitter} enabled={this.state.enabled} />
+        <BottomToolbarView eventEmitter={this.eventEmitter} enabled={this.state.enabled} />
         <GeofenceView ref={"geofenceModal"} onSubmit={this.onSubmitGeofence}/>
       </View>
     );

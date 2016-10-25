@@ -52,7 +52,9 @@ var SettingsService = (function() {
       {name: 'disableElasticity', group: 'geolocation', dataType: 'boolean', inputType: 'select', values: [true, false], defaultValue: false},
       {name: 'heartbeatInterval', group: 'application', dataType: 'integer', inputType: 'select', values: [30, 60, 120, 240, 600], defaultValue: 60},
       {name: 'maxRecordsToPersist', group: 'persistence', dataType: 'integer', inputType: 'select', values: [-1, 0, 1, 10, 100, 1000], defaultValue: -1},
-      {name: 'maxDaysToPersist', group: 'persistence', dataType: 'integer', inputType: 'select', values: [-1, 1, 2, 3, 4, 5, 6, 7], defaultValue: -1}
+      {name: 'maxDaysToPersist', group: 'persistence', dataType: 'integer', inputType: 'select', values: [-1, 1, 2, 3, 4, 5, 6, 7], defaultValue: -1},
+      {name: 'logLevel', group: 'application', dataType: 'integer', inputType: 'select', values: [0, 1, 2, 3, 4, 5], defaultValue: 5},
+      {name: 'logMaxDays', group: 'application', dataType: 'integer', inputType: 'select', values: [1, 2, 3, 4, 5, 6, 7], defaultValue: 3}
     ],
     iOS: [
       {name: 'desiredAccuracy', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [-1, 0, 10, 100, 1000], defaultValue: 0 },
@@ -60,8 +62,7 @@ var SettingsService = (function() {
       {name: 'stationaryRadius', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 20, 50, 100, 500], defaultValue: 20 },
       {name: 'activityType', group: 'geolocation', dataType: 'string', inputType: 'select', values: ['Other', 'AutomotiveNavigation', 'Fitness', 'OtherNavigation'], defaultValue: 'Other'},
       {name: 'preventSuspend', group: 'application', dataType: 'boolean', inputType: 'select', values: [true, false], defaultValue: false},
-      {name: 'disableStopDetection', group: 'activity recognition', dataType: 'boolean', inputType: 'select', values: [true, false], defaultValue: false},
-      {name: 'logLevel', group: 'application', dataType: 'integer', inputType: 'select', values: [0, 1, 2, 3, 4, 5], defaultValue: 5}
+      {name: 'disableStopDetection', group: 'activity recognition', dataType: 'boolean', inputType: 'select', values: [true, false], defaultValue: false}      
     ],
     Android: [
       {name: 'desiredAccuracy', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 10, 100, 1000], defaultValue: 0 },
@@ -153,7 +154,7 @@ var SettingsService = (function() {
         _values.useSignificantChangesOnly = 0;
         _values.stopDetectionDelay = 0;
 
-        callback.call(this, _values);
+        callback(_values);
       })
       //.catch((error) => console.error("- error: ", error.message))
       .done();

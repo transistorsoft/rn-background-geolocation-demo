@@ -1,5 +1,5 @@
 'use strict';
- 
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -15,9 +15,9 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import SettingDetail from './SettingDetailView';
- 
+
 var SettingsListView = React.createClass({
-    
+
   onCancel() {
     this.props.navigator.pop();
   },
@@ -52,9 +52,9 @@ var SettingsListView = React.createClass({
       for (var n=0,len=sections.length;n<len;n++) {
         var section = sections[n];
         var settings = values[section];
-        sectionIds.push(section);        
+        sectionIds.push(section);
         rowIds[n] = [];
-        
+
         dataBlob[section] = settings;
         for (var s=0,lens=settings.length;s<lens;s++) {
           var setting = settings[s];
@@ -101,7 +101,7 @@ var SettingsListView = React.createClass({
       <View style={styles.section}>
         <Text style={styles.text}>{sectionTitle}</Text>
       </View>
-    ); 
+    );
   },
   renderSetting(setting, sectionId, rowId) {
     return (
@@ -146,8 +146,8 @@ var SettingsListView = React.createClass({
         />
       </View>
     );
-  },    
-    
+  },
+
 });
 
 var styles = StyleSheet.create({
