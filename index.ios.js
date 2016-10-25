@@ -14,7 +14,7 @@ import Drawer from 'react-native-drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BackgroundGeolocation from 'react-native-background-geolocation';
 
-global.bgGeo = BackgroundGeolocation;
+global.BackgroundGeolocation = BackgroundGeolocation;
 
 import HomeView from './components/HomeView';
 import SettingsView from './components/SettingsView';
@@ -42,7 +42,7 @@ var Application = React.createClass({
     return (
       <View style={{backgroundColor: "#ffd700", flex: 1, paddingTop:17}}>
         <Drawer ref="drawer" side="right" acceptPan={false} content={<SettingsView drawer={this.refs.drawer} locationManager={BackgroundGeolocation} />}>
-          <HomeView drawer={this.state.drawer} locationManager={BackgroundGeolocation} />    
+          <HomeView drawer={this.state.drawer} />    
         </Drawer>
       </View>
     );

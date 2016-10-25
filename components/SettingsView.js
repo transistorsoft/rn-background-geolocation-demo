@@ -35,41 +35,40 @@ var SettingsView = React.createClass({
   },
   componentDidMount: function() {
     var me = this;
-    this.locationManager = this.props.locationManager;  // @see index.<platform>.js
+    var bgGeo = global.BackgroundGeolocation;
 
     // TSLocationManager should fire a "ready" event to signal to sub-components that the plugin
     // has been #configured.  Hack it for now with a setTimeout to #getState
-    setTimeout(function() {
-      me.locationManager.getState(function(state) {
-        me.setState({
-          debug: state.debug
-        });
+    bgGeo.getState(function(state) {
+      me.setState({
+        debug: state.debug
       });
-    }, 1000);
+    });
   },
   onClickBack: function() {
-    this.locationManager.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
+    global.BackgroundGeolocation.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
     this.props.drawer.close();
   },
   onClickSettingDone: function() {
-    this.locationManager.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
+    global.BackgroundGeolocation.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
     this.refs.drawer.close();
   },
   onClickEmailLogs: function() {
-    this.locationManager.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
+    global.BackgroundGeolocation.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
     this.refs.modal.open();
   },
   onToggleDebug: function(value) {
-    this.locationManager.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
+    var bgGeo = global.BackgroundGeolocation;
+    bgGeo.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
     this.setState({debug: value});
-    this.locationManager.setConfig({
+    bgGeo.setConfig({
       debug: value
     });
     SettingsService.set('debug', value);
   },
   onClickSubmitLogs: function() {
     var modal = this.refs.modal;
-    this.locationManager.emailLog(this.state.email, function() {
+    global.BackgroundGeolocation.emailLog(this.state.email, function() {
       modal.close();
     }, function(error) {
       modal.close();
@@ -83,7 +82,7 @@ var SettingsView = React.createClass({
     this.setState({email: email});
   },
   onSelectSetting: function(setting) {
-    this.locationManager.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
+    global.BackgroundGeolocation.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
     this.setState({
       setting: setting,
       settingDetailView: (
@@ -100,25 +99,27 @@ var SettingsView = React.createClass({
     this.refs.drawer.open();
   },
   onSelectValue: function(value) {
-    this.locationManager.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
+    var bgGeo = global.BackgroundGeolocation;
+    bgGeo.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
     this.refs.settings.update(this.state.setting, value);
     var config = {};
     config[this.state.setting.name] = value;
-    this.locationManager.setConfig(config);
+    bgGeo.setConfig(config);
     this.refs.drawer.close();
   },
   onClickSync: function() {
-    this.locationManager.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
+    var bgGeo = global.BackgroundGeolocation;
+    bgGeo.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
     var me = this;
     this.setState({
       syncButtonIcon: me.icons.spinner
     });
-    this.locationManager.sync(function(rs) {
+    bgGeo.sync(function(rs) {
       console.log('- sync success', rs.length);
       me.setState({
         syncButtonIcon: me.icons.syncButton
       });
-      me.locationManager.playSound(SettingsService.getSoundId('MESSAGE_SENT'));
+      bgGeo.playSound(SettingsService.getSoundId('MESSAGE_SENT'));
     }, function(error) {
       console.log('- sync error: ', error);
     });
