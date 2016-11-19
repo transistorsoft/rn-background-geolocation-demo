@@ -55,14 +55,24 @@ typedef NS_ENUM (NSInteger, MGLOfflinePackState) {
  */
 typedef struct MGLOfflinePackProgress {
     /**
-     The number of resources that have been completely downloaded and are ready
-     to use offline.
+     The number of resources, including tiles, that have been completely
+     downloaded and are ready to use offline.
      */
     uint64_t countOfResourcesCompleted;
     /**
-     The cumulative size of the downloaded resources on disk, measured in bytes.
+     The cumulative size of the downloaded resources on disk, including tiles,
+     measured in bytes.
      */
     uint64_t countOfBytesCompleted;
+    /**
+     The number of tiles that have been completely downloaded and are ready
+     to use offline.
+     */
+    uint64_t countOfTilesCompleted;
+    /**
+     The cumulative size of the downloaded tiles on disk, measured in bytes.
+     */
+    uint64_t countOfTileBytesCompleted;
     /**
      The minimum number of resources that must be downloaded in order to view
      the pack’s full region without any omissions.
@@ -174,27 +184,6 @@ typedef struct MGLOfflinePackProgress {
  come from the default notification center.
  */
 - (void)requestProgress;
-
-@end
-
-/**
- Methods for round-tripping `MGLOfflinePackProgress` values.
- */
-@interface NSValue (MGLOfflinePackAdditions)
-
-/**
- Creates a new value object containing the given `MGLOfflinePackProgress`
- structure.
- 
- @param progress The value for the new object.
- @return A new value object that contains the offline pack progress information.
- */
-+ (NSValue *)valueWithMGLOfflinePackProgress:(MGLOfflinePackProgress)progress;
-
-/**
- The `MGLOfflinePackProgress` structure representation of the value.
- */
-@property (readonly) MGLOfflinePackProgress MGLOfflinePackProgressValue;
 
 @end
 

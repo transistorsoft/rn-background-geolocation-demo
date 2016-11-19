@@ -26,9 +26,7 @@ SettingsService.init();
 
 var HomeView = React.createClass({
   locationIcon: require("image!green_circle"),
-  currentLocation: undefined,
   eventEmitter: new EventEmitter(),
-  coordinates: [],
 
   getInitialState: function() {
     return {
@@ -42,7 +40,8 @@ var HomeView = React.createClass({
       },
       showsUserLocation: true,
       initialZoomLevel: 15,
-      annotations: []
+      annotations: [],
+      coordinates: []
     };
   },
 
@@ -112,6 +111,7 @@ var HomeView = React.createClass({
     //  ]
     // UNCOMMENT TO AUTO-GENERATE A SERIES OF SCHEDULE EVENTS BASED UPON CURRENT TIME:
     //config.schedule = SettingsService.generateSchedule(24, 1, 1, 1);
+    config.schedule = null;
     //
     //config.url = 'http://192.168.11.100:8080/locations';
 
@@ -205,17 +205,18 @@ var HomeView = React.createClass({
     var bgGeo = global.BackgroundGeolocation;
 
     if (enabled) {
-      bgGeo.start(function() {
+      bgGeo.start(function(state) {
+        console.log('- Start success: ', state);
       }.bind(this));
     } else {
       bgGeo.resetOdometer();
       bgGeo.stop(function() {
         console.log('- stopped');
       });
-      this.coordinates = [];
 
       //this.removeAllAnnotations(mapRef);
       this.setState({
+        coordinates: [],
         annotations: []
       });
     }
@@ -274,10 +275,13 @@ var HomeView = React.createClass({
       };
   },
   createPolyline: function(location) {
-    this.coordinates.push([location.coords.latitude, location.coords.longitude]);
+    this.setState({
+      coordinates: [...this.state.coordinates, [location.coords.latitude, location.coords.longitude]]
+    });
+
     return {
       type: "polyline",
-      coordinates: this.coordinates,
+      coordinates: this.state.coordinates,
       title: "Route",
       strokeColor: '#2677FF',
       strokeWidth: 5,
