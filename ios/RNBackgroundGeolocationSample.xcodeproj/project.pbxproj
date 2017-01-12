@@ -22,9 +22,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		8303CC2C1DD235CB0085FBC1 /* libRNBackgroundFetch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8303CC2B1DD235B90085FBC1 /* libRNBackgroundFetch.a */; };
-		8303CC2E1DD235F10085FBC1 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8303CC2D1DD235F10085FBC1 /* RNBackgroundFetch+AppDelegate.m */; };
-		8303CC4E1DD2368C0085FBC1 /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8303CC451DD236870085FBC1 /* libCocoaLumberjack.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		836C60CB1DDF5FF400C3BDD4 /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 837650EB1D3EC90A00268B87 /* libRCTMapboxGL.a */; };
 		836C60CD1DDF607100C3BDD4 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836C60CC1DDF607100C3BDD4 /* Mapbox.framework */; };
@@ -39,9 +36,12 @@
 		837651191D3ECBED00268B87 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 837651111D3ECBED00268B87 /* MaterialIcons.ttf */; };
 		8376511A1D3ECBED00268B87 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 837651121D3ECBED00268B87 /* Octicons.ttf */; };
 		8376511B1D3ECBED00268B87 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 837651131D3ECBED00268B87 /* Zocial.ttf */; };
-		839A61E61D995B3C008F5A84 /* libRNBackgroundGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 839A61E31D995B34008F5A84 /* libRNBackgroundGeolocation.a */; };
-		839A61EC1D995CCC008F5A84 /* TSBackgroundFetch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839A61EB1D995CCC008F5A84 /* TSBackgroundFetch.framework */; };
-		839A61EE1D995CE0008F5A84 /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839A61ED1D995CE0008F5A84 /* TSLocationManager.framework */; };
+		8386B2831DF908AE0081B74E /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8386B27A1DF908960081B74E /* libCocoaLumberjack.a */; };
+		8386B2841DF908AE0081B74E /* libRNBackgroundFetch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8386B2631DF9087E0081B74E /* libRNBackgroundFetch.a */; };
+		8386B2851DF908AE0081B74E /* libRNBackgroundGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8386B25A1DF908690081B74E /* libRNBackgroundGeolocation.a */; };
+		8386B2871DF908BC0081B74E /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8386B2861DF908BC0081B74E /* RNBackgroundFetch+AppDelegate.m */; };
+		8386B2881DF909930081B74E /* TSBackgroundFetch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839A61EB1D995CCC008F5A84 /* TSBackgroundFetch.framework */; };
+		8386B28A1DF909A70081B74E /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8386B2891DF909A70081B74E /* TSLocationManager.framework */; };
 		83F838D51D58F9A4006EAA2F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 837651051D3ECA1E00268B87 /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
@@ -115,76 +115,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RCTLinking;
-		};
-		8303CC2A1DD235B90085FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8303CC251DD235B90085FBC1 /* RNBackgroundFetch.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 835318541D52293F005738CD;
-			remoteInfo = RNBackgroundFetch;
-		};
-		8303CC3C1DD236870085FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8303CC2F1DD236870085FBC1 /* Lumberjack.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = DCB3185114EB418E001CFBEE;
-			remoteInfo = CocoaLumberjack;
-		};
-		8303CC3E1DD236870085FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8303CC2F1DD236870085FBC1 /* Lumberjack.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 18F3BF0F1A81D8B700692297;
-			remoteInfo = CocoaLumberjackSwift;
-		};
-		8303CC401DD236870085FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8303CC2F1DD236870085FBC1 /* Lumberjack.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 19FF46021B8B4CF400B43179;
-			remoteInfo = "CocoaLumberjack-iOS";
-		};
-		8303CC421DD236870085FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8303CC2F1DD236870085FBC1 /* Lumberjack.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 19FF460F1B8B4D1400B43179;
-			remoteInfo = "CocoaLumberjackSwift-iOS";
-		};
-		8303CC441DD236870085FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8303CC2F1DD236870085FBC1 /* Lumberjack.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 18F3BFD71A81E06E00692297;
-			remoteInfo = "CocoaLumberjack-iOS-Static";
-		};
-		8303CC461DD236870085FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8303CC2F1DD236870085FBC1 /* Lumberjack.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 19190EDE1B84D812008D059E;
-			remoteInfo = "CocoaLumberjack-watchOS";
-		};
-		8303CC481DD236870085FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8303CC2F1DD236870085FBC1 /* Lumberjack.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 19190EEB1B84D826008D059E;
-			remoteInfo = "CocoaLumberjackSwift-watchOS";
-		};
-		8303CC4A1DD236870085FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8303CC2F1DD236870085FBC1 /* Lumberjack.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 19D90B261BBFA9DB00947169;
-			remoteInfo = "CocoaLumberjack-tvOS";
-		};
-		8303CC4C1DD236870085FBC1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8303CC2F1DD236870085FBC1 /* Lumberjack.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 19D90B351BBFAA7500947169;
-			remoteInfo = "CocoaLumberjackSwift-tvOS";
 		};
 		832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -270,19 +200,89 @@
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
 		};
-		839A61E21D995B34008F5A84 /* PBXContainerItemProxy */ = {
+		8386B2591DF908690081B74E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 839A61DD1D995B34008F5A84 /* RNBackgroundGeolocation.xcodeproj */;
+			containerPortal = 8386B2541DF908690081B74E /* RNBackgroundGeolocation.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 83FF5F851AFD0D2B0016A13E;
 			remoteInfo = RNBackgroundGeolocation;
 		};
-		839A61E41D995B34008F5A84 /* PBXContainerItemProxy */ = {
+		8386B25B1DF908690081B74E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 839A61DD1D995B34008F5A84 /* RNBackgroundGeolocation.xcodeproj */;
+			containerPortal = 8386B2541DF908690081B74E /* RNBackgroundGeolocation.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 83FF5F901AFD0D2B0016A13E;
 			remoteInfo = RNBackgroundGeolocationTests;
+		};
+		8386B2621DF9087E0081B74E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8386B25D1DF9087E0081B74E /* RNBackgroundFetch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 835318541D52293F005738CD;
+			remoteInfo = RNBackgroundFetch;
+		};
+		8386B2711DF908960081B74E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8386B2641DF908960081B74E /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DCB3185114EB418E001CFBEE;
+			remoteInfo = CocoaLumberjack;
+		};
+		8386B2731DF908960081B74E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8386B2641DF908960081B74E /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 18F3BF0F1A81D8B700692297;
+			remoteInfo = CocoaLumberjackSwift;
+		};
+		8386B2751DF908960081B74E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8386B2641DF908960081B74E /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19FF46021B8B4CF400B43179;
+			remoteInfo = "CocoaLumberjack-iOS";
+		};
+		8386B2771DF908960081B74E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8386B2641DF908960081B74E /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19FF460F1B8B4D1400B43179;
+			remoteInfo = "CocoaLumberjackSwift-iOS";
+		};
+		8386B2791DF908960081B74E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8386B2641DF908960081B74E /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 18F3BFD71A81E06E00692297;
+			remoteInfo = "CocoaLumberjack-iOS-Static";
+		};
+		8386B27B1DF908960081B74E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8386B2641DF908960081B74E /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19190EDE1B84D812008D059E;
+			remoteInfo = "CocoaLumberjack-watchOS";
+		};
+		8386B27D1DF908960081B74E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8386B2641DF908960081B74E /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19190EEB1B84D826008D059E;
+			remoteInfo = "CocoaLumberjackSwift-watchOS";
+		};
+		8386B27F1DF908960081B74E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8386B2641DF908960081B74E /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19D90B261BBFA9DB00947169;
+			remoteInfo = "CocoaLumberjack-tvOS";
+		};
+		8386B2811DF908960081B74E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8386B2641DF908960081B74E /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19D90B351BBFAA7500947169;
+			remoteInfo = "CocoaLumberjackSwift-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -321,9 +321,6 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = RNBackgroundGeolocationSample/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
-		8303CC251DD235B90085FBC1 /* RNBackgroundFetch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundFetch.xcodeproj; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch.xcodeproj"; sourceTree = "<group>"; };
-		8303CC2D1DD235F10085FBC1 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
-		8303CC2F1DD236870085FBC1 /* Lumberjack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lumberjack.xcodeproj; path = "../node_modules/cocoa-lumberjack/CocoaLumberjack/Lumberjack.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		836C60CC1DDF607100C3BDD4 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		837650D51D3EC8F500268B87 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
@@ -338,7 +335,11 @@
 		837651111D3ECBED00268B87 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		837651121D3ECBED00268B87 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		837651131D3ECBED00268B87 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
-		839A61DD1D995B34008F5A84 /* RNBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundGeolocation.xcodeproj; path = "../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
+		8386B2541DF908690081B74E /* RNBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundGeolocation.xcodeproj; path = "../node_modules/react-native-background-geolocation-android/ios/RNBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
+		8386B25D1DF9087E0081B74E /* RNBackgroundFetch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundFetch.xcodeproj; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch.xcodeproj"; sourceTree = "<group>"; };
+		8386B2641DF908960081B74E /* Lumberjack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lumberjack.xcodeproj; path = "../node_modules/cocoa-lumberjack/CocoaLumberjack/Lumberjack.xcodeproj"; sourceTree = "<group>"; };
+		8386B2861DF908BC0081B74E /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
+		8386B2891DF909A70081B74E /* TSLocationManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../node_modules/react-native-background-geolocation-android/ios/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = "<group>"; };
 		839A61EB1D995CCC008F5A84 /* TSBackgroundFetch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TSBackgroundFetch.framework; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/TSBackgroundFetch.framework"; sourceTree = "<group>"; };
 		839A61ED1D995CE0008F5A84 /* TSLocationManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -356,12 +357,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8386B28A1DF909A70081B74E /* TSLocationManager.framework in Frameworks */,
+				8386B2881DF909930081B74E /* TSBackgroundFetch.framework in Frameworks */,
+				8386B2831DF908AE0081B74E /* libCocoaLumberjack.a in Frameworks */,
+				8386B2841DF908AE0081B74E /* libRNBackgroundFetch.a in Frameworks */,
+				8386B2851DF908AE0081B74E /* libRNBackgroundGeolocation.a in Frameworks */,
 				836C60CB1DDF5FF400C3BDD4 /* libRCTMapboxGL.a in Frameworks */,
-				8303CC4E1DD2368C0085FBC1 /* libCocoaLumberjack.a in Frameworks */,
-				8303CC2C1DD235CB0085FBC1 /* libRNBackgroundFetch.a in Frameworks */,
-				839A61EE1D995CE0008F5A84 /* TSLocationManager.framework in Frameworks */,
-				839A61EC1D995CCC008F5A84 /* TSBackgroundFetch.framework in Frameworks */,
-				839A61E61D995B3C008F5A84 /* libRNBackgroundGeolocation.a in Frameworks */,
 				83F838D51D58F9A4006EAA2F /* libsqlite3.tbd in Frameworks */,
 				837650FF1D3EC95300268B87 /* libRNDeviceInfo.a in Frameworks */,
 				837651001D3EC95300268B87 /* libRNVectorIcons.a in Frameworks */,
@@ -463,9 +464,9 @@
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
+				8386B2861DF908BC0081B74E /* RNBackgroundFetch+AppDelegate.m */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				8303CC2D1DD235F10085FBC1 /* RNBackgroundFetch+AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -492,36 +493,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8303CC261DD235B90085FBC1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8303CC2B1DD235B90085FBC1 /* libRNBackgroundFetch.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		8303CC301DD236870085FBC1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8303CC3D1DD236870085FBC1 /* CocoaLumberjack.framework */,
-				8303CC3F1DD236870085FBC1 /* CocoaLumberjackSwift.framework */,
-				8303CC411DD236870085FBC1 /* CocoaLumberjack.framework */,
-				8303CC431DD236870085FBC1 /* CocoaLumberjackSwift.framework */,
-				8303CC451DD236870085FBC1 /* libCocoaLumberjack.a */,
-				8303CC471DD236870085FBC1 /* CocoaLumberjack.framework */,
-				8303CC491DD236870085FBC1 /* CocoaLumberjackSwift.framework */,
-				8303CC4B1DD236870085FBC1 /* CocoaLumberjack.framework */,
-				8303CC4D1DD236870085FBC1 /* CocoaLumberjackSwift.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				8303CC2F1DD236870085FBC1 /* Lumberjack.xcodeproj */,
-				8303CC251DD235B90085FBC1 /* RNBackgroundFetch.xcodeproj */,
-				839A61DD1D995B34008F5A84 /* RNBackgroundGeolocation.xcodeproj */,
+				8386B2641DF908960081B74E /* Lumberjack.xcodeproj */,
+				8386B25D1DF9087E0081B74E /* RNBackgroundFetch.xcodeproj */,
+				8386B2541DF908690081B74E /* RNBackgroundGeolocation.xcodeproj */,
 				837650F71D3EC93200268B87 /* RNVectorIcons.xcodeproj */,
 				837650E51D3EC90A00268B87 /* RCTMapboxGL.xcodeproj */,
 				837650D51D3EC8F500268B87 /* RNDeviceInfo.xcodeproj */,
@@ -588,11 +565,35 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		839A61DE1D995B34008F5A84 /* Products */ = {
+		8386B2551DF908690081B74E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				839A61E31D995B34008F5A84 /* libRNBackgroundGeolocation.a */,
-				839A61E51D995B34008F5A84 /* RNBackgroundGeolocationTests.xctest */,
+				8386B25A1DF908690081B74E /* libRNBackgroundGeolocation.a */,
+				8386B25C1DF908690081B74E /* RNBackgroundGeolocationTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8386B25E1DF9087E0081B74E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8386B2631DF9087E0081B74E /* libRNBackgroundFetch.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8386B2651DF908960081B74E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8386B2721DF908960081B74E /* CocoaLumberjack.framework */,
+				8386B2741DF908960081B74E /* CocoaLumberjackSwift.framework */,
+				8386B2761DF908960081B74E /* CocoaLumberjack.framework */,
+				8386B2781DF908960081B74E /* CocoaLumberjackSwift.framework */,
+				8386B27A1DF908960081B74E /* libCocoaLumberjack.a */,
+				8386B27C1DF908960081B74E /* CocoaLumberjack.framework */,
+				8386B27E1DF908960081B74E /* CocoaLumberjackSwift.framework */,
+				8386B2801DF908960081B74E /* CocoaLumberjack.framework */,
+				8386B2821DF908960081B74E /* CocoaLumberjackSwift.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -600,6 +601,7 @@
 		839A61E71D995B5F008F5A84 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8386B2891DF909A70081B74E /* TSLocationManager.framework */,
 				839A61ED1D995CE0008F5A84 /* TSLocationManager.framework */,
 				839A61EB1D995CCC008F5A84 /* TSBackgroundFetch.framework */,
 			);
@@ -677,7 +679,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -708,8 +710,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 8303CC301DD236870085FBC1 /* Products */;
-					ProjectRef = 8303CC2F1DD236870085FBC1 /* Lumberjack.xcodeproj */;
+					ProductGroup = 8386B2651DF908960081B74E /* Products */;
+					ProjectRef = 8386B2641DF908960081B74E /* Lumberjack.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
@@ -756,12 +758,12 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = 8303CC261DD235B90085FBC1 /* Products */;
-					ProjectRef = 8303CC251DD235B90085FBC1 /* RNBackgroundFetch.xcodeproj */;
+					ProductGroup = 8386B25E1DF9087E0081B74E /* Products */;
+					ProjectRef = 8386B25D1DF9087E0081B74E /* RNBackgroundFetch.xcodeproj */;
 				},
 				{
-					ProductGroup = 839A61DE1D995B34008F5A84 /* Products */;
-					ProjectRef = 839A61DD1D995B34008F5A84 /* RNBackgroundGeolocation.xcodeproj */;
+					ProductGroup = 8386B2551DF908690081B74E /* Products */;
+					ProjectRef = 8386B2541DF908690081B74E /* RNBackgroundGeolocation.xcodeproj */;
 				},
 				{
 					ProductGroup = 837650D61D3EC8F500268B87 /* Products */;
@@ -842,76 +844,6 @@
 			fileType = archive.ar;
 			path = libRCTLinking.a;
 			remoteRef = 78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8303CC2B1DD235B90085FBC1 /* libRNBackgroundFetch.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNBackgroundFetch.a;
-			remoteRef = 8303CC2A1DD235B90085FBC1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8303CC3D1DD236870085FBC1 /* CocoaLumberjack.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CocoaLumberjack.framework;
-			remoteRef = 8303CC3C1DD236870085FBC1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8303CC3F1DD236870085FBC1 /* CocoaLumberjackSwift.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CocoaLumberjackSwift.framework;
-			remoteRef = 8303CC3E1DD236870085FBC1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8303CC411DD236870085FBC1 /* CocoaLumberjack.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CocoaLumberjack.framework;
-			remoteRef = 8303CC401DD236870085FBC1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8303CC431DD236870085FBC1 /* CocoaLumberjackSwift.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CocoaLumberjackSwift.framework;
-			remoteRef = 8303CC421DD236870085FBC1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8303CC451DD236870085FBC1 /* libCocoaLumberjack.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCocoaLumberjack.a;
-			remoteRef = 8303CC441DD236870085FBC1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8303CC471DD236870085FBC1 /* CocoaLumberjack.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CocoaLumberjack.framework;
-			remoteRef = 8303CC461DD236870085FBC1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8303CC491DD236870085FBC1 /* CocoaLumberjackSwift.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CocoaLumberjackSwift.framework;
-			remoteRef = 8303CC481DD236870085FBC1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8303CC4B1DD236870085FBC1 /* CocoaLumberjack.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CocoaLumberjack.framework;
-			remoteRef = 8303CC4A1DD236870085FBC1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8303CC4D1DD236870085FBC1 /* CocoaLumberjackSwift.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CocoaLumberjackSwift.framework;
-			remoteRef = 8303CC4C1DD236870085FBC1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		832341B51AAA6A8300B99B32 /* libRCTText.a */ = {
@@ -998,18 +930,88 @@
 			remoteRef = 837650FB1D3EC93200268B87 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		839A61E31D995B34008F5A84 /* libRNBackgroundGeolocation.a */ = {
+		8386B25A1DF908690081B74E /* libRNBackgroundGeolocation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNBackgroundGeolocation.a;
-			remoteRef = 839A61E21D995B34008F5A84 /* PBXContainerItemProxy */;
+			remoteRef = 8386B2591DF908690081B74E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		839A61E51D995B34008F5A84 /* RNBackgroundGeolocationTests.xctest */ = {
+		8386B25C1DF908690081B74E /* RNBackgroundGeolocationTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = RNBackgroundGeolocationTests.xctest;
-			remoteRef = 839A61E41D995B34008F5A84 /* PBXContainerItemProxy */;
+			remoteRef = 8386B25B1DF908690081B74E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8386B2631DF9087E0081B74E /* libRNBackgroundFetch.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNBackgroundFetch.a;
+			remoteRef = 8386B2621DF9087E0081B74E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8386B2721DF908960081B74E /* CocoaLumberjack.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjack.framework;
+			remoteRef = 8386B2711DF908960081B74E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8386B2741DF908960081B74E /* CocoaLumberjackSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjackSwift.framework;
+			remoteRef = 8386B2731DF908960081B74E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8386B2761DF908960081B74E /* CocoaLumberjack.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjack.framework;
+			remoteRef = 8386B2751DF908960081B74E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8386B2781DF908960081B74E /* CocoaLumberjackSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjackSwift.framework;
+			remoteRef = 8386B2771DF908960081B74E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8386B27A1DF908960081B74E /* libCocoaLumberjack.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCocoaLumberjack.a;
+			remoteRef = 8386B2791DF908960081B74E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8386B27C1DF908960081B74E /* CocoaLumberjack.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjack.framework;
+			remoteRef = 8386B27B1DF908960081B74E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8386B27E1DF908960081B74E /* CocoaLumberjackSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjackSwift.framework;
+			remoteRef = 8386B27D1DF908960081B74E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8386B2801DF908960081B74E /* CocoaLumberjack.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjack.framework;
+			remoteRef = 8386B27F1DF908960081B74E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8386B2821DF908960081B74E /* CocoaLumberjackSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjackSwift.framework;
+			remoteRef = 8386B2811DF908960081B74E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1071,7 +1073,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8303CC2E1DD235F10085FBC1 /* RNBackgroundFetch+AppDelegate.m in Sources */,
+				8386B2871DF908BC0081B74E /* RNBackgroundFetch+AppDelegate.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -1112,6 +1114,7 @@
 				INFOPLIST_FILE = RNBackgroundGeolocationSampleTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RNBackgroundGeolocationSample.app/RNBackgroundGeolocationSample";
 			};
@@ -1126,6 +1129,7 @@
 				INFOPLIST_FILE = RNBackgroundGeolocationSampleTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RNBackgroundGeolocationSample.app/RNBackgroundGeolocationSample";
 			};
@@ -1140,7 +1144,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/ios/**",
+					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation-android/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
 				);
 				HEADER_SEARCH_PATHS = (
@@ -1148,7 +1152,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-background-fetch/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-background-geolocation/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-background-geolocation-android/ios/**",
 				);
 				INFOPLIST_FILE = RNBackgroundGeolocationSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -1158,6 +1162,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RNBackgroundGeolocationSample;
 			};
 			name = Debug;
@@ -1170,7 +1175,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/ios/**",
+					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation-android/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
 				);
 				HEADER_SEARCH_PATHS = (
@@ -1178,7 +1183,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-background-fetch/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-background-geolocation/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-background-geolocation-android/ios/**",
 				);
 				INFOPLIST_FILE = RNBackgroundGeolocationSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -1188,6 +1193,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RNBackgroundGeolocationSample;
 			};
 			name = Release;
@@ -1205,15 +1211,19 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1231,7 +1241,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1251,8 +1261,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1260,6 +1272,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1271,7 +1284,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
