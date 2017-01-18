@@ -44,12 +44,16 @@ var HomeView = React.createClass({
       coordinates: []
     };
   },
-
   componentDidMount: function() {
     AppState.addEventListener('change', this._handleAppStateChange);
 
     this.setState({
       enabled: false
+    });
+
+    var me = this;
+    SettingsService.getValues(function(values) {
+      me.configureBackgroundGeolocation(values);
     });
   },
   componentWillUnmount: function() {
@@ -65,12 +69,10 @@ var HomeView = React.createClass({
     bgGeo.un("motionchange", this.onMotionChange);
     bgGeo.un("schedule", this.onSchedule);
     bgGeo.un("geofenceschange", this.onGeofencesChange);
+
   },
   onMapLoaded: function() {
-    var me = this;
-    SettingsService.getValues(function(values) {
-      me.configureBackgroundGeolocation(values);
-    });
+    
   },
   configureBackgroundGeolocation: function(config) {
     var me = this;
