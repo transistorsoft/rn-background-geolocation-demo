@@ -38,11 +38,11 @@
 		8376511B1D3ECBED00268B87 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 837651131D3ECBED00268B87 /* Zocial.ttf */; };
 		8386B2831DF908AE0081B74E /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8386B27A1DF908960081B74E /* libCocoaLumberjack.a */; };
 		8386B2841DF908AE0081B74E /* libRNBackgroundFetch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8386B2631DF9087E0081B74E /* libRNBackgroundFetch.a */; };
-		8386B2851DF908AE0081B74E /* libRNBackgroundGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8386B25A1DF908690081B74E /* libRNBackgroundGeolocation.a */; };
 		8386B2871DF908BC0081B74E /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8386B2861DF908BC0081B74E /* RNBackgroundFetch+AppDelegate.m */; };
 		8386B2881DF909930081B74E /* TSBackgroundFetch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839A61EB1D995CCC008F5A84 /* TSBackgroundFetch.framework */; };
-		8386B28A1DF909A70081B74E /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8386B2891DF909A70081B74E /* TSLocationManager.framework */; };
 		83F838D51D58F9A4006EAA2F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 837651051D3ECA1E00268B87 /* libsqlite3.tbd */; };
+		83FDC9861E2FD43E005AD08B /* libRNBackgroundGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83FDC9831E2FD432005AD08B /* libRNBackgroundGeolocation.a */; };
+		83FDC9871E2FD456005AD08B /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839A61ED1D995CE0008F5A84 /* TSLocationManager.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,20 +200,6 @@
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
 		};
-		8386B2591DF908690081B74E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8386B2541DF908690081B74E /* RNBackgroundGeolocation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 83FF5F851AFD0D2B0016A13E;
-			remoteInfo = RNBackgroundGeolocation;
-		};
-		8386B25B1DF908690081B74E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8386B2541DF908690081B74E /* RNBackgroundGeolocation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 83FF5F901AFD0D2B0016A13E;
-			remoteInfo = RNBackgroundGeolocationTests;
-		};
 		8386B2621DF9087E0081B74E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8386B25D1DF9087E0081B74E /* RNBackgroundFetch.xcodeproj */;
@@ -284,6 +270,20 @@
 			remoteGlobalIDString = 19D90B351BBFAA7500947169;
 			remoteInfo = "CocoaLumberjackSwift-tvOS";
 		};
+		83FDC9821E2FD432005AD08B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83FDC97D1E2FD432005AD08B /* RNBackgroundGeolocation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 83FF5F851AFD0D2B0016A13E;
+			remoteInfo = RNBackgroundGeolocation;
+		};
+		83FDC9841E2FD432005AD08B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83FDC97D1E2FD432005AD08B /* RNBackgroundGeolocation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 83FF5F901AFD0D2B0016A13E;
+			remoteInfo = RNBackgroundGeolocationTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -335,13 +335,13 @@
 		837651111D3ECBED00268B87 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		837651121D3ECBED00268B87 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		837651131D3ECBED00268B87 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
-		8386B2541DF908690081B74E /* RNBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundGeolocation.xcodeproj; path = "../node_modules/react-native-background-geolocation-android/ios/RNBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		8386B25D1DF9087E0081B74E /* RNBackgroundFetch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundFetch.xcodeproj; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch.xcodeproj"; sourceTree = "<group>"; };
 		8386B2641DF908960081B74E /* Lumberjack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lumberjack.xcodeproj; path = "../node_modules/cocoa-lumberjack/CocoaLumberjack/Lumberjack.xcodeproj"; sourceTree = "<group>"; };
 		8386B2861DF908BC0081B74E /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
 		8386B2891DF909A70081B74E /* TSLocationManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../node_modules/react-native-background-geolocation-android/ios/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = "<group>"; };
 		839A61EB1D995CCC008F5A84 /* TSBackgroundFetch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TSBackgroundFetch.framework; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/TSBackgroundFetch.framework"; sourceTree = "<group>"; };
 		839A61ED1D995CE0008F5A84 /* TSLocationManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = "<group>"; };
+		83FDC97D1E2FD432005AD08B /* RNBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundGeolocation.xcodeproj; path = "../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -357,11 +357,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8386B28A1DF909A70081B74E /* TSLocationManager.framework in Frameworks */,
+				83FDC9871E2FD456005AD08B /* TSLocationManager.framework in Frameworks */,
+				83FDC9861E2FD43E005AD08B /* libRNBackgroundGeolocation.a in Frameworks */,
 				8386B2881DF909930081B74E /* TSBackgroundFetch.framework in Frameworks */,
 				8386B2831DF908AE0081B74E /* libCocoaLumberjack.a in Frameworks */,
 				8386B2841DF908AE0081B74E /* libRNBackgroundFetch.a in Frameworks */,
-				8386B2851DF908AE0081B74E /* libRNBackgroundGeolocation.a in Frameworks */,
 				836C60CB1DDF5FF400C3BDD4 /* libRCTMapboxGL.a in Frameworks */,
 				83F838D51D58F9A4006EAA2F /* libsqlite3.tbd in Frameworks */,
 				837650FF1D3EC95300268B87 /* libRNDeviceInfo.a in Frameworks */,
@@ -496,9 +496,9 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				83FDC97D1E2FD432005AD08B /* RNBackgroundGeolocation.xcodeproj */,
 				8386B2641DF908960081B74E /* Lumberjack.xcodeproj */,
 				8386B25D1DF9087E0081B74E /* RNBackgroundFetch.xcodeproj */,
-				8386B2541DF908690081B74E /* RNBackgroundGeolocation.xcodeproj */,
 				837650F71D3EC93200268B87 /* RNVectorIcons.xcodeproj */,
 				837650E51D3EC90A00268B87 /* RCTMapboxGL.xcodeproj */,
 				837650D51D3EC8F500268B87 /* RNDeviceInfo.xcodeproj */,
@@ -565,15 +565,6 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		8386B2551DF908690081B74E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8386B25A1DF908690081B74E /* libRNBackgroundGeolocation.a */,
-				8386B25C1DF908690081B74E /* RNBackgroundGeolocationTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		8386B25E1DF9087E0081B74E /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,6 +620,15 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* RNBackgroundGeolocationSample.app */,
 				00E356EE1AD99517003FC87E /* RNBackgroundGeolocationSampleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		83FDC97E1E2FD432005AD08B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				83FDC9831E2FD432005AD08B /* libRNBackgroundGeolocation.a */,
+				83FDC9851E2FD432005AD08B /* RNBackgroundGeolocationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -762,8 +762,8 @@
 					ProjectRef = 8386B25D1DF9087E0081B74E /* RNBackgroundFetch.xcodeproj */;
 				},
 				{
-					ProductGroup = 8386B2551DF908690081B74E /* Products */;
-					ProjectRef = 8386B2541DF908690081B74E /* RNBackgroundGeolocation.xcodeproj */;
+					ProductGroup = 83FDC97E1E2FD432005AD08B /* Products */;
+					ProjectRef = 83FDC97D1E2FD432005AD08B /* RNBackgroundGeolocation.xcodeproj */;
 				},
 				{
 					ProductGroup = 837650D61D3EC8F500268B87 /* Products */;
@@ -930,20 +930,6 @@
 			remoteRef = 837650FB1D3EC93200268B87 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8386B25A1DF908690081B74E /* libRNBackgroundGeolocation.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNBackgroundGeolocation.a;
-			remoteRef = 8386B2591DF908690081B74E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8386B25C1DF908690081B74E /* RNBackgroundGeolocationTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RNBackgroundGeolocationTests.xctest;
-			remoteRef = 8386B25B1DF908690081B74E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		8386B2631DF9087E0081B74E /* libRNBackgroundFetch.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1012,6 +998,20 @@
 			fileType = wrapper.framework;
 			path = CocoaLumberjackSwift.framework;
 			remoteRef = 8386B2811DF908960081B74E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		83FDC9831E2FD432005AD08B /* libRNBackgroundGeolocation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNBackgroundGeolocation.a;
+			remoteRef = 83FDC9821E2FD432005AD08B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		83FDC9851E2FD432005AD08B /* RNBackgroundGeolocationTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RNBackgroundGeolocationTests.xctest;
+			remoteRef = 83FDC9841E2FD432005AD08B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1144,7 +1144,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation-android/ios/**",
+					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
 				);
 				HEADER_SEARCH_PATHS = (
@@ -1175,7 +1175,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation-android/ios/**",
+					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
 				);
 				HEADER_SEARCH_PATHS = (
