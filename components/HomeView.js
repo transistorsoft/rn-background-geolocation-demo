@@ -113,7 +113,6 @@ var HomeView = React.createClass({
     //  ]
     // UNCOMMENT TO AUTO-GENERATE A SERIES OF SCHEDULE EVENTS BASED UPON CURRENT TIME:
     //config.schedule = SettingsService.generateSchedule(24, 1, 1, 1);
-    config.schedule = null;
     //
     //config.url = 'http://192.168.11.100:8080/locations';
 
@@ -127,7 +126,7 @@ var HomeView = React.createClass({
       this.eventEmitter.emit('enabled', state.enabled);
 
       // Start the scheduler if configured with one.
-      if (state.schedule) {
+      if (state.schedule.length) {
         bgGeo.startSchedule(function() {
           console.info('- Scheduler started');
         });
