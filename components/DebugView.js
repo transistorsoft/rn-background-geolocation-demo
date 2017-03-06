@@ -4,8 +4,10 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
+  TextInput,
   View,
   ScrollView,
+  AsyncStorage,
   Switch,
   Picker,
   TouchableHighlight,
@@ -18,6 +20,8 @@ import { RadioButtons } from 'react-native-radio-buttons'
 import SettingsService from './SettingsService';
 import commonStyles from './styles';
 import Config from './config';
+
+const STORAGE_KEY = "@TSLocationManager";
 
 var DebugView = React.createClass({
 
@@ -47,6 +51,11 @@ var DebugView = React.createClass({
         trackingMode: trackingMode
       });
     }.bind(this));
+
+    AsyncStorage.getItem(STORAGE_KEY + ":email", function(err, value) {
+      this.setState({email: value});
+    }.bind(this));
+
     return {
       desiredAccuracy: 0,
       distanceFilter: 0,
@@ -58,6 +67,7 @@ var DebugView = React.createClass({
       batchSync: false,
       stopOnTerminate: true,
       startOnBoot: false,
+      email: undefined,
       logLevel: 'ALL',
       debug: true,
       notifyOnEntry: true,
@@ -107,9 +117,7 @@ var DebugView = React.createClass({
   onShow() {
     console.log('onShow: DebugView');
   },
-  onClickEmailLogs() {
 
-  },
   onClickSync() {
     var bgGeo = this.bgGeo;
     bgGeo.sync(function(rs) {
@@ -149,6 +157,14 @@ var DebugView = React.createClass({
     this.bgGeo.removeGeofences();
   },
 
+  onClickEmailLogs() {
+    if (!this.state.email) {
+      alert('Enter an email address');
+      return;
+    }
+    AsyncStorage.setItem(STORAGE_KEY + ":email", this.state.email);
+    this.bgGeo.emailLog(this.state.email);
+  },
   setAutoSync(value) {
     var me = this;
     this.bgGeo.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
@@ -426,7 +442,20 @@ var DebugView = React.createClass({
           <View style={styles.panel}>
             <View style={styles.setting}>
               <View style={styles.label}>
-                <TouchableHighlight underlayColor="#d9534f" style={{alignItems: 'center', backgroundColor: "#0076ff", padding:12, borderRadius:5}}><Text style={{color: "#fff"}}>Email logs</Text></TouchableHighlight>
+                <TouchableHighlight 
+                  onPress={this.onClickEmailLogs} 
+                  underlayColor="#00c" 
+                  style={{alignItems: 'center', backgroundColor: "#0076ff", padding:12, borderRadius:5}}>
+                  <Text style={{color: "#fff"}}>Email logs</Text>
+                </TouchableHighlight>
+                <TextInput
+                  style={{height: 30, fontSize: 14, marginTop: 3, padding: 3, borderColor: '#ccc', borderWidth: 1}}
+                  onChangeText={(email) => this.setState({email})}
+                  placeholder="Email"
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  value={this.state.email}
+                />
               </View>
             </View>
 
