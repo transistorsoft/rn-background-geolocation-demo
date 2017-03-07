@@ -65,7 +65,7 @@ var SettingsListView = React.createClass({
     var sectionTitle = sectionId.toUpperCase();
     return (
       <View style={styles.section}>
-        <Text style={styles.text}>{sectionTitle}</Text>
+        <Text style={[styles.text, {fontWeight:'bold'}]}>{sectionTitle}</Text>
       </View>
     );
   },

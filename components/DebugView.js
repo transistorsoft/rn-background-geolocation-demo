@@ -10,12 +10,11 @@ import {
   AsyncStorage,
   Switch,
   Picker,
-  TouchableHighlight,
   TouchableWithoutFeedback
  } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
 import { RadioButtons } from 'react-native-radio-buttons'
+import Button from 'apsl-react-native-button'
 
 import SettingsService from './SettingsService';
 import commonStyles from './styles';
@@ -23,15 +22,25 @@ import Config from './config';
 
 const STORAGE_KEY = "@TSLocationManager";
 
+// Config select-options
+const desiredAccuracyOptions = [0, 10, 100, 1000];
+const trackingModeOptions = ["location", "geofence"];
+const logLevelOptions = ["OFF", "ERROR", "WARN", "ALL"];
+const distanceFilterOptions = [0, 10, 20, 50, 100, 500];
+const geofenceProximityRadiusOptions = ['1km', '2km', '5km', '10km'];
+const autoSyncThresholdOptions = [0, 5, 10, 25, 50, 100];
+
 var DebugView = React.createClass({
 
   bgGeo: undefined,
 
   getInitialState() {
     this.bgGeo = global.BackgroundGeolocation;
+
+    // Fetch current state of BackgroundGeolocation
     this.bgGeo.getState(function(state) {
-      var logLevel = this.decodeLogLevel(state.logLevel), 
-          trackingMode = 'location', 
+      var logLevel = this.decodeLogLevel(state.logLevel),
+          trackingMode = 'location',
           debug = true;
 
       var trackingMode = (state.trackingMode === 1 || state.trackingMode === 'location') ? 'location' : 'geofence';
@@ -52,10 +61,12 @@ var DebugView = React.createClass({
       });
     }.bind(this));
 
+    // Load cached email address
     AsyncStorage.getItem(STORAGE_KEY + ":email", function(err, value) {
       this.setState({email: value});
     }.bind(this));
 
+    // Default state
     return {
       desiredAccuracy: 0,
       distanceFilter: 0,
@@ -75,12 +86,13 @@ var DebugView = React.createClass({
       notifyOnDwell: false,
       showMapMarkers: true,
       loiteringDelay: 1000,
-      isLoadingGeofences: false
+      isLoadingGeofences: false,
+      isSyncing: false
     };
   },
 
   componentDidMount() {
-    
+
   },
 
   decodeLogLevel(value) {
@@ -100,6 +112,7 @@ var DebugView = React.createClass({
     }
     return value;
   },
+
   update: function(name, value) {
     var state = {};
     switch (name) {
@@ -114,15 +127,13 @@ var DebugView = React.createClass({
     this.setState(state);
   },
 
-  onShow() {
-    console.log('onShow: DebugView');
-  },
-
   onClickSync() {
+    this.setState({isSyncing: true});
     var bgGeo = this.bgGeo;
     bgGeo.sync(function(rs) {
+      this.setState({isSyncing: false});
       bgGeo.playSound(SettingsService.getSoundId('MESSAGE_SENT'));
-    });
+    }.bind(this));
   },
 
   onClickLoadGeofences() {
@@ -164,41 +175,6 @@ var DebugView = React.createClass({
     }
     AsyncStorage.setItem(STORAGE_KEY + ":email", this.state.email);
     this.bgGeo.emailLog(this.state.email);
-  },
-  setAutoSync(value) {
-    var me = this;
-    this.bgGeo.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
-    this.setState({autoSync: value});
-
-    SettingsService.set('autoSync', value, function(state) {
-      if (typeof(me.props.onChange) === 'function') {  // <-- Android
-        me.props.onChange('autoSync', value);
-      }
-    });
-  },
-
-  setAutoSyncThreshold(value) {
-    var me = this;
-    this.bgGeo.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
-    this.setState({autoSyncThreshold: value});
-
-    SettingsService.set('autoSyncThreshold', value, function(state) {
-      if (typeof(me.props.onChange) === 'function') {  // <-- Android
-        me.props.onChange('autoSyncThreshold', value);
-      }
-    });
-  },
-
-  setBatchSync(value) {
-    var me = this;
-    this.bgGeo.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
-    this.setState({batchSync: value});
-
-    SettingsService.set('batchSync', value, function(state) {
-      if (typeof(me.props.onChange) === 'function') {  // <-- Android
-        me.props.onChange('batchSync', value);
-      }
-    });
   },
 
   setTrackingMode(trackingMode){
@@ -256,18 +232,7 @@ var DebugView = React.createClass({
     });
   },
 
-  setDebug(value) {
-    var me = this;
-    this.bgGeo.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
-    this.setState({debug: value});
-    this.bgGeo.setConfig({debug: value});
-    SettingsService.set('debug', value, function(state) {
-      if (typeof(me.props.onChange) === 'function') {  // <-- Android
-        me.props.onChange('debug', value);
-      }
-    });
-  },
-
+  // Generic setter method for simple properties
   createSetter(name) {
     var bgGeo = this.bgGeo;
     var me = this;
@@ -287,12 +252,6 @@ var DebugView = React.createClass({
   },
 
   render() {
-    const desiredAccuracyOptions = [0, 10, 100, 1000];
-    const trackingModeOptions = ["location", "geofence"];
-    const logLevelOptions = ["OFF", "ERROR", "WARN", "ALL"];
-    const distanceFilterOptions = [0, 10, 20, 50, 100, 500];
-    const geofenceProximityRadiusOptions = ['1km', '2km', '5km', '10km'];
-    const autoSyncThresholdOptions = [0, 5, 10, 25, 50, 100];
 
     function renderRadioOption(option, selected, onSelect, index){
       var containerStyle, textStyle = {};
@@ -301,6 +260,7 @@ var DebugView = React.createClass({
           backgroundColor: '#0076ff',
           borderColor: '#0076ff',
           padding: 5,
+          minWidth: 35,
           borderRadius: 3,
           borderWidth: 0
         };
@@ -310,7 +270,8 @@ var DebugView = React.createClass({
           color: '#fff'
         };
       } else {
-        containerStyle = {marginRight: 5, padding: 5};
+        containerStyle = {minWidth: 35, padding: 5, borderWidth: 0};
+        textStyle = {textAlign: 'center'};
       }
 
       return (
@@ -326,7 +287,7 @@ var DebugView = React.createClass({
 
     return (
       <ScrollView style={{backgroundColor: "#eee"}}>
-        <View style={{marginBottom: 10}}>
+        <View style={styles.section}>
           <Text style={styles.sectionHeading}>Geolocation</Text>
           <View style={styles.panel}>
             <View style={styles.setting}>
@@ -380,14 +341,14 @@ var DebugView = React.createClass({
           </View>
         </View>
 
-        <View style={{marginBottom: 10}}>
+        <View style={styles.section}>
           <Text style={styles.sectionHeading}>HTTP & Persistence</Text>
           <View style={styles.panel}>
             <View style={styles.setting}>
               <View style={styles.label}>
-                <TouchableHighlight onPress={this.onClickSync} underlayColor="#c00" style={{alignItems: 'center', backgroundColor: "#ff3824", padding:12, borderRadius:5}}>
-                  <Text style={{color: "#fff"}}>Sync</Text>
-                </TouchableHighlight>
+                <Button onPress={this.onClickSync} isLoading={this.state.isSyncing} activeOpacity={0.7} style={[styles.button, styles.redButton]} textStyle={styles.buttonLabel}>
+                  Sync
+                </Button>
               </View>
             </View>
             <View style={styles.setting}>
@@ -417,7 +378,7 @@ var DebugView = React.createClass({
           </View>
         </View>
 
-        <View style={{marginBottom: 10}}>
+        <View style={styles.section}>
           <Text style={styles.sectionHeading}>Application</Text>
           <View style={styles.panel}>
             <View style={styles.setting}>
@@ -437,19 +398,16 @@ var DebugView = React.createClass({
           </View>
         </View>
 
-        <View style={{marginBottom: 10}}>
+        <View style={styles.section}>
           <Text style={styles.sectionHeading}>Logging & Debug</Text>
           <View style={styles.panel}>
             <View style={styles.setting}>
               <View style={styles.label}>
-                <TouchableHighlight 
-                  onPress={this.onClickEmailLogs} 
-                  underlayColor="#00c" 
-                  style={{alignItems: 'center', backgroundColor: "#0076ff", padding:12, borderRadius:5}}>
-                  <Text style={{color: "#fff"}}>Email logs</Text>
-                </TouchableHighlight>
+                <Button onPress={this.onClickEmailLogs} activeOpacity={0.7} style={[styles.button, styles.blueButton]} textStyle={styles.buttonLabel}>
+                  Email logs
+                </Button>
                 <TextInput
-                  style={{height: 30, fontSize: 14, marginTop: 3, padding: 3, borderColor: '#ccc', borderWidth: 1}}
+                  style={{height: 30, fontSize: 14, marginTop: 10, padding: 3, borderColor: '#ccc', borderWidth: 1}}
                   onChangeText={(email) => this.setState({email})}
                   placeholder="Email"
                   autoCapitalize="none"
@@ -471,34 +429,25 @@ var DebugView = React.createClass({
             </View>
             <View style={styles.setting}>
               <Text style={styles.label}>Sounds & Notifications</Text>
-              <Switch 
-                value={this.state.debug}
-                onValueChange={this.createSetter('debug')}
-              />
+              <Switch value={this.state.debug} onValueChange={this.createSetter('debug')} />
             </View>
           </View>
         </View>
 
-        <View style={{marginBottom: 10}}>
+        <View style={styles.section}>
           <Text style={styles.sectionHeading}>Geofencing Test-data (City Drive)</Text>
           <View style={styles.panel}>
             <View style={[styles.setting, {flexDirection:"row"}]}>
               <View style={styles.label}>
-                <TouchableHighlight 
-                  onPress={this.onClickClearGeofences}
-                  underlayColor="#c00" 
-                  style={{alignItems: 'center', backgroundColor: "#ff3824", padding:12, borderRadius:5}}>
-                  <Text style={{color: "#fff"}}>Clear</Text>
-                </TouchableHighlight>
+                <Button onPress={this.onClickClearGeofences} activeOpacity={0.7} style={[styles.button, styles.redButton]} textStyle={styles.buttonLabel}>
+                  Clear
+                </Button>
               </View>
               <Text>&nbsp;&nbsp;&nbsp;</Text>
               <View style={styles.label}>
-                <TouchableHighlight 
-                  onPress={this.onClickLoadGeofences}
-                  underlayColor="#00c" 
-                  style={{alignItems: 'center', backgroundColor: "#0076ff", padding:12, borderRadius:5}}>
-                  <Text style={{color: "#fff"}}>Load</Text>
-                </TouchableHighlight>
+                <Button onPress={this.onClickLoadGeofences} isLoading={this.state.isLoadingGeofences} activeOpacity={0.7} style={[styles.button, styles.blueButton]} textStyle={styles.buttonLabel}>
+                  Load
+                </Button>
               </View>
             </View>
 
@@ -538,14 +487,15 @@ var DebugView = React.createClass({
             </View>
           </View>
         </View>
-
-
       </ScrollView>
     );
   }
 });
 
 var styles = StyleSheet.create({
+  section: {
+    marginBottom: 10
+  },
   sectionHeading: {
     fontSize:16,
     fontWeight:"bold",
@@ -569,6 +519,21 @@ var styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderTopWidth:1,
     borderTopColor: "#ccc",
+  },
+  button: {
+    borderWidth:0,
+    borderRadius: 5,
+    marginBottom: 0
+  },
+  buttonLabel: {
+    fontSize: 14, 
+    color: '#fff'
+  },
+  redButton: {
+    backgroundColor: '#ff3824'
+  },
+  blueButton: {
+    backgroundColor: '#0076ff'
   }
 });
 
