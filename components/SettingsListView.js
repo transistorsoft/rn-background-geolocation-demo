@@ -10,10 +10,10 @@ import {
   Navigator,
   TouchableHighlight,
   AsyncStorage,
-  SettingsService
  } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import SettingsService from './SettingsService';
 import SettingDetail from './SettingDetailView';
 
 var SettingsListView = React.createClass({
@@ -23,58 +23,24 @@ var SettingsListView = React.createClass({
   },
   componentDidMount() {
     var me = this;
-    this.settingsService = require('./SettingsService');
     this.createDataSource();
   },
+
+  onShow() {
+    console.log('onShow: ListView');
+  },
+
   createDataSource: function() {
     var me = this;
-    this.settingsService.getSettings(function(values) {
-      var getSectionData = (dataBlob, sectionID) => {
-        return dataBlob[sectionID];
-      };
-
-      var getRowData = (dataBlob, sectionID, rowID) => {
-        return dataBlob[sectionID + ':' + rowID];
-      };
-
-      var ds = new ListView.DataSource({
-        getSectionData: getSectionData,
-        getRowData: getRowData,
-        rowHasChanged: (row1, row2) => row1 !== row2,
-        sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-      });
-
-      var sections  = ['geolocation', 'activity recognition', 'application', 'persistence', 'http'],
-          sectionIds = [],
-          rowIds    = [],
-          dataBlob  = {};
-
-      for (var n=0,len=sections.length;n<len;n++) {
-        var section = sections[n];
-        var settings = values[section];
-        sectionIds.push(section);
-        rowIds[n] = [];
-
-        dataBlob[section] = settings;
-        for (var s=0,lens=settings.length;s<lens;s++) {
-          var setting = settings[s];
-          rowIds[n].push(setting.name);
-          dataBlob[section + ':' + setting.name] = setting;
-        }
-      }
-
+    SettingsService.getDataSource(function(dataSource) {
       me.setState({
         loaded: true,
-        dataSource: ds.cloneWithRowsAndSections(dataBlob, sectionIds, rowIds)
+        dataSource: dataSource
       });
     });
   },
-  update: function(setting, value) {
-    var me = this;
-    var settings = this.settingsService;
-    settings.set(setting.name, value, function(s, values) {
-      me.createDataSource();
-    });
+  update: function(state) {
+    this.createDataSource();
   },
 
   getInitialState() {
@@ -99,7 +65,7 @@ var SettingsListView = React.createClass({
     var sectionTitle = sectionId.toUpperCase();
     return (
       <View style={styles.section}>
-        <Text style={styles.text}>{sectionTitle}</Text>
+        <Text style={[styles.text, {fontWeight:'bold'}]}>{sectionTitle}</Text>
       </View>
     );
   },
@@ -112,7 +78,7 @@ var SettingsListView = React.createClass({
               <Text style={styles.name}>{setting.name}</Text>
             </View>
             <View style={styles.rightContainer}>
-              <Text style={styles.value}>{this.settingsService.get(setting.name).toString()}</Text>
+              <Text style={styles.value}>{setting.value.toString()}</Text>
               <Icon name="ios-arrow-forward" size={22} color="#4f8ef7" style={styles.disclosure} />
             </View>
           </View>
@@ -137,14 +103,13 @@ var SettingsListView = React.createClass({
 
   render() {
     return (
-      <View style={styles.container}>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderSetting}
-          renderSectionHeader={this.renderSectionHeader}
-          style={styles.listView}
-        />
-      </View>
+      <ListView
+        tabLabel="Config"
+        dataSource={this.state.dataSource}
+        renderRow={this.renderSetting}
+        renderSectionHeader={this.renderSectionHeader}
+        style={styles.listView}
+      />
     );
   },
 

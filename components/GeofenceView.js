@@ -26,11 +26,14 @@ class GeofenceView extends React.Component {
       identifier: '',
       latitude: 0,
       longitude: 0,
-      radius: '100',
+      radius: '200',
       notifyOnEntry: true,
       notifyOnExit: false,
       notifyOnDwell: false,
-      loiteringDelay: '0'
+      loiteringDelay: '0',
+      extras: {
+        geofence_extra_foo: 'bar'
+      }
     };    
   }
   load(annotation) {

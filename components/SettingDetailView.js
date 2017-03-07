@@ -15,6 +15,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import SettingsView from './SettingsView';
+import SettingsService from './SettingsService';
 
 var styles = StyleSheet.create({
   container: {
@@ -90,7 +91,7 @@ var SettingDetailView = React.createClass({
   load: function(setting) {
     var state = {
       setting: setting,
-      value: this.settingsService.get(setting.name),
+      value: setting.value,
       isLoading: false
     };
     if (setting.inputType !== 'text') {
@@ -152,16 +153,20 @@ var SettingDetailView = React.createClass({
   onSelectValue(value) {
     var me      = this;
     var setting = this.props.setting;
-    
+    var config  = {};
+
+    global.BackgroundGeolocation.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
+
     this.setState({
       value: value
     });
-    this.settingsService.set(setting.name, value, function(config) {
+
+    SettingsService.set(setting.name, value, function(state) {
       if (typeof(me.props.onSelectValue) === 'function') {  // <-- Android
-        me.props.onSelectValue(value);    
+        me.props.onSelectValue(setting.name, value);
       }
     });
    }
 });
- 
+
 module.exports = SettingDetailView;

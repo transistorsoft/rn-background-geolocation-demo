@@ -13,9 +13,13 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import Drawer from 'react-native-drawer';
 import Modal from 'react-native-modalbox';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
+
 import SettingsService from './SettingsService';
 import SettingsListView from './SettingsListView.js';
 import SettingDetailView from './SettingDetailView';
+import DebugView from './DebugView';
+
 import commonStyles from './styles';
 import Config from './config';
 
@@ -57,15 +61,6 @@ var SettingsView = React.createClass({
     global.BackgroundGeolocation.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
     this.refs.modal.open();
   },
-  onToggleDebug: function(value) {
-    var bgGeo = global.BackgroundGeolocation;
-    bgGeo.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
-    this.setState({debug: value});
-    bgGeo.setConfig({
-      debug: value
-    });
-    SettingsService.set('debug', value);
-  },
   onClickSubmitLogs: function() {
     var modal = this.refs.modal;
     global.BackgroundGeolocation.emailLog(this.state.email, function() {
@@ -92,20 +87,20 @@ var SettingsView = React.createClass({
             <Text style={commonStyles.toolbarTitle}>{setting.name}</Text>
             <Text style={{width: 60}}>&nbsp;</Text>
           </View>
-          <SettingDetailView setting={setting} onSelectValue={this.onSelectValue} />
+          <SettingDetailView setting={setting} onSelectValue={this.onChange} />
         </View>
       )
     });
     this.refs.drawer.open();
   },
-  onSelectValue: function(value) {
-    var bgGeo = global.BackgroundGeolocation;
-    bgGeo.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
-    this.refs.settings.update(this.state.setting, value);
-    var config = {};
-    config[this.state.setting.name] = value;
-    bgGeo.setConfig(config);
-    this.refs.drawer.close();
+  onChange: function(name, value) {
+    if (this.refs.settings) {
+      this.refs.drawer.close();
+      this.refs.settings.update(name, value);
+    }
+    if (this.refs.debug) {
+      this.refs.debug.update(name, value);
+    }
   },
   onClickSync: function() {
     var bgGeo = global.BackgroundGeolocation;
@@ -124,6 +119,9 @@ var SettingsView = React.createClass({
       console.log('- sync error: ', error);
     });
   },
+  onChangeTab(event) {
+
+  },
   render: function() {
     return (
       <Drawer ref="drawer" side="right" content={this.state.settingDetailView}>
@@ -131,16 +129,12 @@ var SettingsView = React.createClass({
           <View style={commonStyles.topToolbar}>
             <Icon.Button name="ios-arrow-back" onPress={this.onClickBack} iconStyle={commonStyles.backButtonIcon} backgroundColor="transparent" size={30} color="#4f8ef7" underlayColor={"transparent"}><Text style={commonStyles.backButtonText}>Back</Text></Icon.Button>
             <Text style={commonStyles.toolbarTitle}>Settings</Text>
-            <Text>Debug</Text>
-            <Switch onValueChange={this.onToggleDebug} value={this.state.debug} />
+            <Text style={{width:75}} />
           </View>
-          <SettingsListView ref="settings" onSelectSetting={this.onSelectSetting} />
-
-          <View style={commonStyles.bottomToolbar}>
-            <Icon.Button name="ios-share-alt" onPress={this.onClickEmailLogs}><Text style={[styles.btnLog, commonStyles.iconButton]}>Logs</Text></Icon.Button>
-            <Text style={{flex: 1, textAlign: 'center'}}>&nbsp;</Text>
-            <Icon.Button name={this.state.syncButtonIcon} onPress={this.onClickSync} style={commonStyles.redButton}><Text style={[styles.btnSync, commonStyles.iconButton, {color: "#fff"}]}>Sync</Text></Icon.Button>
-          </View>
+          <ScrollableTabView onChangeTab={this.onChangeTab}>
+            <DebugView tabLabel="Basic" ref={"debug"} onChange={this.onChange} />
+            <SettingsListView tabLabel="Advanced" ref="settings" onSelectSetting={this.onSelectSetting} />            
+          </ScrollableTabView>
         </View>
 
         <Modal style={styles.modal} ref={"modal"}>
