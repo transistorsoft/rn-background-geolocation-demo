@@ -43,11 +43,14 @@ class GeofenceView extends React.Component {
       latitude: params.latitude,
       longitude: params.longitude,
       identifier: '',
-      radius: '100',
+      radius: '200',
       notifyOnEntry: true,
       notifyOnExit: false,
       notifyOnDwell: false,
-      loiteringDelay: '0'
+      loiteringDelay: '0',
+      extras: {
+        "geofence_extra_foo": "bar"
+      }
     });
     this.refs.modal.open();
   }
