@@ -116,9 +116,6 @@ var HomeView = React.createClass({
     //
     //config.url = 'http://192.168.11.100:8080/locations';
 
-    // Set the license key
-    config.license = "1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774";
-
     bgGeo.configure(config, function(state) {
       console.log('- configure success.  Current state: ', state);
 
