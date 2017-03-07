@@ -87,7 +87,8 @@ var DebugView = React.createClass({
       showMapMarkers: true,
       loiteringDelay: 1000,
       isLoadingGeofences: false,
-      isSyncing: false
+      isSyncing: false,
+      isEmailingLog: false
     };
   },
 
@@ -173,8 +174,11 @@ var DebugView = React.createClass({
       alert('Enter an email address');
       return;
     }
+    this.setState({isEmailingLog: true});
     AsyncStorage.setItem(STORAGE_KEY + ":email", this.state.email);
-    this.bgGeo.emailLog(this.state.email);
+    this.bgGeo.emailLog(this.state.email, function() {
+      this.setState({isEmailingLog: false});
+    }.bind(this));
   },
 
   setTrackingMode(trackingMode){
@@ -403,7 +407,7 @@ var DebugView = React.createClass({
           <View style={styles.panel}>
             <View style={styles.setting}>
               <View style={styles.label}>
-                <Button onPress={this.onClickEmailLogs} activeOpacity={0.7} style={[styles.button, styles.blueButton]} textStyle={styles.buttonLabel}>
+                <Button onPress={this.onClickEmailLogs} isLoading={this.state.isEmailingLog} activeOpacity={0.7} style={[styles.button, styles.blueButton]} textStyle={styles.buttonLabel}>
                   Email logs
                 </Button>
                 <TextInput
