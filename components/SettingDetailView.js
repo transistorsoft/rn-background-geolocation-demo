@@ -100,17 +100,7 @@ var SettingDetailView = React.createClass({
 
     this.setState(state);
   },
-  onSubmit: function(value) {
-    this.props.setting.value = this.refs.text.value;
-    if (typeof(this.props.onSelectValue) === 'function') {  // <-- Android
-        this.props.onSelectValue(this.state.text);    
-      }
-  },
-  onChangeText: function(value) {
-    this.setState({
-      text: value
-    });
-  },
+  
 
   renderRow(setting) {
     return (
@@ -141,15 +131,19 @@ var SettingDetailView = React.createClass({
       <TextInput
         ref="text"
         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-        defaultValue={this.props.setting.value}
+        value={this.state.value}
         editable={true}
         autoCorrect={false}
         blurOnSubmit={true}
-        onSubmitEditing={this.onSubmit}
-        onChangeText={this.onChangeText}
+        onSubmitEditing={this.onSubmitText}
+        onChangeText={(value) => this.setState({value})}
         keyboardType="url"/>
     );
   },
+  onSubmitText() {
+    this.onSelectValue(this.state.value);
+  },
+
   onSelectValue(value) {
     var me      = this;
     var setting = this.props.setting;

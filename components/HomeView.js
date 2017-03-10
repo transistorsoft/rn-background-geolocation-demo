@@ -75,6 +75,7 @@ var HomeView = React.createClass({
     
   },
   configureBackgroundGeolocation: function(config) {
+
     var me = this;
     var bgGeo = global.BackgroundGeolocation;
     ////
