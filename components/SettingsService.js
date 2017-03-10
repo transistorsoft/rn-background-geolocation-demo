@@ -11,7 +11,7 @@ import {
 import DeviceInfo from 'react-native-device-info';
 
 var SettingsService = (function() {
-  var STORAGE_KEY = "@TSLocationManager:settings";
+  var STORAGE_KEY = "@TSLocationManager:";
 
   // react-native-device-info
   var deviceInfo = {
@@ -79,20 +79,17 @@ var SettingsService = (function() {
       {name: 'deferTime', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, (10*1000), (30*1000), (60*1000), (5*60*1000)], defaultValue: 0}
     ]
   }
+  // @private
   var _platform = undefined;
-  var _values = undefined;
+  var _pluginState   = undefined;
   var _sections = ['geolocation', 'activity recognition', 'application', 'persistence', 'http'];
-  var _items = [];
-  var _defaultValues = {};
+  var _items    = [];
   var _dataSource;
 
   var bindValues = function(settings, values) {
     for (var n=0,len=settings.length;n<len;n++) {
       var setting = settings[n];
       var value = values[setting.name];
-      if (setting.dataType === 'integer') {
-        value = parseInt(value, 10);
-      }
       settings[n].value = value;
     }
     var result = {};
@@ -113,23 +110,16 @@ var SettingsService = (function() {
       };
 
       _items = [].concat(_settings[_platform]).concat(_settings.common);
-      for (var n=0,len=_items.length;n<len;n++) {
-        var setting = _items[n];
-        _defaultValues[setting.name] = setting.defaultValue;
-      }
     },
     getDataSource: function(callback) {
       var me = this;
-      if (!_values) {
-        global.BackgroundGeolocation.getState(function(state) {
-          me.buildDataSource(state, callback);
-        });
-      } else {
-        this.buildDataSource(_values, callback);
-      }
+      this.getState(function(config) {
+        this.buildDataSource(config, callback);
+      }.bind(this));
     },
 
-    buildDataSource: function(state, callback) {
+    // Build ListView.DataSource
+    buildDataSource: function(bgGeoState, callback) {
       var getSectionData = (dataBlob, sectionID) => {
         return dataBlob[sectionID];
       };
@@ -149,7 +139,8 @@ var SettingsService = (function() {
           rowIds    = [],
           dataBlob  = {};
 
-      var values = bindValues(_items, state);
+      var values = bindValues(_items, bgGeoState);
+
       for (var n=0,len=_sections.length;n<len;n++) {
         var section = _sections[n];
         var settings = values[section];
@@ -166,67 +157,57 @@ var SettingsService = (function() {
       callback(ds.cloneWithRowsAndSections(dataBlob, sectionIds, rowIds));
     },
 
+    // Fetch plugin settings {} with bound current-values
     getSettings: function(callback) {
       var me = this;
       if (!_settings[_platform]) {
         throw "Unknown platform: " + _platform;
       }
       //var platformSettings = [].concat(_settings[_platform]).concat(_settings.common);
-      if (!_values) {
-        this.getValues(function(result) {
-          _values = result;
-          callback.call(me, bindValues(_items, _values));
+      if (!_pluginState) {
+        this.getConfig(function(result) {
+          _pluginState = result;
+          callback.call(me, bindValues(_items, _pluginState));
         });
       } else {
-        callback.call(me, bindValues(_items, _values));
+        callback.call(me, bindValues(_items, _pluginState));
       }
     },
-    getValues: function(callback) {
-      if (_values === undefined) {
-        _values = {
-          params: {device: deviceInfo}
-        };
+
+    // Fetch plugin state.
+    getState: function(callback) {
+      if (_pluginState === undefined) {
         global.BackgroundGeolocation.getState(function(state) {
-          var setting;
-          for (var n=0,len=_items.length;n<len;n++) {
-            setting = _items[n];
-            if (typeof(state[setting.name]) !== 'undefined') {
-              _values[setting.name] = state[setting.name];
+          _pluginState = state;
+          // Check if first-boot.
+          AsyncStorage.getItem(STORAGE_KEY+"uuid", function(err, uuid) {
+            if (!uuid) {
+              // First boot:  Override default options from plugin state.
+              // We want to start with debug: true.
+              AsyncStorage.setItem(STORAGE_KEY+"uuid", deviceInfo.uuid);
+              _pluginState.debug = true;
+              _pluginState.logLevel = global.BackgroundGeolocation.LOG_LEVEL_VERBOSE;
+              _pluginState.params = {device: deviceInfo};
             }
-          }
-          callback(_values);
+            callback(_pluginState);
+          });
         });
       } else {
-        callback(_values);
+        callback(_pluginState);
       }
     },
-    get: function(key) {
-      if (typeof(_values[key]) === 'undefined') {
-        return _defaultValues[key];
-      } else if (_values[key] === null) {
-        return '';
-      } else {
-        return _values[key];  
-      }
-    },
+
+    // Set a plugin config option and execute BackgroundGeolocation#setConfig
     set: function(key, value, callback) {
       var config = {};
       config[key] = value;
       global.BackgroundGeolocation.setConfig(config, function(state) {
-        _values = state;
+        _pluginState = state;
         callback(state);
       });
     },
 
-    save: function(values, callback) {
-      var me = this;
-      AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(values))
-      .then(() => {
-        callback.call(me, values);
-      })
-      //.catch((error) => console.error("- error: ", error))
-      .done();
-    },
+    // Fetch a sound ID by platform.
     getSoundId: function(key) {
       var id = SOUNDS[key + "_" + deviceInfo.platform.toUpperCase()];
       if (!id) {

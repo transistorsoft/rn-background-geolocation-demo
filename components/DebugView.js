@@ -38,7 +38,7 @@ var DebugView = React.createClass({
     this.bgGeo = global.BackgroundGeolocation;
 
     // Fetch current state of BackgroundGeolocation
-    this.bgGeo.getState(function(state) {
+    SettingsService.getState(function(state) {
       var logLevel = this.decodeLogLevel(state.logLevel),
           trackingMode = 'location',
           debug = true;

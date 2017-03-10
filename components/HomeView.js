@@ -52,8 +52,8 @@ var HomeView = React.createClass({
     });
 
     var me = this;
-    SettingsService.getValues(function(values) {
-      me.configureBackgroundGeolocation(values);
+    SettingsService.getState(function(state) {
+      me.configureBackgroundGeolocation(state);
     });
   },
   componentWillUnmount: function() {
