@@ -66,13 +66,13 @@
 -dontwarn okio.**
 
 # BackgroundGeolocation
+-keep class com.transistorsoft.** { *; }
+-dontwarn com.transistorsoft.**
+
 -keep class com.google.**
 -dontwarn com.google.**
 -dontwarn org.apache.http.**
 -dontwarn com.android.volley.toolbox.**
-
--keep class com.transistorsoft.** { *; }
--dontwarn com.transistorsoft.**
 
 # BackgroundGeolocation (EventBus)
 -keepclassmembers class * extends de.greenrobot.event.util.ThrowableFailureEvent {

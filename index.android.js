@@ -13,7 +13,7 @@ import {
 
 import Drawer from 'react-native-drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
-import BackgroundGeolocation from 'react-native-background-geolocation-android';
+import BackgroundGeolocation from 'react-native-background-geolocation';
 
 async function requestLocationPermission() {
   try {

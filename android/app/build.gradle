@@ -142,7 +142,7 @@ android {
 
 repositories {
     flatDir {
-        dirs "../../node_modules/react-native-background-geolocation-android/android/libs"
+        dirs "../../node_modules/react-native-background-geolocation/android/libs"
     }
 }
 
