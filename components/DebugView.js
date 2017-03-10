@@ -246,7 +246,6 @@ var DebugView = React.createClass({
       state[name] = value;
       bgGeo.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
       me.setState(state);
-      bgGeo.setConfig(state);
       SettingsService.set(name, value, function(state) {
         if (typeof(me.props.onChange) === 'function') {  // <-- Android
           me.props.onChange(name, value);

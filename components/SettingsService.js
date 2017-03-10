@@ -183,9 +183,18 @@ var SettingsService = (function() {
     },
     getValues: function(callback) {
       if (_values === undefined) {
+        _values = {
+          params: {device: deviceInfo}
+        };
         global.BackgroundGeolocation.getState(function(state) {
-          _values = state;
-          callback(state);
+          var setting;
+          for (var n=0,len=_items.length;n<len;n++) {
+            setting = _items[n];
+            if (typeof(state[setting.name]) !== 'undefined') {
+              _values[setting.name] = state[setting.name];
+            }
+          }
+          callback(_values);
         });
       } else {
         callback(_values);
