@@ -12,15 +12,11 @@ Fully-featured, React Native demo application for [React Native Background Geolo
 $ git clone https://github.com/transistorsoft/rn-background-geolocation-demo.git
 $ cd rn-background-geolocation-demo
 $ npm install
+$
+$ react-native run-android
+$ react-native run-ios
 ```
 
-**Android users**: Install plugin from private repo ([requires license](http://shop.transistorsoft.com/pages/react-native-background-geolocation))
-
-```
-$ npm install git+https://git@github.com:transistorsoft/react-native-background-geolocation-android.git
-```
-
-- Now open as an XCode project
 
 - Simulate location 
 
