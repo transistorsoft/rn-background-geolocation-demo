@@ -137,7 +137,7 @@ var BottomToolbarView = React.createClass({
       }
     }
     var spinner = undefined;
-    var button = <Icon.Button name={icon} onPress={this.onClickPace} iconStyle={{marginLeft:12}} style={[style, {paddingLeft:5}]} />
+    var button = <Icon.Button name={icon} onPress={this.onClickPace} iconStyle={{marginLeft:15}} style={[style, styles.paceButton]} />
     if (this.state.isChangingPace) {
       spinner = Config.icons.spinner;
     }
@@ -148,9 +148,9 @@ var BottomToolbarView = React.createClass({
 
   render: function() {
     return (
-      <View style={commonStyles.bottomToolbar}>
+      <View style={styles.bottomToolbar}>
         <View style={styles.navigateContainer}>
-          <Icon.Button name={Config.icons.navigate} onPress={this.onClickLocate} size={30} color="#000" backgroundColor="#eee" underlayColor="green" style={styles.btnNavigate} />
+          <Icon.Button name={Config.icons.navigate} onPress={this.onClickLocate} size={30} color="#000" backgroundColor="transparent" style={styles.btnNavigate} />
           {Config.getLocationProviders(this.state.currentProvider)}
         </View>
         <View style={styles.statusContainer}>
@@ -159,28 +159,28 @@ var BottomToolbarView = React.createClass({
           <Text style={styles.statusLabel}>{this.state.odometer}km</Text>
         </View>
         {this.getPaceButton()}
-        <Text>&nbsp;</Text>
       </View>
     );
   }
 });
 
 var styles = StyleSheet.create({
+  bottomToolbar: {
+    backgroundColor: '#eee',
+    flexDirection: 'row',
+    height: 50
+  },
   navigateContainer: {
-    flex:0.3,
+    flex:0.4,
     flexDirection:"row",
     justifyContent:"flex-start",
     alignItems:"center"
   },
-  paceButtonContainer: {
-    flex:0.3,
-    flexDirection:"row",
-    alignItems:"center",
-    justifyContent:"flex-end"
-  },
   btnNavigate: {
     padding: 3,
-    paddingLeft: 10
+    flex: 1,
+    borderRadius: 0,
+    paddingLeft: 15
   },
   statusContainer: {
     flex:1,
@@ -197,6 +197,16 @@ var styles = StyleSheet.create({
   },
   statusLabel: {
     marginLeft:5
+  },
+  paceButtonContainer: {
+    flex:0.4,
+    flexDirection:"row",
+    alignItems:"stretch",
+    justifyContent:"flex-end"
+  },
+  paceButton: {
+    flex: 1,
+    borderRadius: 0
   }
 });
 

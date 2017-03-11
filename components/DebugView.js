@@ -30,6 +30,38 @@ const distanceFilterOptions = [0, 10, 20, 50, 100, 500];
 const geofenceProximityRadiusOptions = ['1km', '2km', '5km', '10km'];
 const autoSyncThresholdOptions = [0, 5, 10, 25, 50, 100];
 
+function renderRadioOption(option, selected, onSelect, index){
+  var containerStyle, textStyle = {};
+  if (selected) {
+    containerStyle = {
+      backgroundColor: '#0076ff',
+      borderColor: '#0076ff',
+      padding: 5,
+      minWidth: 35,
+      borderRadius: 3,
+      borderWidth: 0
+    };
+    textStyle = {
+      fontWeight: 'bold',
+      textAlign: 'center',
+      color: '#fff'
+    };
+  } else {
+    containerStyle = {minWidth: 35, padding: 5, borderWidth: 0};
+    textStyle = {textAlign: 'center'};
+  }
+
+  return (
+    <TouchableWithoutFeedback onPress={onSelect} key={index}>
+      <View style={containerStyle}><Text style={textStyle}>{option}</Text></View>
+    </TouchableWithoutFeedback>
+  );
+}
+
+function renderRadioContainer(optionNodes){
+  return <View style={{flexDirection: "row", backgroundColor: '#eee', padding: 3, borderRadius: 5, borderWidth: 1, borderColor: '#ccc'}}>{optionNodes}</View>
+}
+
 var DebugView = React.createClass({
 
   bgGeo: undefined,
@@ -50,6 +82,7 @@ var DebugView = React.createClass({
         distanceFilter: state.distanceFilter,
         disableElasticity: state.disableElasticity,
         geofenceProximityRadius: (state.geofenceProximityRadius/1000)+'km',
+        url: state.url,
         autoSync: state.autoSync,
         autoSyncThreshold: state.autoSyncThreshold,
         batchSync: state.batchSync,
@@ -57,7 +90,10 @@ var DebugView = React.createClass({
         startOnBoot: state.startOnBoot,
         logLevel: logLevel,
         debug: state.debug,
-        trackingMode: trackingMode
+        trackingMode: trackingMode,
+        // Platform: Android
+        foregroundService: state.foregroundService,
+        foo: state.bar
       });
     }.bind(this));
 
@@ -73,6 +109,7 @@ var DebugView = React.createClass({
       disableElasticity: false,
       trackingMode: 'location',
       geofenceProximityRadius: '1km',
+      url: '',
       autoSync: false,
       autoSyncThreshold: 0,
       batchSync: false,
@@ -88,7 +125,9 @@ var DebugView = React.createClass({
       loiteringDelay: 1000,
       isLoadingGeofences: false,
       isSyncing: false,
-      isEmailingLog: false
+      isEmailingLog: false,
+      // Platform: Android
+      foregroundService: false
     };
   },
 
@@ -134,6 +173,17 @@ var DebugView = React.createClass({
     bgGeo.sync(function(rs) {
       this.setState({isSyncing: false});
       bgGeo.playSound(SettingsService.getSoundId('MESSAGE_SENT'));
+    }.bind(this));
+  },
+
+  onSubmitUrl() {
+    var config = {url: this.state.url};
+    this.bgGeo.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
+    this.setState(config);
+    SettingsService.set('url', this.state.url, function(state) {
+      if (typeof(this.props.onChange) === 'function') {  // <-- Android
+        this.props.onChange('url', this.state.url);
+      }
     }.bind(this));
   },
 
@@ -254,39 +304,22 @@ var DebugView = React.createClass({
     }
   },
 
+  getPlatformSettings(section) {
+    var platform = SettingsService.getPlatform();
+    switch (section) {
+      case 'application':
+        if (platform === 'android') {
+          return (
+            <View style={styles.setting}>
+              <Text style={styles.label}>foregroundService</Text>
+              <Switch value={this.state.foregroundService} onValueChange={this.createSetter('foregroundService')} />
+            </View>
+          );
+        }
+    }
+  },
+
   render() {
-
-    function renderRadioOption(option, selected, onSelect, index){
-      var containerStyle, textStyle = {};
-      if (selected) {
-        containerStyle = {
-          backgroundColor: '#0076ff',
-          borderColor: '#0076ff',
-          padding: 5,
-          minWidth: 35,
-          borderRadius: 3,
-          borderWidth: 0
-        };
-        textStyle = {
-          fontWeight: 'bold',
-          textAlign: 'center',
-          color: '#fff'
-        };
-      } else {
-        containerStyle = {minWidth: 35, padding: 5, borderWidth: 0};
-        textStyle = {textAlign: 'center'};
-      }
-
-      return (
-        <TouchableWithoutFeedback onPress={onSelect} key={index}>
-          <View style={containerStyle}><Text style={textStyle}>{option}</Text></View>
-        </TouchableWithoutFeedback>
-      );
-    }
-
-    function renderRadioContainer(optionNodes){
-      return <View style={{flexDirection: "row", backgroundColor: '#eee', padding: 3, borderRadius: 5, borderWidth: 1, borderColor: '#ccc'}}>{optionNodes}</View>
-    }
 
     return (
       <ScrollView style={{backgroundColor: "#eee"}}>
@@ -352,6 +385,17 @@ var DebugView = React.createClass({
                 <Button onPress={this.onClickSync} isLoading={this.state.isSyncing} activeOpacity={0.7} style={[styles.button, styles.redButton]} textStyle={styles.buttonLabel}>
                   Sync
                 </Button>
+                <TextInput
+                  style={{height: 30, fontSize: 14, marginTop: 10, padding: 3, borderColor: '#ccc', borderWidth: 1}}
+                  onChangeText={(url) => this.setState({url})}
+                  onSubmitEditing={this.onSubmitUrl}
+                  placeholder="http://your.server.com/endpoint"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  keyboardType="url"
+                  underlineColorAndroid='transparent'
+                  value={this.state.url}
+                />
               </View>
             </View>
             <View style={styles.setting}>
@@ -398,6 +442,7 @@ var DebugView = React.createClass({
                 onValueChange={this.createSetter('startOnBoot')}
               />
             </View>
+            {this.getPlatformSettings('application')}
           </View>
         </View>
 
@@ -414,7 +459,9 @@ var DebugView = React.createClass({
                   onChangeText={(email) => this.setState({email})}
                   placeholder="Email"
                   autoCapitalize="none"
+                  autoCorrect={false}
                   keyboardType="email-address"
+                  underlineColorAndroid='transparent'
                   value={this.state.email}
                 />
               </View>

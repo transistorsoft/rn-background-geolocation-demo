@@ -25,17 +25,6 @@ var styles = StyleSheet.create({
     height: 20,
     backgroundColor: '#ffd700'
   },
-  bottomToolbar: {
-  	paddingLeft: 5,
-    paddingRight: 5,
-    backgroundColor: '#eee',
-    borderTopColor: '#d6d6d6',
-    borderTopWidth: 1,
-    alignSelf: 'stretch',
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 46
-  },
   toolbarTitle: {
   	fontWeight: 'bold', 
   	fontSize: 18, 

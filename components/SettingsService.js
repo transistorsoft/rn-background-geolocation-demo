@@ -111,6 +111,11 @@ var SettingsService = (function() {
 
       _items = [].concat(_settings[_platform]).concat(_settings.common);
     },
+
+    getPlatform: function() {
+      return deviceInfo.platform.toLowerCase();
+    },
+
     getDataSource: function(callback) {
       var me = this;
       this.getState(function(config) {
