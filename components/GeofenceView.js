@@ -34,17 +34,17 @@ class GeofenceView extends React.Component {
       extras: {
         geofence_extra_foo: 'bar'
       }
-    };    
+    };
   }
   load(annotation) {
     this.setState({
       identifier: annotation.id 
     });
   }
-  open(params) {
+  open(coordinate) {
     this.setState({
-      latitude: params.latitude,
-      longitude: params.longitude,
+      latitude: coordinate.latitude,
+      longitude: coordinate.longitude,
       identifier: '',
       radius: '200',
       notifyOnEntry: true,
@@ -64,7 +64,17 @@ class GeofenceView extends React.Component {
   onDone() {
     dismissKeyboard();
     this.refs.modal.close();
-    this.props.onSubmit(this.state);
+    this.props.onSubmit({
+      identifier: this.state.identifier,
+      latitude: this.state.latitude,
+      longitude: this.state.longitude,
+      radius: parseInt(this.state.radius, 10),
+      loiteringDelay: parseInt(this.state.loiteringDelay, 10),
+      notifyOnEntry: this.state.notifyOnEntry,
+      notifyOnExit: this.state.notifyOnExit,
+      notifyOnDwell: this.state.notifyOnDwell,
+      extras: this.state.extras
+    });
   }
   onCancel() {
     dismissKeyboard();

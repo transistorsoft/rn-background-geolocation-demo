@@ -29,6 +29,7 @@ const logLevelOptions = ["OFF", "ERROR", "WARN", "ALL"];
 const distanceFilterOptions = [0, 10, 20, 50, 100, 500];
 const geofenceProximityRadiusOptions = ['1km', '2km', '5km', '10km'];
 const autoSyncThresholdOptions = [0, 5, 10, 25, 50, 100];
+const heartbeatIntervalOptions = [60, 120, 240, 600];
 
 function renderRadioOption(option, selected, onSelect, index){
   var containerStyle, textStyle = {};
@@ -88,12 +89,14 @@ var DebugView = React.createClass({
         batchSync: state.batchSync,
         stopOnTerminate: state.stopOnTerminate,
         startOnBoot: state.startOnBoot,
+        heartbeatInterval: state.heartbeatInterval,
         logLevel: logLevel,
         debug: state.debug,
         trackingMode: trackingMode,
         // Platform: Android
         foregroundService: state.foregroundService,
-        foo: state.bar
+        // Platform: iOS
+        preventSuspend: state.preventSuspend
       });
     }.bind(this));
 
@@ -115,6 +118,7 @@ var DebugView = React.createClass({
       batchSync: false,
       stopOnTerminate: true,
       startOnBoot: false,
+      heartbeatInterval: 60,
       email: undefined,
       logLevel: 'ALL',
       debug: true,
@@ -127,7 +131,9 @@ var DebugView = React.createClass({
       isSyncing: false,
       isEmailingLog: false,
       // Platform: Android
-      foregroundService: false
+      foregroundService: false,
+      // Platform: iOS
+      preventSuspend: false
     };
   },
 
@@ -165,6 +171,12 @@ var DebugView = React.createClass({
     };
     state[name] = value;
     this.setState(state);
+  },
+
+  onClickResetOdometer() {
+    var bgGeo = this.bgGeo;
+    this.bgGeo.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
+    bgGeo.resetOdometer();
   },
 
   onClickSync() {
@@ -315,6 +327,13 @@ var DebugView = React.createClass({
               <Switch value={this.state.foregroundService} onValueChange={this.createSetter('foregroundService')} />
             </View>
           );
+        } else if (platform === 'ios') {
+          return (
+            <View style={styles.setting}>
+              <Text style={styles.label}>preventSuspend</Text>
+              <Switch value={this.state.preventSuspend} onValueChange={this.createSetter('preventSuspend')} />
+            </View>
+          );
         }
     }
   },
@@ -373,7 +392,13 @@ var DebugView = React.createClass({
                 renderContainer={renderRadioContainer}
               />
             </View>
-
+            <View style={styles.setting}>
+              <View style={styles.label}>
+                <Button onPress={this.onClickResetOdometer} activeOpacity={0.7} style={[styles.button, styles.redButton]} textStyle={styles.buttonLabel}>
+                    Reset Odometer
+                </Button>
+              </View>
+            </View>
           </View>
         </View>
 
@@ -443,6 +468,16 @@ var DebugView = React.createClass({
               />
             </View>
             {this.getPlatformSettings('application')}
+            <View style={styles.setting}>
+              <Text style={styles.label}>heartbeatInterval</Text>
+              <RadioButtons
+                options={ heartbeatIntervalOptions }
+                onSelection={this.createSetter('heartbeatInterval')}
+                selectedOption={this.state.heartbeatInterval }
+                renderOption={ renderRadioOption }
+                renderContainer={renderRadioContainer}
+              />
+            </View>
           </View>
         </View>
 
