@@ -142,7 +142,10 @@ var BottomToolbarView = React.createClass({
       spinner = Config.icons.spinner;
     }
     return (
-      <View style={styles.paceButtonContainer}>{spinner}{button}</View>
+      <View style={styles.paceButtonContainer}>
+        {spinner}
+        <View style={[style, {flexDirection: 'row'}]}>{button}</View>
+      </View>
     );
   },
 
@@ -150,7 +153,7 @@ var BottomToolbarView = React.createClass({
     return (
       <View style={styles.bottomToolbar}>
         <View style={styles.navigateContainer}>
-          <Icon.Button name={Config.icons.navigate} onPress={this.onClickLocate} size={30} color="#000" backgroundColor="transparent" style={styles.btnNavigate} />
+          <Icon.Button name={Config.icons.navigate} onPress={this.onClickLocate} size={30} color="black" backgroundColor="transparent" style={styles.btnNavigate} />
           {Config.getLocationProviders(this.state.currentProvider)}
         </View>
         <View style={styles.statusContainer}>
@@ -166,6 +169,8 @@ var BottomToolbarView = React.createClass({
 
 var styles = StyleSheet.create({
   bottomToolbar: {
+    borderTopColor: '#ccc',
+    borderTopWidth: 1,
     backgroundColor: '#eee',
     flexDirection: 'row',
     height: 50

@@ -11,8 +11,10 @@ import {
 
 import EventEmitter from 'EventEmitter';
 
-import Mapbox, { MapView } from 'react-native-mapbox-gl';
-Mapbox.setAccessToken('pk.eyJ1IjoiY2hyaXN0b2NyYWN5IiwiYSI6ImVmM2Y2MDA1NzIyMjg1NTdhZGFlYmZiY2QyODVjNzI2In0.htaacx3ZhE5uAWN86-YNAQ');
+//import Mapbox, { MapView } from 'react-native-mapbox-gl';
+//Mapbox.setAccessToken('pk.eyJ1IjoiY2hyaXN0b2NyYWN5IiwiYSI6ImVmM2Y2MDA1NzIyMjg1NTdhZGFlYmZiY2QyODVjNzI2In0.htaacx3ZhE5uAWN86-YNAQ');
+
+import MapView from 'react-native-maps';
 
 import Config from './config';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -22,10 +24,21 @@ import SettingsService from './SettingsService';
 import GeofenceView from './GeofenceView';
 import Modal from 'react-native-modalbox';
 
+var MAP_MARKER_IMAGE = require('../images/green-dot.png');
+
+const LATITUDE_DELTA = 0.00922;
+const LONGITUDE_DELTA = 0.00421;
+
+const GEOFENCE_STROKE_COLOR = "rgba(0,200,0,0.5)"
+const GEOFENCE_FILL_COLOR   ="rgba(0,170,0,0.5)"
+const GEOFENCE_STROKE_COLOR_ACTIVATED = "rgba(127,127,127,0.5)";
+const GEOFENCE_FILL_COLOR_ACTIVATED = "rgba(127,127,127,0.5)";
+const POLYLINE_STROKE_COLOR = "#2677FF";
+
 SettingsService.init();
 
 var HomeView = React.createClass({
-  locationIcon: require("image!green_circle"),
+  //locationIcon: require("image!green_circle"),
   eventEmitter: new EventEmitter(),
 
   getInitialState: function() {
@@ -38,9 +51,16 @@ var HomeView = React.createClass({
         latitude: 40.7223,
         longitude: -73.9878
       },
+      centerCoordinate: {
+        latitude: 0,
+        longitude: 0
+      },
+      stationaryLocation: {timestamp: '',latitude:0,longitude:0},
+      stationaryRadius: 0,
       showsUserLocation: true,
-      initialZoomLevel: 15,
-      annotations: [],
+
+      markers: [],
+      geofences: [],
       coordinates: []
     };
   },
@@ -71,9 +91,7 @@ var HomeView = React.createClass({
     bgGeo.un("geofenceschange", this.onGeofencesChange);
 
   },
-  onMapLoaded: function() {
-    
-  },
+
   configureBackgroundGeolocation: function(config) {
 
     var me = this;
@@ -142,48 +160,89 @@ var HomeView = React.createClass({
   onMotionChange: function(event) {
     var location = event.location;
     console.log("- motionchange", JSON.stringify(event));
+    if (event.isMoving) {
+      this.setState({
+        stationaryRadius: 0,
+        stationaryLocation: {
+          timestamp: '',
+          latitude: 0,
+          longitude: 0
+        }
+      });
+    } else {
+      this.setState({
+        stationaryRadius: 200,
+        stationaryLocation: {
+          timestamp: event.location.timestamp,
+          latitude: event.location.coords.latitude,
+          longitude: event.location.coords.longitude
+        }
+      })
+    }
   },
   onLocation: function(location) {
     console.log('- location: ', JSON.stringify(location));
     if (!location.sample) {
       this.addMarker(location);
     }
-    this.setCenter(location);
+    // Seems to fix PolyLine rendering issue by wrapping call to setCenter in a timeout
+    setTimeout(function() {
+      this.setCenter(location);
+    }.bind(this))
   },
   onGeofencesChange: function(event) {
-    console.log('- geofenceshcange: ', event);
-    var on = event.on;
+    var on  = event.on;
     var off = event.off;
-    var rs = this.state.annotations.filter(function(annotation) {
-      return (annotation.title === 'geofence') ? off.indexOf(annotation.id) <= 0 : true;
+    var geofences  = this.state.geofences;
+
+    // Filter out all "off" geofences.
+    geofences = geofences.filter(function(geofence) {
+      return off.indexOf(geofence.identifier) < 0;
     });
+
+    // Add new "on" geofences.
     on.forEach(function(geofence) {
-      rs.push(this.createGeofenceMarker(geofence));
+      var marker = geofences.find(function(m) { return m.identifier === geofence.identifier;});
+      if (marker) { return; }
+      geofences.push(this.createGeofenceMarker(geofence));
     }.bind(this));
+
     this.setState({
-      annotations: [...rs]
+      geofences: geofences
     });
   },
+
+  onPressGeofence: function(event) {
+    console.log('NOT IMPLEMENTED');
+  },
+
   onHeartbeat: function(params) {
     console.log("- heartbeat: ", params.location);
   },
+
   onHttp: function(response) {
     console.log('- http ' + response.status);
     console.log(response.responseText);
   },
+
   onGeofence: function(geofence) {
-    console.log('- onGeofence: ', JSON.stringify(geofence));
+    var marker = this.state.geofences.find(function(m) {
+      return m.identifier === geofence.identifier;
+    });
+    if (!marker) { return; }
+
+    marker.fillColor = GEOFENCE_STROKE_COLOR_ACTIVATED;
+    marker.strokeColor = GEOFENCE_STROKE_COLOR_ACTIVATED;
+    this.setState({geofences: this.state.geofences});
   },
+
   onSchedule: function(state) {
     console.log("- schedule", state.enabled, state);
     this.setState({
       enabled: state.enabled
     });
   },
-  /**
-  * MapBox is evil.  It keeps the location running in background when showsUserLocation is enabled
-  * BE SURE TO SHUT THAT OFF IN BACKGROUND OR GPS IS ON FOREVER.  Bye bye battery.
-  */
+
   _handleAppStateChange: function(currentAppState) {
     var showsUserLocation = (currentAppState === 'background') ? false : true;
 
@@ -208,135 +267,94 @@ var HomeView = React.createClass({
         console.log('- Start success: ', state);
       }.bind(this));
     } else {
-      bgGeo.resetOdometer();
       bgGeo.stop(function() {
         console.log('- stopped');
       });
 
-      //this.removeAllAnnotations(mapRef);
+      // Clear markers, polyline, geofences, stationary-region
       this.setState({
         coordinates: [],
-        annotations: []
+        markers: [],
+        geofences: [],
+        stationaryRadius: 0,
+        stationaryLocation: {
+          timestamp: '',
+          latitude: 0,
+          longitude: 0
+        }
       });
     }
 
     this.setState({
       enabled: enabled
     });
+
+    // Transmit to other components
     this.eventEmitter.emit('enabled', enabled);
   },
 
-  onRegionChange: function() {
-    console.log('onRegionChange');
+  onRegionChange: function(coordinate) {
+
   },
+
   setCenter: function(location) {
-    if (!this._map) { return;}
+    if (!this.refs.map) { return; }
+    this.refs.map.animateToCoordinate({
+      latitude: location.coords.latitude, 
+      longitude: location.coords.longitude
+    });
+  },
 
-    if (location.event === 'motionchange') {
-      this._map.setCenterCoordinateZoomLevel(location.coords.latitude, location.coords.longitude, 15);
-    } else {
-      this._map.setCenterCoordinate(location.coords.latitude, location.coords.longitude);
-    }
-  },
-  onUserLocationChange: function(location) {
-    console.log('[MapBox] #onUserLocationChange: ', location);
-  },
   onLongPress: function(params) {
+    var coordinate = params.nativeEvent.coordinate;
     global.BackgroundGeolocation.playSound(SettingsService.getSoundId('LONG_PRESS_ACTIVATE'));
-    this.refs.geofenceModal.open(params);
+    this.refs.geofenceModal.open(coordinate);
   },
-  onOpenAnnotation: function(annotation) {
-    console.log('[MapBox] #onOpenAnnotation', annotation);
-    if (annotation.title === 'geofence') {
-      this.refs.geofenceModal.load(annotation);
-    }
-  },
-  addMarker :function(location) {
-    // Remove the route polyline.  We have to regenerate it from scratch each time.
-    // Wish we could just update it with new coords
-    this.state.annotations = this.state.annotations.filter(function(annotation) {
-      return (annotation.type === 'polyline' && annotation.id === 'route') ? false : true;
-    });
 
-    this.setState({
-      annotations: [ ...this.state.annotations, this.createMarker(location)]
-    });
-    this.setState({
-      annotations: [ ...this.state.annotations, this.createPolyline(location) ]
-    });
-  },
-  createMarker: function(location) {
-    return {
-        id: location.timestamp,
-        type: 'point',
-        title: location.timestamp,
-        coordinates: [location.coords.latitude, location.coords.longitude]
-      };
-  },
-  createPolyline: function(location) {
-    this.setState({
-      coordinates: [...this.state.coordinates, [location.coords.latitude, location.coords.longitude]]
-    });
-
-    return {
-      type: "polyline",
-      coordinates: this.state.coordinates,
-      title: "Route",
-      strokeColor: '#2677FF',
-      strokeWidth: 5,
-      strokeAlpha: 0.5,
-      id: "route"
-    };
-  },
-  createGeofenceMarker: function(params) {
-    // Too bad MapBox doesn't support a simple Circle...ugh.
-    var lat = params.latitude;
-    var lng = params.longitude;
-    var radius = params.radius;
-    var degreesBetweenPoints = 8;
-    var numberOfPoints = Math.floor(360/degreesBetweenPoints);
-    var distRadians = radius/6371000;
-    var centerLatRadians = lat * Math.PI / 180
-    var centerLngRadians = lng * Math.PI / 180;
-    var polygons = [];
-
-    var degrees, degreesRadians, pointLatRadians, pointLngRadians, pointLat, pointLng;
-    for (var i=0;i<numberOfPoints;i++) {
-      degrees = i * degreesBetweenPoints;
-      degreesRadians = degrees * Math.PI / 180;
-      pointLatRadians = Math.asin(Math.sin(centerLatRadians) * Math.cos(distRadians) + Math.cos(centerLatRadians) * Math.sin(distRadians) * Math.cos(degreesRadians));
-      pointLngRadians = centerLngRadians + Math.atan2(Math.sin(degreesRadians) * Math.sin(distRadians) * Math.cos(centerLatRadians), Math.cos(distRadians) - Math.sin(centerLatRadians) * Math.sin(pointLatRadians));
-      pointLat = pointLatRadians * 180 / Math.PI;
-      pointLng = pointLngRadians * 180 / Math.PI;
-      polygons.push([pointLat, pointLng]);
-    }
-
-    return {
-      id: params.identifier,
-      title: 'geofence',
-      type: 'polygon',
-      coordinates: polygons,
-      strokeAlpha: 0.9,
-      strokeColor: '#11b700',
-      strokeWidth: 2,
-      fillAlpha:  0.2,
-      alpha: 0.2,
-      fillColor: '#11b700'
-    };
-  },
-  onCloseGeofenceModal: function() {
-
-  },
   onSubmitGeofence: function(params) {
     var bgGeo = global.BackgroundGeolocation;
     bgGeo.playSound(SettingsService.getSoundId('ADD_GEOFENCE'));
     bgGeo.addGeofence(params, function(identifier) {
       this.setState({
-        annotations: [ ...this.state.annotations, this.createGeofenceMarker(params)]
+        geofences: [ ...this.state.geofences, this.createGeofenceMarker(params)]
       });
     }.bind(this), function(error) {
       console.warn('- addGeofence error: ', error);
     }.bind(this))
+  },
+
+  addMarker :function(location) {
+    this.setState({
+      markers: [...this.state.markers, this.createMarker(location)],
+      coordinates: [...this.state.coordinates, {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      }]
+    });
+  },
+
+  createMarker: function(location) {
+    return {
+      key: location.uuid,
+      title: location.timestamp,
+      coordinate: {
+        latitude: location.coords.latitude, 
+        longitude: location.coords.longitude
+      }
+    };
+  },
+
+  createGeofenceMarker: function(geofence) {
+    return {
+      radius: geofence.radius,
+      center: {
+        latitude: geofence.latitude,
+        longitude: geofence.longitude
+      },
+      identifier: geofence.identifier,
+      strokeColor:GEOFENCE_STROKE_COLOR,
+      fillColor: GEOFENCE_FILL_COLOR
+    }
   },
 
   render: function() {
@@ -349,25 +367,57 @@ var HomeView = React.createClass({
         </View>
         <View ref="workspace" style={styles.workspace}>
           <MapView
-            ref={map => {this._map = map;}}
-            annotations={this.state.annotations}
-            annotationsAreImmutable
-            initialCenterCoordinate={this.state.initialCenterCoordinate}
-            debugActive={false}
-            direction={10}
-            rotateEnabled={true}
-            scrollEnabled={true}
-            style={styles.mapBox}
-            showsUserLocation={this.state.showsUserLocation}
-            styleURL={Mapbox.mapStyles.dark}
-            userTrackingMode={Mapbox.userTrackingMode.none}
-            zoomEnabled={true}
-            initialZoomLevel={this.state.initialZoomLevel}
-            compassIsHidden={true}
-            onUserLocationChange={this.onUserLocationChange}
+            ref="map"
+            style={styles.map}
+            showsUserLocation={true}
             onLongPress={this.onLongPress}
-            onOpenAnnotation={this.onOpenAnnotation}
-            onFinishLoadingMap={this.onMapLoaded} />
+            onRegionChange={this.onRegionChange}
+            initialRegion={{
+              latitude: 37.78825,
+              longitude: -122.4324,
+              latitudeDelta: LATITUDE_DELTA,
+              longitudeDelta: LONGITUDE_DELTA
+            }}>
+            <MapView.Circle
+              key={this.state.stationaryLocation.timestamp}
+              radius={this.state.stationaryRadius}
+              fillColor="rgba(200,0,0,0.5)"
+              strokeColor="rgba(170,0,0,0.5)"
+              strokeWidth={3}
+              center={{latitude: this.state.stationaryLocation.latitude, longitude: this.state.stationaryLocation.longitude}}
+            />
+            <MapView.Marker
+              key="Center"
+              coordinate={this.state.centerCoordinate}
+              title="Center"
+            />
+            {this.state.markers.map(marker => (
+              <MapView.Marker
+                key={marker.key}
+                coordinate={marker.coordinate}
+                title={marker.title}
+                image={MAP_MARKER_IMAGE}
+              />
+            ))}
+            {this.state.geofences.map(geofence => (
+              <MapView.Circle
+                key={geofence.identifier}
+                radius={geofence.radius}
+                center={geofence.center}
+                strokeWidth={3}
+                strokeColor={geofence.strokeColor}
+                fillColor={geofence.fillColor}
+                onPress={this.onPressGeofence}
+              />
+            ))}
+            <MapView.Polyline
+              coordinates={this.state.coordinates}
+              geodesic={true}
+              strokeColor={POLYLINE_STROKE_COLOR}
+              strokeWidth={5}
+            />
+          </MapView>
+
         </View>
         <BottomToolbarView eventEmitter={this.eventEmitter} enabled={this.state.enabled} />
         <GeofenceView ref={"geofenceModal"} onSubmit={this.onSubmitGeofence}/>
@@ -381,6 +431,9 @@ var styles = StyleSheet.create({
     flex: 1
   },
   mapBox: {
+    flex: 1
+  },
+  map: {
     flex: 1
   }
 });
