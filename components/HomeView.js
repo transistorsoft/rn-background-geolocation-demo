@@ -35,7 +35,7 @@ const GEOFENCE_STROKE_COLOR = "rgba(17,183,0,0.5)"
 const GEOFENCE_FILL_COLOR   ="rgba(17,183,0,0.2)"
 const GEOFENCE_STROKE_COLOR_ACTIVATED = "rgba(64,64,64,0.5)";
 const GEOFENCE_FILL_COLOR_ACTIVATED = "rgba(64,64,64,0.2)";
-const POLYLINE_STROKE_COLOR = "#2677FF";
+const POLYLINE_STROKE_COLOR = "rgba(32,64,255,0.7)";
 
 SettingsService.init();
 
