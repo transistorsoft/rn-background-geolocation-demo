@@ -70,6 +70,39 @@ var DebugView = React.createClass({
   getInitialState() {
     this.bgGeo = global.BackgroundGeolocation;
 
+    // Default state
+    return {
+      desiredAccuracy: 0,
+      distanceFilter: 0,
+      disableElasticity: false,
+      trackingMode: 'location',
+      geofenceProximityRadius: '1km',
+      url: '',
+      autoSync: false,
+      autoSyncThreshold: 0,
+      batchSync: false,
+      stopOnTerminate: true,
+      startOnBoot: false,
+      heartbeatInterval: 60,
+      email: undefined,
+      logLevel: 'ALL',
+      debug: true,
+      notifyOnEntry: true,
+      notifyONExit: false,
+      notifyOnDwell: false,
+      showMapMarkers: true,
+      loiteringDelay: 1000,
+      isLoadingGeofences: false,
+      isSyncing: false,
+      isEmailingLog: false,
+      // Platform: Android
+      foregroundService: false,
+      // Platform: iOS
+      preventSuspend: false
+    };
+  },
+
+  componentDidMount() {
     // Fetch current state of BackgroundGeolocation
     SettingsService.getState(function(state) {
       var logLevel = this.decodeLogLevel(state.logLevel),
@@ -104,41 +137,6 @@ var DebugView = React.createClass({
     AsyncStorage.getItem(STORAGE_KEY + ":email", function(err, value) {
       this.setState({email: value});
     }.bind(this));
-
-    // Default state
-    return {
-      desiredAccuracy: 0,
-      distanceFilter: 0,
-      disableElasticity: false,
-      trackingMode: 'location',
-      geofenceProximityRadius: '1km',
-      url: '',
-      autoSync: false,
-      autoSyncThreshold: 0,
-      batchSync: false,
-      stopOnTerminate: true,
-      startOnBoot: false,
-      heartbeatInterval: 60,
-      email: undefined,
-      logLevel: 'ALL',
-      debug: true,
-      notifyOnEntry: true,
-      notifyONExit: false,
-      notifyOnDwell: false,
-      showMapMarkers: true,
-      loiteringDelay: 1000,
-      isLoadingGeofences: false,
-      isSyncing: false,
-      isEmailingLog: false,
-      // Platform: Android
-      foregroundService: false,
-      // Platform: iOS
-      preventSuspend: false
-    };
-  },
-
-  componentDidMount() {
-
   },
 
   decodeLogLevel(value) {

@@ -29,10 +29,12 @@ var MAP_MARKER_IMAGE = require('../images/green-dot.png');
 const LATITUDE_DELTA = 0.00922;
 const LONGITUDE_DELTA = 0.00421;
 
-const GEOFENCE_STROKE_COLOR = "rgba(0,200,0,0.5)"
-const GEOFENCE_FILL_COLOR   ="rgba(0,170,0,0.5)"
-const GEOFENCE_STROKE_COLOR_ACTIVATED = "rgba(127,127,127,0.5)";
-const GEOFENCE_FILL_COLOR_ACTIVATED = "rgba(127,127,127,0.5)";
+const STATIONARY_REGION_FILL_COLOR = "rgba(200,0,0,0.2)"
+const STATIONARY_REGION_STROKE_COLOR = "rgba(200,0,0,0.2)"
+const GEOFENCE_STROKE_COLOR = "rgba(17,183,0,0.5)"
+const GEOFENCE_FILL_COLOR   ="rgba(17,183,0,0.2)"
+const GEOFENCE_STROKE_COLOR_ACTIVATED = "rgba(64,64,64,0.5)";
+const GEOFENCE_FILL_COLOR_ACTIVATED = "rgba(64,64,64,0.2)";
 const POLYLINE_STROKE_COLOR = "#2677FF";
 
 SettingsService.init();
@@ -381,8 +383,8 @@ var HomeView = React.createClass({
             <MapView.Circle
               key={this.state.stationaryLocation.timestamp}
               radius={this.state.stationaryRadius}
-              fillColor="rgba(200,0,0,0.5)"
-              strokeColor="rgba(170,0,0,0.5)"
+              fillColor={STATIONARY_REGION_FILL_COLOR}
+              strokeColor={STATIONARY_REGION_STROKE_COLOR}
               strokeWidth={3}
               center={{latitude: this.state.stationaryLocation.latitude, longitude: this.state.stationaryLocation.longitude}}
             />
