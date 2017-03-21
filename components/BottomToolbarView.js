@@ -171,7 +171,7 @@ var styles = StyleSheet.create({
   bottomToolbar: {
     borderTopColor: '#ccc',
     borderTopWidth: 1,
-    backgroundColor: '#eee',
+    backgroundColor: Config.colors.gold,
     flexDirection: 'row',
     height: 50
   },

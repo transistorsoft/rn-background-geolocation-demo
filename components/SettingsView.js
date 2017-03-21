@@ -29,6 +29,13 @@ var SettingsView = React.createClass({
     spinner: 'md-sync'
   },
 
+  open() {
+    this.refs.modal.open();
+  },
+  close() {
+    this.refs.modal.close();
+  },
+
   getInitialState: function() {
     return {
       settingDetailView: null,
@@ -50,8 +57,9 @@ var SettingsView = React.createClass({
     });
   },
   onClickBack: function() {
-    global.BackgroundGeolocation.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
-    this.props.drawer.close();
+    //global.BackgroundGeolocation.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
+    //this.props.drawer.close();
+    this.refs.modal.close();
   },
   onClickSettingDone: function() {
     global.BackgroundGeolocation.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
@@ -124,7 +132,7 @@ var SettingsView = React.createClass({
   },
   render: function() {
     return (
-      <Drawer ref="drawer" side="right" content={this.state.settingDetailView}>
+      <Modal ref="modal" swipeToClose={false} animationDuration={300}>
         <View style={commonStyles.container}>
           <View style={commonStyles.topToolbar}>
             <Icon.Button name="ios-arrow-back" onPress={this.onClickBack} iconStyle={commonStyles.backButtonIcon} backgroundColor="transparent" size={30} color="#4f8ef7" underlayColor={"transparent"}><Text style={commonStyles.backButtonText}>Back</Text></Icon.Button>
@@ -136,36 +144,7 @@ var SettingsView = React.createClass({
             <SettingsListView tabLabel="Advanced" ref="settings" onSelectSetting={this.onSelectSetting} />            
           </ScrollableTabView>
         </View>
-
-        <Modal style={styles.modal} ref={"modal"}>
-          <View style={styles.modalContainer}>
-            <View style={styles.modalHeader}>
-              <Text style={{textAlign: "center", fontWeight: "bold"}}>Email application logs</Text>
-              <TextInput editable={true} maxLength={50}/>
-            </View>
-            <View style={styles.modalBody}>
-              <Text style={{textAlign: "center"}}>Recipient email</Text>
-              <TextInput
-                style={{marginTop: 5,padding:10, height: 40}}
-                ref="email"
-                value={this.state.email}
-                onChangeText={this.onChangeEmail}
-                placeholder="foo@bar.com"
-                editable={true}
-                keyboardType="email-address"
-                autoCorrect={false}
-                autoCapitalize="none"
-                blurOnSubmit={true} />
-            </View>
-            <View style={styles.modalFooter}>
-              <TouchableHighlight onPress={this.onClickCancelLogs} underlayColor="#acacac" style={styles.modalButtonCancel}><Text style={{textAlign: "center"}}>Cancel</Text></TouchableHighlight>
-              <TouchableHighlight onPress={this.onClickSubmitLogs} underlayColor="#3879a2" style={styles.modalButtonSubmit}><Text style={{textAlign: "center", fontWeight: "bold", color: "#fff"}}>Send</Text></TouchableHighlight>
-            </View>
-          </View>
-        </Modal>
-
-      </Drawer>
-
+      </Modal>
     );
   }
 });

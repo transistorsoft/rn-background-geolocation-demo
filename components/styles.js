@@ -5,14 +5,15 @@ import {
   StyleSheet
  } from 'react-native';
 
+
 var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#F5FCFF'    
   },
-  topToolbar: {    
-    backgroundColor: '#ffd700',  //ff d7 00
+  topToolbar: {
+    backgroundColor: 'rgba(254,221,30,1)',  //ff d7 00
     borderBottomColor: '#E6BE00',
     borderBottomWidth: 1,
     paddingRight: 5,
@@ -21,15 +22,15 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     height: 46
   },
+  toolbarTitle: {
+    fontWeight: 'bold', 
+    fontSize: 18, 
+    flex: 1, 
+    textAlign: 'center'
+  },
   iosStatusBar: {
     height: 20,
     backgroundColor: '#ffd700'
-  },
-  toolbarTitle: {
-  	fontWeight: 'bold', 
-  	fontSize: 18, 
-  	flex: 1, 
-  	textAlign: 'center'
   },
   disabledButton: {
     backgroundColor: '#ccc'
@@ -62,10 +63,10 @@ var styles = StyleSheet.create({
   },
 
   redButton: {
-    backgroundColor: '#D9534F'
+    backgroundColor: '#FE381E'
   },
   greenButton: {
-    backgroundColor: '#5CB85C'
+    backgroundColor: '#16BE42'
   }
   
 });

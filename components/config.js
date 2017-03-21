@@ -27,6 +27,17 @@ var config = (function() {
       "ERROR_IOS": 1006
     },
 
+    colors: {
+      gold: '#fedd1e',
+      white: '#fff',
+      black: '#000',
+      light_blue: '#2677FF',
+      grey: '#404040',
+      red: '#FE381E',
+      green: '#16BE42',
+      polyline_color: '#00B3FD'
+    },
+
     icons: {
       play: 'md-play',
       pause: 'md-pause',

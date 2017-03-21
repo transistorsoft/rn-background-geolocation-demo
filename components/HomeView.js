@@ -11,20 +11,19 @@ import {
 
 import EventEmitter from 'EventEmitter';
 
-//import Mapbox, { MapView } from 'react-native-mapbox-gl';
-//Mapbox.setAccessToken('pk.eyJ1IjoiY2hyaXN0b2NyYWN5IiwiYSI6ImVmM2Y2MDA1NzIyMjg1NTdhZGFlYmZiY2QyODVjNzI2In0.htaacx3ZhE5uAWN86-YNAQ');
-
+import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
+import Modal from 'react-native-modalbox';
+import ActionButton from 'react-native-action-button';
 
 import Config from './config';
-import Icon from 'react-native-vector-icons/Ionicons';
 import commonStyles from './styles';
 import BottomToolbarView from './BottomToolbarView';
 import SettingsService from './SettingsService';
 import GeofenceView from './GeofenceView';
-import Modal from 'react-native-modalbox';
+import SettingsView from './SettingsView';
 
-var MAP_MARKER_IMAGE = require('../images/green-dot.png');
+var MAP_MARKER_IMAGE = require('../images/location_marker.png');
 
 const LATITUDE_DELTA = 0.00922;
 const LONGITUDE_DELTA = 0.00421;
@@ -35,16 +34,18 @@ const GEOFENCE_STROKE_COLOR = "rgba(17,183,0,0.5)"
 const GEOFENCE_FILL_COLOR   ="rgba(17,183,0,0.2)"
 const GEOFENCE_STROKE_COLOR_ACTIVATED = "rgba(64,64,64,0.5)";
 const GEOFENCE_FILL_COLOR_ACTIVATED = "rgba(64,64,64,0.2)";
-const POLYLINE_STROKE_COLOR = "rgba(32,64,255,0.7)";
+const POLYLINE_STROKE_COLOR = "rgba(32,64,255,0.6)";
 
 SettingsService.init();
 
-var HomeView = React.createClass({
+class HomeView extends React.Component {
   //locationIcon: require("image!green_circle"),
-  eventEmitter: new EventEmitter(),
+  eventEmitter = new EventEmitter();
 
-  getInitialState: function() {
-    return {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       currentState: AppState.currentState,
       enabled: false,
       title: 'Background Geolocation',
@@ -65,8 +66,9 @@ var HomeView = React.createClass({
       geofences: [],
       coordinates: []
     };
-  },
-  componentDidMount: function() {
+  }
+
+  componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
 
     this.setState({
@@ -77,8 +79,9 @@ var HomeView = React.createClass({
     SettingsService.getState(function(state) {
       me.configureBackgroundGeolocation(state);
     });
-  },
-  componentWillUnmount: function() {
+  }
+  
+  componentWillUnmount() {
     AppState.removeEventListener('change', this._handleAppStateChange);
     var bgGeo = global.BackgroundGeolocation;
 
@@ -90,11 +93,39 @@ var HomeView = React.createClass({
     bgGeo.un("error", this.onError);
     bgGeo.un("motionchange", this.onMotionChange);
     bgGeo.un("schedule", this.onSchedule);
-    bgGeo.un("geofenceschange", this.onGeofencesChange);
+    bgGeo.un("geofenceschange", this.onGeofencesChange.bind(this));
+  }
 
-  },
+  onClickMainMenu(command) {
+    switch(command) {
+      case 'settings':
+        this.settingsView.open();
+        break;
+      case 'resetOdometer':
+        break;
+      case 'sync':
+        break;
+      case 'destroyLocations':
+        break;
+    }
+  }
+  onClickSettings() {
+    //this.refs.settingsView.open();
+    debugger;
+  }
+  onClickResetOdometer() {
 
-  configureBackgroundGeolocation: function(config) {
+  }
+  onClickEmailLog() {
+
+  }
+  onClickSync() {
+
+  }
+  onClickDestroyLocations() {
+
+  }
+  configureBackgroundGeolocation(config) {
 
     var me = this;
     var bgGeo = global.BackgroundGeolocation;
@@ -102,21 +133,21 @@ var HomeView = React.createClass({
     // 1. Set up listeners on BackgroundGeolocation events
     //
     // location event
-    bgGeo.on("location", this.onLocation);
+    bgGeo.on("location", this.onLocation.bind(this));
     // http event
-    bgGeo.on("http", this.onHttp);
+    bgGeo.on("http", this.onHttp.bind(this));
     // geofence event
-    bgGeo.on("geofence", this.onGeofence);
+    bgGeo.on("geofence", this.onGeofence.bind(this));
     // heartbeat event
-    bgGeo.on("heartbeat", this.onHeartbeat);
+    bgGeo.on("heartbeat", this.onHeartbeat.bind(this));
     // error event
-    bgGeo.on("error", this.onError);
+    bgGeo.on("error", this.onError.bind(this));
     // motionchange event
-    bgGeo.on("motionchange", this.onMotionChange);
+    bgGeo.on("motionchange", this.onMotionChange.bind(this));
     // schedule event
-    bgGeo.on("schedule", this.onSchedule);
+    bgGeo.on("schedule", this.onSchedule.bind(this));
     // geofenceschange
-    bgGeo.on("geofenceschange", this.onGeofencesChange);
+    bgGeo.on("geofenceschange", this.onGeofencesChange.bind(this));
 
     ////
     // 2. Configure it.
@@ -155,11 +186,13 @@ var HomeView = React.createClass({
         enabled: state.enabled
       });
     }.bind(this));
-  },
-  onError: function(error) {
+  }
+
+  onError(error) {
     console.log('- ERROR: ', JSON.stringify(error));
-  },
-  onMotionChange: function(event) {
+  }
+
+  onMotionChange(event) {
     var location = event.location;
     console.log("- motionchange", JSON.stringify(event));
     if (event.isMoving) {
@@ -181,8 +214,8 @@ var HomeView = React.createClass({
         }
       })
     }
-  },
-  onLocation: function(location) {
+  }
+  onLocation(location) {
     console.log('- location: ', JSON.stringify(location));
     if (!location.sample) {
       this.addMarker(location);
@@ -191,8 +224,9 @@ var HomeView = React.createClass({
     setTimeout(function() {
       this.setCenter(location);
     }.bind(this))
-  },
-  onGeofencesChange: function(event) {
+  }
+
+  onGeofencesChange(event) {
     var on  = event.on;
     var off = event.off;
     var geofences  = this.state.geofences;
@@ -212,22 +246,22 @@ var HomeView = React.createClass({
     this.setState({
       geofences: geofences
     });
-  },
+  }
 
-  onPressGeofence: function(event) {
+  onPressGeofence(event) {
     console.log('NOT IMPLEMENTED');
-  },
+  }
 
-  onHeartbeat: function(params) {
+  onHeartbeat(params) {
     console.log("- heartbeat: ", params.location);
-  },
+  }
 
-  onHttp: function(response) {
+  onHttp(response) {
     console.log('- http ' + response.status);
     console.log(response.responseText);
-  },
+  }
 
-  onGeofence: function(geofence) {
+  onGeofence(geofence) {
     var marker = this.state.geofences.find(function(m) {
       return m.identifier === geofence.identifier;
     });
@@ -236,30 +270,32 @@ var HomeView = React.createClass({
     marker.fillColor = GEOFENCE_STROKE_COLOR_ACTIVATED;
     marker.strokeColor = GEOFENCE_STROKE_COLOR_ACTIVATED;
     this.setState({geofences: this.state.geofences});
-  },
+  }
 
-  onSchedule: function(state) {
+  onSchedule(state) {
     console.log("- schedule", state.enabled, state);
     this.setState({
       enabled: state.enabled
     });
-  },
+  }
 
-  _handleAppStateChange: function(currentAppState) {
+  _handleAppStateChange(currentAppState) {
     var showsUserLocation = (currentAppState === 'background') ? false : true;
 
     this.setState({
       currentAppState: currentAppState,
       showsUserLocation: showsUserLocation
     });
-  },
+  }
 
-  onClickMenu: function() {
+  onClickMenu() {
     global.BackgroundGeolocation.playSound(Config.sounds.BUTTON_CLICK_ANDROID);
-    this.props.drawer.open();
-  },
+    this.refs.settingsModal.open();
 
-  onClickEnable: function() {
+    //this.props.drawer.open();
+  }
+
+  onClickEnable() {
     var me = this;
     var enabled = !this.state.enabled;
     var bgGeo = global.BackgroundGeolocation;
@@ -292,28 +328,28 @@ var HomeView = React.createClass({
     });
 
     // Transmit to other components
-    this.eventEmitter.emit('enabled', enabled);
-  },
+    eventEmitter.emit('enabled', enabled);
+  }
 
-  onRegionChange: function(coordinate) {
+  onRegionChange(coordinate) {
 
-  },
+  }
 
-  setCenter: function(location) {
+  setCenter(location) {
     if (!this.refs.map) { return; }
     this.refs.map.animateToCoordinate({
       latitude: location.coords.latitude, 
       longitude: location.coords.longitude
     });
-  },
+  }
 
-  onLongPress: function(params) {
+  onLongPress(params) {
     var coordinate = params.nativeEvent.coordinate;
     global.BackgroundGeolocation.playSound(SettingsService.getSoundId('LONG_PRESS_ACTIVATE'));
     this.refs.geofenceModal.open(coordinate);
-  },
+  }
 
-  onSubmitGeofence: function(params) {
+  onSubmitGeofence(params) {
     var bgGeo = global.BackgroundGeolocation;
     bgGeo.playSound(SettingsService.getSoundId('ADD_GEOFENCE'));
     bgGeo.addGeofence(params, function(identifier) {
@@ -323,9 +359,9 @@ var HomeView = React.createClass({
     }.bind(this), function(error) {
       console.warn('- addGeofence error: ', error);
     }.bind(this))
-  },
+  }
 
-  addMarker :function(location) {
+  addMarker(location) {
     this.setState({
       markers: [...this.state.markers, this.createMarker(location)],
       coordinates: [...this.state.coordinates, {
@@ -333,9 +369,9 @@ var HomeView = React.createClass({
         longitude: location.coords.longitude
       }]
     });
-  },
+  }
 
-  createMarker: function(location) {
+  createMarker(location) {
     return {
       key: location.uuid,
       title: location.timestamp,
@@ -344,9 +380,9 @@ var HomeView = React.createClass({
         longitude: location.coords.longitude
       }
     };
-  },
+  }
 
-  createGeofenceMarker: function(geofence) {
+  createGeofenceMarker(geofence) {
     return {
       radius: geofence.radius,
       center: {
@@ -357,86 +393,124 @@ var HomeView = React.createClass({
       strokeColor:GEOFENCE_STROKE_COLOR,
       fillColor: GEOFENCE_FILL_COLOR
     }
-  },
+  }
 
-  render: function() {
+  render() {
     return (
-      <View style={commonStyles.container}>
-        <View style={commonStyles.topToolbar}>
-          <Icon.Button name="ios-options" onPress={this.onClickMenu} backgroundColor="transparent" size={30} color="#000" style={styles.btnMenu} underlayColor={"transparent"} />
+      <View ref="workspace" style={styles.container}>
+        <MapView
+          ref="map"
+          style={styles.map}
+          showsUserLocation={true}
+          onLongPress={this.onLongPress}
+          onRegionChange={this.onRegionChange}
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA
+          }}>
+
+          <MapView.Circle
+            key={this.state.stationaryLocation.timestamp}
+            radius={this.state.stationaryRadius}
+            fillColor={STATIONARY_REGION_FILL_COLOR}
+            strokeColor={STATIONARY_REGION_STROKE_COLOR}
+            strokeWidth={3}
+            center={{latitude: this.state.stationaryLocation.latitude, longitude: this.state.stationaryLocation.longitude}}
+          />
+          <MapView.Marker
+            key="Center"
+            coordinate={this.state.centerCoordinate}
+            title="Center"
+          />
+          {this.state.markers.map(marker => (
+            <MapView.Marker
+              key={marker.key}
+              coordinate={marker.coordinate}
+              title={marker.title}
+              image={MAP_MARKER_IMAGE}
+            />
+          ))}
+          {this.state.geofences.map(geofence => (
+            <MapView.Circle
+              key={geofence.identifier}
+              radius={geofence.radius}
+              center={geofence.center}
+              strokeWidth={3}
+              strokeColor={geofence.strokeColor}
+              fillColor={geofence.fillColor}
+              onPress={this.onPressGeofence}
+            />
+          ))}
+          <MapView.Polyline
+            coordinates={this.state.coordinates}
+            geodesic={true}
+            strokeColor={Config.colors.polyline_color}
+            strokeWidth={6}
+          />
+        </MapView>
+        <View style={[commonStyles.topToolbar, styles.topToolbar]}>
+          <Text style={{width:50}}>&nbsp;</Text>
           <Text style={commonStyles.toolbarTitle}>{this.state.title}</Text>
           <Switch onValueChange={this.onClickEnable} value={this.state.enabled} />
         </View>
-        <View ref="workspace" style={styles.workspace}>
-          <MapView
-            ref="map"
-            style={styles.map}
-            showsUserLocation={true}
-            onLongPress={this.onLongPress}
-            onRegionChange={this.onRegionChange}
-            initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
-              latitudeDelta: LATITUDE_DELTA,
-              longitudeDelta: LONGITUDE_DELTA
-            }}>
-            <MapView.Circle
-              key={this.state.stationaryLocation.timestamp}
-              radius={this.state.stationaryRadius}
-              fillColor={STATIONARY_REGION_FILL_COLOR}
-              strokeColor={STATIONARY_REGION_STROKE_COLOR}
-              strokeWidth={3}
-              center={{latitude: this.state.stationaryLocation.latitude, longitude: this.state.stationaryLocation.longitude}}
-            />
-            <MapView.Marker
-              key="Center"
-              coordinate={this.state.centerCoordinate}
-              title="Center"
-            />
-            {this.state.markers.map(marker => (
-              <MapView.Marker
-                key={marker.key}
-                coordinate={marker.coordinate}
-                title={marker.title}
-                image={MAP_MARKER_IMAGE}
-              />
-            ))}
-            {this.state.geofences.map(geofence => (
-              <MapView.Circle
-                key={geofence.identifier}
-                radius={geofence.radius}
-                center={geofence.center}
-                strokeWidth={3}
-                strokeColor={geofence.strokeColor}
-                fillColor={geofence.fillColor}
-                onPress={this.onPressGeofence}
-              />
-            ))}
-            <MapView.Polyline
-              coordinates={this.state.coordinates}
-              geodesic={true}
-              strokeColor={POLYLINE_STROKE_COLOR}
-              strokeWidth={5}
-            />
-          </MapView>
 
-        </View>
+        <ActionButton 
+          position="left"
+          size={50}
+          verticalOrientation="down"
+          buttonColor="rgba(254,221,30,1)"
+          buttonTextStyle={{color: "#000"}}
+          hideShadow={true}
+          autoInactive={false}
+          spacing={10}
+          offsetX={10}
+          offsetY={20}>
+          <ActionButton.Item buttonColor={Config.colors.gold} title="New Task" onPress={() => this.onClickMainMenu('settings')}>
+            <Icon name="ios-cog" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+
+          <ActionButton.Item buttonColor={Config.colors.gold} title="New Task" onPress={() => this.onClickMainMenu('resetOdometer')}>
+            <Icon name="ios-speedometer" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+
+          <ActionButton.Item buttonColor={Config.colors.gold} title="Notifications" onPress={() => this.onClickMainMenu('emailLog')}>
+            <Icon name="ios-mail" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor={Config.colors.gold} title="All Tasks" onPress={() => this.onClickMainMenu('sync')}>
+            <Icon name="ios-cloud-upload" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor={Config.colors.gold} title="All Tasks" onPress={() => this.onClickMainMenu('destroyLocations')}>
+            <Icon name="ios-trash" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+        </ActionButton>
         <BottomToolbarView eventEmitter={this.eventEmitter} enabled={this.state.enabled} />
-        <GeofenceView ref={"geofenceModal"} onSubmit={this.onSubmitGeofence}/>
+        <GeofenceView ref={(view) => {this.geofenceView = view; }} onSubmit={this.onSubmitGeofence}/>
+        <SettingsView ref={(view) => {this.settingsView = view; }} />
       </View>
     );
   }
-});
+};
 
 var styles = StyleSheet.create({
-  workspace: {
-    flex: 1
-  },
-  mapBox: {
-    flex: 1
+  container: {
+    flex: 1,
+    paddingTop: 46
   },
   map: {
     flex: 1
+  },
+  topToolbar: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0
+  },
+  actionButtonIcon: {
+    color: '#000',
+    fontSize: 24,
+    //fontWeight: 'bold'
   }
 });
 
