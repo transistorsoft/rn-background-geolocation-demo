@@ -147,6 +147,7 @@ repositories {
 }
 
 dependencies {
+    compile project(':react-native-spinkit')
     compile(project(':react-native-maps')) {
         exclude group: 'com.google.android.gms'
     }

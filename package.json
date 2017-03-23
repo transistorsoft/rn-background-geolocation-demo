@@ -1,6 +1,6 @@
 {
   "name": "BackgroundGeolocationDemo",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -10,13 +10,14 @@
     "apsl-react-native-button": "^3.0.2",
     "react": "~15.4.1",
     "react-native": "0.42.0",
+    "react-native-action-button": "^2.6.4",
     "react-native-background-geolocation": "^2.7.0",
     "react-native-device-info": "^0.10.1",
-    "react-native-drawer": "^2.3.0",
+    "react-native-form-generator": "^0.9.9",
     "react-native-maps": "git+https://github.com/airbnb/react-native-maps.git",
     "react-native-modalbox": "^1.3.9",
-    "react-native-radio-buttons": "^0.14.0",
-    "react-native-scrollable-tab-view": "^0.7.2",
+    "react-native-root-toast": "^1.0.3",
+    "react-native-spinkit": "^1.0.2",
     "react-native-vector-icons": "^4.0.0",
     "whatwg-fetch": "^2.0.3"
   },
