@@ -6,17 +6,29 @@ import {
  } from 'react-native';
 import Config from './config';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Button from 'apsl-react-native-button'
+
 import commonStyles from './styles';
+import BGService from './BGService';
+import SettingsService from './SettingsService';
 
 /**
 * This is the common shared bottom-toolbar.  It's passed the BackgroundGeolocation instance
 * via #props.  It manages the #changePace, #getCurrentPosition buttons, #odometer, #activity
 * and location #provider.
 */
-var BottomToolbarView = React.createClass({
+class BottomToolbarView extends React.Component {
 
-  getInitialState: function() {
-    return {
+  constructor(props) {
+    super(props);
+    this.bgService = BGService.getInstance();
+    this.bgService.on('odometer', (value) => {
+      this.setState({odometer: value.toFixed(1)});
+    });
+
+    this.settingsService = SettingsService.getInstance();
+
+    this.state = {
       enabled: false,
       isMoving: false,
       isChangingPace: false,
@@ -24,106 +36,114 @@ var BottomToolbarView = React.createClass({
       currentActivity: 'unknown',
       currentProvider: undefined
     };
-  },
+  }
 
-  componentDidMount: function() {
-    var me = this;
+  componentDidMount() {
 
     // Listen to events from our parent
-    this.props.eventEmitter.addListener('enabled', this.onChangeEnabled);
+    this.props.eventEmitter.addListener('enabled', this.onChangeEnabled.bind(this));
 
-    var bgGeo = global.BackgroundGeolocation;
+    let bgGeo = this.bgService.getPlugin();
 
-    bgGeo.on("activitychange", this.onActivityChange);
-    bgGeo.on("providerchange", this.onProviderChange);
-    bgGeo.on("location", this.onLocation);
-    bgGeo.on("motionchange", this.onMotionChange);
+    bgGeo.on("activitychange", this.onActivityChange.bind(this));
+    bgGeo.on("providerchange", this.onProviderChange.bind(this));
+    bgGeo.on("location", this.onLocation.bind(this));
+    bgGeo.on("motionchange", this.onMotionChange.bind(this));
 
-    bgGeo.getState(function(state) {
+    bgGeo.getState((state) => {
       this.setState({
         enabled: state.enabled,
         isMoving: state.isMoving,
-        odometer: state.odometer
+        odometer: (state.odometer/1000).toFixed(1)
       });
-    }.bind(this));
-  },
-  componentWillUnmount: function() {
+    });
+  }
+
+  componentWillUnmount() {
     // Unregister BackgroundGeolocation listeners!
-    var bgGeo = global.BackgroundGeolocation;
-    bgGeo.un("activitychange", this.onActivityChange);
-    bgGeo.un("providerchange", this.onProviderChange);
-    bgGeo.un("location", this.onLocation);
-    bgGeo.un("motionchange", this.onMotionChange);
+    let bgGeo = this.bgService.getPlugin();
+    bgGeo.un("activitychange", this.onActivityChange.bind(this));
+    bgGeo.un("providerchange", this.onProviderChange.bind(this));
+    bgGeo.un("location", this.onLocation.bind(this));
+    bgGeo.un("motionchange", this.onMotionChange.bind(this));
 
-    this.props.eventEmitter.removeListener('enabled', this.onChangeEnabled);
+    this.props.eventEmitter.removeListener('enabled', this.onChangeEnabled.bind(this));
+  }
 
-  },
-  onActivityChange: function(activityName) {
+  onActivityChange(activityName) {
     this.setState({
       currentActivity: activityName
     });
-  },
-  onProviderChange: function(provider) {
+  }
+
+  onProviderChange(provider) {
     this.setState({
       currentProvider: provider
     });
-  },
-  onChangeEnabled: function(enabled) {
+  }
+
+  onChangeEnabled(enabled) {
     this.setState({
       enabled: enabled
     });
-  },
-  onLocation: function(location) {
+  }
+
+  onLocation(location) {
     if (location.sample) { return; }
     this.setState({
       odometer: (location.odometer/1000).toFixed(1)
     });
-  },
-  onMotionChange: function(event) {
+  }
+
+  onMotionChange(event) {
     console.log('motionchange: ', event);
 
     this.setState({
+      isChangingPace: false,
       isMoving: event.isMoving
     });
-  },
-  onClickPace: function() {
+  }
+
+  onClickPace() {
     if (!this.state.enabled) { return; }
 
-    var isMoving = !this.state.isMoving;
-    var bgGeo = global.BackgroundGeolocation;
+    let isMoving = !this.state.isMoving;
+    let bgGeo = this.bgService.getPlugin();
 
     this.setState({
       isMoving: isMoving,
       isChangingPace: true
     });
 
-    bgGeo.changePace(isMoving, function(state) {
-      this.setState({
-        isChangingPace: false
-      });
-    }.bind(this), function(error) {
+    bgGeo.changePace(isMoving, (state) => {
+
+    }, (error) => {
       console.info("Failed to changePace: ", error);
       this.setState({
+        isChangingPace: false,
         isMoving: !isMoving // <-- reset state back
       });
-    }.bind(this));
-  },
-  onClickLocate: function() {
-    var bgGeo = global.BackgroundGeolocation
+    });
+  }
 
+  onClickLocate() {
+    let bgGeo = this.bgService.getPlugin();
+    this.bgService.playSound('BUTTON_CLICK');
+    this.settingsService.set('followsUserLocation', true);
     bgGeo.getCurrentPosition({
       timeout: 30,
       samples: 3,
       desiredAccuracy: 10,
       maximumAge: 0,
       persist: false
-    }, function(location) {
+    }, (location) => {
       console.log('- current position: ', JSON.stringify(location));
-    }, function(error) {
+    }, (error) => {
       console.info('ERROR: Could not get current position', error);
-    }.bind(this));
-  },
-  getPaceButton: function() {
+    });
+  }
+
+  getPaceButton() {
     var icon = Config.icons.play;
     var style = commonStyles.disabledButton;
 
@@ -136,36 +156,33 @@ var BottomToolbarView = React.createClass({
         style = commonStyles.greenButton;
       }
     }
-    var spinner = undefined;
-    var button = <Icon.Button name={icon} onPress={this.onClickPace} iconStyle={{marginLeft:15}} style={[style, styles.paceButton]} />
-    if (this.state.isChangingPace) {
-      spinner = Config.icons.spinner;
-    }
+
+    let button = <Icon.Button onPress={this.onClickPace.bind(this)} name={icon} color="#fff" size={15} style={[style, styles.paceButton]} iconStyle={{marginRight: 0}}/>
+
     return (
       <View style={styles.paceButtonContainer}>
-        {spinner}
-        <View style={[style, {flexDirection: 'row'}]}>{button}</View>
+        {button}
       </View>
     );
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <View style={styles.bottomToolbar}>
         <View style={styles.navigateContainer}>
-          <Icon.Button name={Config.icons.navigate} onPress={this.onClickLocate} size={30} color="black" backgroundColor="transparent" style={styles.btnNavigate} />
+          <Icon.Button name={Config.icons.navigate} onPress={() => this.onClickLocate() } size={20} color="black" backgroundColor={Config.colors.gold} style={styles.btnNavigate} />
           {Config.getLocationProviders(this.state.currentProvider)}
         </View>
         <View style={styles.statusContainer}>
-          <Text style={styles.statusLabel}>Activity</Text>
-          {Config.getActivityIcon(this.state.currentActivity)}
+          <Text style={[styles.statusLabel, {textAlign: 'right'}]}>Activity</Text>
+          <View style={styles.activityIcon}>{Config.getActivityIcon(this.state.currentActivity)}</View>
           <Text style={styles.statusLabel}>{this.state.odometer}km</Text>
         </View>
         {this.getPaceButton()}
       </View>
     );
   }
-});
+}
 
 var styles = StyleSheet.create({
   bottomToolbar: {
@@ -173,19 +190,20 @@ var styles = StyleSheet.create({
     borderTopWidth: 1,
     backgroundColor: Config.colors.gold,
     flexDirection: 'row',
-    height: 50
+    height: 44
   },
   navigateContainer: {
+    padding: 5,
     flex:0.4,
     flexDirection:"row",
     justifyContent:"flex-start",
     alignItems:"center"
   },
   btnNavigate: {
-    padding: 3,
+    padding: 5,
     flex: 1,
     borderRadius: 0,
-    paddingLeft: 15
+    paddingLeft: 5
   },
   statusContainer: {
     flex:1,
@@ -197,21 +215,27 @@ var styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 3,
-    width: 40,
+    flex: 1,
     padding: 3
   },
   statusLabel: {
-    marginLeft:5
+    flex: 1
+  },
+  activityIcon: {
+    marginRight: 5,
+    marginLeft: 5
+    //width: 50
   },
   paceButtonContainer: {
+    padding: 5,
     flex:0.4,
     flexDirection:"row",
-    alignItems:"stretch",
     justifyContent:"flex-end"
   },
   paceButton: {
-    flex: 1,
-    borderRadius: 0
+    width: 40,
+    justifyContent: 'center',
+    flex: 1
   }
 });
 

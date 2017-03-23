@@ -5,194 +5,414 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  TouchableHighlight,
-  Switch
+  ScrollView,
+  AsyncStorage,
+  TouchableWithoutFeedback
  } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import Drawer from 'react-native-drawer';
 import Modal from 'react-native-modalbox';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
+import Button from 'apsl-react-native-button'
+
+import {
+  Form,
+  Separator,
+  InputField,
+  SwitchField,
+  PickerField
+} from 'react-native-form-generator';
 
 import SettingsService from './SettingsService';
-import SettingsListView from './SettingsListView.js';
-import SettingDetailView from './SettingDetailView';
-import DebugView from './DebugView';
+import BGService from './BGService';
 
 import commonStyles from './styles';
 import Config from './config';
 
-var SettingsView = React.createClass({
-  icons: {
-    syncButton: 'ios-cloud-upload',
-    spinner: 'md-sync'
-  },
+class SettingsView extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.bgService = BGService.getInstance();
+    this.settingsService = SettingsService.getInstance();
+
+    // Default state
+    this.state = {
+      geofence: {
+        radius: '200',
+        notifyOnEntry: true,
+        notifyOnExit: false,
+        notifyOnDwell: false,
+        loiteringDelay: 0
+      },
+      map: {},
+      bgGeo: {}
+    };
+  }
 
   open() {
     this.refs.modal.open();
-  },
-  close() {
-    this.refs.modal.close();
-  },
+  }
 
-  getInitialState: function() {
-    return {
-      settingDetailView: null,
-      syncButtonIcon: this.icons.syncButton,
-      debug: false,
-      email: ''
-    };
-  },
-  componentDidMount: function() {
-    var me = this;
-    var bgGeo = global.BackgroundGeolocation;
+  load() {
+    let form = this.refs.form;
 
-    // TSLocationManager should fire a "ready" event to signal to sub-components that the plugin
-    // has been #configured.  Hack it for now with a setTimeout to #getState
-    bgGeo.getState(function(state) {
-      me.setState({
-        debug: state.debug
+    // Fetch current state of BackgroundGeolocation
+    this.bgService.getState((state) => {
+
+      state.logLevel = this.decodeLogLevel(state.logLevel),
+      state.trackingMode = (state.trackingMode === 1 || state.trackingMode === 'location') ? 'location' : 'geofence';
+
+      this.setState({
+        bgGeo: state
+      });
+
+      // Load form values
+      this.bgService.getPlatformSettings().forEach((setting) => {
+        let field = form.refs[setting.name];
+        let value = state[setting.name]
+        if (!field) {
+          console.warn('Failed to find ref for field: ', setting.name);
+        } else {
+          switch (setting.inputType) {
+            case 'select':
+              value = value.toString();
+              break;
+          }
+          field.setValue(value);
+        }
       });
     });
-  },
-  onClickBack: function() {
-    //global.BackgroundGeolocation.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
-    //this.props.drawer.close();
-    this.refs.modal.close();
-  },
-  onClickSettingDone: function() {
-    global.BackgroundGeolocation.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
-    this.refs.drawer.close();
-  },
-  onClickEmailLogs: function() {
-    global.BackgroundGeolocation.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
-    this.refs.modal.open();
-  },
-  onClickSubmitLogs: function() {
-    var modal = this.refs.modal;
-    global.BackgroundGeolocation.emailLog(this.state.email, function() {
-      modal.close();
-    }, function(error) {
-      modal.close();
-      console.error('- emailLog failure: ', error);
-    });
-  },
-  onClickCancelLogs: function() {
-    this.refs.modal.close();
-  },
-  onChangeEmail: function(email) {
-    this.setState({email: email});
-  },
-  onSelectSetting: function(setting) {
-    global.BackgroundGeolocation.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
-    this.setState({
-      setting: setting,
-      settingDetailView: (
-        <View style={commonStyles.container}>
-          <View style={commonStyles.topToolbar}>
-            <Icon.Button name="ios-arrow-back" onPress={this.onClickSettingDone} iconStyle={commonStyles.backButtonIcon} backgroundColor="transparent" size={30} color="#4f8ef7" underlayColor={"transparent"}><Text style={commonStyles.backButtonText}>Back</Text></Icon.Button>
-            <Text style={commonStyles.toolbarTitle}>{setting.name}</Text>
-            <Text style={{width: 60}}>&nbsp;</Text>
-          </View>
-          <SettingDetailView setting={setting} onSelectValue={this.onChange} />
-        </View>
-      )
-    });
-    this.refs.drawer.open();
-  },
-  onChange: function(name, value) {
-    if (this.refs.settings) {
-      this.refs.drawer.close();
-      this.refs.settings.update(name, value);
-    }
-    if (this.refs.debug) {
-      this.refs.debug.update(name, value);
-    }
-  },
-  onClickSync: function() {
-    var bgGeo = global.BackgroundGeolocation;
-    bgGeo.playSound(SettingsService.getSoundId('BUTTON_CLICK'));
-    var me = this;
-    this.setState({
-      syncButtonIcon: me.icons.spinner
-    });
-    bgGeo.sync(function(rs) {
-      console.log('- sync success', rs.length);
-      me.setState({
-        syncButtonIcon: me.icons.syncButton
-      });
-      bgGeo.playSound(SettingsService.getSoundId('MESSAGE_SENT'));
-    }, function(error) {
-      console.log('- sync error: ', error);
-    });
-  },
-  onChangeTab(event) {
 
-  },
-  render: function() {
+    // Load app settings
+    this.settingsService.getState((state) => {
+      this.settingsService.getSettings().forEach((setting) => {
+        let field = form.refs[setting.name];
+        if (!field) {
+          return;
+        }
+        let value = state[setting.name];
+        switch (setting.inputType) {
+          case 'select':
+            value = value.toString();
+            break;
+        }
+        field.setValue(value);
+      });
+    });
+  }
+  onClickClose() {
+
+    this.bgService.playSound('CLOSE');
+    this.refs.modal.close();
+  }
+
+  componentDidMount() {
+    
+  }
+
+  onClickLoadGeofences() {
+    if (this.state.isLoadingGeofences) { return false; }
+    this.setState({isLoadingGeofences: true});
+
+    this.settingsService.getState((state) => {
+      this.bgService.loadTestGeofences('city_drive', state, () => {
+        this.settingsService.toast('Loaded City Drive geofences');
+        this.setState({isLoadingGeofences: false});
+      });
+    });
+  }
+
+  onClickClearGeofences() {
+    this.bgService.removeGeofences();
+  }
+
+  onClickEmailLogs() {
+
+  }
+
+  setTrackingMode(trackingMode){
+    this.bgService.playSound('BUTTON_CLICK');
+    this.setState({
+      trackingMode
+    });
+    let bgGeo = this.bgService.getPlugin();
+    if (trackingMode == "location") {
+      bgGeo.start();
+    } else {
+      bgGeo.startGeofences();
+    }
+    if (typeof(this.props.onChange) === 'function') {  // <-- Android
+      this.props.onChange('trackingMode', trackingMode);
+    }
+  }
+
+  decodeLogLevel(logLevel) {
+    let value = 'VERBOSE';
+    switch(logLevel) {
+      case 0:
+        value = 'OFF';
+        break;
+      case 1:
+        value = 'ERROR';
+        break;
+      case 2:
+        value = 'WARN';
+        break;
+      case 3:
+        value = 'INFO';
+        break;
+      case 4:
+        value = 'DEBUG';
+        break;
+      case 5:
+        value = 'VERBOSE';
+        break;
+    }
+    return value;
+  }
+
+  encodeLogLevel(logLevel) {
+    let value = 0;
+    let bgGeo = this.bgService.getPlugin();
+    switch(logLevel) {
+      case 'OFF':
+        value = bgGeo.LOG_LEVEL_OFF;
+        break;
+      case 'ERROR':
+        value = bgGeo.LOG_LEVEL_ERROR;
+        break;
+      case 'WARN':
+        value = bgGeo.LOG_LEVEL_WARNING;
+        break;
+      case 'INFO':
+        value = bgGeo.LOG_LEVEL_INFO;
+        break;
+      case 'DEBUG':
+        value = bgGeo.LOG_LEVEL_DEBUG;
+        break;
+      case 'VERBOSE':
+        value = bgGeo.LOG_LEVEL_VERBOSE;
+        break;
+    }
+    return value;
+  }
+
+  setGeofenceProximityRadius(value) {
+    this.bgService.playSound('BUTTON_CLICK');
+    var state = {geofenceProximityRadius: value}
+    this.setState(state);
+    var decodedValue = parseInt(value.match(/[0-9]+/)[0], 10)*1000;
+
+    /*
+    SettingsService.set('geofenceProximityRadius', decodedValue, function(state) {
+      if (typeof(me.props.onChange) === 'function') {  // <-- Android
+        me.props.onChange('geofenceProximityRadius', decodedValue);
+      }
+    });
+    */
+    console.warn('TODO setGeofenceProximityRadius');
+  }
+
+  onFormChange() {
+
+  }
+
+  onFieldChange(setting, value) {
+
+    let state = this.state.bgGeo;
+    let currentValue = state[setting.name];
+
+    switch (setting.dataType) {
+      case 'integer':
+        value = parseInt(value, 10);
+        break;
+    }
+
+    if (state[setting.name] === value) {
+      return;
+    }
+
+    // Buffer field-changes by 500ms
+    function doChange() {
+      state[setting.name] = value;
+      this.setState({bgGeo: state});
+
+      // Encode applicable settings for consumption by plugin.
+      switch(setting.name) {
+        case 'logLevel':
+          value = this.encodeLogLevel(value);
+          break;
+      }
+      let config = {};
+      config[setting.name] = value;
+
+      this.bgService.getPlugin().setConfig(config, (state) => {
+        console.log('- setConfig success', state);
+      });
+    }
+
+    if (this.changeBuffer) {
+      this.changeBuffer = clearTimeout(this.changeBuffer);
+    }
+    this.changeBuffer = setTimeout(doChange.bind(this), 500);
+  }
+
+  buildField(setting, onValueChange) {
+    let field = null;
+    switch(setting.inputType) {
+      case 'text':
+        field = (
+          <InputField 
+            key={setting.name}
+            ref={setting.name}
+            onValueChange={(value) => {onValueChange(setting, value)}}
+            placeholder={setting.defaultValue} />
+        );
+        break;
+      case 'select':
+        let options = {};
+        setting.values.forEach((value) => {
+          options[value.toString()] = value.toString();
+        });
+
+        field = (
+          <PickerField
+            key={setting.name}
+            ref={setting.name}
+            onValueChange={(value) => {onValueChange(setting, value)}}
+            label={setting.name}
+            options={options} />
+        );
+        break;
+      case 'toggle':
+        field = (
+          <SwitchField 
+            ref={setting.name}
+            key={setting.name}
+            label={setting.name}
+            onValueChange={(value) => {onValueChange(setting, value)}} />
+        );
+        break;
+      default:
+        field = (<Text key={setting.name}>Unknown field-type for {setting.name} {setting.inputType}</Text>);
+        break;
+    }
+    return field;
+  }
+
+  getPlatformSettings(section) {
+    return this.bgService.getPlatformSettings(section).map((setting) => {
+      return this.buildField(setting, this.onFieldChange.bind(this));
+    });
+  }
+
+  getGeofenceTestSettings() {
+    return this.settingsService.getSettings('geofence').map((setting) => {
+      return this.buildField(setting, this.settingsService.onChange.bind(this.settingsService));
+    });
+  }
+
+  render() {
     return (
-      <Modal ref="modal" swipeToClose={false} animationDuration={300}>
+      <Modal ref="modal" swipeToClose={false} animationDuration={300} onOpened={this.load.bind(this)}>
         <View style={commonStyles.container}>
           <View style={commonStyles.topToolbar}>
-            <Icon.Button name="ios-arrow-back" onPress={this.onClickBack} iconStyle={commonStyles.backButtonIcon} backgroundColor="transparent" size={30} color="#4f8ef7" underlayColor={"transparent"}><Text style={commonStyles.backButtonText}>Back</Text></Icon.Button>
+            <Icon.Button
+              name="ios-arrow-dropdown-circle"
+              size={25}
+              onPress={this.onClickClose.bind(this)}
+              backgroundColor="transparent"
+              underlayColor="transparent"
+              color={Config.colors.black}>
+            </Icon.Button>
             <Text style={commonStyles.toolbarTitle}>Settings</Text>
-            <Text style={{width:75}} />
+            <Text style={{width:40}}>&nbsp;</Text>
           </View>
-          <ScrollableTabView onChangeTab={this.onChangeTab}>
-            <DebugView tabLabel="Basic" ref={"debug"} onChange={this.onChange} />
-            <SettingsListView tabLabel="Advanced" ref="settings" onSelectSetting={this.onSelectSetting} />            
-          </ScrollableTabView>
+          <ScrollView keyboardShouldPersistTaps="always" style={{backgroundColor: "#eee"}}>
+            <Form
+              ref="form"
+              onChange={this.onFormChange.bind(this)}>
+              <Separator label="Geolocation" />
+              {this.getPlatformSettings('geolocation')}
+              <Separator label="Activity Recognition" />
+              {this.getPlatformSettings('activity recognition')}
+              <Separator label="HTTP & Persistence" />
+              {this.getPlatformSettings('http')}
+              <Separator label="Application" />
+              {this.getPlatformSettings('application')}
+              <Separator label="Logging & Debug" />
+              <InputField key="email" ref="email" placeholder="Email" onValueChange={(value) => {this.settingsService.onChange('email', value)}} />
+              {this.getPlatformSettings('debug')}
+              <Separator label="Geofence Test (City Drive)" />
+              <View style={[styles.setting, {flexDirection:"row"}]}>
+                <View style={styles.label}>
+                  <Button onPress={this.onClickClearGeofences.bind(this)} activeOpacity={0.7} style={[styles.button, styles.redButton]} textStyle={styles.buttonLabel}>
+                    Clear
+                  </Button>
+                </View>
+                <Text>&nbsp;&nbsp;&nbsp;</Text>
+                <View style={styles.label}>
+                  <Button onPress={this.onClickLoadGeofences.bind(this)} isLoading={this.state.isLoadingGeofences} activeOpacity={0.7} style={[styles.button, styles.blueButton]} textStyle={styles.buttonLabel}>
+                    Load
+                  </Button>
+                </View>
+              </View>
+              {this.getGeofenceTestSettings()}
+            </Form>
+          </ScrollView>
         </View>
       </Modal>
     );
   }
-});
-
+};
 
 var styles = StyleSheet.create({
-  modal: {
-    position: "absolute",
-    top: 0,
-    height: 200,
-    width: 250
+  section: {
+    marginBottom: 10
   },
-  modalContainer: {
+  sectionHeading: {
+    fontSize:16,
+    fontWeight:"bold",
+    margin: 10
+  },
+  setting: {
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: "#fff",
-    flex: 1,
-    alignSelf: "stretch"
-  },
-  modalHeader: {
+    borderBottomWidth:1,
+    borderBottomColor:"#ccc",
     padding: 10
   },
-  modalBody: {
+  columns: {
+    flexDirection: 'row'
+  },
+  bigButton: {
     flex: 1
   },
-  modalFooter: {
-    flexDirection: "row",
+  label: {
+    flex: 1
+  },
+  panel: {
     backgroundColor: "#fff",
-    alignItems: "stretch"
+    borderTopWidth:1,
+    borderTopColor: "#ccc",
   },
-  modalButtonSubmit: {
-    backgroundColor: "#3879e2",
-    flex: 1,
-    padding: 15
+  button: {
+    borderWidth:0,
+    borderRadius: 5,
+    marginBottom: 0
   },
-  modalButtonCancel: {
-    backgroundColor: "#efefef",
-    flex: 1,
-    padding: 15
+  buttonLabel: {
+    fontSize: 14, 
+    color: '#fff'
   },
-  btnSync: {
-    width: 50
+  redButton: {
+    backgroundColor: '#ff3824'
   },
-  btnLog: {
-    color: "#fff",
-    width: 50
-  },
-  btnDone: {
-    color: '#000000'
+  blueButton: {
+    backgroundColor: '#0076ff'
   }
 });
+
 
 module.exports = SettingsView;

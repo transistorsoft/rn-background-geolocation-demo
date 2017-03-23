@@ -35,7 +35,7 @@ var config = (function() {
       grey: '#404040',
       red: '#FE381E',
       green: '#16BE42',
-      polyline_color: '#00B3FD'
+      polyline_color: 'rgba(0,179,253, 0.6)'//'#00B3FD'
     },
 
     icons: {
@@ -45,11 +45,11 @@ var config = (function() {
       load: 'ios-sync',
 
       spinner: <Icon name="ios-sync" size={20} style={{marginRight:3, alignSelf: 'center'}} />,
-      disabled: <Icon name="ios-warning" size={20} style={{color: "#D9534F"}} />,
-      network: <Icon name="ios-wifi" size={20} style={{marginRight:5}}/>,
-      gps: <Icon name="ios-locate" size={20} style={{marginRight:5}}/>,
+      disabled: <Icon name="ios-warning" size={15} style={{color: "#D9534F"}} />,
+      network: <Icon name="ios-wifi" size={15} style={{marginRight:5}}/>,
+      gps: <Icon name="ios-locate" size={15} style={{marginRight:5}}/>,
       on_foot: <Icon name="ios-walk" size={20} style={{color:"#000"}} />,
-      still: <Icon name="ios-man" size={20} style={{color:"#000"}}/>,
+      still: <Icon name="ios-body" size={20} style={{color:"#000"}}/>,
       walking: <Icon name="ios-walk" size={20} style={{color:"#000"}}/>,
       running: <Icon name="ios-walk" size={20} style={{color:"#000"}}/>,
       in_vehicle: <Icon name="ios-car" size={20}style={{color:"#000"}}/>,
@@ -70,9 +70,7 @@ var config = (function() {
           bgColor = Styles.greenButton;
       }
       return (
-        <View style={[Styles.labelActivity]}>
-          {icon}
-        </View>
+        icon
       );
     },
     getLocationProviders(provider) {

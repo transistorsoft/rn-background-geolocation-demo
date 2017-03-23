@@ -11,7 +11,6 @@ import {
   PermissionsAndroid
  } from 'react-native';
 
-import Drawer from 'react-native-drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BackgroundGeolocation from 'react-native-background-geolocation';
 
@@ -31,7 +30,6 @@ async function requestLocationPermission() {
 global.BackgroundGeolocation = BackgroundGeolocation;
 
 import HomeView from './components/HomeView';
-import SettingsView from './components/SettingsView';
 
 var Application = React.createClass({
   getInitialState: function() {
@@ -47,15 +45,10 @@ var Application = React.createClass({
 
     });
   },
-  onClickMenu: function() {
-    this.props.refs.drawer.open();
-  },
 
   render: function() {
     return (
-      <Drawer ref="drawer" side="right" acceptPan={false} content={<SettingsView drawer={this.refs.drawer} />}>
-        <HomeView drawer={this.refs.drawer} />
-      </Drawer>
+      <HomeView />
     );
   }
 });
