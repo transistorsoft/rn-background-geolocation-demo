@@ -1,5 +1,5 @@
 # [Demo App]
-##[react-native-background-geolocation](http://transistorsoft.github.io/react-native-background-geolocation/)
+## [react-native-background-geolocation](http://transistorsoft.github.io/react-native-background-geolocation/)
 
 Fully-featured, React Native demo application for [React Native Background Geolocation Module](http://transistorsoft.github.io/react-native-background-geolocation/)
 
