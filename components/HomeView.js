@@ -669,7 +669,7 @@ class HomeView extends React.Component {
         <View style={[commonStyles.topToolbar, styles.topToolbar]}>
           <Text style={{width:50}}>&nbsp;</Text>
           <Text style={commonStyles.toolbarTitle}>{this.state.title}</Text>
-          <Switch onValueChange={() => this.onClickEnable()} value={this.state.enabled} tintColor="red"/>
+          <Switch onValueChange={() => this.onClickEnable()} value={this.state.enabled} />
         </View>
 
         <View style={styles.mapMenu}>
