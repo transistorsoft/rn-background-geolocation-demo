@@ -13,13 +13,13 @@ var styles = StyleSheet.create({
     backgroundColor: '#F5FCFF'    
   },
   topToolbar: {
-    backgroundColor: 'rgba(254,221,30,1)',  //ff d7 00
+    backgroundColor: 'rgba(254,221,30,1)',
     borderBottomColor: '#E6BE00',
     borderBottomWidth: 1,
-    paddingRight: 5,
     alignSelf: 'stretch',
     flexDirection: 'row',
     alignItems: 'center',
+    padding: 5,
     height: 46
   },
   toolbarTitle: {

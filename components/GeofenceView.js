@@ -12,6 +12,8 @@ import {
 
 import Modal from 'react-native-modalbox';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Button from 'apsl-react-native-button'
+import Config from './config';
 import commonStyles from './styles';
 
 var dismissKeyboard = require('dismissKeyboard');
@@ -84,10 +86,10 @@ class GeofenceView extends React.Component {
     return (
       <Modal ref="modal" style={styles.modal} animationDuration={300} swipeToClose={false} position={"top"}>
         <View style={styles.modalContainer}>
-          <View style={styles.toolbar}>
-            <TouchableHighlight underlayColor="transparent" onPress={() => this.onCancel()}><Text style={styles.button}>Cancel</Text></TouchableHighlight>
+          <View style={commonStyles.topToolbar}>
+            <Button onPress={() => this.onCancel()} style={styles.button}>Cancel</Button>
             <Text style={styles.title}>Add Geofence</Text>
-            <TouchableHighlight underlayColor="transparent" onPress={() => this.onDone()}><Text style={styles.button}>Done</Text></TouchableHighlight>
+            <Button onPress={() => this.onDone()} style={[styles.button, styles.borderButton]}>Done</Button>
           </View>
           <View style={styles.form}>
             <View style={styles.formItem}>
@@ -180,22 +182,14 @@ var styles = StyleSheet.create({
     alignSelf: "stretch"
   },
   button: {
-    color: '#387ef5',
-    fontSize: 17
+    borderWidth: 0,
+    width: 60,
+    height: 34,
+    padding: 0
   },
-  toolbar: {
-    paddingLeft: 5,
-    paddingRight: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-    backgroundColor: '#fff',
-    alignSelf: 'stretch',
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 46
-  },
-  form: {
-    
+  borderButton: {
+    borderWidth: 1,
+    borderRadius: 5
   },
   formItem: {
     borderBottomWidth: 1,

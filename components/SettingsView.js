@@ -13,7 +13,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modalbox';
 import Button from 'apsl-react-native-button'
-
+import AboutView from './AboutView';
 import {
   Form,
   Separator,
@@ -31,6 +31,7 @@ import Config from './config';
 class SettingsView extends React.Component {
   constructor(props) {
     super(props);
+
 
     this.bgService = BGService.getInstance();
     this.settingsService = SettingsService.getInstance();
@@ -100,14 +101,18 @@ class SettingsView extends React.Component {
       });
     });
   }
-  onClickClose() {
 
+  componentDidMount() {
+
+  }
+
+  onClickClose() {
     this.bgService.playSound('CLOSE');
     this.refs.modal.close();
   }
 
-  componentDidMount() {
-    
+  onClickAbout() {
+    this.refs.aboutModal.open();
   }
 
   onClickLoadGeofences() {
@@ -279,6 +284,9 @@ class SettingsView extends React.Component {
           <PickerField
             key={setting.name}
             ref={setting.name}
+            labelStyle={{paddingLeft: 10, fontSize: 16, color: '#687DCA', flex: 1, alignSelf: 'center', backgroundColor: '#fff'}}
+            containerStyle={{borderBottomColor: '#C8C7CC', borderBottomWidth: 1, flexDirection: 'row', justifyContent: 'center', backgroundColor: '#fff'}}
+            pickerStyle={{flex: 0.4, backgroundColor: Config.colors.light_gold}}
             onValueChange={(value) => {onValueChange(setting, value)}}
             label={setting.name}
             options={options} />
@@ -290,6 +298,7 @@ class SettingsView extends React.Component {
             ref={setting.name}
             key={setting.name}
             label={setting.name}
+            labelStyle={{alignSelf: 'center', fontSize: 16, paddingLeft: 10, color: '#687DCA'}}
             onValueChange={(value) => {onValueChange(setting, value)}} />
         );
         break;
@@ -312,6 +321,9 @@ class SettingsView extends React.Component {
     });
   }
 
+  getAboutModal() {
+    return this.refs.aboutModal;
+  }
   render() {
     return (
       <Modal ref="modal" swipeToClose={false} animationDuration={300} onOpened={this.load.bind(this)}>
@@ -326,9 +338,9 @@ class SettingsView extends React.Component {
               color={Config.colors.black}>
             </Icon.Button>
             <Text style={commonStyles.toolbarTitle}>Settings</Text>
-            <Text style={{width:40}}>&nbsp;</Text>
+            <Button onPress={this.onClickAbout.bind(this)} style={styles.aboutButton}>About</Button>
           </View>
-          <ScrollView keyboardShouldPersistTaps="always" style={{backgroundColor: "#eee"}}>
+          <ScrollView keyboardShouldPersistTaps="always" style={{backgroundColor: '#eee'}}>
             <Form
               ref="form"
               onChange={this.onFormChange.bind(this)}>
@@ -361,6 +373,7 @@ class SettingsView extends React.Component {
             </Form>
           </ScrollView>
         </View>
+        <Modal swipeToClose={false} animationDuration={300} ref="aboutModal"><AboutView modal={() => {return this.refs.aboutModal}}/></Modal>
       </Modal>
     );
   }
@@ -401,6 +414,12 @@ var styles = StyleSheet.create({
     borderWidth:0,
     borderRadius: 5,
     marginBottom: 0
+  },
+  aboutButton: {
+    borderRadius: 5,
+    width: 70,
+    height: 34
+
   },
   buttonLabel: {
     fontSize: 14, 
