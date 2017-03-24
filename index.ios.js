@@ -15,6 +15,7 @@ import BackgroundGeolocation from 'react-native-background-geolocation';
 
 global.BackgroundGeolocation = BackgroundGeolocation;
 
+import Config from './components/config';
 import HomeView from './components/HomeView';
 
 var Application = React.createClass({
@@ -32,7 +33,7 @@ var Application = React.createClass({
   },
   render: function() {
     return (
-      <View style={{backgroundColor: "#ffd700", flex: 1, paddingTop:17}}>
+      <View style={{backgroundColor: Config.colors.gold, flex: 1, paddingTop:17}}>
         <HomeView />
       </View>
     );

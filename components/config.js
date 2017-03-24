@@ -28,7 +28,8 @@ var config = (function() {
     },
 
     colors: {
-      gold: '#fedd1e',
+      gold: 'rgba(254,221,30,1)',//#fedd1e',
+      light_gold: '#FFEB73',
       white: '#fff',
       black: '#000',
       light_blue: '#2677FF',

@@ -48,6 +48,8 @@
 -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactProp <methods>; }
 -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactPropGroup <methods>; }
 
+-dontwarn android.text.StaticLayout
+
 -dontwarn com.facebook.react.**
 
 # okhttp
@@ -57,6 +59,10 @@
 -keep class okhttp3.** { *; }
 -keep interface okhttp3.** { *; }
 -dontwarn okhttp3.**
+
+-dontnote android.net.http.*
+-dontnote org.apache.commons.codec.**
+-dontnote org.apache.http.**
 
 # okio
 
@@ -73,11 +79,6 @@
 -dontwarn com.google.**
 -dontwarn org.apache.http.**
 -dontwarn com.android.volley.toolbox.**
-
-# BackgroundGeolocation (EventBus)
--keepclassmembers class * extends de.greenrobot.event.util.ThrowableFailureEvent {
-    <init>(java.lang.Throwable);
-}
 
 -keepattributes *Annotation*
 -keepclassmembers class ** {

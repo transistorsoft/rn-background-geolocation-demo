@@ -41,11 +41,13 @@ const POLYLINE_STROKE_COLOR = "rgba(32,64,255,0.6)";
 
 let eventEmitter = new EventEmitter();
 
+
 class HomeView extends React.Component {
   //locationIcon: require("image!green_circle"),
 
   constructor() {
     super();
+
     this.bgService = BGService.getInstance();
     this.settingsService = SettingsService.getInstance();
 
@@ -507,6 +509,7 @@ class HomeView extends React.Component {
     return {
       key: location.uuid,
       title: location.timestamp,
+      heading: location.coords.heading,
       coordinate: {
         latitude: location.coords.latitude, 
         longitude: location.coords.longitude
@@ -536,9 +539,10 @@ class HomeView extends React.Component {
         <MapView.Marker
           key={marker.key}
           coordinate={marker.coordinate}
-          title={marker.title}
-          style={styles.marker}>
-          <Text style={styles.markerIcon}></Text></MapView.Marker>
+          anchor={{x:0, y:0.1}}
+          title={marker.title}>
+          <View style={[styles.markerIcon]}></View>
+        </MapView.Marker>
       ));
     });
     return rs;
@@ -595,15 +599,15 @@ class HomeView extends React.Component {
           <MapView.Marker
             key="edge_marker"
             coordinate={event.coordinates[0]}
-            title="event"
-            style={[styles.geofenceHitMarker, markerStyle]}>
-              <Text style={styles.markerIcon}></Text>
+            anchor={{x:0, y:0.1}}>
+            <View style={[styles.geofenceHitMarker, markerStyle]}></View>
           </MapView.Marker>
           <MapView.Marker
             key="location_marker"
             coordinate={event.coordinates[1]}
-            style={styles.marker}>
-          <Text style={styles.markerIcon}></Text></MapView.Marker>
+            anchor={{x:0, y:0.1}}>
+            <View style={styles.markerIcon}></View>
+          </MapView.Marker>
         </View>
       );
     });
@@ -678,7 +682,7 @@ class HomeView extends React.Component {
           <View style={styles.mapMenuButtonContainer}><Icon.Button name="ios-radio-button-off" onPress={() => this.onClickMapMenu('showGeofenceHits')} size={20} color={(!this.state.settings.showGeofenceHits) ? '#ccc' : Config.colors.black} backgroundColor={(!this.state.settings.showGeofenceHits) ? '#eee' : Config.colors.gold} style={styles.mapMenuButton} iconStyle={styles.mapMenuButtonIcon} /></View>
         </View>
 
-        <ActionButton 
+        <ActionButton
           position="left"
           onPress={this.onClickMainMenu.bind(this)}
           size={40}
@@ -765,23 +769,27 @@ var styles = StyleSheet.create({
     borderWidth:1,
     borderColor:'black',
     backgroundColor: Config.colors.polyline_color,
-    borderRadius: 5,
+    borderRadius: 0,
     zIndex: 0,
-    width: 10,
-    height:10
+    width: 32,
+    height:32
   },
   geofenceHitMarker: {
     borderWidth:1,
     borderColor:'black',
     borderRadius: 6,
-    zIndex: 2,
+    zIndex: 10,
     width: 12,
     height:12
   },
   markerIcon: {
-    width: 0,
-    height:0
-  }
+    borderWidth:1,
+    borderColor:'#000000',
+    backgroundColor: Config.colors.polyline_color,
+    width: 10,
+    height: 10,
+    borderRadius: 5
+  }  
 });
 
 module.exports = HomeView;
