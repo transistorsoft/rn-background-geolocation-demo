@@ -22,8 +22,10 @@ class BottomToolbarView extends React.Component {
   constructor(props) {
     super(props);
     this.bgService = BGService.getInstance();
-    this.bgService.on('odometer', (value) => {
-      this.setState({odometer: value.toFixed(1)});
+    this.bgService.on('change', (name, value) => {
+      if (name === 'odometer') {
+        this.setState({odometer: value.toFixed(1)});
+      }
     });
 
     this.settingsService = SettingsService.getInstance();

@@ -61,13 +61,16 @@ class SettingsView extends React.Component {
     this.bgService.getState((state) => {
 
       state.logLevel = this.decodeLogLevel(state.logLevel),
-      state.trackingMode = (state.trackingMode === 1 || state.trackingMode === 'location') ? 'location' : 'geofence';
+      state.trackingMode = this.decodeTrackingMode(state.trackingMode);
 
       this.setState({
         bgGeo: state
       });
 
       // Load form values
+      let trackingModeField = form.refs.trackingMode;
+      trackingModeField.setValue(state.trackingMode);
+
       this.bgService.getPlatformSettings().forEach((setting) => {
         let field = form.refs[setting.name];
         let value = state[setting.name]
@@ -151,6 +154,10 @@ class SettingsView extends React.Component {
     }
   }
 
+  decodeTrackingMode(trackingMode) {
+    return (trackingMode === 1 || trackingMode === 'location') ? 'location' : 'geofence';
+  }
+
   decodeLogLevel(logLevel) {
     let value = 'VERBOSE';
     switch(logLevel) {
@@ -222,6 +229,16 @@ class SettingsView extends React.Component {
 
   }
 
+  onChangeTrackingMode(value) {
+    let bgGeo = this.bgService.getPlugin();
+    let state = this.state.bgGeo;
+    if (state.trackingMode === value) { return; }
+
+    state.trackingMode = value;
+    this.setState({bgGeo: state});
+    this.bgService.set('trackingMode', value);
+  }
+
   onFieldChange(setting, value) {
 
     let state = this.state.bgGeo;
@@ -248,12 +265,7 @@ class SettingsView extends React.Component {
           value = this.encodeLogLevel(value);
           break;
       }
-      let config = {};
-      config[setting.name] = value;
-
-      this.bgService.getPlugin().setConfig(config, (state) => {
-        console.log('- setConfig success', state);
-      });
+      this.bgService.set(setting.name, value);
     }
 
     if (this.changeBuffer) {
@@ -284,9 +296,9 @@ class SettingsView extends React.Component {
           <PickerField
             key={setting.name}
             ref={setting.name}
-            labelStyle={{paddingLeft: 10, fontSize: 16, color: '#687DCA', flex: 1, alignSelf: 'center', backgroundColor: '#fff'}}
-            containerStyle={{borderBottomColor: '#C8C7CC', borderBottomWidth: 1, flexDirection: 'row', justifyContent: 'center', backgroundColor: '#fff'}}
-            pickerStyle={{flex: 0.4, backgroundColor: Config.colors.light_gold}}
+            labelStyle={styles.pickerFieldLabel}
+            containerStyle={styles.pickerFieldContainer}
+            pickerStyle={styles.pickerField}
             onValueChange={(value) => {onValueChange(setting, value)}}
             label={setting.name}
             options={options} />
@@ -298,7 +310,7 @@ class SettingsView extends React.Component {
             ref={setting.name}
             key={setting.name}
             label={setting.name}
-            labelStyle={{alignSelf: 'center', fontSize: 16, paddingLeft: 10, color: '#687DCA'}}
+            labelStyle={styles.switchField}
             onValueChange={(value) => {onValueChange(setting, value)}} />
         );
         break;
@@ -309,7 +321,23 @@ class SettingsView extends React.Component {
     return field;
   }
 
-  getPlatformSettings(section) {
+  renderTrackingModeField() {
+    return (
+      <PickerField
+        key="trackingMode"
+        ref="trackingMode"
+        labelStyle={styles.pickerFieldLabel}
+        containerStyle={styles.pickerFieldContainer}
+        pickerStyle={styles.picker}
+        onValueChange={this.onChangeTrackingMode.bind(this)}
+        label="trackingMode"
+        options={{
+          'location':'Location',
+          'geofence':'Geofence'
+        }} />
+    );
+  }
+  renderPlatformSettings(section) {
     return this.bgService.getPlatformSettings(section).map((setting) => {
       return this.buildField(setting, this.onFieldChange.bind(this));
     });
@@ -345,16 +373,17 @@ class SettingsView extends React.Component {
               ref="form"
               onChange={this.onFormChange.bind(this)}>
               <Separator label="Geolocation" />
-              {this.getPlatformSettings('geolocation')}
+              {this.renderTrackingModeField()}
+              {this.renderPlatformSettings('geolocation')}
               <Separator label="Activity Recognition" />
-              {this.getPlatformSettings('activity recognition')}
+              {this.renderPlatformSettings('activity recognition')}
               <Separator label="HTTP & Persistence" />
-              {this.getPlatformSettings('http')}
+              {this.renderPlatformSettings('http')}
               <Separator label="Application" />
-              {this.getPlatformSettings('application')}
+              {this.renderPlatformSettings('application')}
               <Separator label="Logging & Debug" />
               <InputField key="email" ref="email" placeholder="Email" onValueChange={(value) => {this.settingsService.onChange('email', value)}} />
-              {this.getPlatformSettings('debug')}
+              {this.renderPlatformSettings('debug')}
               <Separator label="Geofence Test (City Drive)" />
               <View style={[styles.setting, {flexDirection:"row"}]}>
                 <View style={styles.label}>
@@ -430,6 +459,33 @@ var styles = StyleSheet.create({
   },
   blueButton: {
     backgroundColor: '#0076ff'
+  },
+  // SwitchField
+  switchField: {
+    alignSelf: 'center',
+    fontSize: 16, 
+    paddingLeft: 10, 
+    color: Config.colors.blue
+  },
+  // PickerField
+  pickerField: {
+    flex: 0.4, 
+    backgroundColor: Config.colors.light_gold
+  },
+  pickerFieldContainer: {
+    borderBottomColor: '#C8C7CC', 
+    borderBottomWidth: 1, 
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    backgroundColor: '#fff'
+  },
+  pickerFieldLabel: {
+    paddingLeft: 10, 
+    fontSize: 16, 
+    color: Config.colors.blue, 
+    flex: 1, 
+    alignSelf: 'center', 
+    backgroundColor: '#fff'
   }
 });
 

@@ -51,6 +51,8 @@ class HomeView extends React.Component {
     this.bgService = BGService.getInstance();
     this.settingsService = SettingsService.getInstance();
 
+    this.lastMotionChangeLocation = undefined;
+
     this.state = {
       isMainMenuOpen: false,
       currentState: AppState.currentState,
@@ -70,11 +72,13 @@ class HomeView extends React.Component {
       stationaryRadius: 0,
       showsUserLocation: true,
       markers: [],
+      stopZones: [],
       geofences: [],
       geofencesHit: [],
       geofencesHitEvents: [],
       coordinates: [],
-      settings: {}
+      settings: {},
+      bgGeo: {}
     };
   }
 
@@ -98,6 +102,7 @@ class HomeView extends React.Component {
     });
 
     this.settingsService.on('change', this.onSettingsChanged.bind(this));
+    this.bgService.on('change', this.onBackgroundGeolocationChanged.bind(this));
   }
 
   componentWillUnmount() {
@@ -140,6 +145,12 @@ class HomeView extends React.Component {
         break;
     }
     //this.setState({settings: event.state});
+  }
+
+  onBackgroundGeolocationChanged(name, value) {
+    let bgGeo = this.state.bgGeo;
+    bgGeo[name] = value;
+    this.setState({bgGeo: bgGeo});
   }
 
   onClickMapMenu(command) {
@@ -325,7 +336,8 @@ class HomeView extends React.Component {
 
       // Update UI
       this.setState({
-        enabled: state.enabled
+        enabled: state.enabled,
+        bgGeo: state
       });
     });
   }
@@ -338,6 +350,17 @@ class HomeView extends React.Component {
     var location = event.location;
     console.log("- motionchange", JSON.stringify(event));
     if (event.isMoving) {
+      if (this.lastMotionChangeLocation) {
+        this.setState({
+          stopZones: [...this.state.stopZones, {
+            coordinate: {
+              latitude: this.lastMotionChangeLocation.coords.latitude,
+              longitude: this.lastMotionChangeLocation.coords.longitude
+            },
+            key: this.lastMotionChangeLocation.timestamp
+          }]
+        });
+      }
       this.setState({
         stationaryRadius: 0,
         stationaryLocation: {
@@ -348,14 +371,15 @@ class HomeView extends React.Component {
       });
     } else {
       this.setState({
-        stationaryRadius: 200,
+        stationaryRadius: (this.bgService.isLocationTrackingMode()) ? 200 : (this.state.bgGeo.geofenceProximityRadius/2),
         stationaryLocation: {
           timestamp: event.location.timestamp,
           latitude: event.location.coords.latitude,
           longitude: event.location.coords.longitude
         }
-      })
+      });
     }
+    this.lastMotionChangeLocation = location;
   }
 
   onLocation(location) {
@@ -366,7 +390,8 @@ class HomeView extends React.Component {
     // Seems to fix PolyLine rendering issue by wrapping call to setCenter in a timeout
     setTimeout(function() {
       this.setCenter(location);
-    }.bind(this))
+    }.bind(this));
+
   }
 
   onGeofencesChange(event) {
@@ -502,7 +527,7 @@ class HomeView extends React.Component {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude
       }]
-    });
+    });    
   }
 
   createMarker(location) {
@@ -534,7 +559,7 @@ class HomeView extends React.Component {
     let rs = [];
     if (this.state.settings.hideMarkers) { return; }
 
-    this.state.markers.map(marker => {
+    this.state.markers.map((marker) => {
       rs.push((
         <MapView.Marker
           key={marker.key}
@@ -548,8 +573,22 @@ class HomeView extends React.Component {
     return rs;
   }
 
+  renderStopZoneMarkers() {
+    return this.state.stopZones.map((stopZone) => (
+      <MapView.Circle
+        key={stopZone.key}
+        radius={50}
+        fillColor={STATIONARY_REGION_FILL_COLOR}
+        strokeColor={STATIONARY_REGION_STROKE_COLOR}
+        strokeWidth={1}
+        zIndex={10}
+        center={stopZone.coordinate}
+      />
+    ));
+  }
+
   renderActiveGeofences() {
-    return this.state.geofences.map(geofence => (
+    return this.state.geofences.map((geofence) => (
       <MapView.Circle
         key={geofence.identifier}
         radius={geofence.radius}
@@ -648,7 +687,7 @@ class HomeView extends React.Component {
             radius={this.state.stationaryRadius}
             fillColor={STATIONARY_REGION_FILL_COLOR}
             strokeColor={STATIONARY_REGION_STROKE_COLOR}
-            strokeWidth={3}
+            strokeWidth={1}
             center={{latitude: this.state.stationaryLocation.latitude, longitude: this.state.stationaryLocation.longitude}}
           />
           <MapView.Marker
@@ -664,6 +703,7 @@ class HomeView extends React.Component {
             strokeWidth={6}
             zIndex={0}
           />
+          {this.renderStopZoneMarkers()}
           {this.renderMarkers()}
           {this.renderActiveGeofences()}
           {this.renderGeofencesHit()}
@@ -773,6 +813,16 @@ var styles = StyleSheet.create({
     zIndex: 0,
     width: 32,
     height:32
+  },
+  stopZoneMarker: {
+    borderWidth:1,
+    borderColor: 'red',
+    backgroundColor: Config.colors.red,
+    opacity: 0.2,
+    borderRadius: 25,
+    zIndex: 0,
+    width: 50,
+    height:50
   },
   geofenceHitMarker: {
     borderWidth:1,

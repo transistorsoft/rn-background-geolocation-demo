@@ -122,6 +122,7 @@ class BGService {
     this.getUUID((uuid) => {
       this.uuid = uuid;
     });
+    this.state = {};
 
     this.plugin = global.BackgroundGeolocation;
 
@@ -182,7 +183,10 @@ class BGService {
   // Fetch plugin state.
   getState(callback) {
     if (this.uuid) {
-      this.plugin.getState(callback);
+      this.plugin.getState((state) => {
+        this.state = state;
+        callback(state);
+      });
     } else {
       // Determine if this is app first-boot.
       this.getUUID((uuid) => {
@@ -195,23 +199,52 @@ class BGService {
             state.debug = true;
             state.logLevel = this.plugin.LOG_LEVEL_VERBOSE;
             state.params = {device: deviceInfo};
+            this.state = state;
             callback(state);
           });
         } else {
-          this.plugin.getState(callback);
+          this.plugin.getState((state) => {
+            this.state = state;
+            callback(state);
+          });
         }
       });
     }
   }
 
+  isLocationTrackingMode() {
+    return (this.state.trackingMode === 1) || (this.state.trackingMode === 'location');
+  }
+
   // Set a plugin config option and execute BackgroundGeolocation#setConfig
   set(key, value, callback) {
-    var config = {};
-    config[key] = value;
-    global.BackgroundGeolocation.setConfig(config, function(state) {
-      _pluginState = state;
-      callback(state);
-    });
+    callback = callback || function(){};
+    
+    if (key === 'trackingMode') {
+      this.plugin.stop();
+      if (value === 'location') {
+        this.plugin.start((state) => {
+          this.state = state;
+          callback(state);
+        });
+      } else {
+        this.plugin.startGeofences((state) => {
+          this.state = state;
+          callback(state);
+        });
+      }
+    } else {
+      let config = {};
+      config[key] = value;
+      this.state[key] = value;
+
+      this.plugin.setConfig(config, (state) => {
+        this.state = state;
+        console.log('- setConfig success', state);
+        callback(state);
+      });
+    }
+    eventEmitter.emit('change', key, value);
   }
 
   /**
@@ -258,7 +291,7 @@ class BGService {
     success = success || function() {};
     failure = failure || function() {};
     this.plugin.setOdometer(value, (location) => {
-      eventEmitter.emit('odometer', value);
+      eventEmitter.emit('change', 'odometer', value);
       success(location);
     }, (error) => {
       failure(error);

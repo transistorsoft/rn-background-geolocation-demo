@@ -33,6 +33,7 @@ var config = (function() {
       white: '#fff',
       black: '#000',
       light_blue: '#2677FF',
+      blue: '#337AB7',
       grey: '#404040',
       red: '#FE381E',
       green: '#16BE42',
