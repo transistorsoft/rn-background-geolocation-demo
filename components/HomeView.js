@@ -99,7 +99,7 @@ class HomeView extends React.Component {
       this.setState({
         settings: state 
       });
-    });
+    });    
 
     this.settingsService.on('change', this.onSettingsChanged.bind(this));
     this.bgService.on('change', this.onBackgroundGeolocationChanged.bind(this));
@@ -267,6 +267,7 @@ class HomeView extends React.Component {
           latitude: 0,
           longitude: 0
         },
+        stopZones: [],
         geofencesHit: [],
         geofencesHitEvents: []
       });
