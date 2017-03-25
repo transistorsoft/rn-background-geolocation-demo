@@ -109,6 +109,8 @@ class BottomToolbarView extends React.Component {
   onClickPace() {
     if (!this.state.enabled) { return; }
 
+    this.bgService.playSound('BUTTON_CLICK');
+    
     let isMoving = !this.state.isMoving;
     let bgGeo = this.bgService.getPlugin();
 
