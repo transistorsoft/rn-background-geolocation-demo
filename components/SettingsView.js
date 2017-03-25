@@ -328,7 +328,7 @@ class SettingsView extends React.Component {
         ref="trackingMode"
         labelStyle={styles.pickerFieldLabel}
         containerStyle={styles.pickerFieldContainer}
-        pickerStyle={styles.picker}
+        pickerStyle={styles.pickerField}
         onValueChange={this.onChangeTrackingMode.bind(this)}
         label="trackingMode"
         options={{
