@@ -38,6 +38,8 @@ class SettingsView extends React.Component {
 
     // Default state
     this.state = {
+      isDestroyingLog: false,
+      isLoadingGeofences: false,
       geofence: {
         radius: '200',
         notifyOnEntry: true,
@@ -136,6 +138,16 @@ class SettingsView extends React.Component {
 
   onClickEmailLogs() {
 
+  }
+
+  onClickDestroyLog() {
+    this.settingsService.confirm('Confirm Destroy', 'Destroy Logs?', () => {
+      this.setState({isDestroyingLog: true});
+      this.bgService.getPlugin().destroyLog(() => {
+        this.setState({isDestroyingLog: false});
+        this.settingsService.toast('Destroyed logs');
+      });
+    });
   }
 
   setTrackingMode(trackingMode){
@@ -299,6 +311,7 @@ class SettingsView extends React.Component {
             labelStyle={styles.pickerFieldLabel}
             containerStyle={styles.pickerFieldContainer}
             pickerStyle={styles.pickerField}
+            iconRight={<Icon name="ios-arrow-down" size={20} color="#aaa" style={{marginTop:12,marginLeft:0,marginRight:5}} />}
             onValueChange={(value) => {onValueChange(setting, value)}}
             label={setting.name}
             options={options} />
@@ -384,8 +397,13 @@ class SettingsView extends React.Component {
               <Separator label="Logging & Debug" />
               <InputField key="email" ref="email" placeholder="Email" onValueChange={(value) => {this.settingsService.onChange('email', value)}} />
               {this.renderPlatformSettings('debug')}
+              <View style={styles.setting}>
+                <Button onPress={this.onClickDestroyLog.bind(this)} activeOpacity={0.7} isLoading={this.state.isDestroyingLog} style={[styles.button, styles.redButton, {flex:1}]} textStyle={styles.buttonLabel}>
+                  Destroy logs
+                </Button>
+              </View>
               <Separator label="Geofence Test (City Drive)" />
-              <View style={[styles.setting, {flexDirection:"row"}]}>
+              <View style={styles.setting}>
                 <View style={styles.label}>
                   <Button onPress={this.onClickClearGeofences.bind(this)} activeOpacity={0.7} style={[styles.button, styles.redButton]} textStyle={styles.buttonLabel}>
                     Clear
