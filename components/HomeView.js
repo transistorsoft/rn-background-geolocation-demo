@@ -733,15 +733,20 @@ class HomeView extends React.Component {
 
         <ActionButton
           position="left"
+          showsCompass={false}
+          showsMyLocationButton={false}
+          showsScale={false}
+          showsTraffic={false}
+          toolbarEnabled={false}
+          hideShadow={true}
+          autoInactive={false}
+          backgroundTappable={true}
           onPress={this.onClickMainMenu.bind(this)}
           size={40}
           icon={<Icon name="ios-add" size={25}/>}
           verticalOrientation="down"
           buttonColor="rgba(254,221,30,1)"
           buttonTextStyle={{color: "#000"}}
-          hideShadow={true}
-          autoInactive={false}
-          backgroundTappable={true}
           spacing={15}
           offsetX={10}
           offsetY={25}>
