@@ -576,6 +576,13 @@ class HomeView extends React.Component {
 
   renderStopZoneMarkers() {
     return this.state.stopZones.map((stopZone) => (
+      <MapView.Marker
+        key={stopZone.key}
+        coordinate={stopZone.coordinate}
+        anchor={{x:0, y:0}}>
+        <View style={[styles.stopZoneMarker]}></View>
+      </MapView.Marker>
+      /*
       <MapView.Circle
         key={stopZone.key}
         radius={50}
@@ -585,6 +592,7 @@ class HomeView extends React.Component {
         zIndex={10}
         center={stopZone.coordinate}
       />
+      */
     ));
   }
 
@@ -820,10 +828,10 @@ var styles = StyleSheet.create({
     borderColor: 'red',
     backgroundColor: Config.colors.red,
     opacity: 0.2,
-    borderRadius: 25,
+    borderRadius: 15,
     zIndex: 0,
-    width: 50,
-    height:50
+    width: 30,
+    height: 30
   },
   geofenceHitMarker: {
     borderWidth:1,
