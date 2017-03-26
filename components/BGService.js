@@ -198,6 +198,10 @@ class BGService {
 
             state.debug = true;
             state.logLevel = this.plugin.LOG_LEVEL_VERBOSE;
+            state.foregroundService = true;
+            state.autoSync = false;
+            state.stopOnTerminate = false;
+            state.startOnBoot = true;
             state.params = {device: deviceInfo};
             this.state = state;
             callback(state);

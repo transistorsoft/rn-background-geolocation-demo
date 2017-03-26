@@ -84,17 +84,17 @@ def enableProguardInReleaseBuilds = true
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 5
-        versionName "1.5"
+        versionCode 7
+        versionName "2.0.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
-        multiDexEnabled true
+        multiDexEnabled false
     }
     signingConfigs {
         release {
