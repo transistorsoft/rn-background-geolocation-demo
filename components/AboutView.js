@@ -10,8 +10,8 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import Button from 'apsl-react-native-button'
 
-import SettingsService from './SettingsService';
-import BGService from './BGService';
+import SettingsService from './lib/SettingsService';
+import BGService from './lib/BGService';
 
 import commonStyles from './styles';
 import Config from './config';

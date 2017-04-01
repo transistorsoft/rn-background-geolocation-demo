@@ -9,8 +9,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Button from 'apsl-react-native-button'
 
 import commonStyles from './styles';
-import BGService from './BGService';
-import SettingsService from './SettingsService';
+import BGService from './lib/BGService';
+import SettingsService from './lib/SettingsService';
 
 /**
 * This is the common shared bottom-toolbar.  It's passed the BackgroundGeolocation instance
@@ -43,14 +43,20 @@ class BottomToolbarView extends React.Component {
   componentDidMount() {
 
     // Listen to events from our parent
-    this.props.eventEmitter.addListener('enabled', this.onChangeEnabled.bind(this));
+    this.onChangeEnabled = this.onChangeEnabled.bind(this)
+    this.props.eventEmitter.addListener('enabled', this.onChangeEnabled);
 
     let bgGeo = this.bgService.getPlugin();
 
-    bgGeo.on("activitychange", this.onActivityChange.bind(this));
-    bgGeo.on("providerchange", this.onProviderChange.bind(this));
-    bgGeo.on("location", this.onLocation.bind(this));
-    bgGeo.on("motionchange", this.onMotionChange.bind(this));
+    this.onActivityChange = this.onActivityChange.bind(this);
+    this.onProviderChange = this.onProviderChange.bind(this);
+    this.onLocation = this.onLocation.bind(this);
+    this.onMotionChange = this.onMotionChange.bind(this);
+    
+    bgGeo.on("activitychange", this.onActivityChange);
+    bgGeo.on("providerchange", this.onProviderChange);
+    bgGeo.on("location", this.onLocation);
+    bgGeo.on("motionchange", this.onMotionChange);
 
     bgGeo.getState((state) => {
       this.setState({
@@ -64,12 +70,12 @@ class BottomToolbarView extends React.Component {
   componentWillUnmount() {
     // Unregister BackgroundGeolocation listeners!
     let bgGeo = this.bgService.getPlugin();
-    bgGeo.un("activitychange", this.onActivityChange.bind(this));
-    bgGeo.un("providerchange", this.onProviderChange.bind(this));
-    bgGeo.un("location", this.onLocation.bind(this));
-    bgGeo.un("motionchange", this.onMotionChange.bind(this));
+    bgGeo.un("activitychange", this.onActivityChange);
+    bgGeo.un("providerchange", this.onProviderChange);
+    bgGeo.un("location", this.onLocation);
+    bgGeo.un("motionchange", this.onMotionChange);
 
-    this.props.eventEmitter.removeListener('enabled', this.onChangeEnabled.bind(this));
+    this.props.eventEmitter.removeListener('enabled', this.onChangeEnabled);
   }
 
   onActivityChange(activityName) {

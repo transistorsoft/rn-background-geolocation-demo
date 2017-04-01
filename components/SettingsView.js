@@ -22,8 +22,8 @@ import {
   PickerField
 } from 'react-native-form-generator';
 
-import SettingsService from './SettingsService';
-import BGService from './BGService';
+import SettingsService from './lib/SettingsService';
+import BGService from './lib/BGService';
 
 import commonStyles from './styles';
 import Config from './config';
@@ -45,7 +45,7 @@ class SettingsView extends React.Component {
         notifyOnEntry: true,
         notifyOnExit: false,
         notifyOnDwell: false,
-        loiteringDelay: 0
+        loiteringDelay: '0'
       },
       map: {},
       bgGeo: {}
@@ -417,6 +417,7 @@ class SettingsView extends React.Component {
                 </View>
               </View>
               {this.getGeofenceTestSettings()}
+
             </Form>
           </ScrollView>
         </View>

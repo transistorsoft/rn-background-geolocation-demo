@@ -13,6 +13,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import BackgroundGeolocation from 'react-native-background-geolocation';
+import BackgroundGeolocationHeadlessService from './components/lib/BackgroundGeolocationHeadlessService';
 
 async function requestLocationPermission() {
   try {
@@ -53,9 +54,10 @@ var Application = React.createClass({
   }
 });
 
-
 var styles = StyleSheet.create({
 
 });
+
+AppRegistry.registerHeadlessTask('BackgroundGeolocation', () => BackgroundGeolocationHeadlessService);
 
 AppRegistry.registerComponent('RNBackgroundGeolocationSample', () => Application);

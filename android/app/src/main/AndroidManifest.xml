@@ -11,7 +11,7 @@
       android:icon="@mipmap/ic_launcher"
       android:theme="@style/AppTheme">
 
-
+=
       <activity
         android:name=".MainActivity"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
@@ -27,6 +27,24 @@
 
         <meta-data android:name="com.transistorsoft.locationmanager.license" android:value="1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774" />
 
+        <!-- 
+        <receiver android:name="com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocationEventReceiver">
+            <intent-filter>
+                <action android:name="com.transistorsoft.locationmanager.event.BOOT" />
+                <action android:name="com.transistorsoft.locationmanager.event.TERMINATE" />
+                <action android:name="com.transistorsoft.locationmanager.event.HEARTBEAT" />
+                <action android:name="com.transistorsoft.locationmanager.event.MOTIONCHANGE" />
+                <action android:name="com.transistorsoft.locationmanager.event.LOCATION" />
+                <action android:name="com.transistorsoft.locationmanager.event.GEOFENCE" />
+                <action android:name="com.transistorsoft.locationmanager.event.HTTP" />
+                <action android:name="com.transistorsoft.locationmanager.event.SCHEDULE" />
+                <action android:name="com.transistorsoft.locationmanager.event.ACTIVITYCHANGE" />
+                <action android:name="com.transistorsoft.locationmanager.event.PROVIDERCHANGE" />
+                <action android:name="com.transistorsoft.locationmanager.event.GEOFENCESCHANGE" />
+            </intent-filter>
+        </receiver>
+        -->
+        
     </application>
 
 </manifest>

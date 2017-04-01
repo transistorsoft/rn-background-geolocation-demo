@@ -33,7 +33,7 @@ const SETTINGS = [
   {name: 'notifyOnEntry', group: 'geofence', dataType: 'boolean', inputType: 'toggle', defaultValue: true},
   {name: 'notifyOnExit', group: 'geofence', dataType: 'boolean', inputType: 'toggle', defaultValue: false},
   {name: 'notifyOnDwell', group: 'geofence', dataType: 'boolean', inputType: 'toggle', defaultValue: false},
-  {name: 'loiteringDelay', group: 'geofence', dataType: 'integer', inputType: 'select', defaultValue: 0, values: [0, 10*1000, 30*1000, 60*1000, 5*60*1000]},
+  {name: 'loiteringDelay', group: 'geofence', dataType: 'integer', inputType: 'select', defaultValue: 0, values: [0, (1*1000), (5*1000), (10*1000), (30*1000), (60*1000), (5*60*1000)]},
   {name: 'hideMarkers', group: 'map', dataType: 'boolean', inputType: 'toggle', defaultValue: false},
   {name: 'hidePolyline', group: 'map', dataType: 'boolean', inputType: 'toggle', defaultValue: false},
   {name: 'showGeofenceHits', group: 'map', dataType: 'boolean', inputType: 'toggle', defaultValue: false},
@@ -77,6 +77,10 @@ class SettingsService {
 
   on(event, callback) {
     eventEmitter.addListener(event, callback);
+  }
+
+  removeListeners() {
+    eventEmitter.removeAllListeners();
   }
 
   onChange(setting, value) {

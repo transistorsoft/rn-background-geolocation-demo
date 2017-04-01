@@ -30,6 +30,7 @@ const SETTINGS = {
     {name: 'desiredAccuracy', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [-1, 0, 10, 100, 1000], defaultValue: 0 },
     {name: 'distanceFilter', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 10, 20, 50, 100, 500], defaultValue: 20 },
     {name: 'disableElasticity', group: 'geolocation', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
+    {name: 'geofenceProximityRadius', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [1000, 1500, 2000, 5000, 10000, 100000], defaultValue: 1000 },
     {name: 'stopAfterElapsedMinutes', group: 'geolocation', dataType: 'number', inputType: 'select', values: [-1, 0, 1, 2, 5, 10, 15], defaultValue: 0},
     {name: 'desiredOdometerAccuracy', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [10, 20, 50, 100, 500], defaultValue: 100},
     // Activity Recognition
@@ -54,7 +55,7 @@ const SETTINGS = {
   ],
   ios: [
     // Geolocation
-    {name: 'stationaryRadius', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 25, 50, 100, 500], defaultValue: 20 },
+    {name: 'stationaryRadius', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 25, 50, 100, 500, 1000, 5000], defaultValue: 25 },
     {name: 'activityType', group: 'geolocation', dataType: 'string', inputType: 'select', values: ['Other', 'AutomotiveNavigation', 'Fitness', 'OtherNavigation'], defaultValue: 'Other'},
     {name: 'preventSuspend', group: 'application', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
     // Activity Recognition
@@ -104,6 +105,8 @@ const SOUND_MAP = {
 };
 
 let eventEmitter = new EventEmitter();
+
+let geofenceNextId = 0;
 
 // Singleton instance
 let instance = null;
@@ -258,6 +261,10 @@ class BGService {
     eventEmitter.addListener(event, callback);
   }
 
+  removeListeners() {
+    eventEmitter.removeAllListeners();
+  }
+
   /**
   * Load test geofences
   * @param {String} route name
@@ -269,7 +276,7 @@ class BGService {
     var geofences = [];
     for (var n=0, len=data.length;n<len;n++) {
       geofences.push({
-        identifier: 'city_drive_' + (n+1),
+        identifier: 'city_drive_' + (++geofenceNextId),
         extras: {
           "geofence_extra_foo": "extra geofence data"
         },

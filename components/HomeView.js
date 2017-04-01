@@ -18,13 +18,15 @@ import ActionButton from 'react-native-action-button';
 import Button from 'apsl-react-native-button'
 import Spinner from 'react-native-spinkit';
 
+import SettingsService from './lib/SettingsService';
+import BGService from './lib/BGService';
+
 import Config from './config';
 import commonStyles from './styles';
 import BottomToolbarView from './BottomToolbarView';
-import SettingsService from './SettingsService';
 import GeofenceView from './GeofenceView';
 import SettingsView from './SettingsView';
-import BGService from './BGService';
+
 
 var MAP_MARKER_IMAGE = require('../images/location_marker.png');
 
@@ -83,7 +85,7 @@ class HomeView extends React.Component {
   }
 
   componentDidMount() {
-    AppState.addEventListener('change', this.onAppStateChange.bind(this));
+    //AppState.addEventListener('change', this.onAppStateChange.bind(this));
 
     this.setState({
       enabled: false
@@ -106,18 +108,22 @@ class HomeView extends React.Component {
   }
 
   componentWillUnmount() {
-    AppState.removeEventListener('change', this.onAppStateChange.bind(this));
+
+    //AppState.removeEventListener('change', this.onAppStateChange.bind(this));
     let bgGeo = this.bgService.getPlugin();
 
     // Unregister BackgroundGeolocation event-listeners!
-    bgGeo.un("location", this.onLocation.bind(this));
-    bgGeo.un("http", this.onHttp.bind(this));
-    bgGeo.un("geofence", this.onGeofence.bind(this));
-    bgGeo.un("heartbeat", this.onHeartbeat.bind(this));
-    bgGeo.un("error", this.onError.bind(this));
-    bgGeo.un("motionchange", this.onMotionChange.bind(this));
-    bgGeo.un("schedule", this.onSchedule.bind(this));
-    bgGeo.un("geofenceschange", this.onGeofencesChange.bind(this));
+    bgGeo.un("location", this.onLocation);
+    bgGeo.un("http", this.onHttp);
+    bgGeo.un("geofence", this.onGeofence);
+    bgGeo.un("heartbeat", this.onHeartbeat);
+    bgGeo.un("error", this.onError);
+    bgGeo.un("motionchange", this.onMotionChange);
+    bgGeo.un("schedule", this.onSchedule);
+    bgGeo.un("geofenceschange", this.onGeofencesChange);
+
+    this.bgService.removeListeners();
+    this.settingsService.removeListeners();
   }
 
   onAppStateChange(currentAppState) {
@@ -287,21 +293,30 @@ class HomeView extends React.Component {
     // 1. Set up listeners on BackgroundGeolocation events
     //
     // location event
-    bgGeo.on("location", this.onLocation.bind(this));
+    this.onLocation = this.onLocation.bind(this);
+    this.onHttp = this.onHttp.bind(this);
+    this.onGeofence = this.onGeofence.bind(this);
+    this.onHeartbeat = this.onHeartbeat.bind(this);
+    this.onError = this.onError.bind(this);
+    this.onMotionChange = this.onMotionChange.bind(this);
+    this.onSchedule = this.onSchedule.bind(this);
+    this.onGeofencesChange = this.onGeofencesChange.bind(this);
+
+    bgGeo.on("location", this.onLocation);
     // http event
-    bgGeo.on("http", this.onHttp.bind(this));
+    bgGeo.on("http", this.onHttp);
     // geofence event
-    bgGeo.on("geofence", this.onGeofence.bind(this));
+    bgGeo.on("geofence", this.onGeofence);
     // heartbeat event
-    bgGeo.on("heartbeat", this.onHeartbeat.bind(this));
+    bgGeo.on("heartbeat", this.onHeartbeat);
     // error event
-    bgGeo.on("error", this.onError.bind(this));
+    bgGeo.on("error", this.onError);
     // motionchange event
-    bgGeo.on("motionchange", this.onMotionChange.bind(this));
+    bgGeo.on("motionchange", this.onMotionChange);
     // schedule event
-    bgGeo.on("schedule", this.onSchedule.bind(this));
+    bgGeo.on("schedule", this.onSchedule);
     // geofenceschange
-    bgGeo.on("geofenceschange", this.onGeofencesChange.bind(this));
+    bgGeo.on("geofenceschange", this.onGeofencesChange);
 
     ////
     // 2. Configure it.
@@ -437,8 +452,6 @@ class HomeView extends React.Component {
     });
     if (!marker) { return; }
 
-    let bearing = this.bgService.getBearing(marker.center, location.coords);
-
     marker.fillColor = GEOFENCE_STROKE_COLOR_ACTIVATED;
     marker.strokeColor = GEOFENCE_STROKE_COLOR_ACTIVATED;
 
@@ -462,6 +475,8 @@ class HomeView extends React.Component {
         geofencesHit: [...this.state.geofencesHit, hit]
       });
     }
+    // Get bearing of location relative to geofence center.
+    let bearing = this.bgService.getBearing(marker.center, location.coords);
     let edgeCoordinate = this.bgService.computeOffsetCoordinate(marker.center, marker.radius, bearing);
     let event = {
       coordinates: [
@@ -630,8 +645,20 @@ class HomeView extends React.Component {
     if (!this.state.settings.showGeofenceHits) { return; }
     return this.state.geofencesHitEvents.map((event) => {
       let isEnter = (event.action === 'ENTER');
+      let color = undefined;
+      switch(event.action) {
+        case 'ENTER':
+          color = Config.colors.green;
+          break;
+        case 'EXIT':
+          color = Config.colors.red;
+          break;
+        case 'DWELL':
+          color = Config.colors.gold;
+          break;
+      }
       let markerStyle = {
-        backgroundColor: isEnter ? Config.colors.green : Config.colors.red
+        backgroundColor: color
       };
       return (
         <View key={event.key}>
