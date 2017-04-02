@@ -3,8 +3,8 @@
 
 Fully-featured, React Native demo application for [React Native Background Geolocation Module](http://transistorsoft.github.io/react-native-background-geolocation/)
 
-![Home](https://dl.dropboxusercontent.com/u/2319755/cordova-background-geolocaiton/screenshot-iphone5-geofences-framed-README.png)
-![Settings](https://dl.dropboxusercontent.com/u/2319755/cordova-background-geolocaiton/screenshot-iphone5-settings-framed-README.png)
+![Home](https://www.dropbox.com/s/byaayezphkwn36h/home-framed-350.png?dl=1)
+![Settings](https://www.dropbox.com/s/8lvnpp0gowitagq/settings-framed-350.png?dl=1)
 
 ## Installation
 
