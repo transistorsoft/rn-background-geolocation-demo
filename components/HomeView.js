@@ -254,9 +254,17 @@ class HomeView extends React.Component {
     var bgGeo = this.bgService.getPlugin();
 
     if (enabled) {
-      bgGeo.start((state) => {
-        console.log('- Start success: ', state);
-      });
+      if (this.bgService.isLocationTrackingMode()) {
+        // Location tracking mode
+        bgGeo.start((state) => {
+          console.log('- Start success: ', state);
+        });
+      } else {
+        // Geofences-only mode
+        bgGeo.startGeofences((state) => {
+          console.log('- Start geofences: ', state);
+        });
+      }
     } else {
       bgGeo.stop(() => {
         console.log('- stopped');

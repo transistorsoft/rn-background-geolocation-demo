@@ -1,3 +1,3 @@
-rm node_modules/react-native-background-geolocation-android/android/libs/tslocationmanager.aar
-ln -s ../react-native-background-geolocation-android/android/libs/tslocationmanager.aar node_modules/react-native-background-geolocation-android/android/libs/tslocationmanager.aar
+rm node_modules/react-native-background-geolocation/android/libs/tslocationmanager.aar
+ln -s ~/workspace/react/background-geolocation/react-native-background-geolocation/android/libs/tslocationmanager.aar node_modules/react-native-background-geolocation/android/libs/tslocationmanager.aar
 
