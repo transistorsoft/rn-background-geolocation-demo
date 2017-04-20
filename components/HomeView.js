@@ -190,6 +190,7 @@ class HomeView extends React.Component {
         this.settingsView.open();
         break;
       case 'resetOdometer':
+        this.clearMarkers();
         this.bgService.playSound('BUTTON_CLICK');
         this.setState({isResettingOdometer: true, odometer: '0.0'});
         this.bgService.setOdometer(0, () => {
@@ -541,6 +542,16 @@ class HomeView extends React.Component {
       });
     }, (error) => {
       console.warn('- addGeofence error: ', error);
+    });
+  }
+
+  clearMarkers() {
+    this.setState({
+      coordinates: [],
+      markers: [],
+      stopZones: [],
+      geofencesHit: [],
+      geofencesHitEvents: []
     });
   }
 

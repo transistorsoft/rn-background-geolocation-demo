@@ -18,10 +18,9 @@ let deviceInfo = {
   model: DeviceInfo.getModel(),
   platform: DeviceInfo.getSystemName(),
   manufacturer: DeviceInfo.getManufacturer(),
-  version: DeviceInfo.getSystemVersion()
+  version: DeviceInfo.getSystemVersion(),
+  framework: 'ReactNative'
 };
-
-let PLATFORM = DeviceInfo.getSystemName().toUpperCase();
 
 const SECTIONS = ['geolocation', 'activity recognition', 'application', 'persistence', 'http'];
 const SETTINGS = {
@@ -82,7 +81,7 @@ const SETTINGS = {
 
 //A collection of soundId for use with BackgroundGeolocation#playSound
 const SOUND_MAP = {
-  "IOS": {
+  "ios": {
     "LONG_PRESS_ACTIVATE": 1113,
     "LONG_PRESS_CANCEL": 1075,
     "ADD_GEOFENCE": 1114,
@@ -93,7 +92,7 @@ const SOUND_MAP = {
     "CLOSE": 1503,
     "FLOURISH": 1509
   },
-  "ANDROID": {
+  "android": {
     "LONG_PRESS_ACTIVATE": 27,
     "LONG_PRESS_CANCEL": 94,
     "ADD_GEOFENCE": 28,
@@ -327,7 +326,7 @@ class BGService {
     var soundId = 0;
 
     if (typeof(name) === 'string') {
-      soundId = SOUND_MAP[PLATFORM][name];
+      soundId = SOUND_MAP[this.platform][name];
     } else if (typeof(name) === 'number') {
       soundId = name;
     }

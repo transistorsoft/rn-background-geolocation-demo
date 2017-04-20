@@ -75,7 +75,10 @@ class GeofenceView extends React.Component {
       notifyOnEntry: this.state.notifyOnEntry,
       notifyOnExit: this.state.notifyOnExit,
       notifyOnDwell: this.state.notifyOnDwell,
-      extras: this.state.extras
+      extras: {
+        radius: parseInt(this.state.radius, 10),
+        center: {latitude: this.state.latitude, longitude: this.state.longitude}
+      }
     });
   }
   onCancel() {
