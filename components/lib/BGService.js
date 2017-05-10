@@ -229,7 +229,6 @@ class BGService {
     callback = callback || function(){};
     
     if (key === 'trackingMode') {
-      this.plugin.stop();
       if (value === 'location') {
         this.plugin.start((state) => {
           this.state = state;

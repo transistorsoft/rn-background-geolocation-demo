@@ -144,8 +144,8 @@ class BottomToolbarView extends React.Component {
       timeout: 30,
       samples: 3,
       desiredAccuracy: 10,
-      maximumAge: 0,
-      persist: false
+      maximumAge: 5000,
+      persist: true
     }, (location) => {
       console.log('- current position: ', JSON.stringify(location));
     }, (error) => {
