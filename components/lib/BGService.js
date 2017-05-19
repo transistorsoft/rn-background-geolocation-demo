@@ -46,7 +46,7 @@ const SETTINGS = {
     // Application
     {name: 'stopOnTerminate', group: 'application', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: true},
     {name: 'startOnBoot', group: 'application', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
-    {name: 'heartbeatInterval', group: 'application', dataType: 'integer', inputType: 'select', values: [30, 60, 120, 240, 600], defaultValue: 60},
+    {name: 'heartbeatInterval', group: 'application', dataType: 'integer', inputType: 'select', values: [60, (2*60), (5*60), (15*60)], defaultValue: 60},
     // Logging & Debug
     {name: 'debug', group: 'debug', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: true},
     {name: 'logLevel', group: 'debug', dataType: 'string', inputType: 'select', values: ['OFF', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'VERBOSE'], defaultValue: 'VERBOSE'},
@@ -206,6 +206,7 @@ class BGService {
             state.autoSync = false;
             state.stopOnTerminate = false;
             state.startOnBoot = true;
+            state.heartbeatInterval = 60;
             state.params = {device: deviceInfo};
             this.state = state;
             callback(state);

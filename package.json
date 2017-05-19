@@ -1,6 +1,6 @@
 {
   "name": "BackgroundGeolocationDemo",
-  "version": "2.7.1",
+  "version": "2.8.1",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -11,7 +11,7 @@
     "react": "~15.4.1",
     "react-native": "0.42.0",
     "react-native-action-button": "^2.6.4",
-    "react-native-background-geolocation": "^2.8.0",
+    "react-native-background-geolocation": "^2.8.1",
     "react-native-device-info": "^0.10.1",
     "react-native-form-generator": "git+https://github.com/MichaelCereda/react-native-form-generator.git",
     "react-native-maps": "^0.13.1",

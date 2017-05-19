@@ -89,8 +89,8 @@ android {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 8
-        versionName "2.0.2"
+        versionCode 9
+        versionName "2.8.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
