@@ -345,7 +345,9 @@ class HomeView extends React.Component {
     //config.schedule = SettingsService.generateSchedule(24, 1, 1, 1);
     //
     //config.url = 'http://192.168.11.100:8080/locations';
-
+    config.httpTimeout = 3000;
+    config.notificationLargeIcon = 'drawable/notification_large_icon';
+    
     bgGeo.configure(config, (state) => {
       console.log('- configure success.  Current state: ', state);
 

@@ -84,7 +84,7 @@ def enableProguardInReleaseBuilds = true
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion 16
@@ -160,13 +160,13 @@ dependencies {
     compile project(':react-native-background-geolocation')
     compile(name: 'tslocationmanager', ext: 'aar')
     compile project(':react-native-vector-icons')
-    compile ("com.google.android.gms:play-services-base:10.2.0") {
+    compile ("com.google.android.gms:play-services-base:11.0.0") {
         force = true;
     }
-    compile ("com.google.android.gms:play-services-maps:10.2.0") {
+    compile ("com.google.android.gms:play-services-maps:11.0.0") {
         force = true;
     }
-    compile ("com.google.android.gms:play-services-gcm:10.2.0") {
+    compile ("com.google.android.gms:play-services-gcm:11.0.0") {
         force = true;
     }
 

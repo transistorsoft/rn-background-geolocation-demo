@@ -1,6 +1,6 @@
 {
   "name": "BackgroundGeolocationDemo",
-  "version": "2.8.1",
+  "version": "2.8.2",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -8,10 +8,10 @@
   },
   "dependencies": {
     "apsl-react-native-button": "^3.0.2",
-    "react": "~15.4.1",
-    "react-native": "0.42.0",
+    "react": "16.0.0-alpha.6",
+    "react-native": "0.44.2",
     "react-native-action-button": "^2.6.4",
-    "react-native-background-geolocation": "^2.8.1",
+    "react-native-background-geolocation": "file:///Users/chris/Documents/workspace/react/background-geolocation/react-native-background-geolocation",
     "react-native-device-info": "^0.10.1",
     "react-native-form-generator": "git+https://github.com/MichaelCereda/react-native-form-generator.git",
     "react-native-maps": "^0.13.1",
@@ -22,10 +22,10 @@
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
-    "babel-jest": "19.0.0",
-    "babel-preset-react-native": "1.9.1",
-    "jest": "19.0.2",
-    "react-test-renderer": "~15.4.1"
+    "babel-jest": "20.0.3",
+    "babel-preset-react-native": "1.9.2",
+    "jest": "20.0.4",
+    "react-test-renderer": "16.0.0-alpha.6"
   },
   "jest": {
     "preset": "react-native"
