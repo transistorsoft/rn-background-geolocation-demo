@@ -11,7 +11,7 @@
     "react": "16.0.0-alpha.12",
     "react-native": "0.45.1",
     "react-native-action-button": "^2.6.10",
-    "react-native-background-geolocation": "file:///Users/chris/Documents/workspace/react/background-geolocation/react-native-background-geolocation",
+    "react-native-background-geolocation": "^2.8.2",
     "react-native-device-info": "^0.10.2",
     "react-native-form-generator": "git+https://github.com/MichaelCereda/react-native-form-generator.git",
     "react-native-maps": "^0.15.2",
