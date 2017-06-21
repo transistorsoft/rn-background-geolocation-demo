@@ -169,6 +169,9 @@ dependencies {
     compile ("com.google.android.gms:play-services-gcm:11.0.0") {
         force = true;
     }
+    compile ("com.google.android.gms:play-services-location:11.0.0") {
+        force = true;
+    }
 
 }
 
