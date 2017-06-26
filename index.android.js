@@ -60,14 +60,14 @@ var styles = StyleSheet.create({
 
 const BackgroundGeolocationHeadlessService = async (event) => {
     // do stuff
-    console.log('[js] BackgroundGeolocationService: ', event);
+    console.log('[js] BackgroundGeolocationHeadlessService: ', event);
 
     switch (event.name) {
         case 'boot':
             break;
         case 'terminate':
             break;
-        case 'heartbeat':
+        case 'heartbeat':            
             break;
         case 'motionchange':
             break;

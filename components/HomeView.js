@@ -91,7 +91,6 @@ class HomeView extends React.Component {
       enabled: false
     });
 
-    // Configure BackgroundGeolocation
     this.bgService.getState((state) => {
       this.configureBackgroundGeolocation(state);
     });
@@ -342,12 +341,19 @@ class HomeView extends React.Component {
     //    '7 10:00-18:00'
     //  ]
     // UNCOMMENT TO AUTO-GENERATE A SERIES OF SCHEDULE EVENTS BASED UPON CURRENT TIME:
-    //config.schedule = SettingsService.generateSchedule(24, 1, 1, 1);
+    //config.schedule = this.settingsService.generateSchedule(24, 1, 1, 1);
     //
     //config.url = 'http://192.168.11.100:8080/locations';
+    
+    config.schedule = [];    
     config.httpTimeout = 3000;
     config.notificationLargeIcon = 'drawable/notification_large_icon';
     
+    config.locationTemplate = '';
+    config.extras = {
+        "location_extra_foo": "extra location data"
+    };
+
     bgGeo.configure(config, (state) => {
       console.log('- configure success.  Current state: ', state);
 
