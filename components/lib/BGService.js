@@ -11,6 +11,7 @@ import EventEmitter from 'EventEmitter';
 import DeviceInfo from 'react-native-device-info';
 
 const STORAGE_KEY = "@TSLocationManager:";
+const defaultIpAddress = __IP_ADDRESS__; //babel will insert your public ip address here
 
 // react-native-device-info
 let deviceInfo = {
@@ -205,6 +206,7 @@ class BGService {
             state.foregroundService = true;
             state.autoSync = false;
             state.stopOnTerminate = false;
+            state.url = `http://${defaultIpAddress}:9000/locations`;
             state.startOnBoot = true;
             state.heartbeatInterval = 60;
             state.params = {device: deviceInfo};
