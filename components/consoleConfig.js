@@ -3,6 +3,6 @@ export const defaultIpAddress = __IP_ADDRESS__;
 export const defaultListenerUrl = `http://${defaultIpAddress}:9000/locations`;
 //babel will insert a mac address here
 const macAddress = __MAC_ADDRESS__;
-import {createHash } from 'crypto';
+import md5 from 'md5';
 //access token can be used for a public board
-export const companyToken = createHash('md5').update(macAddress).digest("hex").substring(0, 8);
+export const companyToken = md5(macAddress).substring(0, 8);
