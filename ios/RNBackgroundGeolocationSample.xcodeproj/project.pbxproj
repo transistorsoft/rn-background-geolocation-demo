@@ -114,20 +114,6 @@
 			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
 			remoteInfo = AirMaps;
 		};
-		83372B8C1EFAD740001C32D4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 835E97691E745796002A1DDC /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3D383D3C1EBD27B6005632C8;
-			remoteInfo = "third-party-tvOS";
-		};
-		83372B8E1EFAD740001C32D4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 835E97691E745796002A1DDC /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
-			remoteInfo = "double-conversion-tvOS";
-		};
 		835E97561E745422002A1DDC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 835E97521E745422002A1DDC /* RNDeviceInfo.xcodeproj */;
@@ -580,9 +566,7 @@
 				835E97811E745796002A1DDC /* libjschelpers.a */,
 				835E97831E745796002A1DDC /* libjschelpers.a */,
 				83372B0A1EF1C42F001C32D4 /* libthird-party.a */,
-				83372B8D1EFAD740001C32D4 /* libthird-party.a */,
 				83372B0C1EF1C42F001C32D4 /* libdouble-conversion.a */,
-				83372B8F1EFAD740001C32D4 /* libdouble-conversion.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -750,7 +734,7 @@
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 32A636YFGZ;
+						DevelopmentTeam = MU89GG495F;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -920,20 +904,6 @@
 			fileType = archive.ar;
 			path = libAirMaps.a;
 			remoteRef = 83372B1B1EF1C4E7001C32D4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		83372B8D1EFAD740001C32D4 /* libthird-party.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libthird-party.a";
-			remoteRef = 83372B8C1EFAD740001C32D4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		83372B8F1EFAD740001C32D4 /* libdouble-conversion.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libdouble-conversion.a";
-			remoteRef = 83372B8E1EFAD740001C32D4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		835E97571E745422002A1DDC /* libRNDeviceInfo.a */ = {
@@ -1244,7 +1214,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 32A636YFGZ;
+				DEVELOPMENT_TEAM = MU89GG495F;
 				ENABLE_TESTABILITY = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1261,7 +1231,7 @@
 					"-lc++",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.RNBackgroundGeolocationSample-12321";
 				PRODUCT_NAME = RNBackgroundGeolocationSample;
 			};
 			name = Debug;
@@ -1270,7 +1240,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 32A636YFGZ;
+				DEVELOPMENT_TEAM = MU89GG495F;
 				ENABLE_TESTABILITY = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1287,7 +1257,7 @@
 					"-lc++",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.RNBackgroundGeolocationSample-12321";
 				PRODUCT_NAME = RNBackgroundGeolocationSample;
 			};
 			name = Release;
