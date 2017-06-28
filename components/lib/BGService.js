@@ -209,7 +209,7 @@ class BGService {
             state.url = defaultListenerUrl;
             state.startOnBoot = true;
             state.heartbeatInterval = 60;
-            state.params = {device: deviceInfo, company_token: companyToken};
+            state.params = {device: deviceInfo, company_token: companyToken, test: '1'};
             this.state = state;
             callback(state);
           });
