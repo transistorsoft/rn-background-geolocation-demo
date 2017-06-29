@@ -27,7 +27,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-jest": "20.0.3",
-    "babel-plugin-ip-address": "github:zeusthetruegod/babel-plugin-ip-address",
+    "babel-plugin-ip-address": "github:ZeusTheTrueGod/babel-plugin-ip-address",
     "babel-preset-react-native": "1.9.2",
     "jest": "20.0.4",
     "react-test-renderer": "16.0.0-alpha.12"

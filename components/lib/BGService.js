@@ -204,7 +204,7 @@ class BGService {
             state.debug = true;
             state.logLevel = this.plugin.LOG_LEVEL_VERBOSE;
             state.foregroundService = true;
-            state.autoSync = false;
+            state.autoSync = true;
             state.stopOnTerminate = false;
             state.url = defaultListenerUrl;
             state.startOnBoot = true;
