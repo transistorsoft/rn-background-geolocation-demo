@@ -15,6 +15,8 @@ $ npm install
 $
 $ react-native run-android
 $ react-native run-ios
+// opens a console which receives all your locations
+$ npm run open  
 ```
 
 
