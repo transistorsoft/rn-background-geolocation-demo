@@ -19,10 +19,23 @@ $ react-native run-ios
 $ npm run open  
 ```
 
+https://www.dropbox.com/s/fop61yoc75oi5ov/Screenshot%202017-07-03%2011.56.49.png?dl=0
 
 - Simulate location 
 
 ![](https://dl.dropboxusercontent.com/u/2319755/react-native-background-geolocation-demo/simulate-location.png)
+
+## Testing Server
+
+By default, the sample app posts locations to Transistor Software's test server (sandboxed to your MAC address).  You can view these locations by running:
+
+```bash
+$ npm run open
+```
+
+This will launch a browser window to view the test server:
+
+![](https://www.dropbox.com/s/fop61yoc75oi5ov/Screenshot%202017-07-03%2011.56.49.png?dl=1)
 
 ## Adding Geofences
 
