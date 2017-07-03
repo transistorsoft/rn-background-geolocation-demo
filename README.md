@@ -19,8 +19,6 @@ $ react-native run-ios
 $ npm run open  
 ```
 
-https://www.dropbox.com/s/fop61yoc75oi5ov/Screenshot%202017-07-03%2011.56.49.png?dl=0
-
 - Simulate location 
 
 ![](https://dl.dropboxusercontent.com/u/2319755/react-native-background-geolocation-demo/simulate-location.png)
