@@ -39,7 +39,7 @@ This will launch a browser window to view the test server:
 
 The app implements a **longtap** event on the map.  Simply **tap & hold** the map to initiate adding a geofence.
 
-![Tap-hold to add geofence](https://www.dropbox.com/s/9qif3rvznwkbphd/Screenshot%202015-06-06%2017.12.41.png?dl=1)
+![Tap-hold to add geofence](https://dl.dropboxusercontent.com/u/2319755/react-native-background-geolocation-demo/Add%20Geofence.png)
 
 Enter an `identifier`, `radius`, `notifyOnExit`, `notifyOnEntry`.
 
