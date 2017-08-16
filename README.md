@@ -35,7 +35,6 @@ This will launch a browser window to view the test server:
 
 ![](https://dl.dropboxusercontent.com/s/1a4far51w70rjvj/Screenshot%202017-08-16%2011.34.43.png?dl=1)
 
-
 ## Adding Geofences
 
 The app implements a **longtap** event on the map.  Simply **tap & hold** the map to initiate adding a geofence.
