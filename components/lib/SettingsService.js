@@ -143,7 +143,7 @@ class SettingsService {
   * @param {String} duration LONG|SHORT
   */
   toast(message, param, duration) {
-    duration = duration || 'SHORT';
+    duration = duration || 'LONG';
     // Add a Toast on screen.
     let toast = Toast.show(message, {
       duration: Toast.durations[duration.toUpperCase()],
