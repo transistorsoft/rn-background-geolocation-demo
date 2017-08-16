@@ -3,8 +3,8 @@
 
 Fully-featured, React Native demo application for [React Native Background Geolocation Module](http://transistorsoft.github.io/react-native-background-geolocation/)
 
-![Home](https://www.dropbox.com/s/byaayezphkwn36h/home-framed-350.png?dl=1)
-![Settings](https://www.dropbox.com/s/8lvnpp0gowitagq/settings-framed-350.png?dl=1)
+![Home](https://dl.dropboxusercontent.com/s/byaayezphkwn36h/home-framed-350.png?dl=1)
+![Settings](https://dl.dropboxusercontent.com/s/8lvnpp0gowitagq/settings-framed-350.png?dl=1)
 
 ## Installation
 
@@ -33,13 +33,14 @@ $ npm run open
 
 This will launch a browser window to view the test server:
 
-![](https://www.dropbox.com/s/1a4far51w70rjvj/Screenshot%202017-08-16%2011.34.43.png?dl=1)
+![](https://dl.dropboxusercontent.com/s/1a4far51w70rjvj/Screenshot%202017-08-16%2011.34.43.png?dl=1)
+
 
 ## Adding Geofences
 
 The app implements a **longtap** event on the map.  Simply **tap & hold** the map to initiate adding a geofence.
 
-![Tap-hold to add geofence](https://www.dropbox.com/s/9qif3rvznwkbphd/Screenshot%202015-06-06%2017.12.41.png?dl=1)
+![Tap-hold to add geofence](https://dl.dropboxusercontent.com/s/9qif3rvznwkbphd/Screenshot%202015-06-06%2017.12.41.png?dl=1)
 
 Enter an `identifier`, `radius`, `notifyOnExit`, `notifyOnEntry`.
 
