@@ -78,13 +78,15 @@ class BottomToolbarView extends React.Component {
     this.props.eventEmitter.removeListener('enabled', this.onChangeEnabled);
   }
 
-  onActivityChange(activityName) {
+  onActivityChange(event) {
+    console.log('[js] activitychange: ', event.activity, event.confidence);
     this.setState({
-      currentActivity: activityName
+      currentActivity: event.activity
     });
   }
 
   onProviderChange(provider) {
+    console.log('[js] providerchange: ', JSON.stringify(provider));    
     this.setState({
       currentProvider: provider
     });

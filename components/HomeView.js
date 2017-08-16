@@ -182,7 +182,6 @@ class HomeView extends React.Component {
 
   onSelectMainMenu(command) {
     let bgGeo = this.bgService.getPlugin();
-
     switch(command) {
       case 'settings':
         this.bgService.playSound('OPEN');
@@ -353,7 +352,12 @@ class HomeView extends React.Component {
     config.extras = {
         "location_extra_foo": "extra location data"
     };
+    config.notificationPriority = bgGeo.NOTIFICATION_PRIORITY_DEFAULT;
 
+    bgGeo.getSensors((sensors) => {
+      console.log('[js] sensors: ', JSON.stringify(sensors, null, 2));
+    });
+    
     bgGeo.configure(config, (state) => {
       console.log('- configure success.  Current state: ', state);
 
