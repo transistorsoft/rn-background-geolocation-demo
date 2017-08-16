@@ -33,7 +33,7 @@ $ npm run open
 
 This will launch a browser window to view the test server:
 
-![](https://www.dropbox.com/s/fop61yoc75oi5ov/Screenshot%202017-07-03%2011.56.49.png)
+![](https://www.dropbox.com/s/1a4far51w70rjvj/Screenshot%202017-08-16%2011.34.43.png?dl=1)
 
 ## Adding Geofences
 
