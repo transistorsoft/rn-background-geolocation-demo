@@ -519,7 +519,6 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = RNBackgroundGeolocationSample;
-			path = ..;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -629,7 +628,6 @@
 		8376510B1D3ECBED00268B87 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* RNBackgroundGeolocationSample */,
 				8376510C1D3ECBED00268B87 /* Entypo.ttf */,
 				8376510D1D3ECBED00268B87 /* EvilIcons.ttf */,
 				8376510E1D3ECBED00268B87 /* FontAwesome.ttf */,
@@ -688,6 +686,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				13B07FAE1A68108700A75B9A /* RNBackgroundGeolocationSample */,
 				8376510B1D3ECBED00268B87 /* Fonts */,
 				837651051D3ECA1E00268B87 /* libsqlite3.tbd */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,

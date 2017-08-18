@@ -160,16 +160,16 @@ dependencies {
     compile project(':react-native-background-geolocation')
     compile(name: 'tslocationmanager', ext: 'aar')
     compile project(':react-native-vector-icons')
-    compile ("com.google.android.gms:play-services-base:11.2.0") {
+    compile ("com.google.android.gms:play-services-base:11.0.0") {
         force = true;
     }
-    compile ("com.google.android.gms:play-services-maps:11.2.0") {
+    compile ("com.google.android.gms:play-services-maps:11.0.0") {
         force = true;
     }
-    compile ("com.google.android.gms:play-services-gcm:11.2.0") {
+    compile ("com.google.android.gms:play-services-gcm:11.0.0") {
         force = true;
     }
-    compile ("com.google.android.gms:play-services-location:11.2.0") {
+    compile ("com.google.android.gms:play-services-location:11.0.0") {
         force = true;
     }
 
