@@ -27,6 +27,7 @@ import BottomToolbarView from './BottomToolbarView';
 import GeofenceView from './GeofenceView';
 import SettingsView from './SettingsView';
 
+import BackgroundFetch from "react-native-background-fetch";
 
 var MAP_MARKER_IMAGE = require('../images/location_marker.png');
 
@@ -72,7 +73,7 @@ class HomeView extends React.Component {
       followsUserLocation: true,
       stationaryLocation: {timestamp: '',latitude:0,longitude:0},
       stationaryRadius: 0,
-      showsUserLocation: true,
+      showsUserLocation: false,
       markers: [],
       stopZones: [],
       geofences: [],
@@ -89,6 +90,16 @@ class HomeView extends React.Component {
 
     this.setState({
       enabled: false
+    });
+
+    BackgroundFetch.configure({
+      stopOnTerminate: false,
+      minimumFetchInterval: 0
+    }, () => {
+      this.bgService.getPlugin().logger.ok('FETCH RECEIVED');
+      BackgroundFetch.finish();
+    }, (error) => {
+      console.warn('Fetch error: ', error);
     });
 
     this.bgService.getState((state) => {
@@ -256,6 +267,7 @@ class HomeView extends React.Component {
       if (this.bgService.isLocationTrackingMode()) {
         // Location tracking mode
         bgGeo.start((state) => {
+          this.setState({showsUserLocation: true});
           console.log('- Start success: ', state);
         });
       } else {
@@ -364,6 +376,11 @@ class HomeView extends React.Component {
       // Broadcast to child components.
       eventEmitter.emit('enabled', state.enabled);
 
+      // Tell react-native-maps to show blue current-location icons
+      if (state.enabled) {
+        this.setState({showsUserLocation: true});
+      }
+      
       // Start the scheduler if configured with one.
       if (state.schedule.length) {
         bgGeo.startSchedule(function() {
@@ -416,6 +433,7 @@ class HomeView extends React.Component {
         }
       });
     }
+
     this.lastMotionChangeLocation = location;
   }
 
@@ -524,10 +542,16 @@ class HomeView extends React.Component {
   }
 
   setCenter(location) {
-    if (!this.refs.map || !this.state.followsUserLocation) { return; }
-    this.refs.map.animateToCoordinate({
+    if (!this.refs.map) { return; }
+
+    if (!location.event && !location.sample && !this.state.followsUserLocation) {
+      return;
+    }
+    this.refs.map.animateToRegion({
       latitude: location.coords.latitude,
-      longitude: location.coords.longitude
+      longitude: location.coords.longitude,
+      latitudeDelta: LATITUDE_DELTA,
+      longitudeDelta: LONGITUDE_DELTA
     });
   }
 
@@ -733,7 +757,7 @@ class HomeView extends React.Component {
         <MapView
           ref="map"
           style={styles.map}
-          showsUserLocation={true}
+          showsUserLocation={this.state.showsUserLocation}
           onLongPress={this.onLongPress.bind(this)}
           onRegionChange={this.onRegionChange.bind(this)}
           onPanDrag={this.onMapPanDrag.bind(this)}
@@ -742,13 +766,7 @@ class HomeView extends React.Component {
           showsPointsOfInterest={false}
           showsScale={false}
           showsTraffic={false}
-          toolbarEnabled={false}
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA
-          }}>
+          toolbarEnabled={false}>
           <MapView.Circle
             key={this.state.stationaryLocation.timestamp}
             radius={this.state.stationaryRadius}
@@ -756,11 +774,6 @@ class HomeView extends React.Component {
             strokeColor={STATIONARY_REGION_STROKE_COLOR}
             strokeWidth={1}
             center={{latitude: this.state.stationaryLocation.latitude, longitude: this.state.stationaryLocation.longitude}}
-          />
-          <MapView.Marker
-            key="Center"
-            coordinate={this.state.centerCoordinate}
-            title="Center"
           />
           <MapView.Polyline
             key="polyline"

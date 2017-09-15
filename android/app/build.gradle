@@ -88,7 +88,7 @@ android {
     defaultConfig {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 25
         versionCode 9
         versionName "2.8.2"
         ndk {
