@@ -33,10 +33,10 @@
 		837651191D3ECBED00268B87 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 837651111D3ECBED00268B87 /* MaterialIcons.ttf */; };
 		8376511A1D3ECBED00268B87 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 837651121D3ECBED00268B87 /* Octicons.ttf */; };
 		8376511B1D3ECBED00268B87 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 837651131D3ECBED00268B87 /* Zocial.ttf */; };
-		8380C2871F17E0CF005AFEEB /* TSBackgroundFetch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839A61EB1D995CCC008F5A84 /* TSBackgroundFetch.framework */; };
 		8380C28A1F17E29E005AFEEB /* libRNBackgroundFetch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8380C2801F17E0B6005AFEEB /* libRNBackgroundFetch.a */; };
 		838409551E845ED300728E9C /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 838409541E845EC900728E9C /* libRNSpinkit.a */; };
 		8386B2831DF908AE0081B74E /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8386B27A1DF908960081B74E /* libCocoaLumberjack.a */; };
+		83B9CBF01F74BEEE002EF9C2 /* TSBackgroundFetch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839A61EB1D995CCC008F5A84 /* TSBackgroundFetch.framework */; };
 		83DE67DF1F17DD1800414438 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DE67DE1F17DD1800414438 /* RNBackgroundFetch+AppDelegate.m */; };
 		83F45CE41E745D0800E49702 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F45CE31E745CF700E49702 /* libRNVectorIcons.a */; };
 		83F45CF61E745F6B00E49702 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 835E97571E745422002A1DDC /* libRNDeviceInfo.a */; };
@@ -418,11 +418,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83B9CBF01F74BEEE002EF9C2 /* TSBackgroundFetch.framework in Frameworks */,
 				8358F57F1F449ACE006743F1 /* libRNBackgroundGeolocation.a in Frameworks */,
 				8358F57E1F449AC5006743F1 /* TSLocationManager.framework in Frameworks */,
 				836901281F20F3980073FC57 /* libz.tbd in Frameworks */,
 				8380C28A1F17E29E005AFEEB /* libRNBackgroundFetch.a in Frameworks */,
-				8380C2871F17E0CF005AFEEB /* TSBackgroundFetch.framework in Frameworks */,
 				83372B1D1EF1C4F2001C32D4 /* libAirMaps.a in Frameworks */,
 				838409551E845ED300728E9C /* libRNSpinkit.a in Frameworks */,
 				83F45E891E75418E00E49702 /* libRCTAnimation.a in Frameworks */,

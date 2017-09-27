@@ -32,27 +32,13 @@ global.BackgroundGeolocation = BackgroundGeolocation;
 
 import HomeView from './components/HomeView';
 
-var Application = React.createClass({
-  getInitialState: function() {
-    return {
-      drawer: undefined
-    };
-  },
-
-  componentDidMount: function() {
-    var me = this;
-    //requestLocationPermission();
-    this.setState({
-
-    });
-  },
-
-  render: function() {
+export default class Application extends Component {  
+  render() {
     return (
       <HomeView />
     );
   }
-});
+}
 
 var styles = StyleSheet.create({
 

@@ -57,6 +57,8 @@ class HomeView extends React.Component {
     this.lastMotionChangeLocation = undefined;
 
     this.state = {
+      containerBorderWidth: 0,
+      containerBorderColor: '#ff0000',
       isMainMenuOpen: false,
       currentState: AppState.currentState,
       enabled: false,
@@ -131,7 +133,8 @@ class HomeView extends React.Component {
     bgGeo.un("motionchange", this.onMotionChange);
     bgGeo.un("schedule", this.onSchedule);
     bgGeo.un("geofenceschange", this.onGeofencesChange);
-
+    bgGeo.un("powersavechange", this.onPowerSaveChange);
+    
     this.bgService.removeListeners();
     this.settingsService.removeListeners();
   }
@@ -320,6 +323,7 @@ class HomeView extends React.Component {
     this.onMotionChange = this.onMotionChange.bind(this);
     this.onSchedule = this.onSchedule.bind(this);
     this.onGeofencesChange = this.onGeofencesChange.bind(this);
+    this.onPowerSaveChange = this.onPowerSaveChange.bind(this);
 
     bgGeo.on("location", this.onLocation);
     // http event
@@ -336,7 +340,8 @@ class HomeView extends React.Component {
     bgGeo.on("schedule", this.onSchedule);
     // geofenceschange
     bgGeo.on("geofenceschange", this.onGeofencesChange);
-
+    // powersavechange event
+    bgGeo.on("powersavechange", this.onPowerSaveChange);
     ////
     // 2. Configure it.
     //
@@ -369,7 +374,11 @@ class HomeView extends React.Component {
     bgGeo.getSensors((sensors) => {
       console.log('[js] sensors: ', JSON.stringify(sensors, null, 2));
     });
-    
+  
+    bgGeo.isPowerSaveMode((isPowerSaveMode) => {
+      this.setState({containerBorderWidth: (isPowerSaveMode) ? 5 : 0 });
+    });
+
     bgGeo.configure(config, (state) => {
       console.log('- configure success.  Current state: ', state);
 
@@ -468,6 +477,15 @@ class HomeView extends React.Component {
 
     this.setState({
       geofences: geofences
+    });
+  }
+
+  onPowerSaveChange(isPowerSaveMode) {
+    // Show red side-border bars on map when in low-power mode.
+    console.log('- powersavechange: ', isPowerSaveMode);
+    this.settingsService.toast('Power save mode: ' + ((isPowerSaveMode) ? 'ON' : 'OFF'));
+    this.setState({
+      containerBorderWidth: (isPowerSaveMode) ? 5 : 0
     });
   }
 
@@ -753,7 +771,7 @@ class HomeView extends React.Component {
 
   render() {
     return (
-      <View ref="workspace" style={styles.container}>
+      <View ref="workspace" style={[styles.container, {borderLeftWidth: this.state.containerBorderWidth, borderRightWidth: this.state.containerBorderWidth, borderColor: '#ff0000'}]}>
         <MapView
           ref="map"
           style={styles.map}
@@ -856,7 +874,7 @@ var styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingTop: 46
+    paddingTop: 46,
   },
   map: {
     flex: 1
