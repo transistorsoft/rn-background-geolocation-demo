@@ -16,8 +16,6 @@ import Button from 'apsl-react-native-button'
 import Config from './config';
 import commonStyles from './styles';
 
-var dismissKeyboard = require('dismissKeyboard');
-
 class GeofenceView extends React.Component {
   propTypes: {
     onSubmit: React.PropTypes.func
@@ -60,11 +58,9 @@ class GeofenceView extends React.Component {
     this.refs.modal.open();
   }
   close() {
-    dismissKeyboard();
     this.refs.modal.close();    
   }
   onDone() {
-    dismissKeyboard();
     this.refs.modal.close();
     this.props.onSubmit({
       identifier: this.state.identifier,
@@ -82,7 +78,6 @@ class GeofenceView extends React.Component {
     });
   }
   onCancel() {
-    dismissKeyboard();
     this.refs.modal.close();   
   }
   render() {
