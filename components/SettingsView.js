@@ -3,25 +3,32 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
-  ScrollView,
-  AsyncStorage,
-  TouchableWithoutFeedback
+  Switch,
+  Platform
  } from 'react-native';
+
+
+import { 
+  Container, 
+  Header, 
+  Content, 
+  Text, 
+  Right, 
+  Left, 
+  Picker, 
+  Form, 
+  Label,
+  Input,
+  Item as FormItem  
+} from "native-base";
+const Item = Picker.Item;
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modalbox';
 import Button from 'apsl-react-native-button'
-import AboutView from './AboutView';
-import {
-  Form,
-  Separator,
-  InputField,
-  SwitchField,
-  PickerField
-} from 'react-native-form-generator';
 
+import AboutView from './AboutView';
 import SettingsService from './lib/SettingsService';
 import BGService from './lib/BGService';
 
@@ -46,9 +53,7 @@ class SettingsView extends React.Component {
         notifyOnExit: false,
         notifyOnDwell: false,
         loiteringDelay: '0'
-      },
-      map: {},
-      bgGeo: {}
+      }
     };
   }
 
@@ -57,54 +62,20 @@ class SettingsView extends React.Component {
   }
 
   load() {
-    let form = this.refs.form;
-
     // Fetch current state of BackgroundGeolocation
     this.bgService.getState((state) => {
-
-      state.logLevel = this.decodeLogLevel(state.logLevel),
-      state.trackingMode = this.decodeTrackingMode(state.trackingMode);
-
+      
       this.setState({
-        bgGeo: state
-      });
-
-      // Load form values
-      let trackingModeField = form.refs.trackingMode;
-      trackingModeField.setValue(state.trackingMode);
-
-      this.bgService.getPlatformSettings().forEach((setting) => {
-        let field = form.refs[setting.name];
-        let value = state[setting.name]
-        if (!field) {
-          console.warn('Failed to find ref for field: ', setting.name);
-        } else {
-          switch (setting.inputType) {
-            case 'select':
-              value = value.toString();
-              break;
-          }
-          field.setValue(value);
-        }
+        ...state,
+        logLevel: this.decodeLogLevel(state.logLevel),
+        trackingMode: this.decodeTrackingMode(state.trackingMode)
       });
     });
 
     // Load app settings
     this.settingsService.getState((state) => {
-      this.settingsService.getSettings().forEach((setting) => {
-        let field = form.refs[setting.name];
-        if (!field) {
-          return;
-        }
-        let value = state[setting.name];
-        switch (setting.inputType) {
-          case 'select':
-            value = value.toString();
-            break;
-        }
-        field.setValue(value);
-      });
-    });
+      this.setState(state);
+    });    
   }
 
   componentDidMount() {
@@ -118,6 +89,13 @@ class SettingsView extends React.Component {
 
   onClickAbout() {
     this.refs.aboutModal.open();
+  }
+
+  onChangeGeofence(setting, value) {
+    this.settingsService.onChange(setting, value);
+    let state = {};
+    state[setting.name] = value;
+    this.setState(state);
   }
 
   onClickLoadGeofences() {
@@ -243,18 +221,18 @@ class SettingsView extends React.Component {
 
   onChangeTrackingMode(value) {
     let bgGeo = this.bgService.getPlugin();
-    let state = this.state.bgGeo;
-    if (state.trackingMode === value) { return; }
-
-    state.trackingMode = value;
-    this.setState({bgGeo: state});
+    if (this.state.trackingMode === value) { return; }
+    this.setState({trackingMode: value});
     this.bgService.set('trackingMode', value);
   }
 
-  onFieldChange(setting, value) {
+  onChangeEmail(value) {
+    this.settingsService.onChange('email', value);
+    this.setState({email: value});
+  }
 
-    let state = this.state.bgGeo;
-    let currentValue = state[setting.name];
+  onFieldChange(setting, value) {
+    let currentValue = this.state[setting.name];
 
     switch (setting.dataType) {
       case 'integer':
@@ -262,15 +240,16 @@ class SettingsView extends React.Component {
         break;
     }
 
-    if (state[setting.name] === value) {
+    if (this.state[setting.name] === value) {
       return;
     }
 
+    let state = {};
+    state[setting.name] = value;
+    this.setState(state);
+
     // Buffer field-changes by 500ms
     function doChange() {
-      state[setting.name] = value;
-      this.setState({bgGeo: state});
-
       // Encode applicable settings for consumption by plugin.
       switch(setting.name) {
         case 'logLevel':
@@ -291,44 +270,46 @@ class SettingsView extends React.Component {
     switch(setting.inputType) {
       case 'text':
         field = (
-          <InputField 
-            key={setting.name}
-            ref={setting.name}
-            onValueChange={(value) => {onValueChange(setting, value)}}
-            placeholder={setting.defaultValue} />
+          <FormItem inlineLabel key={setting.name} style={styles.formItem}>
+            <Input placeholder={setting.defaultValue} value={this.state[setting.name]} onChangeText={value => {onValueChange(setting, value)}}/>
+          </FormItem>
         );
         break;
       case 'select':
-        let options = {};
+        let items = [];
         setting.values.forEach((value) => {
-          options[value.toString()] = value.toString();
+          items.push((<Item label={value.toString()} value={value} key={setting.name + ":" + value} />));
         });
-
         field = (
-          <PickerField
-            key={setting.name}
-            ref={setting.name}
-            labelStyle={styles.pickerFieldLabel}
-            containerStyle={styles.pickerFieldContainer}
-            pickerStyle={styles.pickerField}
-            iconRight={<Icon name="ios-arrow-down" size={20} color="#aaa" style={{marginTop:12,marginLeft:0,marginRight:5}} />}
-            onValueChange={(value) => {onValueChange(setting, value)}}
-            label={setting.name}
-            options={options} />
+          <FormItem inlineLabel key={setting.name} style={styles.formItem}>
+            <Label style={styles.formLabel}>{setting.name}</Label>
+            <Right>
+              <Picker
+                mode="dropdown"
+                style={{width:(Platform.OS === 'ios') ? undefined : 150}}
+                selectedValue={this.state[setting.name]}
+                onValueChange={value => {onValueChange(setting, value)}}
+              >{items}</Picker>
+            </Right>
+          </FormItem>
         );
         break;
       case 'toggle':
         field = (
-          <SwitchField 
-            ref={setting.name}
-            key={setting.name}
-            label={setting.name}
-            labelStyle={styles.switchField}
-            onValueChange={(value) => {onValueChange(setting, value)}} />
+          <FormItem inlineLabel key={setting.name} style={styles.formItem}>
+            <Label style={styles.formLabel}>{setting.name}</Label>
+            <Right style={{paddingRight:10}}>
+              <Switch value={this.state[setting.name]} onValueChange={value => {onValueChange(setting, value)}} />
+            </Right>
+          </FormItem>
         );
         break;
       default:
-        field = (<Text key={setting.name}>Unknown field-type for {setting.name} {setting.inputType}</Text>);
+        field = (
+          <FormItem key={setting.name}>
+            <Text>Unknown field-type for {setting.name} {setting.inputType}</Text>
+          </FormItem>
+        );
         break;
     }
     return field;
@@ -336,18 +317,19 @@ class SettingsView extends React.Component {
 
   renderTrackingModeField() {
     return (
-      <PickerField
-        key="trackingMode"
-        ref="trackingMode"
-        labelStyle={styles.pickerFieldLabel}
-        containerStyle={styles.pickerFieldContainer}
-        pickerStyle={styles.pickerField}
-        onValueChange={this.onChangeTrackingMode.bind(this)}
-        label="trackingMode"
-        options={{
-          'location':'Location',
-          'geofence':'Geofence'
-        }} />
+      <FormItem inlineLabel key="trackingMode" style={styles.formItem}>
+        <Label style={styles.formLabel}>trackingMode</Label>
+        <Right>
+          <Picker 
+            mode="dropdown" 
+            selectedValue={this.state.trackingMode}
+            onValueChange={this.onChangeTrackingMode.bind(this)}
+            style={{width:(Platform.OS === 'ios') ? undefined : 150}}>
+            <Item label="Location" value="location" />
+            <Item label="Geofence" value="geofence" />
+          </Picker>
+        </Right>
+      </FormItem>
     );
   }
   renderPlatformSettings(section) {
@@ -358,13 +340,14 @@ class SettingsView extends React.Component {
 
   getGeofenceTestSettings() {
     return this.settingsService.getSettings('geofence').map((setting) => {
-      return this.buildField(setting, this.settingsService.onChange.bind(this.settingsService));
+      return this.buildField(setting, this.onChangeGeofence.bind(this));
     });
   }
 
   getAboutModal() {
     return this.refs.aboutModal;
   }
+  
   render() {
     return (
       <Modal ref="modal" swipeToClose={false} animationDuration={300} onOpened={this.load.bind(this)}>
@@ -381,28 +364,41 @@ class SettingsView extends React.Component {
             <Text style={commonStyles.toolbarTitle}>Settings</Text>
             <Button onPress={this.onClickAbout.bind(this)} style={styles.aboutButton}>About</Button>
           </View>
-          <ScrollView keyboardShouldPersistTaps="always" style={{backgroundColor: '#eee'}}>
-            <Form
-              ref="form"
-              onChange={this.onFormChange.bind(this)}>
-              <Separator label="Geolocation" />
+          <Content>          
+            <Form>
+              <FormItem style={styles.headerItem}>
+                <Text style={styles.header}>GEOLOCATION</Text>
+              </FormItem>
               {this.renderTrackingModeField()}
               {this.renderPlatformSettings('geolocation')}
-              <Separator label="Activity Recognition" />
+              <FormItem style={styles.headerItem}>
+                <Text style={styles.header}>ACTIVITY RECOGNITION</Text>
+              </FormItem>
               {this.renderPlatformSettings('activity recognition')}
-              <Separator label="HTTP & Persistence" />
+              <FormItem style={styles.headerItem}>
+                <Text style={styles.header}>HTTP &amp; PERSISTENCE</Text>
+              </FormItem>
               {this.renderPlatformSettings('http')}
-              <Separator label="Application" />
+              <FormItem style={styles.headerItem}>
+                <Text style={styles.header}>APPLICATION</Text>
+              </FormItem>
               {this.renderPlatformSettings('application')}
-              <Separator label="Logging & Debug" />
-              <InputField key="email" ref="email" placeholder="Email" onValueChange={(value) => {this.settingsService.onChange('email', value)}} />
+              <FormItem style={styles.headerItem}>
+                <Text style={styles.header}>DEBUG</Text>
+              </FormItem>
+              <FormItem inlineLabel key="email" style={styles.formItem}>
+                <Input placeholder="your@email.com" value={this.state.email} onChangeText={this.onChangeEmail.bind(this)} />
+              </FormItem>              
               {this.renderPlatformSettings('debug')}
               <View style={styles.setting}>
                 <Button onPress={this.onClickDestroyLog.bind(this)} activeOpacity={0.7} isLoading={this.state.isDestroyingLog} style={[styles.button, styles.redButton, {flex:1}]} textStyle={styles.buttonLabel}>
                   Destroy logs
                 </Button>
               </View>
-              <Separator label="Geofence Test (City Drive)" />
+
+              <FormItem style={styles.headerItem}>
+                <Text style={styles.header}>GEOFENCE TESTING (Freeway Drive)</Text>
+              </FormItem>
               <View style={styles.setting}>
                 <View style={styles.label}>
                   <Button onPress={this.onClickClearGeofences.bind(this)} activeOpacity={0.7} style={[styles.button, styles.redButton]} textStyle={styles.buttonLabel}>
@@ -417,9 +413,8 @@ class SettingsView extends React.Component {
                 </View>
               </View>
               {this.getGeofenceTestSettings()}
-
             </Form>
-          </ScrollView>
+          </Content>
         </View>
         <Modal swipeToClose={false} animationDuration={300} ref="aboutModal"><AboutView modal={() => {return this.refs.aboutModal}}/></Modal>
       </Modal>
@@ -427,15 +422,7 @@ class SettingsView extends React.Component {
   }
 };
 
-var styles = StyleSheet.create({
-  section: {
-    marginBottom: 10
-  },
-  sectionHeading: {
-    fontSize:16,
-    fontWeight:"bold",
-    margin: 10
-  },
+var styles = StyleSheet.create({  
   setting: {
     flexDirection: "row",
     alignItems: "center",
@@ -444,20 +431,16 @@ var styles = StyleSheet.create({
     borderBottomColor:"#ccc",
     padding: 10
   },
-  columns: {
-    flexDirection: 'row'
+  headerItem: {
+    marginTop: 20,
+    backgroundColor: "transparent"
   },
-  bigButton: {
-    flex: 1
+  header: {
+    fontSize: 16    
   },
   label: {
     flex: 1
-  },
-  panel: {
-    backgroundColor: "#fff",
-    borderTopWidth:1,
-    borderTopColor: "#ccc",
-  },
+  },  
   button: {
     borderWidth:0,
     borderRadius: 5,
@@ -479,32 +462,11 @@ var styles = StyleSheet.create({
   blueButton: {
     backgroundColor: '#0076ff'
   },
-  // SwitchField
-  switchField: {
-    alignSelf: 'center',
-    fontSize: 16, 
-    paddingLeft: 10, 
-    color: Config.colors.blue
+  formItem: {
+    backgroundColor: "#fff"
   },
-  // PickerField
-  pickerField: {
-    flex: 0.4, 
-    backgroundColor: Config.colors.light_gold
-  },
-  pickerFieldContainer: {
-    borderBottomColor: '#C8C7CC', 
-    borderBottomWidth: 1, 
-    flexDirection: 'row', 
-    justifyContent: 'center', 
-    backgroundColor: '#fff'
-  },
-  pickerFieldLabel: {
-    paddingLeft: 10, 
-    fontSize: 16, 
-    color: Config.colors.blue, 
-    flex: 1, 
-    alignSelf: 'center', 
-    backgroundColor: '#fff'
+  formLabel: {
+    color: Config.colors.light_blue
   }
 });
 

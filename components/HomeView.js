@@ -5,8 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Switch,
-  AppState
+  Switch
  } from 'react-native';
 
 import EventEmitter from 'EventEmitter';
@@ -27,6 +26,8 @@ import BottomToolbarView from './BottomToolbarView';
 import GeofenceView from './GeofenceView';
 import SettingsView from './SettingsView';
 
+import {StyleProvider} from "native-base";
+import getTheme from '../native-base-theme/components';
 import BackgroundFetch from "react-native-background-fetch";
 
 var MAP_MARKER_IMAGE = require('../images/location_marker.png');
@@ -60,7 +61,6 @@ class HomeView extends React.Component {
       containerBorderWidth: 0,
       containerBorderColor: '#ff0000',
       isMainMenuOpen: false,
-      currentState: AppState.currentState,
       enabled: false,
       title: 'Background Geolocation',
       centerCoordinate: {
@@ -92,7 +92,7 @@ class HomeView extends React.Component {
 
     this.setState({
       enabled: false
-    });
+    });    
 
     BackgroundFetch.configure({
       stopOnTerminate: false,
@@ -361,10 +361,9 @@ class HomeView extends React.Component {
     //
     //config.url = 'http://192.168.11.100:8080/locations';
     
-    config.schedule = [];    
-    config.httpTimeout = 3000;
+    config.schedule = [];
+    config.httpTimeout = 10000;
     config.notificationLargeIcon = 'drawable/notification_large_icon';
-    
     config.locationTemplate = '';
     config.extras = {
         "location_extra_foo": "extra location data"
@@ -771,96 +770,98 @@ class HomeView extends React.Component {
 
   render() {
     return (
-      <View ref="workspace" style={[styles.container, {borderLeftWidth: this.state.containerBorderWidth, borderRightWidth: this.state.containerBorderWidth, borderColor: '#ff0000'}]}>
-        <MapView
-          ref="map"
-          style={styles.map}
-          showsUserLocation={this.state.showsUserLocation}
-          onLongPress={this.onLongPress.bind(this)}
-          onRegionChange={this.onRegionChange.bind(this)}
-          onPanDrag={this.onMapPanDrag.bind(this)}
-          scrollEnabled={this.state.mapScrollEnabled}
-          showsMyLocationButton={false}
-          showsPointsOfInterest={false}
-          showsScale={false}
-          showsTraffic={false}
-          toolbarEnabled={false}>
-          <MapView.Circle
-            key={this.state.stationaryLocation.timestamp}
-            radius={this.state.stationaryRadius}
-            fillColor={STATIONARY_REGION_FILL_COLOR}
-            strokeColor={STATIONARY_REGION_STROKE_COLOR}
-            strokeWidth={1}
-            center={{latitude: this.state.stationaryLocation.latitude, longitude: this.state.stationaryLocation.longitude}}
-          />
-          <MapView.Polyline
-            key="polyline"
-            coordinates={(!this.state.settings.hidePolyline) ? this.state.coordinates : []}
-            geodesic={true}
-            strokeColor={Config.colors.polyline_color}
-            strokeWidth={6}
-            zIndex={0}
-          />
-          {this.renderStopZoneMarkers()}
-          {this.renderMarkers()}
-          {this.renderActiveGeofences()}
-          {this.renderGeofencesHit()}
-          {this.renderGeofencesHitEvents()}
-        </MapView>
+      <StyleProvider style={getTheme()}>
+        <View ref="workspace" style={[styles.container, {borderLeftWidth: this.state.containerBorderWidth, borderRightWidth: this.state.containerBorderWidth, borderColor: '#ff0000'}]}>
+          <MapView
+            ref="map"
+            style={styles.map}
+            showsUserLocation={this.state.showsUserLocation}
+            onLongPress={this.onLongPress.bind(this)}
+            onRegionChange={this.onRegionChange.bind(this)}
+            onPanDrag={this.onMapPanDrag.bind(this)}
+            scrollEnabled={this.state.mapScrollEnabled}
+            showsMyLocationButton={false}
+            showsPointsOfInterest={false}
+            showsScale={false}
+            showsTraffic={false}
+            toolbarEnabled={false}>
+            <MapView.Circle
+              key={this.state.stationaryLocation.timestamp}
+              radius={this.state.stationaryRadius}
+              fillColor={STATIONARY_REGION_FILL_COLOR}
+              strokeColor={STATIONARY_REGION_STROKE_COLOR}
+              strokeWidth={1}
+              center={{latitude: this.state.stationaryLocation.latitude, longitude: this.state.stationaryLocation.longitude}}
+            />
+            <MapView.Polyline
+              key="polyline"
+              coordinates={(!this.state.settings.hidePolyline) ? this.state.coordinates : []}
+              geodesic={true}
+              strokeColor={Config.colors.polyline_color}
+              strokeWidth={6}
+              zIndex={0}
+            />
+            {this.renderStopZoneMarkers()}
+            {this.renderMarkers()}
+            {this.renderActiveGeofences()}
+            {this.renderGeofencesHit()}
+            {this.renderGeofencesHitEvents()}
+          </MapView>
 
-        <View style={[commonStyles.topToolbar, styles.topToolbar]}>
-          <Text style={{width:50}}>&nbsp;</Text>
-          <Text style={commonStyles.toolbarTitle}>{this.state.title}</Text>
-          <Switch onValueChange={() => this.onClickEnable()} value={this.state.enabled} />
+          <View style={[commonStyles.topToolbar, styles.topToolbar]}>
+            <Text style={{width:50}}>&nbsp;</Text>
+            <Text style={commonStyles.toolbarTitle}>{this.state.title}</Text>
+            <Switch onValueChange={() => this.onClickEnable()} value={this.state.enabled} />
+          </View>
+
+          <View style={styles.mapMenu}>
+            <View style={styles.mapMenuButtonContainer}><Icon.Button name="ios-pin" onPress={() => this.onClickMapMenu('hideMarkers')} size={20} color={(this.state.settings.hideMarkers) ? '#ccc' : Config.colors.black} backgroundColor={(this.state.settings.hideMarkers) ? '#eee' : Config.colors.gold} style={styles.mapMenuButton} iconStyle={styles.mapMenuButtonIcon} /></View>
+            <View style={styles.mapMenuButtonContainer}><Icon.Button name="ios-pulse" onPress={() => this.onClickMapMenu('hidePolyline')} size={20} color={(this.state.settings.hidePolyline) ? '#ccc' : Config.colors.black} backgroundColor={(this.state.settings.hidePolyline) ? '#eee' : Config.colors.gold} style={styles.mapMenuButton} iconStyle={styles.mapMenuButtonIcon} /></View>
+            <View style={styles.mapMenuButtonContainer}><Icon.Button name="ios-radio-button-off" onPress={() => this.onClickMapMenu('showGeofenceHits')} size={20} color={(!this.state.settings.showGeofenceHits) ? '#ccc' : Config.colors.black} backgroundColor={(!this.state.settings.showGeofenceHits) ? '#eee' : Config.colors.gold} style={styles.mapMenuButton} iconStyle={styles.mapMenuButtonIcon} /></View>
+          </View>
+
+          <ActionButton
+            position="left"
+            showsCompass={false}
+            showsMyLocationButton={false}
+            showsScale={false}
+            showsTraffic={false}
+            toolbarEnabled={false}
+            hideShadow={true}
+            autoInactive={false}
+            backgroundTappable={true}
+            onPress={this.onClickMainMenu.bind(this)}
+            size={40}
+            icon={<Icon name="ios-add" size={25}/>}
+            verticalOrientation="down"
+            buttonColor="rgba(254,221,30,1)"
+            buttonTextStyle={{color: "#000"}}
+            spacing={15}
+            offsetX={10}
+            offsetY={25}>
+            <ActionButton.Item buttonColor={Config.colors.gold} onPress={() => this.onSelectMainMenu('settings')}>
+              <Icon name="ios-cog" style={styles.actionButtonIcon} size={25} />
+            </ActionButton.Item>
+
+            <ActionButton.Item buttonColor={Config.colors.gold} onPress={() => this.onSelectMainMenu('resetOdometer')}>
+              <Icon name="ios-speedometer" style={styles.actionButtonIcon} size={25} />
+            </ActionButton.Item>
+
+            <ActionButton.Item buttonColor={Config.colors.gold} onPress={() => this.onSelectMainMenu('emailLog')}>
+              <Icon name="ios-mail" style={styles.actionButtonIcon} size={25} />
+            </ActionButton.Item>
+            <ActionButton.Item buttonColor={Config.colors.gold} onPress={() => this.onSelectMainMenu('sync')}>
+              {this.renderSyncButton()}
+            </ActionButton.Item>
+            <ActionButton.Item buttonColor={Config.colors.gold} onPress={() => this.onSelectMainMenu('destroyLocations')}>
+              <Icon name="ios-trash" style={styles.actionButtonIcon} size={25} />
+            </ActionButton.Item>
+          </ActionButton>
+          <BottomToolbarView eventEmitter={eventEmitter} enabled={this.state.enabled} />
+          <GeofenceView ref={(view) => {this.geofenceView = view; }} onSubmit={this.onSubmitGeofence.bind(this)}/>
+          <SettingsView ref={(view) => {this.settingsView = view; }} />
         </View>
-
-        <View style={styles.mapMenu}>
-          <View style={styles.mapMenuButtonContainer}><Icon.Button name="ios-pin" onPress={() => this.onClickMapMenu('hideMarkers')} size={20} color={(this.state.settings.hideMarkers) ? '#ccc' : Config.colors.black} backgroundColor={(this.state.settings.hideMarkers) ? '#eee' : Config.colors.gold} style={styles.mapMenuButton} iconStyle={styles.mapMenuButtonIcon} /></View>
-          <View style={styles.mapMenuButtonContainer}><Icon.Button name="ios-pulse" onPress={() => this.onClickMapMenu('hidePolyline')} size={20} color={(this.state.settings.hidePolyline) ? '#ccc' : Config.colors.black} backgroundColor={(this.state.settings.hidePolyline) ? '#eee' : Config.colors.gold} style={styles.mapMenuButton} iconStyle={styles.mapMenuButtonIcon} /></View>
-          <View style={styles.mapMenuButtonContainer}><Icon.Button name="ios-radio-button-off" onPress={() => this.onClickMapMenu('showGeofenceHits')} size={20} color={(!this.state.settings.showGeofenceHits) ? '#ccc' : Config.colors.black} backgroundColor={(!this.state.settings.showGeofenceHits) ? '#eee' : Config.colors.gold} style={styles.mapMenuButton} iconStyle={styles.mapMenuButtonIcon} /></View>
-        </View>
-
-        <ActionButton
-          position="left"
-          showsCompass={false}
-          showsMyLocationButton={false}
-          showsScale={false}
-          showsTraffic={false}
-          toolbarEnabled={false}
-          hideShadow={true}
-          autoInactive={false}
-          backgroundTappable={true}
-          onPress={this.onClickMainMenu.bind(this)}
-          size={40}
-          icon={<Icon name="ios-add" size={25}/>}
-          verticalOrientation="down"
-          buttonColor="rgba(254,221,30,1)"
-          buttonTextStyle={{color: "#000"}}
-          spacing={15}
-          offsetX={10}
-          offsetY={25}>
-          <ActionButton.Item buttonColor={Config.colors.gold} onPress={() => this.onSelectMainMenu('settings')}>
-            <Icon name="ios-cog" style={styles.actionButtonIcon} size={25} />
-          </ActionButton.Item>
-
-          <ActionButton.Item buttonColor={Config.colors.gold} onPress={() => this.onSelectMainMenu('resetOdometer')}>
-            <Icon name="ios-speedometer" style={styles.actionButtonIcon} size={25} />
-          </ActionButton.Item>
-
-          <ActionButton.Item buttonColor={Config.colors.gold} onPress={() => this.onSelectMainMenu('emailLog')}>
-            <Icon name="ios-mail" style={styles.actionButtonIcon} size={25} />
-          </ActionButton.Item>
-          <ActionButton.Item buttonColor={Config.colors.gold} onPress={() => this.onSelectMainMenu('sync')}>
-            {this.renderSyncButton()}
-          </ActionButton.Item>
-          <ActionButton.Item buttonColor={Config.colors.gold} onPress={() => this.onSelectMainMenu('destroyLocations')}>
-            <Icon name="ios-trash" style={styles.actionButtonIcon} size={25} />
-          </ActionButton.Item>
-        </ActionButton>
-        <BottomToolbarView eventEmitter={eventEmitter} enabled={this.state.enabled} />
-        <GeofenceView ref={(view) => {this.geofenceView = view; }} onSubmit={this.onSubmitGeofence.bind(this)}/>
-        <SettingsView ref={(view) => {this.settingsView = view; }} />
-      </View>
+      </StyleProvider>
     );
   }
 };
