@@ -25,6 +25,7 @@
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-jest": "21.2.0",
     "babel-plugin-ip-address": "github:ZeusTheTrueGod/babel-plugin-ip-address",
     "babel-preset-react-native": "4.0.0",
