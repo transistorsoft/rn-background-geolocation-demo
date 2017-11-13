@@ -83,12 +83,12 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = true
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 9
         versionName "2.8.2"
         ndk {
@@ -149,27 +149,32 @@ repositories {
 dependencies {
     compile project(':react-native-spinkit')
     compile(project(':react-native-maps')) {
+        // Exclude to prevent gradle conflicts.
         exclude group: 'com.google.android.gms'
     }
     compile(project(':react-native-device-info')) {
+        // Exclude to prevent gradle conflicts.
         exclude group: 'com.google.android.gms'
     }
     compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.0.1"
+    compile "com.android.support:appcompat-v7:26.1.0"
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(':react-native-background-geolocation')
     compile(name: 'tslocationmanager', ext: 'aar')
     compile project(':react-native-vector-icons')
-    compile ("com.google.android.gms:play-services-base:11.0.0") {
+
+    // Override play-services version
+
+    compile ("com.google.android.gms:play-services-base:11.6.0") {
         force = true;
     }
-    compile ("com.google.android.gms:play-services-maps:11.0.0") {
+    compile ("com.google.android.gms:play-services-maps:11.6.0") {
         force = true;
     }
-    compile ("com.google.android.gms:play-services-gcm:11.0.0") {
+    compile ("com.google.android.gms:play-services-gcm:11.6.0") {
         force = true;
     }
-    compile ("com.google.android.gms:play-services-location:11.0.0") {
+    compile ("com.google.android.gms:play-services-location:11.6.0") {
         force = true;
     }
 
