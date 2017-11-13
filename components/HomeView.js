@@ -92,7 +92,7 @@ class HomeView extends React.Component {
 
     this.setState({
       enabled: false
-    });    
+    });
 
     BackgroundFetch.configure({
       stopOnTerminate: false,
@@ -111,9 +111,9 @@ class HomeView extends React.Component {
     // Fetch current app settings state.
     this.settingsService.getState((state) => {
       this.setState({
-        settings: state 
+        settings: state
       });
-    });    
+    });
 
     this.settingsService.on('change', this.onSettingsChanged.bind(this));
     this.bgService.on('change', this.onBackgroundGeolocationChanged.bind(this));
@@ -125,16 +125,8 @@ class HomeView extends React.Component {
     let bgGeo = this.bgService.getPlugin();
 
     // Unregister BackgroundGeolocation event-listeners!
-    bgGeo.un("location", this.onLocation);
-    bgGeo.un("http", this.onHttp);
-    bgGeo.un("geofence", this.onGeofence);
-    bgGeo.un("heartbeat", this.onHeartbeat);
-    bgGeo.un("error", this.onError);
-    bgGeo.un("motionchange", this.onMotionChange);
-    bgGeo.un("schedule", this.onSchedule);
-    bgGeo.un("geofenceschange", this.onGeofencesChange);
-    bgGeo.un("powersavechange", this.onPowerSaveChange);
-    
+    bgGeo.removeAllListeners();
+
     this.bgService.removeListeners();
     this.settingsService.removeListeners();
   }
@@ -325,15 +317,13 @@ class HomeView extends React.Component {
     this.onGeofencesChange = this.onGeofencesChange.bind(this);
     this.onPowerSaveChange = this.onPowerSaveChange.bind(this);
 
-    bgGeo.on("location", this.onLocation);
+    bgGeo.on("location", this.onLocation, this.onError);
     // http event
     bgGeo.on("http", this.onHttp);
     // geofence event
     bgGeo.on("geofence", this.onGeofence);
     // heartbeat event
     bgGeo.on("heartbeat", this.onHeartbeat);
-    // error event
-    bgGeo.on("error", this.onError);
     // motionchange event
     bgGeo.on("motionchange", this.onMotionChange);
     // schedule event
@@ -359,21 +349,12 @@ class HomeView extends React.Component {
     // UNCOMMENT TO AUTO-GENERATE A SERIES OF SCHEDULE EVENTS BASED UPON CURRENT TIME:
     //config.schedule = this.settingsService.generateSchedule(24, 1, 1, 1);
     //
-    //config.url = 'http://192.168.11.100:8080/locations';
-    
-    config.schedule = [];
-    config.httpTimeout = 10000;
     config.notificationLargeIcon = 'drawable/notification_large_icon';
-    config.locationTemplate = '';
-    config.extras = {
-        "location_extra_foo": "extra location data"
-    };
-    config.notificationPriority = bgGeo.NOTIFICATION_PRIORITY_DEFAULT;
 
     bgGeo.getSensors((sensors) => {
       console.log('[js] sensors: ', JSON.stringify(sensors, null, 2));
     });
-  
+
     bgGeo.isPowerSaveMode((isPowerSaveMode) => {
       this.setState({containerBorderWidth: (isPowerSaveMode) ? 5 : 0 });
     });
@@ -388,7 +369,7 @@ class HomeView extends React.Component {
       if (state.enabled) {
         this.setState({showsUserLocation: true});
       }
-      
+
       // Start the scheduler if configured with one.
       if (state.schedule.length) {
         bgGeo.startSchedule(function() {
@@ -405,7 +386,7 @@ class HomeView extends React.Component {
   }
 
   onError(error) {
-    console.log('- ERROR: ', JSON.stringify(error));
+    console.warn('- ERROR: ', JSON.stringify(error));
   }
 
   onMotionChange(event) {
@@ -522,7 +503,7 @@ class HomeView extends React.Component {
         identifier: geofence.identifier,
         radius: marker.radius,
         center: {
-          latitude: marker.center.latitude, 
+          latitude: marker.center.latitude,
           longitude: marker.center.longitude
         },
         events: []
@@ -615,7 +596,7 @@ class HomeView extends React.Component {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude
       }]
-    });    
+    });
   }
 
   createMarker(location) {
@@ -624,7 +605,7 @@ class HomeView extends React.Component {
       title: location.timestamp,
       heading: location.coords.heading,
       coordinate: {
-        latitude: location.coords.latitude, 
+        latitude: location.coords.latitude,
         longitude: location.coords.longitude
       }
     };
@@ -943,7 +924,7 @@ var styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5
-  }  
+  }
 });
 
 module.exports = HomeView;

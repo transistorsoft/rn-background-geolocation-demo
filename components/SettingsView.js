@@ -9,18 +9,18 @@ import {
  } from 'react-native';
 
 
-import { 
-  Container, 
-  Header, 
-  Content, 
-  Text, 
-  Right, 
-  Left, 
-  Picker, 
-  Form, 
+import {
+  Container,
+  Header,
+  Content,
+  Text,
+  Right,
+  Left,
+  Picker,
+  Form,
   Label,
   Input,
-  Item as FormItem  
+  Item as FormItem
 } from "native-base";
 const Item = Picker.Item;
 
@@ -64,18 +64,19 @@ class SettingsView extends React.Component {
   load() {
     // Fetch current state of BackgroundGeolocation
     this.bgService.getState((state) => {
-      
+
       this.setState({
         ...state,
         logLevel: this.decodeLogLevel(state.logLevel),
-        trackingMode: this.decodeTrackingMode(state.trackingMode)
+        trackingMode: this.decodeTrackingMode(state.trackingMode),
+        notificationPriority: this.decodeNotificationPriority(state.notificationPriority)
       });
     });
 
     // Load app settings
     this.settingsService.getState((state) => {
       this.setState(state);
-    });    
+    });
   }
 
   componentDidMount() {
@@ -150,23 +151,24 @@ class SettingsView extends React.Component {
 
   decodeLogLevel(logLevel) {
     let value = 'VERBOSE';
+    let bgGeo = this.bgService.getPlugin();
     switch(logLevel) {
-      case 0:
+      case bgGeo.LOG_LEVEL_OFF:
         value = 'OFF';
         break;
-      case 1:
+      case bgGeo.LOG_LEVEL_ERROR:
         value = 'ERROR';
         break;
-      case 2:
+      case bgGeo.LOG_LEVEL_WARNING:
         value = 'WARN';
         break;
-      case 3:
+      case bgGeo.LOG_LEVEL_INFO:
         value = 'INFO';
         break;
-      case 4:
+      case bgGeo.LOG_LEVEL_DEBUG:
         value = 'DEBUG';
         break;
-      case 5:
+      case bgGeo.LOG_LEVEL_VERBOSE:
         value = 'VERBOSE';
         break;
     }
@@ -194,6 +196,52 @@ class SettingsView extends React.Component {
         break;
       case 'VERBOSE':
         value = bgGeo.LOG_LEVEL_VERBOSE;
+        break;
+    }
+    return value;
+  }
+
+  decodeNotificationPriority(value) {
+    let bgGeo = this.bgService.getPlugin();
+    switch(value) {
+      case bgGeo.NOTIFICATION_PRIORITY_DEFAULT:
+        value = 'DEFAULT';
+        break;
+      case bgGeo.NOTIFICATION_PRIORITY_HIGH:
+        value = 'HIGH';
+        break;
+      case bgGeo.NOTIFICATION_PRIORITY_LOW:
+        value = 'LOW';
+        break;
+      case bgGeo.NOTIFICATION_PRIORITY_MAX:
+        value = 'MAX';
+        break;
+      case bgGeo.NOTIFICATION_PRIORITY_MIN:
+        value = 'MIN';
+        break;
+      default:
+        value = bgGeo.NOTIFICATION_PRIORITY_DEFAULT;
+    }
+    return value;
+  }
+
+  encodeNotficationPriority(value) {
+    let bgGeo = this.bgService.getPlugin();
+    switch(value) {
+      case 'DEFAULT':
+        value = bgGeo.NOTIFICATION_PRIORITY_DEFAULT;
+        break;
+      case 'HIGH':
+        value = bgGeo.NOTIFICATION_PRIORITY_HIGH;
+        break;
+      case 'LOW':
+        value = bgGeo.NOTIFICATION_PRIORITY_LOW;
+        break;
+      case 'MAX':
+        value = bgGeo.NOTIFICATION_PRIORITY_MAX;
+        break;
+      case 'MIN':
+        value = bgGeo.NOTIFICATION_PRIORITY_MIN;
         break;
     }
     return value;
@@ -254,6 +302,9 @@ class SettingsView extends React.Component {
       switch(setting.name) {
         case 'logLevel':
           value = this.encodeLogLevel(value);
+          break;
+        case 'notificationPriority':
+          value = this.encodeNotficationPriority(value);
           break;
       }
       this.bgService.set(setting.name, value);
@@ -320,8 +371,8 @@ class SettingsView extends React.Component {
       <FormItem inlineLabel key="trackingMode" style={styles.formItem}>
         <Label style={styles.formLabel}>trackingMode</Label>
         <Right>
-          <Picker 
-            mode="dropdown" 
+          <Picker
+            mode="dropdown"
             selectedValue={this.state.trackingMode}
             onValueChange={this.onChangeTrackingMode.bind(this)}
             style={{width:(Platform.OS === 'ios') ? undefined : 150}}>
@@ -347,7 +398,7 @@ class SettingsView extends React.Component {
   getAboutModal() {
     return this.refs.aboutModal;
   }
-  
+
   render() {
     return (
       <Modal ref="modal" swipeToClose={false} animationDuration={300} onOpened={this.load.bind(this)}>
@@ -364,7 +415,7 @@ class SettingsView extends React.Component {
             <Text style={commonStyles.toolbarTitle}>Settings</Text>
             <Button onPress={this.onClickAbout.bind(this)} style={styles.aboutButton}>About</Button>
           </View>
-          <Content>          
+          <Content>
             <Form>
               <FormItem style={styles.headerItem}>
                 <Text style={styles.header}>GEOLOCATION</Text>
@@ -388,7 +439,7 @@ class SettingsView extends React.Component {
               </FormItem>
               <FormItem inlineLabel key="email" style={styles.formItem}>
                 <Input placeholder="your@email.com" value={this.state.email} onChangeText={this.onChangeEmail.bind(this)} />
-              </FormItem>              
+              </FormItem>
               {this.renderPlatformSettings('debug')}
               <View style={styles.setting}>
                 <Button onPress={this.onClickDestroyLog.bind(this)} activeOpacity={0.7} isLoading={this.state.isDestroyingLog} style={[styles.button, styles.redButton, {flex:1}]} textStyle={styles.buttonLabel}>
@@ -422,7 +473,7 @@ class SettingsView extends React.Component {
   }
 };
 
-var styles = StyleSheet.create({  
+var styles = StyleSheet.create({
   setting: {
     flexDirection: "row",
     alignItems: "center",
@@ -436,11 +487,11 @@ var styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
   header: {
-    fontSize: 16    
+    fontSize: 16
   },
   label: {
     flex: 1
-  },  
+  },
   button: {
     borderWidth:0,
     borderRadius: 5,
@@ -453,7 +504,7 @@ var styles = StyleSheet.create({
 
   },
   buttonLabel: {
-    fontSize: 14, 
+    fontSize: 14,
     color: '#fff'
   },
   redButton: {

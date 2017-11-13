@@ -75,11 +75,6 @@
 -keep class com.transistorsoft.** { *; }
 -dontwarn com.transistorsoft.**
 
--keep class com.google.**
--dontwarn com.google.**
--dontwarn org.apache.http.**
--dontwarn com.android.volley.toolbox.**
-
 -keepattributes *Annotation*
 -keepclassmembers class ** {
     @org.greenrobot.eventbus.Subscribe <methods>;
