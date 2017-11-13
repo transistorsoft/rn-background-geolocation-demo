@@ -15,7 +15,7 @@
     "react": "16.0.0-beta.5",
     "react-native": "0.49.3",
     "react-native-action-button": "^2.8.0",
-    "react-native-background-geolocation": "^2.9.4",
+    "react-native-background-geolocation": "^2.10.1",
     "react-native-device-info": "^0.12.1",
     "react-native-maps": "^0.17.0",
     "react-native-modalbox": "^1.4.2",
