@@ -1,16 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.transistorsoft.backgroundgeolocation.react">
+    package="com.transistorsoft.backgroundgeolocation.react"
+    android:versionCode="1"
+    android:versionName="1.0">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
-    <!-- For react-native-device-info -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-
     <uses-sdk
         android:minSdkVersion="16"
-        android:targetSdkVersion="26" />
+        android:targetSdkVersion="22" />
 
     <application
       android:name=".MainApplication"
@@ -18,40 +16,21 @@
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
       android:theme="@style/AppTheme">
-
       <activity
         android:name=".MainActivity"
+        android:label="@string/app_name"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-        android:windowSoftInputMode="adjustResize"
-        android:label="@string/app_name">
+        android:windowSoftInputMode="adjustResize">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
-
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCINS2dyuBipK8MZzOQnzyKdrS2I1_b5I4"/>
 
-        <meta-data android:name="com.transistorsoft.locationmanager.license" android:value="1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774" />
+      <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCINS2dyuBipK8MZzOQnzyKdrS2I1_b5I4"/>
 
-        <!--
-        <receiver android:name="com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocationEventReceiver">
-            <intent-filter>
-                <action android:name="com.transistorsoft.locationmanager.event.BOOT" />
-                <action android:name="com.transistorsoft.locationmanager.event.TERMINATE" />
-                <action android:name="com.transistorsoft.locationmanager.event.HEARTBEAT" />
-                <action android:name="com.transistorsoft.locationmanager.event.MOTIONCHANGE" />
-                <action android:name="com.transistorsoft.locationmanager.event.LOCATION" />
-                <action android:name="com.transistorsoft.locationmanager.event.GEOFENCE" />
-                <action android:name="com.transistorsoft.locationmanager.event.HTTP" />
-                <action android:name="com.transistorsoft.locationmanager.event.SCHEDULE" />
-                <action android:name="com.transistorsoft.locationmanager.event.ACTIVITYCHANGE" />
-                <action android:name="com.transistorsoft.locationmanager.event.PROVIDERCHANGE" />
-                <action android:name="com.transistorsoft.locationmanager.event.GEOFENCESCHANGE" />
-            </intent-filter>
-        </receiver>
-        -->
+      <meta-data android:name="com.transistorsoft.locationmanager.license" android:value="1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774" />
 
     </application>
 

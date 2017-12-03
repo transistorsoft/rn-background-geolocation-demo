@@ -48,9 +48,11 @@
 -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactProp <methods>; }
 -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactPropGroup <methods>; }
 
--dontwarn android.text.StaticLayout
-
 -dontwarn com.facebook.react.**
+
+# TextLayoutBuilder uses a non-public Android constructor within StaticLayout.
+# See libs/proxy/src/main/java/com/facebook/fbui/textlayoutbuilder/proxy for details.
+-dontwarn android.text.StaticLayout
 
 # okhttp
 
@@ -59,10 +61,6 @@
 -keep class okhttp3.** { *; }
 -keep interface okhttp3.** { *; }
 -dontwarn okhttp3.**
-
--dontnote android.net.http.*
--dontnote org.apache.commons.codec.**
--dontnote org.apache.http.**
 
 # okio
 
@@ -90,4 +88,3 @@
 -keep class ch.qos.** { *; }
 -keep class org.slf4j.** { *; }
 -dontwarn ch.qos.logback.core.net.*
-

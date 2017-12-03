@@ -3,8 +3,10 @@ package com.transistorsoft.backgroundgeolocation.react;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import im.shimo.react.prompt.RNPromptPackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.airbnb.android.react.maps.MapsPackage;
-import com.react.rnspinkit.RNSpinkitPackage;
+import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -13,13 +15,9 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 
-import com.transistorsoft.rnbackgroundgeolocation.*;
-import com.oblador.vectoricons.VectorIconsPackage;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
-
 public class MainApplication extends Application implements ReactApplication {
-    private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
 
+  private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
@@ -27,25 +25,29 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-        return Arrays.<ReactPackage>asList(
-                new MainReactPackage(),
-                new RNSpinkitPackage(),
-                new MapsPackage(),
-                new RNBackgroundGeolocation(),      // <-- for background-geolocation
-                new VectorIconsPackage(),
-                new RNDeviceInfo()                     // react-native-device-info
-            );
-        }
-    };
+      return Arrays.<ReactPackage>asList(
+          new MainReactPackage(),
+            new RNPromptPackage(),
+            new RNDeviceInfo(),
+            new MapsPackage(),
+            new RNBackgroundGeolocation()
+      );
+    }
 
     @Override
-    public ReactNativeHost getReactNativeHost() {
-      return mReactNativeHost;
+    protected String getJSMainModuleName() {
+      return "index";
+    }
+  };
+
+  @Override
+  public ReactNativeHost getReactNativeHost() {
+    return mReactNativeHost;
   }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        SoLoader.init(this, /* native exopackage */ false);
-    }
+  @Override
+  public void onCreate() {
+    super.onCreate();
+    SoLoader.init(this, /* native exopackage */ false);
+  }
 }

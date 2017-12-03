@@ -19,19 +19,27 @@ $ react-native run-ios
 $ npm run open  
 ```
 
-- Simulate location 
+The quickest way to see the plugin in-action is to boot the **iOS** simulator and *simulate location* with *Freeway Drive*.
 
-![](https://dl.dropboxusercontent.com/u/2319755/react-native-background-geolocation-demo/simulate-location.png)
+The demo is composed of three separate and indpendant sub-applications:
 
-## Testing Server
+- [Hello World](./src/hello-world/HelloWorld.js)
+- [Simple Map](./src/simple-map/SimpleMap.js)
+- [Advanced](./src/advanced/) with complex settings screen and geofencing.
 
-By default, the sample app posts locations to Transistor Software's test server (sandboxed to your MAC address).  You can view these locations by running:
+![](https://dl.dropboxusercontent.com/s/w87uylrgij9kd7r/ionic-demo-home.png?dl=1)
 
-```bash
-$ npm run open
-```
+## :large_blue_diamond: Tracking Server
 
-This will launch a browser window to view the test server:
+The demo app is configured to post locations to Transistor Software's demo server, which hosts a web-application for visualizing and filtering your tracking on a map.
+
+- After booting the app the first time, you'll be asked to enter a **unique** "Tracking Server Username" (eg: Github username) so the plugin can post locations to `tracker.transistorsoft.com`.  
+
+:warning: Make your username **unique** and known only to *you* &mdash; if every one uses *"test"*, you'll never find your device!)
+
+![](https://dl.dropboxusercontent.com/s/yhb311q5shxri36/ionic-demo-username.png?dl=1)
+
+- You can view the plugin's tracking history by visiting [http://tracker.transistorsoft.com/username](http://tracker.transistorsoft.com/username).
 
 ![](https://dl.dropboxusercontent.com/s/1a4far51w70rjvj/Screenshot%202017-08-16%2011.34.43.png?dl=1)
 
