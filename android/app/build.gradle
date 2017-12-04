@@ -161,7 +161,7 @@ dependencies {
     compile project(':react-native-prompt-android')
     compile(project(':react-native-device-info')) {
         // Exclude to prevent gradle conflicts.
-        exclude group: 'com.google.android.gms'
+        exclude group: 'com.google.android.gcm'
     }
     compile(project(':react-native-maps')) {
         // Exclude to prevent gradle conflicts.
