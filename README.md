@@ -15,8 +15,6 @@ $ npm install
 $
 $ react-native run-android
 $ react-native run-ios
-// opens a console which receives all your locations
-$ npm run open  
 ```
 
 The quickest way to see the plugin in-action is to boot the **iOS** simulator and *simulate location* with *Freeway Drive*.
