@@ -33,6 +33,13 @@ import com.android.build.OutputFile
  *   // bundleInPaidRelease: true,
  *   // bundleInBeta: true,
  *
+ *   // whether to disable dev mode in custom build variants (by default only disabled in release)
+ *   // for example: to disable dev mode in the staging build type (if configured)
+ *   devDisabledInStaging: true,
+ *   // The configuration property can be in the following formats
+ *   //         'devDisabledIn${productFlavor}${buildType}'
+ *   //         'devDisabledIn${buildType}'
+ *
  *   // the root of your project, i.e. where "package.json" lives
  *   root: "../../",
  *
@@ -58,12 +65,16 @@ import com.android.build.OutputFile
  *   inputExcludes: ["android/**", "ios/**"],
  *
  *   // override which node gets called and with what additional arguments
- *   nodeExecutableAndArgs: ["node"]
+ *   nodeExecutableAndArgs: ["node"],
  *
  *   // supply additional arguments to the packager
  *   extraPackagerArgs: []
  * ]
  */
+
+project.ext.react = [
+    entryFile: "index.js"
+]
 
 apply from: "../../node_modules/react-native/react.gradle"
 
@@ -80,21 +91,21 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = true
+def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
+
     defaultConfig {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 9
-        versionName "2.8.2"
+        versionCode 210
+        versionName "2.10.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
-        multiDexEnabled false
     }
     signingConfigs {
         release {
@@ -109,13 +120,6 @@ android {
             }
         }
     }
-    buildTypes {
-        release {
-            minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.release
-        }
-    }
     splits {
         abi {
             reset()
@@ -124,7 +128,13 @@ android {
             include "armeabi-v7a", "x86"
         }
     }
-    
+    buildTypes {
+        release {
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
+        }
+    }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
@@ -141,27 +151,26 @@ android {
 }
 
 repositories {
-    flatDir {
-        dirs "../../node_modules/react-native-background-geolocation/android/libs"
-    }
+   flatDir {
+       dirs "../../node_modules/react-native-background-geolocation/android/libs"
+   }
 }
 
 dependencies {
-    compile project(':react-native-spinkit')
+    compile(name: 'tslocationmanager', ext: 'aar')
+    compile project(':react-native-prompt-android')
+    compile(project(':react-native-device-info')) {
+        // Exclude to prevent gradle conflicts.
+        exclude group: 'com.google.android.gcm'
+    }
     compile(project(':react-native-maps')) {
         // Exclude to prevent gradle conflicts.
         exclude group: 'com.google.android.gms'
     }
-    compile(project(':react-native-device-info')) {
-        // Exclude to prevent gradle conflicts.
-        exclude group: 'com.google.android.gms'
-    }
+    compile project(':react-native-background-geolocation')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:26.1.0"
     compile "com.facebook.react:react-native:+"  // From node_modules
-    compile project(':react-native-background-geolocation')
-    compile(name: 'tslocationmanager', ext: 'aar')
-    compile project(':react-native-vector-icons')
 
     // Override play-services version
 
@@ -177,7 +186,6 @@ dependencies {
     compile ("com.google.android.gms:play-services-location:11.6.0") {
         force = true;
     }
-
 }
 
 // Run this once to be able to run the application with BUCK
