@@ -46,7 +46,7 @@ const APP_SETTINGS = [
   {name: 'loiteringDelay', group: 'geofence', dataType: 'integer', inputType: 'select', defaultValue: 0, values: [0, (1*1000), (5*1000), (10*1000), (30*1000), (60*1000), (5*60*1000)]},
   {name: 'hideMarkers', group: 'map', dataType: 'boolean', inputType: 'toggle', defaultValue: false},
   {name: 'hidePolyline', group: 'map', dataType: 'boolean', inputType: 'toggle', defaultValue: false},
-  {name: 'showGeofenceHits', group: 'map', dataType: 'boolean', inputType: 'toggle', defaultValue: true},
+  {name: 'hideGeofenceHits', group: 'map', dataType: 'boolean', inputType: 'toggle', defaultValue: false},
   {name: 'followsUserLocation', group: 'map', dataType: 'boolean', inputType: 'toggle', defaultValue: true},
 ];
 
@@ -56,6 +56,7 @@ const PLUGIN_SETTINGS = {
     {name: 'desiredAccuracy', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [-1, 0, 10, 100, 1000], defaultValue: 0 },
     {name: 'distanceFilter', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 10, 20, 50, 100, 500], defaultValue: 20 },
     {name: 'disableElasticity', group: 'geolocation', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
+    {name: 'elasticityMultiplier', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 1, 2, 3, 5, 10], defaultValue: 1},
     {name: 'geofenceProximityRadius', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [1000, 1500, 2000, 5000, 10000, 100000], defaultValue: 1000 },
     {name: 'stopAfterElapsedMinutes', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [-1, 0, 1, 2, 5, 10, 15], defaultValue: 0},
     {name: 'desiredOdometerAccuracy', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [10, 20, 50, 100, 500], defaultValue: 100},
@@ -414,10 +415,9 @@ class SettingsService {
   /**
   * Show a toast message
   * @param {String} message
-  * @param {Mixed} param
   * @param {String} duration LONG|SHORT
   */
-  toast(message, param, duration) {
+  toast(message, duration) {
     duration = duration || 'LONG';
     // Add a Toast on screen.
     let toast = Toast.show(message, {
