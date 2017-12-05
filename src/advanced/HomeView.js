@@ -12,12 +12,12 @@ import DeviceInfo from 'react-native-device-info';
 import ActionButton from 'react-native-action-button';
 
 // Import native-base UI components
-import { 
+import {
   Container,
   Button, Icon,
   Text,
   Header, Footer, Title,
-  Content, 
+  Content,
   Left, Body, Right,
   Switch,
   Spinner
@@ -54,15 +54,14 @@ const GEOFENCE_STROKE_COLOR_ACTIVATED = "rgba(127,127,127,0.5)";
 const GEOFENCE_FILL_COLOR_ACTIVATED = "rgba(127,127,127, 0.2)";
 const POLYLINE_STROKE_COLOR = "rgba(32,64,255,0.6)";
 
-// FAB button position is tricky per platform / device.
-let ACTION_BUTTON_OFFSET_Y = 0;
+// FAB button / map-menu position is tricky per platform / device.
+let ACTION_BUTTON_OFFSET_Y  = 70;
 if (Platform.OS == 'android') {
-  ACTION_BUTTON_OFFSET_Y = 67;
+  ACTION_BUTTON_OFFSET_Y = 65;
 } else if (DeviceInfo.getModel() === 'iPhone X') {
   ACTION_BUTTON_OFFSET_Y = 95;
-} else {
-  ACTION_BUTTON_OFFSET_Y = 70;
 }
+
 
 export default class HomeView extends Component<{}> {
   constructor(props) {
@@ -75,7 +74,7 @@ export default class HomeView extends Component<{}> {
       isMoving: false,
       motionActivity: {activity: 'unknown', confidence: 100},
       odometer: 0,
-      username: props.navigation.state.params.username,      
+      username: props.navigation.state.params.username,
       // ActionButton state
       isMainMenuOpen: true,
       isSyncing: false,
@@ -110,7 +109,7 @@ export default class HomeView extends Component<{}> {
 
   componentDidMount() {
 
-    // Fetch BackgroundGeolocation current state and use that as our config object.  we use the config as persisted by the 
+    // Fetch BackgroundGeolocation current state and use that as our config object.  we use the config as persisted by the
     // Settings screen to configure the plugin.
     this.settingsService.getPluginState((state) => {
       this.configureBackgroundGeolocation(state);
@@ -121,20 +120,20 @@ export default class HomeView extends Component<{}> {
       this.setState({
         settings: state
       });
-    });    
+    });
   }
 
   configureBackgroundGeolocation(config) {
     // Step 1:  Listen to events:
     BackgroundGeolocation.on('location', this.onLocation.bind(this));
     BackgroundGeolocation.on('motionchange', this.onMotionChange.bind(this));
-    BackgroundGeolocation.on('activitychange', this.onActivityChange.bind(this));    
+    BackgroundGeolocation.on('activitychange', this.onActivityChange.bind(this));
     BackgroundGeolocation.on('providerchange', this.onProviderChange.bind(this));
     BackgroundGeolocation.on('geofenceschange', this.onGeofencesChange.bind(this));
     BackgroundGeolocation.on('powersavechange', this.onPowerSaveChange.bind(this));
     BackgroundGeolocation.on('heartbeat', this.onHeartbeat.bind(this));
     BackgroundGeolocation.on('http', this.onHttp.bind(this));
-    BackgroundGeolocation.on("geofence", this.onGeofence.bind(this));    
+    BackgroundGeolocation.on("geofence", this.onGeofence.bind(this));
     BackgroundGeolocation.on("schedule", this.onSchedule.bind(this));
 
     // Step 2:  #configure:
@@ -201,7 +200,7 @@ export default class HomeView extends Component<{}> {
       };
     }
     this.setState(state);
-    this.lastMotionChangeLocation = location;    
+    this.lastMotionChangeLocation = location;
   }
   /**
   * @event activitychange
@@ -345,10 +344,10 @@ export default class HomeView extends Component<{}> {
         });
       });
     } else {
-      BackgroundGeolocation.stop();      
+      BackgroundGeolocation.stop();
       // Clear markers, polyline, geofences, stationary-region
       this.clearMarkers();
-      this.setState({        
+      this.setState({
         stationaryRadius: 0,
         stationaryLocation: {
           timestamp: '',
@@ -389,7 +388,7 @@ export default class HomeView extends Component<{}> {
     let isMoving = !this.state.isMoving;
     this.setState({isMoving: isMoving});
     BackgroundGeolocation.changePace(isMoving);
-  }  
+  }
 
   onClickHome() {
     this.settingsService.playSound('BUTTON_CLICK');
@@ -416,13 +415,13 @@ export default class HomeView extends Component<{}> {
         this.settingsService.playSound('OPEN');
         this.props.navigation.navigate('Settings');
         break;
-      case 'resetOdometer':        
+      case 'resetOdometer':
         this.settingsService.playSound('BUTTON_CLICK');
         this.resetOdometer();
         break;
       case 'emailLog':
         this.settingsService.playSound('BUTTON_CLICK');
-        this.emailLog();                
+        this.emailLog();
         break;
       case 'sync':
         this.settingsService.playSound('BUTTON_CLICK');
@@ -431,9 +430,9 @@ export default class HomeView extends Component<{}> {
       case 'destroyLocations':
         this.settingsService.playSound('BUTTON_CLICK');
         this.destroyLocations();
-        break;      
+        break;
     }
-  }    
+  }
 
   resetOdometer() {
     this.clearMarkers();
@@ -460,13 +459,13 @@ export default class HomeView extends Component<{}> {
         }, (error) => {
           this.setState({isEmailingLog: false});
           this.settingsService.toast("Email log failure: " + error);
-        });              
+        });
       }, () => {
         // User said [NO]:  The want to change their email.  Clear it and recursively restart the process.
         this.settingsService.set('email', null);
         this.emailLog();
       });
-    });          
+    });
   }
 
   sync() {
@@ -524,6 +523,20 @@ export default class HomeView extends Component<{}> {
     this.setState({
       settings: settings
     });
+
+    let message = ((enabled) ? 'Hide' : 'Show');
+    switch (command) {
+      case 'hideMarkers':
+        message += ' map markers';
+        break;
+      case 'hidePolyline':
+        message += ' polyline';
+        break;
+      case 'hideGeofenceHits':
+        message += ' geofence transitions';
+        break;
+    }
+    this.settingsService.toast(message, 'SHORT');
   }
 
   render() {
@@ -573,32 +586,31 @@ export default class HomeView extends Component<{}> {
             zIndex={0}
           />
           {this.renderMarkers()}
-          {this.renderStopZoneMarkers()}          
+          {this.renderStopZoneMarkers()}
           {this.renderActiveGeofences()}
           {this.renderGeofencesHit()}
           {this.renderGeofencesHitEvents()}
-        </MapView>        
+        </MapView>
 
         <View style={styles.mapMenu}>
           <Button small success light={this.state.settings.hideMarkers} style={styles.mapMenuButton} onPress={() => this.onClickMapMenu('hideMarkers') }>
             <Icon name="ios-pin" />
-          </Button>          
+          </Button>
           <Button small success light={this.state.settings.hidePolyline} style={styles.mapMenuButton} onPress={() => this.onClickMapMenu('hidePolyline')}>
             <Icon name="ios-pulse" />
           </Button>
-          <Button small success light={!this.state.settings.showGeofenceHits} style={styles.mapMenuButton} onPress={() => this.onClickMapMenu('showGeofenceHits')}>
+          <Button small success light={this.state.settings.hideGeofenceHits} style={styles.mapMenuButton} onPress={() => this.onClickMapMenu('hideGeofenceHits')}>
             <Icon name="ios-radio-button-off" />
           </Button>
         </View>
 
         <ActionButton
           position="left"
-          hideShadow={true}
+          hideShadow={false}
           autoInactive={false}
           active={this.state.isMainMenuOpen}
           backgroundTappable={true}
           onPress={this.onClickMainMenu.bind(this)}
-          
           icon={<Icon name="ios-add" size={25}/>}
           verticalOrientation="down"
           buttonColor="rgba(254,221,30,1)"
@@ -609,34 +621,34 @@ export default class HomeView extends Component<{}> {
           <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('settings')}>
             <Icon name="ios-cog" style={styles.actionButtonIcon} />
           </ActionButton.Item>
-          <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('resetOdometer')}>            
+          <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('resetOdometer')}>
             {!this.state.isResettingOdometer ? (<Icon name="ios-speedometer" style={styles.actionButtonIcon} />) : (<Spinner color="#000" size="small" />)}
           </ActionButton.Item>
           <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('emailLog')}>
-            {!this.state.isEmailingLog ? (<Icon name="ios-mail" style={styles.actionButtonIcon} />) : (<Spinner color="#000" size="small" />)}            
+            {!this.state.isEmailingLog ? (<Icon name="ios-mail" style={styles.actionButtonIcon} />) : (<Spinner color="#000" size="small" />)}
           </ActionButton.Item>
-          <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('sync')}>            
+          <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('sync')}>
             {!this.state.isSyncing ? (<Icon name="ios-cloud-upload" style={styles.actionButtonIcon} />) : (<Spinner color="#000" size="small" />)}
           </ActionButton.Item>
           <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('destroyLocations')}>
             {!this.state.isDestroyingLocations ? (<Icon name="ios-trash" style={styles.actionButtonIcon} />) : (<Spinner color="#000" size="small" />)}
-          </ActionButton.Item>          
+          </ActionButton.Item>
         </ActionButton>
 
-        <Footer style={styles.footer}>          
+        <Footer style={styles.footer}>
           <Left style={{flex:0.3}}>
-            <Button small info>
-              <Icon active name="md-navigate" style={[styles.icon]} onPress={this.onClickGetCurrentPosition.bind(this)} />              
+            <Button small info onPress={this.onClickGetCurrentPosition.bind(this)}>
+              <Icon active name="md-navigate" style={styles.icon} />
             </Button>
           </Left>
-          <Body style={styles.footerBody}>            
+          <Body style={styles.footerBody}>
             <Text style={styles.status}>{this.state.motionActivity.activity}:{this.state.motionActivity.confidence}% &middot; {this.state.odometer}km</Text>
           </Body>
           <Right style={{flex: 0.3}}>
-            <Button small 
-              danger={this.state.isMoving} 
+            <Button small
+              danger={this.state.isMoving}
               success={!this.state.isMoving}
-              disabled={!this.state.enabled} 
+              disabled={!this.state.enabled}
               onPress={this.onClickChangePace.bind(this)}>
               <Icon active name={(this.state.isMoving) ? 'pause' : 'play'} style={styles.icon}/>
             </Button>
@@ -692,7 +704,7 @@ export default class HomeView extends Component<{}> {
         coordinate={stopZone.coordinate}
         anchor={{x:0, y:0}}>
         <View style={[styles.stopZoneMarker]}></View>
-      </MapView.Marker>      
+      </MapView.Marker>
     ));
   }
 
@@ -711,7 +723,7 @@ export default class HomeView extends Component<{}> {
   }
 
   renderGeofencesHit() {
-    if (!this.state.settings.showGeofenceHits) { return; }
+    if (!this.state.settings.hideGeofenceHits) { return; }
     let rs = [];
     return this.state.geofencesHit.map((hit) => {
       return (
@@ -727,7 +739,7 @@ export default class HomeView extends Component<{}> {
   }
 
   renderGeofencesHitEvents() {
-    if (!this.state.settings.showGeofenceHits) { return; }
+    if (!this.state.settings.hideGeofenceHits) { return; }
     return this.state.geofencesHitEvents.map((event) => {
       let isEnter = (event.action === 'ENTER');
       let color = undefined;
@@ -825,13 +837,13 @@ export default class HomeView extends Component<{}> {
     this.setState({
       followsUserLocation: false,
       mapScrollEnabled: true
-    });    
+    });
   }
 
   onLongPress(params) {
     var coordinate = params.nativeEvent.coordinate;
     this.settingsService.playSound('LONG_PRESS_ACTIVATE');
-    this.props.navigation.navigate('Geofence', {      
+    this.props.navigation.navigate('Geofence', {
       coordinate: coordinate
     });
   }
@@ -884,7 +896,7 @@ export default class HomeView extends Component<{}> {
                         Math.cos(lat1) * Math.sin(distance) * Math.cos(heading));
 
     var lon2 = lon1 + Math.atan2(Math.sin(heading) * Math.sin(distance) *
-                                Math.cos(lat1), 
+                                Math.cos(lat1),
                                 Math.cos(distance) - Math.sin(lat1) *
                                 Math.sin(lat2));
 
@@ -909,7 +921,7 @@ var styles = StyleSheet.create({
   },
   footer: {
     backgroundColor: '#fedd1e',
-    paddingLeft: 5, 
+    paddingLeft: 5,
     paddingRight: 5
   },
   footerBody: {
@@ -966,14 +978,12 @@ var styles = StyleSheet.create({
   // Map Menu on top-right.  What a pain to style this thing...
   mapMenu: {
     position:'absolute',
-    right: 0,
-    top: (DeviceInfo.getModel() === 'iPhone X') ? 95 : 75,
-    flexDirection: 'row',
-  },  
+    right: 5,
+    top: ACTION_BUTTON_OFFSET_Y,
+    flexDirection: 'row'
+  },
   mapMenuButton: {
-    marginRight: 10,
-    flexDirection: 'row',
-    justifyContent: 'center'
+    marginLeft: 10
   },
   mapMenuIcon: {
     color: '#000'
