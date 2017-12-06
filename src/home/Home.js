@@ -4,16 +4,17 @@ import {
   Platform,
   StyleSheet,
   AsyncStorage,
+  Alert,
   Linking,
   View
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
-import { 
+import {
   Container, Header, Content, Footer,
   Left, Body, Right,
   Card, CardItem,
-  Text, H1,   
-  Button, Icon, 
+  Text, H1,
+  Button, Icon,
   Title,
   Form, Item, Input, Label
 } from 'native-base';
@@ -25,6 +26,9 @@ import prompt from 'react-native-prompt-android';
 const DEFAULT_USERNAME = "react-native-anonymous";
 const TRACKER_HOST = 'http://tracker.transistorsoft.com/';
 const USERNAME_KEY = '@transistorsoft:username';
+
+// Only allow alpha-numeric usernames with '-' and '_'
+const USERNAME_VALIDATOR =  /^[a-zA-Z0-9_-]*$/;
 
 export default class Home extends Component<{}> {
   constructor(props) {
@@ -44,7 +48,7 @@ export default class Home extends Component<{}> {
 
     if (!this.state.username) {
       this.getUsername().then(this.doGetUsername.bind(this)).catch(() => {
-        this.doGetUsername(DEFAULT_USERNAME);
+        this.onClickEditUsername();
       });
     }
   }
@@ -63,9 +67,10 @@ export default class Home extends Component<{}> {
   onClickEditUsername() {
     AsyncStorage.getItem(USERNAME_KEY, (err, username) => {
       AsyncStorage.removeItem(USERNAME_KEY);
-      this.getUsername().then(this.doGetUsername.bind(this)).catch(() => {
+      this.getUsername(username).then(this.doGetUsername.bind(this)).catch(() => {
         // Revert to current username on [Cancel]
         AsyncStorage.setItem(USERNAME_KEY, username);
+        this.onClickEditUsername();
       });
     });
   }
@@ -80,31 +85,47 @@ export default class Home extends Component<{}> {
     });
   }
 
-  getUsername() {
+  getUsername(defaultValue) {
     return new Promise((resolve, reject) => {
       AsyncStorage.getItem(USERNAME_KEY, (err, username) => {
         if (username) {
           resolve(username);
         } else {
           prompt('Tracking Server Username', 'Please enter a unique identifier (eg: Github username) so the plugin can post loctions to tracker.transistorsoft.com/{identifier}', [{
-            text: 'Cancel', 
-            style: 'cancel',
-            onPress: () => {
-              console.log('Cancel Pressed');
-              reject();
-            }
-          },{
-            text: 'OK', 
+            text: 'OK',
             onPress: (username) => {
-              console.log('OK Pressed, username: ', username);
-              resolve(username);
+              console.log('OK Pressed, username: ', username, username.length);
+              if (!username.length) {
+                Alert.alert('Username required','You must enter a username.  It can be any unique alpha-numeric identifier.', [{
+                  text: 'OK', onPress: () => {
+                    reject();
+                  }
+                }],{
+                  cancelable: false
+                });
+              } else if (!USERNAME_VALIDATOR.test(username)) {
+                Alert.alert("Invalid Username", "Username must be alpha-numeric\n('-' and '_' are allowed)", [{
+                  text: 'OK', onPress: () => {
+                    reject();
+                  }
+                }],{
+                  cancelable: false
+                });
+              } else {
+                resolve(username);
+              }
             }
           }],{
-            type: 'plain-text'
+            type: 'plain-text',
+            defaultValue: defaultValue || ''
           });
         }
-      });      
+      });
     });
+  }
+
+  validateUsername(username) {
+    return U
   }
 
   doGetUsername(username) {
@@ -115,7 +136,7 @@ export default class Home extends Component<{}> {
       url: TRACKER_HOST + username
     });
 
-    BackgroundGeolocation.setConfig({url: TRACKER_HOST + 'locations/' + username});    
+    BackgroundGeolocation.setConfig({url: TRACKER_HOST + 'locations/' + username});
   }
 
   render() {
@@ -132,9 +153,9 @@ export default class Home extends Component<{}> {
             <Button full style={styles.button} onPress={() => this.onClickNavigate('SimpleMap')}><Text>Simple Map</Text></Button>
             <Button full style={styles.button} onPress={() => this.onClickNavigate('Advanced')}><Text>Advanced</Text></Button>
         </Body>
-          
+
         <Footer style={styles.footer}>
-            <Card style={styles.userInfo}>            
+            <Card style={styles.userInfo}>
               <Text style={styles.p}>These apps will post locations to Transistor Software's demo server.  You can view your tracking in the browser by visiting:</Text>
               <Text style={styles.url}>{this.state.url}</Text>
 
@@ -165,13 +186,13 @@ const styles = StyleSheet.create({
     color: '#000'
   },
   body: {
-    width: '100%', 
-    justifyContent: 'center', 
+    width: '100%',
+    justifyContent: 'center',
     backgroundColor:'#272727'
   },
   h1: {
     color: '#fff',
-    marginBottom: 20    
+    marginBottom: 20
   },
   p: {
     fontSize: 12,
@@ -179,7 +200,7 @@ const styles = StyleSheet.create({
   },
   url: {
     fontSize: 12,
-    textAlign: 'center'    
+    textAlign: 'center'
   },
   button: {
     marginBottom: 10
@@ -191,7 +212,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   footer: {
-    backgroundColor:"transparent", 
+    backgroundColor:"transparent",
     height: 215
   },
   userInfo: {
