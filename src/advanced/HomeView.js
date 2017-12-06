@@ -723,7 +723,7 @@ export default class HomeView extends Component<{}> {
   }
 
   renderGeofencesHit() {
-    if (!this.state.settings.hideGeofenceHits) { return; }
+    if (this.state.settings.hideGeofenceHits) { return; }
     let rs = [];
     return this.state.geofencesHit.map((hit) => {
       return (
@@ -739,7 +739,7 @@ export default class HomeView extends Component<{}> {
   }
 
   renderGeofencesHitEvents() {
-    if (!this.state.settings.hideGeofenceHits) { return; }
+    if (this.state.settings.hideGeofenceHits) { return; }
     return this.state.geofencesHitEvents.map((event) => {
       let isEnter = (event.action === 'ENTER');
       let color = undefined;
