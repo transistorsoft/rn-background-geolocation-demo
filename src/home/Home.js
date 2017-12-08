@@ -94,6 +94,7 @@ export default class Home extends Component<{}> {
           prompt('Tracking Server Username', 'Please enter a unique identifier (eg: Github username) so the plugin can post loctions to tracker.transistorsoft.com/{identifier}', [{
             text: 'OK',
             onPress: (username) => {
+              username = username.replace(/\s+/, "");
               console.log('OK Pressed, username: ', username, username.length);
               if (!username.length) {
                 Alert.alert('Username required','You must enter a username.  It can be any unique alpha-numeric identifier.', [{
@@ -122,11 +123,7 @@ export default class Home extends Component<{}> {
         }
       });
     });
-  }
-
-  validateUsername(username) {
-    return U
-  }
+  }  
 
   doGetUsername(username) {
     AsyncStorage.setItem(USERNAME_KEY, username);

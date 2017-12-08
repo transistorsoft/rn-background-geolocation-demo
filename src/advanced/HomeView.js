@@ -123,7 +123,6 @@ export default class HomeView extends Component<{}> {
     });
   }
 
-
   configureBackgroundGeolocation(config) {
     // Step 1:  Listen to events:
     BackgroundGeolocation.on('location', this.onLocation.bind(this));
