@@ -3,10 +3,13 @@ package com.transistorsoft.backgroundgeolocation.react;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+
+import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
+import com.transistorsoft.rnbackgroundfetch.RNBackgroundFetchPackage;
 import im.shimo.react.prompt.RNPromptPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.airbnb.android.react.maps.MapsPackage;
-import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
+
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -26,11 +29,12 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new RNPromptPackage(),
-            new RNDeviceInfo(),
-            new MapsPackage(),
-            new RNBackgroundGeolocation()
+              new MainReactPackage(),
+              new RNBackgroundGeolocation(),
+              new RNBackgroundFetchPackage(),
+              new RNPromptPackage(),
+              new RNDeviceInfo(),
+              new MapsPackage()
       );
     }
 

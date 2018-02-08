@@ -95,14 +95,14 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 210
-        versionName "2.10.1"
+        versionCode 211
+        versionName "2.11.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -152,12 +152,19 @@ android {
 
 repositories {
    flatDir {
-       dirs "../../node_modules/react-native-background-geolocation/android/libs"
+       dirs "../../node_modules/react-native-background-geolocation/android/libs", "../../node_modules/react-native-background-fetch/android/libs"
    }
 }
 
 dependencies {
+    compile fileTree(dir: "libs", include: ["*.jar"])
+    compile "com.android.support:appcompat-v7:26.1.0"
+    compile "com.facebook.react:react-native:+"  // From node_modules
+
+    compile project(':react-native-background-geolocation')
+    compile project(':react-native-background-fetch')
     compile(name: 'tslocationmanager', ext: 'aar')
+    compile(name: 'tsbackgroundfetch', ext: 'aar')
     compile project(':react-native-prompt-android')
     compile(project(':react-native-device-info')) {
         // Exclude to prevent gradle conflicts.
@@ -167,23 +174,19 @@ dependencies {
         // Exclude to prevent gradle conflicts.
         exclude group: 'com.google.android.gms'
     }
-    compile project(':react-native-background-geolocation')
-    compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:26.1.0"
-    compile "com.facebook.react:react-native:+"  // From node_modules
 
     // Override play-services version
 
-    compile ("com.google.android.gms:play-services-base:11.6.0") {
+    compile ("com.google.android.gms:play-services-base:11.8.0") {
         force = true;
     }
-    compile ("com.google.android.gms:play-services-maps:11.6.0") {
+    compile ("com.google.android.gms:play-services-maps:11.8.0") {
         force = true;
     }
-    compile ("com.google.android.gms:play-services-gcm:11.6.0") {
+    compile ("com.google.android.gms:play-services-gcm:11.8.0") {
         force = true;
     }
-    compile ("com.google.android.gms:play-services-location:11.6.0") {
+    compile ("com.google.android.gms:play-services-location:11.8.0") {
         force = true;
     }
 }
