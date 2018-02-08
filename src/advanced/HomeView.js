@@ -32,7 +32,7 @@ import {
 // 2.  private github repo (customers only):  react-native-background-geolocation-android
 //
 // This simply allows one to change the import in a single file.
-import BackgroundGeolocation from 'react-native-background-geolocation';
+import BackgroundGeolocation from '../react-native-background-geolocation';
 
 // react-native-maps
 import MapView from 'react-native-maps';
@@ -123,6 +123,10 @@ export default class HomeView extends Component<{}> {
     });
   }
 
+  componentWillUnmount() {
+    BackgroundGeolocation.removeListeners();
+  }
+  
   configureBackgroundGeolocation(config) {
     // Step 1:  Listen to events:
     BackgroundGeolocation.on('location', this.onLocation.bind(this));
@@ -243,6 +247,7 @@ export default class HomeView extends Component<{}> {
       return off.indexOf(geofence.identifier) < 0;
     });
 
+    console.log('[event] geofenceschange: ', event);
     // Add new "on" geofences.
     on.forEach(function(geofence) {
       var marker = geofences.find(function(m) { return m.identifier === geofence.identifier;});

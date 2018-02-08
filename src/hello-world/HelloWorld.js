@@ -9,14 +9,14 @@ import App from '../App';
 
 import DeviceInfo from 'react-native-device-info';
 
-import { 
+import {
   Container,
   Button, Icon,
   Text,
   Header, Footer, Title,
-  Content, 
+  Content,
   Left, Body, Right,
-  Switch 
+  Switch
 } from 'native-base';
 
 import { Row } from 'react-native-easy-grid';
@@ -51,20 +51,21 @@ export default class HelloWorld extends Component<{}> {
 
   componentDidMount() {
     // Step 1:  Listen to events:
-    BackgroundGeolocation.on('location', this.onLocation.bind(this));    
+    BackgroundGeolocation.on('location', this.onLocation.bind(this));
     BackgroundGeolocation.on('motionchange', this.onMotionChange.bind(this));
     BackgroundGeolocation.on('activitychange', this.onActivityChange.bind(this));
     BackgroundGeolocation.on('providerchange', this.onProviderChange.bind(this));
     BackgroundGeolocation.on('powersavechange', this.onPowerSaveChange.bind(this));
     BackgroundGeolocation.on('http', this.onHttp.bind(this));
     BackgroundGeolocation.on('heartbeat', this.onHeartbeat.bind(this));
-    
+
     // Step 2:  #configure:
-    BackgroundGeolocation.configure({      
+    BackgroundGeolocation.configure({
       distanceFilter: 10,
       stopOnTerminate: false,
       startOnBoot: true,
       foregroundService: true,
+      heartbeatInterval: 60,
       url: TRACKER_HOST + this.state.username,
       params: {
         // Required for tracker.transistorsoft.com
@@ -85,8 +86,8 @@ export default class HelloWorld extends Component<{}> {
       this.setState({
         enabled: state.enabled,
         isMoving: state.isMoving
-      });      
-    });    
+      });
+    });
   }
 
   /**
@@ -113,13 +114,14 @@ export default class HelloWorld extends Component<{}> {
     console.log('[event] activitychange: ', event);
     this.addEvent('activitychange', new Date(), event);
   }
+
   /**
   * @event providerchange
   */
   onProviderChange(event) {
     console.log('[event] providerchange', event);
     this.addEvent('providerchange', new Date(), event);
-  }  
+  }
   /**
   * @event powersavechange
   */
@@ -183,9 +185,9 @@ export default class HelloWorld extends Component<{}> {
   */
   addEvent(name, date, object) {
     let event = {
-      key: this.eventId++, 
-      name: name, 
-      timestamp: date.toLocaleTimeString(), 
+      key: this.eventId++,
+      name: name,
+      timestamp: date.toLocaleTimeString(),
       json: JSON.stringify(object, null, 2)
     };
     let rs = this.state.events;
@@ -227,7 +229,7 @@ export default class HelloWorld extends Component<{}> {
         <Content style={styles.content}>
           <View style={styles.list}>
             {this.renderEvents()}
-          </View>          
+          </View>
         </Content>
 
         <Footer style={styles.footer}>
@@ -288,7 +290,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     backgroundColor: '#fedd1e',
-    paddingLeft: 10, 
+    paddingLeft: 10,
     paddingRight: 10
   },
   footerBody: {
