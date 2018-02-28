@@ -14,7 +14,7 @@
 		"react": "16.2.0",
 		"react-native": "0.52.2",
 		"react-native-action-button": "^2.8.3",
-		"react-native-background-fetch": "^2.3.0",
+		"react-native-background-fetch": "~2.3.0",
 		"react-native-background-geolocation": "^2.11.0",
 		"react-native-device-info": "git+https://github.com/transistorsoft/react-native-device-info.git",
 		"react-native-easy-grid": "^0.1.15",
