@@ -616,7 +616,7 @@ export default class HomeView extends Component<{}> {
           active={this.state.isMainMenuOpen}
           backgroundTappable={true}
           onPress={this.onClickMainMenu.bind(this)}
-          icon={<Icon name="ios-add" size={25}/>}
+          renderIcon={() => <Icon name="ios-add" size={25}/>}
           verticalOrientation="down"
           buttonColor="rgba(254,221,30,1)"
           buttonTextStyle={{color: "#000"}}
