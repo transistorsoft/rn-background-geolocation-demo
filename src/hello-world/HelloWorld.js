@@ -60,7 +60,7 @@ export default class HelloWorld extends Component<{}> {
     BackgroundGeolocation.on('heartbeat', this.onHeartbeat.bind(this));
 
     // Step 2:  #configure:
-    BackgroundGeolocation.configure({
+    BackgroundGeolocation.ready({
       distanceFilter: 10,
       stopOnTerminate: false,
       startOnBoot: true,

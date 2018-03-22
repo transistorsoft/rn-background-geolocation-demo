@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
-  View
+  View,
+  AppState
 } from 'react-native';
 
 // For posting to tracker.transistorsoft.com
@@ -111,9 +112,8 @@ export default class HomeView extends Component<{}> {
 
     // Fetch BackgroundGeolocation current state and use that as our config object.  we use the config as persisted by the
     // Settings screen to configure the plugin.
-    this.settingsService.getPluginState((state) => {
-      this.configureBackgroundGeolocation(state);
-    });
+
+    this.configureBackgroundGeolocation();
 
     // Fetch current app settings state.
     this.settingsService.getApplicationState((state) => {
@@ -126,25 +126,46 @@ export default class HomeView extends Component<{}> {
   componentWillUnmount() {
     BackgroundGeolocation.removeListeners();
   }
-  
-  configureBackgroundGeolocation(config) {
+
+  configureBackgroundGeolocation() {
     // Step 1:  Listen to events:
     BackgroundGeolocation.on('location', this.onLocation.bind(this));
     BackgroundGeolocation.on('motionchange', this.onMotionChange.bind(this));
-    BackgroundGeolocation.on('activitychange', this.onActivityChange.bind(this));
-    BackgroundGeolocation.on('providerchange', this.onProviderChange.bind(this));
-    BackgroundGeolocation.on('geofenceschange', this.onGeofencesChange.bind(this));
-    BackgroundGeolocation.on('powersavechange', this.onPowerSaveChange.bind(this));
     BackgroundGeolocation.on('heartbeat', this.onHeartbeat.bind(this));
     BackgroundGeolocation.on('http', this.onHttp.bind(this));
     BackgroundGeolocation.on("geofence", this.onGeofence.bind(this));
     BackgroundGeolocation.on("schedule", this.onSchedule.bind(this));
-
-    // Step 2:  #configure:
+    BackgroundGeolocation.on('activitychange', this.onActivityChange.bind(this));
+    BackgroundGeolocation.on('providerchange', this.onProviderChange.bind(this));
+    BackgroundGeolocation.on('geofenceschange', this.onGeofencesChange.bind(this));
+    BackgroundGeolocation.on('powersavechange', this.onPowerSaveChange.bind(this));
+    BackgroundGeolocation.on("connectivitychange", this.onConnectivityChange.bind(this));
+    BackgroundGeolocation.on("enabledchange", this.onEnabledChange.bind(this));
+    // Step 2:  #ready:
     // If you want to override any config options provided by the Settings screen, this is the place to do it, eg:
     // config.stopTimeout = 5;
     //
-    BackgroundGeolocation.configure(config, (state) => {
+    BackgroundGeolocation.ready({
+      debug: true,
+      logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+      foregroundService: true,
+      autoSync: true,
+      stopOnTerminate: false,
+      url: TRACKER_HOST + this.state.username,
+      startOnBoot: true,
+      heartbeatInterval: 60,
+      enabledHeadless: true,
+      params: {
+        device: {
+          uuid: DeviceInfo.getUniqueID(),
+          model: DeviceInfo.getModel(),
+          platform: DeviceInfo.getSystemName(),
+          manufacturer: DeviceInfo.getManufacturer(),
+          version: DeviceInfo.getSystemVersion(),
+          framework: 'ReactNative'
+        }
+      }
+    }, (state) => {
       this.setState({
         enabled: state.enabled,
         isMoving: state.isMoving,
@@ -152,13 +173,15 @@ export default class HomeView extends Component<{}> {
         showsUserLocation: state.enabled,
         bgGeo: state
       });
+    }, (error) => {
+      console.warn('BackgroundGeolocation error: ', error)
     });
   }
   /**
   * @event location
   */
   onLocation(location) {
-    console.log('[event] location: ', location);
+    console.log('[event] - location: ', location);
 
     if (!location.sample) {
       this.addMarker(location);
@@ -172,13 +195,12 @@ export default class HomeView extends Component<{}> {
   * @event motionchange
   */
   onMotionChange(event) {
-    console.log('[event] motionchange: ', event.isMovign, event.location);
+    console.log('[event] - motionchange: ', event.isMoving, event.location);
     let location = event.location;
 
     let state = {
       isMoving: event.isMoving
     };
-
     if (event.isMoving) {
       if (this.lastMotionChangeLocation) {
         state.stopZones = [...this.state.stopZones, {
@@ -196,7 +218,7 @@ export default class HomeView extends Component<{}> {
         longitude: 0
       };
     } else {
-      state.stationaryRadius = (this.settingsService.isLocationTrackingMode()) ? 200 : (this.state.bgGeo.geofenceProximityRadius/2);
+      state.stationaryRadius = (this.state.bgGeo.trackingMode) ? 200 : (this.state.bgGeo.geofenceProximityRadius/2);
       state.stationaryLocation = {
         timestamp: location.timestamp,
         latitude: location.coords.latitude,
@@ -210,7 +232,7 @@ export default class HomeView extends Component<{}> {
   * @event activitychange
   */
   onActivityChange(event) {
-    console.log('[event] activitychange: ', event);
+    console.log('[event] - activitychange: ', event);
     this.setState({
       motionActivity: event
     });
@@ -219,19 +241,20 @@ export default class HomeView extends Component<{}> {
   * @event heartbeat
   */
   onHeartbeat(params) {
-    console.log("- heartbeat: ", params.location);
+    console.log("[event] - heartbeat: ", params.location);
   }
+
   /**
   * @event providerchange
   */
   onProviderChange(event) {
-    console.log('[event] providerchange', event);
+    console.log('[event] - providerchange', event);
   }
   /**
   * @event http
   */
   onHttp(response) {
-    console.log('- http ' + response.status);
+    console.log('[event] - http ' + response.status);
     console.log(response.responseText);
   }
   /**
@@ -247,7 +270,7 @@ export default class HomeView extends Component<{}> {
       return off.indexOf(geofence.identifier) < 0;
     });
 
-    console.log('[event] geofenceschange: ', event);
+    console.log('[event] - geofenceschange: ', event);
     // Add new "on" geofences.
     on.forEach(function(geofence) {
       var marker = geofences.find(function(m) { return m.identifier === geofence.identifier;});
@@ -311,7 +334,7 @@ export default class HomeView extends Component<{}> {
   * @event schedule
   */
   onSchedule(state) {
-    console.log("- schedule", state.enabled, state);
+    console.log("[event] - schedule", state.enabled, state);
     this.setState({
       enabled: state.enabled
     });
@@ -320,9 +343,22 @@ export default class HomeView extends Component<{}> {
   * @event powersavechange
   */
   onPowerSaveChange(isPowerSaveMode) {
-    console.log('[event] powersavechange', isPowerSaveMode);
+    console.log('[event] - powersavechange', isPowerSaveMode);
   }
-
+  /**
+  * @event connectivitychange
+  */
+  onConnectivityChange(event) {
+    console.log('[event] - connectivitychange', event);
+    this.settingsService.toast('[event] connectivitychange: ' + event.connected);
+  }
+  /**
+  * @event enabledchange
+  */
+  onEnabledChange(event) {
+    console.log('[event] - enabledchange', event);
+    this.settingsService.toast('[event] enabledchange: ' + event.enabled);
+  }
   /**
   * Toggle button handler to #start / #stop the plugin
   */
@@ -375,13 +411,10 @@ export default class HomeView extends Component<{}> {
       followsUserLocation: true
     });
 
-    BackgroundGeolocation.getCurrentPosition((location) => {
+    BackgroundGeolocation.getCurrentPosition({persist: true, samples: 1}).then(location => {
       console.log('- getCurrentPosition success: ', location);
-    }, (error) => {
+    }).catch(error => {
       console.warn('- getCurrentPosition error: ', error);
-    }, {
-      persist: true,
-      samples: 1
     });
   }
 
@@ -411,6 +444,9 @@ export default class HomeView extends Component<{}> {
     this.settingsService.playSound(soundId);
   }
 
+  getMainMenuIcon() {
+    return <Icon name="ios-add" size={20}/>
+  }
   /**
   * FAB Button command handler
   */
@@ -442,10 +478,10 @@ export default class HomeView extends Component<{}> {
   resetOdometer() {
     this.clearMarkers();
     this.setState({isResettingOdometer: true, odometer: '0.0'});
-    BackgroundGeolocation.setOdometer(0, () => {
+    BackgroundGeolocation.setOdometer(0).then(location => {
       this.setState({isResettingOdometer: false});
       this.settingsService.toast('Reset odometer success');
-    }, (error) => {
+    }).catch(error => {
       this.setState({isResettingOdometer: false});
       this.settingsService.toast('Reset odometer failure: ' + error);
     });
@@ -473,41 +509,39 @@ export default class HomeView extends Component<{}> {
     });
   }
 
-  sync() {
-    BackgroundGeolocation.getCount((count) => {
-      if (!count) {
-        this.settingsService.toast('Locations database is empty');
-        return;
-      }
-      this.settingsService.confirm('Confirm Sync', 'Sync ' + count + ' records?', () => {
-        this.setState({isSyncing: true});
-        BackgroundGeolocation.sync((rs) => {
-          this.settingsService.toast('Sync success (' + count + ' records)');
-          this.settingsService.playSound('MESSAGE_SENT');
-          this.setState({isSyncing: false});
-        }, (error) => {
-          this.settingsService.toast('Sync error: ' + error);
-          this.setState({isSyncing: false});
-        });
+  async sync() {
+    let count = await BackgroundGeolocation.getCount();
+    if (!count) {
+      this.settingsService.toast('Locations database is empty');
+      return;
+    }
+    this.settingsService.confirm('Confirm Sync', 'Sync ' + count + ' records?', () => {
+      this.setState({isSyncing: true});
+      BackgroundGeolocation.sync((rs) => {
+        this.settingsService.toast('Sync success (' + count + ' records)');
+        this.settingsService.playSound('MESSAGE_SENT');
+        this.setState({isSyncing: false});
+      }, (error) => {
+        this.settingsService.toast('Sync error: ' + error);
+        this.setState({isSyncing: false});
       });
     });
   }
 
-  destroyLocations() {
-    BackgroundGeolocation.getCount((count) => {
-      if (!count) {
-        this.settingsService.toast('Locations database is empty');
-        return;
-      }
-      this.settingsService.confirm('Confirm Delete', 'Destroy ' + count + ' records?', () => {
-        this.setState({isDestroyingLocations: true});
-        BackgroundGeolocation.destroyLocations(() => {
-          this.setState({isDestroyingLocations: false});
-          this.settingsService.toast('Destroyed ' + count + ' records');
-        }, (error) => {
-          this.setState({isDestroyingLocations: false});
-          this.settingsService.toast('Destroy locations error: ' + error, null, 'LONG');
-        });
+  async destroyLocations() {
+    let count = BackgroundGeolocation.getCount();
+    if (!count) {
+      this.settingsService.toast('Locations database is empty');
+      return;
+    }
+    this.settingsService.confirm('Confirm Delete', 'Destroy ' + count + ' records?', () => {
+      this.setState({isDestroyingLocations: true});
+      BackgroundGeolocation.destroyLocations(() => {
+        this.setState({isDestroyingLocations: false});
+        this.settingsService.toast('Destroyed ' + count + ' records');
+      }, (error) => {
+        this.setState({isDestroyingLocations: false});
+        this.settingsService.toast('Destroy locations error: ' + error, null, 'LONG');
       });
     });
   }
@@ -549,7 +583,7 @@ export default class HomeView extends Component<{}> {
       <Container style={styles.container}>
         <Header style={styles.header}>
           <Left>
-            <Button transparent small onPress={this.onClickHome.bind(this)}>
+            <Button transparent onPress={this.onClickHome.bind(this)}>
               <Icon active name="arrow-back" style={{color: '#000'}}/>
             </Button>
           </Left>
@@ -598,13 +632,13 @@ export default class HomeView extends Component<{}> {
         </MapView>
 
         <View style={styles.mapMenu}>
-          <Button small success light={this.state.settings.hideMarkers} style={styles.mapMenuButton} onPress={() => this.onClickMapMenu('hideMarkers') }>
+          <Button success light={this.state.settings.hideMarkers} style={styles.mapMenuButton} onPress={() => this.onClickMapMenu('hideMarkers') }>
             <Icon name="ios-pin" />
           </Button>
-          <Button small success light={this.state.settings.hidePolyline} style={styles.mapMenuButton} onPress={() => this.onClickMapMenu('hidePolyline')}>
+          <Button success light={this.state.settings.hidePolyline} style={styles.mapMenuButton} onPress={() => this.onClickMapMenu('hidePolyline')}>
             <Icon name="ios-pulse" />
           </Button>
-          <Button small success light={this.state.settings.hideGeofenceHits} style={styles.mapMenuButton} onPress={() => this.onClickMapMenu('hideGeofenceHits')}>
+          <Button success light={this.state.settings.hideGeofenceHits} style={styles.mapMenuButton} onPress={() => this.onClickMapMenu('hideGeofenceHits')}>
             <Icon name="ios-radio-button-off" />
           </Button>
         </View>
@@ -616,7 +650,6 @@ export default class HomeView extends Component<{}> {
           active={this.state.isMainMenuOpen}
           backgroundTappable={true}
           onPress={this.onClickMainMenu.bind(this)}
-          icon={<Icon name="ios-add" size={25}/>}
           verticalOrientation="down"
           buttonColor="rgba(254,221,30,1)"
           buttonTextStyle={{color: "#000"}}
@@ -642,7 +675,7 @@ export default class HomeView extends Component<{}> {
 
         <Footer style={styles.footer}>
           <Left style={{flex:0.3}}>
-            <Button small info onPress={this.onClickGetCurrentPosition.bind(this)}>
+            <Button info onPress={this.onClickGetCurrentPosition.bind(this)}>
               <Icon active name="md-navigate" style={styles.icon} />
             </Button>
           </Left>
@@ -650,8 +683,7 @@ export default class HomeView extends Component<{}> {
             <Text style={styles.status}>{this.state.motionActivity.activity}:{this.state.motionActivity.confidence}% &middot; {this.state.odometer}km</Text>
           </Body>
           <Right style={{flex: 0.3}}>
-            <Button small
-              danger={this.state.isMoving}
+            <Button danger={this.state.isMoving}
               success={!this.state.isMoving}
               disabled={!this.state.enabled}
               onPress={this.onClickChangePace.bind(this)}>

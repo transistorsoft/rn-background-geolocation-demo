@@ -3,11 +3,11 @@ package com.transistorsoft.backgroundgeolocation.react;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 
 import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
 import com.transistorsoft.rnbackgroundfetch.RNBackgroundFetchPackage;
 import im.shimo.react.prompt.RNPromptPackage;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.airbnb.android.react.maps.MapsPackage;
 
 import com.facebook.react.ReactNativeHost;
