@@ -53,7 +53,7 @@ const APP_SETTINGS = [
 const PLUGIN_SETTINGS = {
   common: [
     // Geolocation
-    {name: 'desiredAccuracy', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [-1, 0, 10, 100, 1000], defaultValue: 0 },
+    {name: 'desiredAccuracy', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [-2, -1, 0, 10, 100, 1000], defaultValue: 0 },
     {name: 'distanceFilter', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 10, 20, 50, 100, 500], defaultValue: 20 },
     {name: 'disableElasticity', group: 'geolocation', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
     {name: 'elasticityMultiplier', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 1, 2, 3, 5, 10], defaultValue: 1},
@@ -294,42 +294,11 @@ class SettingsService {
   }
   * @return {Object}
   */
-  getPluginState(callback) {
-    // Determine if this is app first-boot.
-    this.getUUID((uuid) => {
-      if (!uuid) {
-        BackgroundGeolocation.getState((state) => {
-          // First boot:  Override default options from plugin state.
-          // We want to start with debug: true.
-          this.setUUID(DeviceInfo.getUniqueID());  // <-- flag to detect we've booted before
-          state.debug = true;
-          state.logLevel = BackgroundGeolocation.LOG_LEVEL_VERBOSE;
-          state.foregroundService = true;
-          state.autoSync = true;
-          state.stopOnTerminate = false;
-          state.url = TRACKER_HOST + this.username;
-          state.startOnBoot = true;
-          state.heartbeatInterval = 60;
-          state.enabledHeadless = true;
-          state.params = {
-            device: {
-              uuid: DeviceInfo.getUniqueID(),
-              model: DeviceInfo.getModel(),
-              platform: DeviceInfo.getSystemName(),
-              manufacturer: DeviceInfo.getManufacturer(),
-              version: DeviceInfo.getSystemVersion(),
-              framework: 'ReactNative'
-            }
-          }
-          this.pluginState = state;
-          callback(state);
-        });
-      } else {
-        BackgroundGeolocation.getState((state) => {
-          this.pluginState = state;
-          callback(state);
-        });
-      }
+  getPluginState(callback) {    
+    BackgroundGeolocation.getState((state) => {
+      this.pluginState = state;
+      console.log('------------ state: ', state);
+      callback(state);
     });
   }
 

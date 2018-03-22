@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -44,16 +43,17 @@
 		62608BE8C85A478E8D43E5E1 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DFB5D8F06604D848C09047A /* RNBackgroundFetch+AppDelegate.m */; };
 		64F032504A964B0C82AC71B3 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 789C3C507F3049CFA8B85A4A /* Roboto.ttf */; };
 		6D682B7F2F324D37993F0EFE /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 926ED721081546659F55D8E1 /* FontAwesome.ttf */; };
-		727CE225FD7E46B7A2F6AF70 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E294213E9514716AEF6F987 /* libAirMaps.a */; };
+		743CDFD9C4AC600423DB3299 /* libPods-BGGeolocationTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A89E93D6E72A9BDC790A40 /* libPods-BGGeolocationTests.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		83C11DCEFED3463082560F11 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA0F27ACD19443AABE361C0 /* libz.tbd */; };
 		87158A2050F544E8B1AE5128 /* libRNBackgroundFetch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA444A2800F4C3CAF8B7029 /* libRNBackgroundFetch.a */; };
 		8E656465CFE04735BC220E59 /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1578806BDA4095A7C01897 /* TSLocationManager.framework */; };
 		900A082F35C64A23BC968F31 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D769742F1EF84612B0FB3FD0 /* Zocial.ttf */; };
-		92C09D7BA54648A6B5218510 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EC6CC800FAC416FB2D71A42 /* libRNDeviceInfo.a */; };
+		91BD6D433052178E9F7786F3 /* libPods-BGGeolocation-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 781FAB543D0C9E256640CACB /* libPods-BGGeolocation-tvOSTests.a */; };
 		9396E5BBFF414386A1BA17A8 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23D062786C114403BA55C718 /* Ionicons.ttf */; };
 		9565519609E14638998DBF88 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B15D186CA5745C880EC1263 /* rubicon-icon-font.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		B0AC6B18DEEE5F53A03E6543 /* libPods-BGGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A6FECC2B5F2AE05D8CAC96E /* libPods-BGGeolocation.a */; };
 		B9ABDD429F11425D87DA400E /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0F5602D6BE544839D32078C /* Foundation.ttf */; };
 		C3EC31D32F544A02A392C1EB /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 09B8881FB0234DF5A4821D8E /* MaterialIcons.ttf */; };
 		EFBB187BDBF440598F181013 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0ADD9FB249DA4D55AEDE58FB /* Roboto_medium.ttf */; };
@@ -243,13 +243,6 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		8329E3CE2022672D00C344DE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 70F6C237E26047E1A63DA6B9 /* RNDeviceInfo.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E72EC1401F7ABB5A0001BC90;
-			remoteInfo = "RNDeviceInfo-tvOS";
-		};
 		8329E465202267F900C344DE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F1CE792909744F0E9BBC23F5 /* Lumberjack.xcodeproj */;
@@ -383,20 +376,6 @@
 			remoteGlobalIDString = 835318541D52293F005738CD;
 			remoteInfo = RNBackgroundFetch;
 		};
-		837A27101FC9CF2300AE245F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CFCC7919D265405EAD4193A3 /* AirMaps.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
-			remoteInfo = AirMaps;
-		};
-		837A27581FC9DC9300AE245F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 70F6C237E26047E1A63DA6B9 /* RNDeviceInfo.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = DA5891D81BA9A9FC002B4DB2;
-			remoteInfo = RNDeviceInfo;
-		};
 		83A089821FCF1D4900A25934 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
@@ -451,6 +430,7 @@
 		00E356EE1AD99517003FC87E /* BGGeolocationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BGGeolocationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* BGGeolocationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BGGeolocationTests.m; sourceTree = "<group>"; };
+		02A89E93D6E72A9BDC790A40 /* libPods-BGGeolocationTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BGGeolocationTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09B8881FB0234DF5A4821D8E /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		0ADD9FB249DA4D55AEDE58FB /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
 		0DFB5D8F06604D848C09047A /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
@@ -471,32 +451,36 @@
 		2E1FDB0EEAB84B5D8A17DB11 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		33F33D57C22D49B6AD41B24B /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		36C2729276154E7484A45A7A /* TSBackgroundFetch.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = TSBackgroundFetch.framework; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/TSBackgroundFetch.framework"; sourceTree = SDKROOT; };
+		3A6FECC2B5F2AE05D8CAC96E /* libPods-BGGeolocation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BGGeolocation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AA444A2800F4C3CAF8B7029 /* libRNBackgroundFetch.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNBackgroundFetch.a; sourceTree = "<group>"; };
-		3EC6CC800FAC416FB2D71A42 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
-		4C8F2FF76DE149A19D15A9BA /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
-		70F6C237E26047E1A63DA6B9 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
+		6526472DA5E1AAC749C55348 /* Pods-BGGeolocationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocationTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocationTests/Pods-BGGeolocationTests.release.xcconfig"; sourceTree = "<group>"; };
 		71B80E620AFD42F48F0E2F95 /* RNBackgroundFetch.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundFetch.xcodeproj; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch.xcodeproj"; sourceTree = "<group>"; };
+		781FAB543D0C9E256640CACB /* libPods-BGGeolocation-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BGGeolocation-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		789C3C507F3049CFA8B85A4A /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7E294213E9514716AEF6F987 /* libAirMaps.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAirMaps.a; sourceTree = "<group>"; };
+		7FB96CB917389A889087729B /* Pods-BGGeolocationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocationTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocationTests/Pods-BGGeolocationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		926ED721081546659F55D8E1 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		9CB4A1CC91A76E1D8793A0DD /* Pods-BGGeolocation-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocation-tvOSTests/Pods-BGGeolocation-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ADA0F27ACD19443AABE361C0 /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B0F5602D6BE544839D32078C /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		B28AB5C963154401B2EB496E /* RNBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundGeolocation.xcodeproj; path = "../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		C1C625A141694033B50503A0 /* TSLocationManager.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = SDKROOT; };
 		C6A6C58C7DC241B8ACA64BD6 /* libsqlite3.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		CFCC7919D265405EAD4193A3 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		D0DDF2F640F240209BC59E9F /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		D37940EF74DF4CD5AF2B87F2 /* TSLocationManager.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../../../react-native-background-geolocation-android/ios/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = SDKROOT; };
 		D408921010DD449D9DFC747E /* libRNBackgroundGeolocation.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNBackgroundGeolocation.a; sourceTree = "<group>"; };
 		D421A2A5AD134CE09F705AC4 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		D769742F1EF84612B0FB3FD0 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		E2D2706BB7F9411C95E01609 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libCocoaLumberjack.a; sourceTree = "<group>"; };
+		E2F8EC2A2521F23BF4940262 /* Pods-BGGeolocation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocation/Pods-BGGeolocation.debug.xcconfig"; sourceTree = "<group>"; };
+		EA523868C540D3226FD7EF67 /* Pods-BGGeolocation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation.release.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocation/Pods-BGGeolocation.release.xcconfig"; sourceTree = "<group>"; };
 		EB1578806BDA4095A7C01897 /* TSLocationManager.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../../../react-native-background-geolocation/ios/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = SDKROOT; };
 		F1CE792909744F0E9BBC23F5 /* Lumberjack.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = Lumberjack.xcodeproj; path = "../node_modules/cocoa-lumberjack/CocoaLumberjack/Lumberjack.xcodeproj"; sourceTree = "<group>"; };
+		F71EF5EB479E490E185980D2 /* Pods-BGGeolocation-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocation-tvOSTests/Pods-BGGeolocation-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -505,6 +489,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
+				743CDFD9C4AC600423DB3299 /* libPods-BGGeolocationTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,12 +513,11 @@
 				87158A2050F544E8B1AE5128 /* libRNBackgroundFetch.a in Frameworks */,
 				5F991D8C581C402E9D50F772 /* TSBackgroundFetch.framework in Frameworks */,
 				03D9EBF9F9FB4A3480B87A32 /* libCocoaLumberjack.a in Frameworks */,
-				727CE225FD7E46B7A2F6AF70 /* libAirMaps.a in Frameworks */,
-				92C09D7BA54648A6B5218510 /* libRNDeviceInfo.a in Frameworks */,
 				5F83206134DD4D0C81EC846F /* libRNBackgroundGeolocation.a in Frameworks */,
 				1EC85C1D74684E6684BB0125 /* libsqlite3.tbd in Frameworks */,
 				83C11DCEFED3463082560F11 /* libz.tbd in Frameworks */,
 				8E656465CFE04735BC220E59 /* TSLocationManager.framework in Frameworks */,
+				B0AC6B18DEEE5F53A03E6543 /* libPods-BGGeolocation.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,6 +539,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91BD6D433052178E9F7786F3 /* libPods-BGGeolocation-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,8 +716,6 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				71B80E620AFD42F48F0E2F95 /* RNBackgroundFetch.xcodeproj */,
-				CFCC7919D265405EAD4193A3 /* AirMaps.xcodeproj */,
-				70F6C237E26047E1A63DA6B9 /* RNDeviceInfo.xcodeproj */,
 				F1CE792909744F0E9BBC23F5 /* Lumberjack.xcodeproj */,
 				B28AB5C963154401B2EB496E /* RNBackgroundGeolocation.xcodeproj */,
 			);
@@ -785,23 +768,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		837A270D1FC9CF2300AE245F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				837A27111FC9CF2300AE245F /* libAirMaps.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		837A27541FC9DC9300AE245F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				837A27591FC9DC9300AE245F /* libRNDeviceInfo.a */,
-				8329E3CF2022672D00C344DE /* libRNDeviceInfo-tvOS.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
@@ -812,6 +778,7 @@
 				74FF7F87FACD48C7A40099B5 /* Resources */,
 				E9153ECE1B594224A15ADCCA /* Frameworks */,
 				837A260A1FC8C05600AE245F /* Recovered References */,
+				FC2C121D6A6D9E4C57E2FC2C /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -856,8 +823,24 @@
 				C6A6C58C7DC241B8ACA64BD6 /* libsqlite3.tbd */,
 				ADA0F27ACD19443AABE361C0 /* libz.tbd */,
 				EB1578806BDA4095A7C01897 /* TSLocationManager.framework */,
+				3A6FECC2B5F2AE05D8CAC96E /* libPods-BGGeolocation.a */,
+				781FAB543D0C9E256640CACB /* libPods-BGGeolocation-tvOSTests.a */,
+				02A89E93D6E72A9BDC790A40 /* libPods-BGGeolocationTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FC2C121D6A6D9E4C57E2FC2C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E2F8EC2A2521F23BF4940262 /* Pods-BGGeolocation.debug.xcconfig */,
+				EA523868C540D3226FD7EF67 /* Pods-BGGeolocation.release.xcconfig */,
+				9CB4A1CC91A76E1D8793A0DD /* Pods-BGGeolocation-tvOSTests.debug.xcconfig */,
+				F71EF5EB479E490E185980D2 /* Pods-BGGeolocation-tvOSTests.release.xcconfig */,
+				7FB96CB917389A889087729B /* Pods-BGGeolocationTests.debug.xcconfig */,
+				6526472DA5E1AAC749C55348 /* Pods-BGGeolocationTests.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -867,9 +850,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "BGGeolocationTests" */;
 			buildPhases = (
+				DEB5ED55A648FC99E0C5ADC5 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
+				CEF7A61B473B7EC4A4F969D4 /* [CP] Embed Pods Frameworks */,
+				4AC7585CFFBBF92FC33F45A7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -885,10 +871,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "BGGeolocation" */;
 			buildPhases = (
+				2D0F93AF8D1297E96C56F702 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				DA26D7C06E5969DE8065B44A /* [CP] Embed Pods Frameworks */,
+				DDD1C6E781AD7166AE89E7BC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -921,9 +910,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "BGGeolocation-tvOSTests" */;
 			buildPhases = (
+				9A9C3C93F1996132288746A6 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
+				00B5D6D68F923C0EF730C4C5 /* [CP] Embed Pods Frameworks */,
+				3FADDEDAF9BFE785B03BE23B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -979,10 +971,6 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
-				{
-					ProductGroup = 837A270D1FC9CF2300AE245F /* Products */;
-					ProjectRef = CFCC7919D265405EAD4193A3 /* AirMaps.xcodeproj */;
-				},
 				{
 					ProductGroup = 8329E458202267F900C344DE /* Products */;
 					ProjectRef = F1CE792909744F0E9BBC23F5 /* Lumberjack.xcodeproj */;
@@ -1042,10 +1030,6 @@
 				{
 					ProductGroup = 83CE49562026BAB4004DF1CC /* Products */;
 					ProjectRef = B28AB5C963154401B2EB496E /* RNBackgroundGeolocation.xcodeproj */;
-				},
-				{
-					ProductGroup = 837A27541FC9DC9300AE245F /* Products */;
-					ProjectRef = 70F6C237E26047E1A63DA6B9 /* RNDeviceInfo.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1367,20 +1351,6 @@
 			remoteRef = 837A26781FC8C06200AE245F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		837A27111FC9CF2300AE245F /* libAirMaps.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libAirMaps.a;
-			remoteRef = 837A27101FC9CF2300AE245F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		837A27591FC9DC9300AE245F /* libRNDeviceInfo.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNDeviceInfo.a;
-			remoteRef = 837A27581FC9DC9300AE245F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		83A089831FCF1D4900A25934 /* libRCTLinking-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1472,6 +1442,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		00B5D6D68F923C0EF730C4C5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BGGeolocation-tvOSTests/Pods-BGGeolocation-tvOSTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1499,6 +1484,135 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		2D0F93AF8D1297E96C56F702 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BGGeolocation-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3FADDEDAF9BFE785B03BE23B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BGGeolocation-tvOSTests/Pods-BGGeolocation-tvOSTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4AC7585CFFBBF92FC33F45A7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BGGeolocationTests/Pods-BGGeolocationTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9A9C3C93F1996132288746A6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BGGeolocation-tvOSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CEF7A61B473B7EC4A4F969D4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BGGeolocationTests/Pods-BGGeolocationTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DA26D7C06E5969DE8065B44A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BGGeolocation/Pods-BGGeolocation-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DDD1C6E781AD7166AE89E7BC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BGGeolocation/Pods-BGGeolocation-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DEB5ED55A648FC99E0C5ADC5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BGGeolocationTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1568,6 +1682,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7FB96CB917389A889087729B /* Pods-BGGeolocationTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1586,7 +1701,6 @@
 					"$(SRCROOT)/../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/**",
 					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
 					"$(SRCROOT)/../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation/**",
 				);
@@ -1595,7 +1709,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1608,6 +1721,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6526472DA5E1AAC749C55348 /* Pods-BGGeolocationTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -1623,7 +1737,6 @@
 					"$(SRCROOT)/../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/**",
 					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
 					"$(SRCROOT)/../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation/**",
 				);
@@ -1632,7 +1745,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1645,6 +1757,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E2F8EC2A2521F23BF4940262 /* Pods-BGGeolocation.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1661,7 +1774,6 @@
 					"$(SRCROOT)/../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/**",
 					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
 					"$(SRCROOT)/../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation/**",
 				);
@@ -1681,6 +1793,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA523868C540D3226FD7EF67 /* Pods-BGGeolocation.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1696,7 +1809,6 @@
 					"$(SRCROOT)/../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/**",
 					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
 					"$(SRCROOT)/../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation/**",
 				);
@@ -1738,7 +1850,6 @@
 					"$(SRCROOT)/../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/**",
 					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
 					"$(SRCROOT)/../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation/**",
 				);
@@ -1746,7 +1857,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1784,7 +1894,6 @@
 					"$(SRCROOT)/../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/**",
 					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
 					"$(SRCROOT)/../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation/**",
 				);
@@ -1792,7 +1901,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1808,6 +1916,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9CB4A1CC91A76E1D8793A0DD /* Pods-BGGeolocation-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1821,7 +1930,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.BGGeolocation-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1833,6 +1941,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F71EF5EB479E490E185980D2 /* Pods-BGGeolocation-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1846,7 +1955,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.BGGeolocation-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -8,14 +8,26 @@ Fully-featured, React Native demo application for [React Native Background Geolo
 
 ## Installation
 
-```
+```bash
 $ git clone https://github.com/transistorsoft/rn-background-geolocation-demo.git
 $ cd rn-background-geolocation-demo
 $ npm install
-$
+```
+
+Since the Demo app uses `react-native-maps`, install Pods:
+
+```bash
+$ cd ios
+$ pod install
+```
+
+Now run it:
+```bash
 $ react-native run-android
 $ react-native run-ios
 ```
+
+:warning: If you're opening the Demo in XCode, use the **`.xcworkspace`**, since the Demo requires Cocoapods (due to `react-native-maps`)
 
 The quickest way to see the plugin in-action is to boot the **iOS** simulator and *simulate location* with *Freeway Drive*.
 
