@@ -31,7 +31,7 @@ $ react-native run-ios
 
 The quickest way to see the plugin in-action is to boot the **iOS** simulator and *simulate location* with *Freeway Drive*.
 
-The demo is composed of three separate and indpendant sub-applications:
+The demo is composed of three separate and independent sub-applications:
 
 - [Hello World](./src/hello-world/HelloWorld.js)
 - [Simple Map](./src/simple-map/SimpleMap.js)
