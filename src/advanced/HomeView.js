@@ -34,6 +34,8 @@ import {
 //
 // This simply allows one to change the import in a single file.
 import BackgroundGeolocation from '../react-native-background-geolocation';
+import BackgroundFetch from "react-native-background-fetch";
+global.BackgroundFetch = BackgroundFetch;
 
 // react-native-maps
 import MapView from 'react-native-maps';
@@ -128,6 +130,20 @@ export default class HomeView extends Component<{}> {
   }
 
   configureBackgroundGeolocation() {
+    BackgroundFetch.configure({
+      minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
+      stopOnTerminate: false, // <-- Android-only,
+      startOnBoot: true, // <-- Android-only
+      enableHeadless: true
+    }, async () => {
+      console.log('- BackgroundFetch start');
+      let location = await BackgroundGeolocation.getCurrentPosition({persist: true, samples:1, extras: {'context': 'background-fetch-position'}});
+      console.log('- BackgroundFetch current position: ', location) // <-- don't see this
+      BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA);
+    }, error => {
+      console.log('[js] RNBackgroundFetch failed to start')
+    });
+
     // Step 1:  Listen to events:
     BackgroundGeolocation.on('location', this.onLocation.bind(this));
     BackgroundGeolocation.on('motionchange', this.onMotionChange.bind(this));
@@ -146,12 +162,13 @@ export default class HomeView extends Component<{}> {
     // config.stopTimeout = 5;
     //
     BackgroundGeolocation.ready({
+      reset: false,
       debug: true,
       logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
       foregroundService: true,
       autoSync: true,
-      stopOnTerminate: false,
       url: TRACKER_HOST + this.state.username,
+      stopOnTerminate: false,
       startOnBoot: true,
       heartbeatInterval: 60,
       enabledHeadless: true,
@@ -164,7 +181,8 @@ export default class HomeView extends Component<{}> {
           version: DeviceInfo.getSystemVersion(),
           framework: 'ReactNative'
         }
-      }
+      },
+      maxDaysToPersist: 7
     }, (state) => {
       this.setState({
         enabled: state.enabled,
@@ -181,7 +199,7 @@ export default class HomeView extends Component<{}> {
   * @event location
   */
   onLocation(location) {
-    console.log('[event] - location: ', location);
+    console.log('[location] - ', location);
 
     if (!location.sample) {
       this.addMarker(location);
@@ -195,7 +213,7 @@ export default class HomeView extends Component<{}> {
   * @event motionchange
   */
   onMotionChange(event) {
-    console.log('[event] - motionchange: ', event.isMoving, event.location);
+    console.log('[motionchange] - ', event.isMoving, event.location);
     let location = event.location;
 
     let state = {
@@ -232,7 +250,7 @@ export default class HomeView extends Component<{}> {
   * @event activitychange
   */
   onActivityChange(event) {
-    console.log('[event] - activitychange: ', event);
+    console.log('[activitychange] - ', event);
     this.setState({
       motionActivity: event
     });
@@ -241,21 +259,20 @@ export default class HomeView extends Component<{}> {
   * @event heartbeat
   */
   onHeartbeat(params) {
-    console.log("[event] - heartbeat: ", params.location);
+    console.log("[heartbeat] - ", params.location);
   }
 
   /**
   * @event providerchange
   */
   onProviderChange(event) {
-    console.log('[event] - providerchange', event);
+    console.log('[providerchange] - ', event);
   }
   /**
   * @event http
   */
   onHttp(response) {
-    console.log('[event] - http ' + response.status);
-    console.log(response.responseText);
+    console.log('[http] - ', JSON.stringify(response));
   }
   /**
   * @event geofenceschange
@@ -270,7 +287,7 @@ export default class HomeView extends Component<{}> {
       return off.indexOf(geofence.identifier) < 0;
     });
 
-    console.log('[event] - geofenceschange: ', event);
+    console.log('[geofenceschange] - ', event);
     // Add new "on" geofences.
     on.forEach(function(geofence) {
       var marker = geofences.find(function(m) { return m.identifier === geofence.identifier;});
@@ -286,6 +303,7 @@ export default class HomeView extends Component<{}> {
   * @event geofence
   */
   onGeofence(geofence) {
+    console.log('[geofence] - ', geofence);
     let location = geofence.location;
     var marker = this.state.geofences.find((m) => {
       return m.identifier === geofence.identifier;
@@ -334,7 +352,7 @@ export default class HomeView extends Component<{}> {
   * @event schedule
   */
   onSchedule(state) {
-    console.log("[event] - schedule", state.enabled, state);
+    console.log("[schedule] - ", state.enabled, state);
     this.setState({
       enabled: state.enabled
     });
@@ -343,21 +361,21 @@ export default class HomeView extends Component<{}> {
   * @event powersavechange
   */
   onPowerSaveChange(isPowerSaveMode) {
-    console.log('[event] - powersavechange', isPowerSaveMode);
+    console.log('[powersavechange] - ', isPowerSaveMode);
   }
   /**
   * @event connectivitychange
   */
   onConnectivityChange(event) {
     console.log('[event] - connectivitychange', event);
-    this.settingsService.toast('[event] connectivitychange: ' + event.connected);
+    this.settingsService.toast('[connectivitychange] - ' + event.connected);
   }
   /**
   * @event enabledchange
   */
   onEnabledChange(event) {
     console.log('[event] - enabledchange', event);
-    this.settingsService.toast('[event] enabledchange: ' + event.enabled);
+    this.settingsService.toast('[enabledchange] - ' + event.enabled);
   }
   /**
   * Toggle button handler to #start / #stop the plugin
@@ -412,9 +430,9 @@ export default class HomeView extends Component<{}> {
     });
 
     BackgroundGeolocation.getCurrentPosition({persist: true, samples: 1}).then(location => {
-      console.log('- getCurrentPosition success: ', location);
+      console.log('[getCurrentPosition] success: ', location);
     }).catch(error => {
-      console.warn('- getCurrentPosition error: ', error);
+      console.warn('[getCurrentPosition] error: ', error);
     });
   }
 

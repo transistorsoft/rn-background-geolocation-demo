@@ -97,7 +97,7 @@ export default class GeofenceView extends Component<{}> {
       <Container style={styles.container}>
         <Header style={styles.header}>
           <Left>
-            <Button small transparent primary onPress={this.onClickCancel.bind(this)}>
+            <Button transparent primary onPress={this.onClickCancel.bind(this)}>
               <Icon name="close" style={{color: '#000'}}/>
             </Button>
           </Left>

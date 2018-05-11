@@ -18,7 +18,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-import { StackNavigator, NavigationActions } from 'react-navigation';
+import { createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
 
 import Home from './home/Home';
 import HelloWorld from './hello-world/HelloWorld';
@@ -41,13 +41,14 @@ class Root extends Component<{}> {
       AsyncStorage.getItem("@transistorsoft:username", (err, username) => {
         // Append username to route-params
         if (username) { params.username = username; }
-        navigation.dispatch(NavigationActions.reset({
+        let action = StackActions.reset({
           index: 0,
-          key: null,
           actions: [
             NavigationActions.navigate({ routeName: page, params: params})
-          ]
-        }));        
+          ],
+          key: null
+        });
+        navigation.dispatch(action);
       });
     });
   }
@@ -56,7 +57,7 @@ class Root extends Component<{}> {
   }
 }
 
-export default Navigator = StackNavigator({
+export default Navigator = createStackNavigator({
   Root: {
     screen: Root,
   },

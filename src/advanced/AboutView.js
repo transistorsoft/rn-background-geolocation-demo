@@ -20,7 +20,7 @@ export default class AboutView extends Component<{}> {
       <Container style={styles.container}>
         <Header style={styles.header}>
           <Left>
-            <Button small dark transparent onPress={this.onClickClose.bind(this)}>
+            <Button dark transparent onPress={this.onClickClose.bind(this)}>
               <Icon color="#000" active name="ios-arrow-dropdown-circle" />
             </Button>
           </Left>
