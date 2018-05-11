@@ -191,7 +191,7 @@ export default class SettingsView extends Component<{}> {
       <Container style={styles.container}>
         <Header style={styles.header}>
           <Left>
-            <Button small transparent dark onPress={this.onClickClose.bind(this)}>
+            <Button transparent dark onPress={this.onClickClose.bind(this)}>
               <Icon color="#000" active name="ios-arrow-dropdown-circle" />
             </Button>
           </Left>

@@ -6,14 +6,14 @@
 */
 import React, { Component } from 'react';
 
-import { StackNavigator, NavigationActions } from 'react-navigation';
+import { createStackNavigator, NavigationActions } from 'react-navigation';
 
 import HomeView from './HomeView';
 import SettingsView from './SettingsView';
 import GeofenceView from './GeofenceView';
 import AboutView from './AboutView';
 
-export default AdvancedApp = StackNavigator({
+export default AdvancedApp = createStackNavigator({
   Home: {
     screen: HomeView
   },

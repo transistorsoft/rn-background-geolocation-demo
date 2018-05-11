@@ -8,7 +8,7 @@ import {
   Linking,
   View
 } from 'react-native';
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions, StackActions } from 'react-navigation';
 import {
   Container, Header, Content, Footer,
   Left, Body, Right,
@@ -22,6 +22,8 @@ import {
 import BackgroundGeolocation from "../react-native-background-geolocation";
 
 import prompt from 'react-native-prompt-android';
+
+import App from '../App';
 
 const DEFAULT_USERNAME = "react-native-anonymous";
 const TRACKER_HOST = 'http://tracker.transistorsoft.com/';
@@ -53,15 +55,18 @@ export default class Home extends Component<{}> {
     }
   }
   onClickNavigate(routeName) {
-    this.props.navigation.dispatch(NavigationActions.reset({
+    App.setRootRoute(routeName);
+    let action = StackActions.reset({
       index: 0,
-      key: null,
       actions: [
         NavigationActions.navigate({routeName: routeName, params: {
           username: this.state.username
         }})
-      ]
-    }));
+      ],
+      key: null
+    });
+    this.props.navigation.dispatch(action);    
+    
   }
 
   onClickEditUsername() {

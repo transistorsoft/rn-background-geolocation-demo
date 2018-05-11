@@ -237,7 +237,7 @@ export default class SimpleMap extends Component<{}> {
       <Container style={styles.container}>
         <Header style={styles.header}>
           <Left>
-            <Button small transparent onPress={this.onClickHome.bind(this)}>
+            <Button transparent onPress={this.onClickHome.bind(this)}>
               <Icon active name="arrow-back" style={styles.title} />
             </Button>
           </Left>
@@ -281,7 +281,7 @@ export default class SimpleMap extends Component<{}> {
 
         <Footer style={styles.footer}>
           <Left style={{flex:0.3}}>
-            <Button small info>
+            <Button info>
               <Icon active name="md-navigate" style={styles.icon} onPress={this.onClickGetCurrentPosition.bind(this)} />
             </Button>
           </Left>
@@ -290,7 +290,7 @@ export default class SimpleMap extends Component<{}> {
           </Body>
 
           <Right style={{flex: 0.25}}>
-            <Button small danger={this.state.isMoving} success={!this.state.isMoving} onPress={this.onClickChangePace.bind(this)}>
+            <Button danger={this.state.isMoving} success={!this.state.isMoving} onPress={this.onClickChangePace.bind(this)}>
               <Icon active name={(this.state.isMoving) ? 'pause' : 'play'} style={styles.icon}/>
             </Button>
           </Right>
