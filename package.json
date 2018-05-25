@@ -1,6 +1,6 @@
 {
 	"name": "BGGeolocation",
-	"version": "2.12.0",
+	"version": "2.12.2",
 	"private": true,
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
@@ -14,7 +14,7 @@
 		"react": "16.3.1",
 		"react-native": "0.55.4",
 		"react-native-action-button": "^2.8.4",
-		"react-native-background-geolocation": "^2.12.0",
+		"react-native-background-geolocation": "^2.12.2",
 		"react-native-device-info": "^0.21.2",
 		"react-native-easy-grid": "^0.1.15",
 		"react-native-maps": "^0.21.0",

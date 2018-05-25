@@ -1,38 +1,38 @@
 PODS:
-  - React (0.54.2):
-    - React/Core (= 0.54.2)
-  - react-native-maps (0.20.1):
+  - React (0.55.4):
+    - React/Core (= 0.55.4)
+  - react-native-maps (0.21.0):
     - React
-  - React/Core (0.54.2):
-    - yoga (= 0.54.2.React)
-  - React/fishhook (0.54.2)
-  - React/RCTActionSheet (0.54.2):
+  - React/Core (0.55.4):
+    - yoga (= 0.55.4.React)
+  - React/fishhook (0.55.4)
+  - React/RCTActionSheet (0.55.4):
     - React/Core
-  - React/RCTAnimation (0.54.2):
+  - React/RCTAnimation (0.55.4):
     - React/Core
-  - React/RCTBlob (0.54.2):
+  - React/RCTBlob (0.55.4):
     - React/Core
-  - React/RCTGeolocation (0.54.2):
+  - React/RCTGeolocation (0.55.4):
     - React/Core
-  - React/RCTImage (0.54.2):
+  - React/RCTImage (0.55.4):
     - React/Core
     - React/RCTNetwork
-  - React/RCTLinkingIOS (0.54.2):
+  - React/RCTLinkingIOS (0.55.4):
     - React/Core
-  - React/RCTNetwork (0.54.2):
+  - React/RCTNetwork (0.55.4):
     - React/Core
-  - React/RCTSettings (0.54.2):
+  - React/RCTSettings (0.55.4):
     - React/Core
-  - React/RCTText (0.54.2):
+  - React/RCTText (0.55.4):
     - React/Core
-  - React/RCTVibration (0.54.2):
+  - React/RCTVibration (0.55.4):
     - React/Core
-  - React/RCTWebSocket (0.54.2):
+  - React/RCTWebSocket (0.55.4):
     - React/Core
     - React/fishhook
     - React/RCTBlob
   - RNDeviceInfo (0.21.2)
-  - yoga (0.54.2.React)
+  - yoga (0.55.4.React)
 
 DEPENDENCIES:
   - react-native-maps (from `../node_modules/react-native-maps`)
@@ -61,10 +61,10 @@ EXTERNAL SOURCES:
     :path: ../node_modules/react-native/ReactCommon/yoga/yoga.podspec
 
 SPEC CHECKSUMS:
-  React: 87cb66e255b02cae031f82a5d3e7c70c639957fc
-  react-native-maps: 6ab4fa4f78e88824ec300de0eb412f0556b6a84b
+  React: 755b16d9a9387e856d4dce6528130c51e4d409b8
+  react-native-maps: fb06a43ce6884256097eec1dd69d23957b71df88
   RNDeviceInfo: 82dab2a10d4df51cb9e08b4f22e4d46d29658be6
-  yoga: de5853128c499decde39904270f22f75d36d7668
+  yoga: c3ce6137f85f60c93a834235d7f08e2b44a42eed
 
 PODFILE CHECKSUM: 21e9c8a0925aa70e7a1e77f7f8a1b795f1308d87
 

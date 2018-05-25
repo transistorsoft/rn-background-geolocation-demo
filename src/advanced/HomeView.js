@@ -380,7 +380,7 @@ export default class HomeView extends Component<{}> {
   /**
   * Toggle button handler to #start / #stop the plugin
   */
-  onToggleEnabled(value) {
+  async onToggleEnabled(value) {
     this.settingsService.playSound('BUTTON_CLICK');
 
     let enabled = !this.state.enabled;
@@ -393,7 +393,9 @@ export default class HomeView extends Component<{}> {
     });
 
     if (enabled) {
-      BackgroundGeolocation.start((state) => {
+      let state = await BackgroundGeolocation.getState();
+      let startMethod = (state.trackingMode) ? 'start' : 'startGeofences';
+      BackgroundGeolocation[startMethod]((state) => {
         // We tell react-native-maps to access location only AFTER
         // the plugin has requested location, otherwise we have a permissions tug-of-war,
         // since react-native-maps wants WhenInUse permission
