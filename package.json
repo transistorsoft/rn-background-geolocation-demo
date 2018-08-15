@@ -1,34 +1,33 @@
 {
-	"name": "BGGeolocation",
-	"version": "2.12.2",
-	"private": true,
-	"scripts": {
-		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest"
-	},
-	"dependencies": {
-		"cocoa-lumberjack": "^3.0.3",
-		"install": "^0.10.4",
-		"native-base": "^2.3.10",
-		"npm": "^5.6.0",
-		"react": "16.3.1",
-		"react-native": "0.55.4",
-		"react-native-action-button": "^2.8.4",
-		"react-native-background-geolocation": "^2.12.2",
-		"react-native-device-info": "^0.21.2",
-		"react-native-easy-grid": "^0.1.15",
-		"react-native-maps": "^0.21.0",
-		"react-native-prompt-android": "git+https://github.com/transistorsoft/react-native-prompt-android.git",
-		"react-native-root-toast": "^2.2.0",
-		"react-navigation": "^2.0.1"
-	},
-	"devDependencies": {
-		"babel-jest": "22.4.3",
-		"babel-preset-react-native": "4.0.0",
-		"jest": "22.4.3",
-		"react-test-renderer": "16.3.1"
-	},
-	"jest": {
-		"preset": "react-native"
-	}
+  "name": "BGGeolocation",
+  "version": "2.13.0",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "native-base": "^2.7.2",
+    "react": "16.4.1",
+    "react-native": "0.56.0",
+    "react-native-action-button": "^2.8.4",
+    "react-native-background-geolocation": "^2.13.0",
+    "react-native-device-info": "^0.22.4",
+    "react-native-easy-grid": "^0.2.0",
+    "react-native-maps": "^0.21.0",
+    "react-native-prompt-android": "git+https://github.com/transistorsoft/react-native-prompt-android.git",
+    "react-native-root-siblings": "git+https://github.com/neilzhengzx/react-native-root-siblings.git",
+    "react-native-root-toast": "^3.0.1",
+    "react-navigation": "^2.11.2",
+    "redux": "^4.0.0"
+  },
+  "devDependencies": {
+    "babel-jest": "23.4.2",
+    "babel-preset-react-native": "^5",
+    "jest": "23.5.0",
+    "react-test-renderer": "16.4.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
 }

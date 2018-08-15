@@ -1,1 +1,1 @@
-../../../../../node_modules/react-native-device-info/RNDeviceInfo/RNDeviceInfo.h
+../../../../../node_modules/react-native-device-info/ios/RNDeviceInfo/RNDeviceInfo.h
