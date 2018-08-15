@@ -1,1 +1,1 @@
-../../../../../node_modules/react-native-device-info/RNDeviceInfo/DeviceUID.h
+../../../../../node_modules/react-native-device-info/ios/RNDeviceInfo/DeviceUID.h
