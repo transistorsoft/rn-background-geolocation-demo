@@ -34,13 +34,15 @@
 				<true/>
 			</dict>
 		</dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>CHANGEME: Location Always And When In Use Usage Description</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>CHANGEME: Location Always Usage Description</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>NSMotionUsageDescription</key>
 	<string>CHANGEME: Motion updates increase battery efficiency by intelligently toggling location-services when device is detected to be moving</string>
 	<key>UIBackgroundModes</key>
