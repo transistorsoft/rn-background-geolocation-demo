@@ -182,7 +182,7 @@ export default class HomeView extends Component<{}> {
           framework: 'ReactNative'
         }
       },
-      maxDaysToPersist: 7
+      maxDaysToPersist: 14
     }, (state) => {
       this.setState({
         enabled: state.enabled,

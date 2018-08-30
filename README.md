@@ -14,13 +14,6 @@ $ cd rn-background-geolocation-demo
 $ npm install
 ```
 
-Since the Demo app uses `react-native-maps`, install Pods:
-
-```bash
-$ cd ios
-$ pod install
-```
-
 Now run it:
 ```bash
 $ react-native run-android
