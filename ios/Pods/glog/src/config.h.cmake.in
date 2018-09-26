@@ -1,203 +1,184 @@
-/* src/config.h.  Generated from config.h.in by configure.  */
-/* src/config.h.in.  Generated from configure.ac by autoheader.  */
-
 /* define if glog doesn't use RTTI */
-/* #undef DISABLE_RTTI */
+#cmakedefine DISABLE_RTTI
 
 /* Namespace for Google classes */
-#define GOOGLE_NAMESPACE google
+#cmakedefine GOOGLE_NAMESPACE ${GOOGLE_NAMESPACE}
 
 /* Define if you have the `dladdr' function */
-#define HAVE_DLADDR 1
+#cmakedefine HAVE_DLADDR
+
+/* Define if you have the `snprintf' function */
+#cmakedefine HAVE_SNPRINTF
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
-#define HAVE_DLFCN_H 1
+#cmakedefine HAVE_DLFCN_H
 
 /* Define to 1 if you have the <execinfo.h> header file. */
-#define HAVE_EXECINFO_H 1
+#cmakedefine HAVE_EXECINFO_H
 
 /* Define if you have the `fcntl' function */
-#define HAVE_FCNTL 1
+#cmakedefine HAVE_FCNTL
 
 /* Define to 1 if you have the <glob.h> header file. */
-#define HAVE_GLOB_H 1
+#cmakedefine HAVE_GLOB_H
 
 /* Define to 1 if you have the <inttypes.h> header file. */
-#define HAVE_INTTYPES_H 1
+#cmakedefine HAVE_INTTYPES_H ${HAVE_INTTYPES_H}
 
 /* Define to 1 if you have the `pthread' library (-lpthread). */
-#define HAVE_LIBPTHREAD 1
+#cmakedefine HAVE_LIBPTHREAD
 
 /* Define to 1 if you have the <libunwind.h> header file. */
-#define HAVE_LIBUNWIND_H 1
+#cmakedefine HAVE_LIBUNWIND_H
 
 /* define if you have google gflags library */
-/* #undef HAVE_LIB_GFLAGS */
+#cmakedefine HAVE_LIB_GFLAGS
 
 /* define if you have google gmock library */
-/* #undef HAVE_LIB_GMOCK */
+#cmakedefine HAVE_LIB_GMOCK
 
 /* define if you have google gtest library */
-/* #undef HAVE_LIB_GTEST */
+#cmakedefine HAVE_LIB_GTEST
 
 /* define if you have libunwind */
-/* #undef HAVE_LIB_UNWIND */
+#cmakedefine HAVE_LIB_UNWIND
 
 /* Define to 1 if you have the <memory.h> header file. */
-#define HAVE_MEMORY_H 1
+#cmakedefine HAVE_MEMORY_H
+
+/* define to disable multithreading support. */
+#cmakedefine NO_THREADS
 
 /* define if the compiler implements namespaces */
-#define HAVE_NAMESPACES 1
+#cmakedefine HAVE_NAMESPACES
 
 /* Define if you have the 'pread' function */
-#define HAVE_PREAD 1
+#cmakedefine HAVE_PREAD
 
 /* Define if you have POSIX threads libraries and header files. */
-#define HAVE_PTHREAD 1
+#cmakedefine HAVE_PTHREAD
 
 /* Define to 1 if you have the <pwd.h> header file. */
-#define HAVE_PWD_H 1
+#cmakedefine HAVE_PWD_H
 
 /* Define if you have the 'pwrite' function */
-#define HAVE_PWRITE 1
+#cmakedefine HAVE_PWRITE
 
 /* define if the compiler implements pthread_rwlock_* */
-#define HAVE_RWLOCK 1
+#cmakedefine HAVE_RWLOCK
 
 /* Define if you have the 'sigaction' function */
-#define HAVE_SIGACTION 1
+#cmakedefine HAVE_SIGACTION
 
 /* Define if you have the `sigaltstack' function */
-#define HAVE_SIGALTSTACK 1
+#cmakedefine HAVE_SIGALTSTACK
 
 /* Define to 1 if you have the <stdint.h> header file. */
-#define HAVE_STDINT_H 1
+#cmakedefine HAVE_STDINT_H ${HAVE_STDINT_H}
 
 /* Define to 1 if you have the <stdlib.h> header file. */
-#define HAVE_STDLIB_H 1
+#cmakedefine HAVE_STDLIB_H
 
 /* Define to 1 if you have the <strings.h> header file. */
-#define HAVE_STRINGS_H 1
+#cmakedefine HAVE_STRINGS_H
 
 /* Define to 1 if you have the <string.h> header file. */
-#define HAVE_STRING_H 1
+#cmakedefine HAVE_STRING_H
 
 /* Define to 1 if you have the <syscall.h> header file. */
-/* #undef HAVE_SYSCALL_H */
+#cmakedefine HAVE_SYSCALL_H
 
 /* Define to 1 if you have the <syslog.h> header file. */
-#define HAVE_SYSLOG_H 1
+#cmakedefine HAVE_SYSLOG_H
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
-#define HAVE_SYS_STAT_H 1
+#cmakedefine HAVE_SYS_STAT_H
 
 /* Define to 1 if you have the <sys/syscall.h> header file. */
-#define HAVE_SYS_SYSCALL_H 1
+#cmakedefine HAVE_SYS_SYSCALL_H
 
 /* Define to 1 if you have the <sys/time.h> header file. */
-#define HAVE_SYS_TIME_H 1
+#cmakedefine HAVE_SYS_TIME_H
 
 /* Define to 1 if you have the <sys/types.h> header file. */
-#define HAVE_SYS_TYPES_H 1
+#cmakedefine HAVE_SYS_TYPES_H ${HAVE_SYS_TYPES_H}
 
 /* Define to 1 if you have the <sys/ucontext.h> header file. */
-#define HAVE_SYS_UCONTEXT_H 1
+#cmakedefine HAVE_SYS_UCONTEXT_H
 
 /* Define to 1 if you have the <sys/utsname.h> header file. */
-#define HAVE_SYS_UTSNAME_H 1
+#cmakedefine HAVE_SYS_UTSNAME_H
 
 /* Define to 1 if you have the <ucontext.h> header file. */
-/* #undef HAVE_UCONTEXT_H */
+#cmakedefine HAVE_UCONTEXT_H
 
 /* Define to 1 if you have the <unistd.h> header file. */
-#define HAVE_UNISTD_H 1
+#cmakedefine HAVE_UNISTD_H ${HAVE_UNISTD_H}
 
 /* Define to 1 if you have the <unwind.h> header file. */
-#define HAVE_UNWIND_H 1
+#cmakedefine HAVE_UNWIND_H ${HAVE_UNWIND_H}
 
 /* define if the compiler supports using expression for operator */
-#define HAVE_USING_OPERATOR 1
+#cmakedefine HAVE_USING_OPERATOR
 
 /* define if your compiler has __attribute__ */
-#define HAVE___ATTRIBUTE__ 1
+#cmakedefine HAVE___ATTRIBUTE__
 
 /* define if your compiler has __builtin_expect */
-#define HAVE___BUILTIN_EXPECT 1
+#cmakedefine HAVE___BUILTIN_EXPECT ${HAVE___BUILTIN_EXPECT}
 
 /* define if your compiler has __sync_val_compare_and_swap */
-#define HAVE___SYNC_VAL_COMPARE_AND_SWAP 1
+#cmakedefine HAVE___SYNC_VAL_COMPARE_AND_SWAP
 
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
-#define LT_OBJDIR ".libs/"
+#cmakedefine LT_OBJDIR
 
 /* Name of package */
-#define PACKAGE "glog"
+#cmakedefine PACKAGE
 
 /* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT "opensource@google.com"
+#cmakedefine PACKAGE_BUGREPORT
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME "glog"
+#cmakedefine PACKAGE_NAME
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "glog 0.3.5"
+#cmakedefine PACKAGE_STRING
 
 /* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "glog"
+#cmakedefine PACKAGE_TARNAME
 
 /* Define to the home page for this package. */
-#define PACKAGE_URL ""
+#cmakedefine PACKAGE_URL
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "0.3.5"
+#cmakedefine PACKAGE_VERSION
 
 /* How to access the PC from a struct ucontext */
-/* #undef PC_FROM_UCONTEXT */
+#cmakedefine PC_FROM_UCONTEXT
 
 /* Define to necessary symbol if this constant uses a non-standard name on
    your system. */
-/* #undef PTHREAD_CREATE_JOINABLE */
+#cmakedefine PTHREAD_CREATE_JOINABLE
 
 /* The size of `void *', as computed by sizeof. */
-#define SIZEOF_VOID_P 4
+#cmakedefine SIZEOF_VOID_P ${SIZEOF_VOID_P}
 
 /* Define to 1 if you have the ANSI C header files. */
-/* #undef STDC_HEADERS */
+#cmakedefine STDC_HEADERS
 
 /* the namespace where STL code like vector<> is defined */
-#define STL_NAMESPACE std
+#cmakedefine STL_NAMESPACE ${STL_NAMESPACE}
 
 /* location of source code */
-#define TEST_SRC_DIR "."
+#cmakedefine TEST_SRC_DIR ${TEST_SRC_DIR}
 
 /* Version number of package */
-#define VERSION "0.3.5"
+#cmakedefine VERSION
 
 /* Stops putting the code inside the Google namespace */
-#define _END_GOOGLE_NAMESPACE_ }
+#cmakedefine _END_GOOGLE_NAMESPACE_ ${_END_GOOGLE_NAMESPACE_}
 
 /* Puts following code inside the Google namespace */
-#define _START_GOOGLE_NAMESPACE_ namespace google {
-
-/* Add in so we have Apple Target Conditionals */
-#ifdef __APPLE__
-#include <TargetConditionals.h>
-#include <Availability.h>
-#endif
-
-/* Special configuration for AppleTVOS */
-#if TARGET_OS_TV
-#undef HAVE_SYSCALL_H
-#undef HAVE_SYS_SYSCALL_H
-#undef OS_MACOSX
-#endif
-
-/* Special configuration for ucontext */
-#undef HAVE_UCONTEXT_H
-#undef PC_FROM_UCONTEXT
-#if defined(__x86_64__)
-#define PC_FROM_UCONTEXT uc_mcontext->__ss.__rip
-#elif defined(__i386__)
-#define PC_FROM_UCONTEXT uc_mcontext->__ss.__eip
-#endif
+#cmakedefine _START_GOOGLE_NAMESPACE_ ${_START_GOOGLE_NAMESPACE_}

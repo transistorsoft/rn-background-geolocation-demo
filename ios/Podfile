@@ -1,11 +1,11 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '9.0'
 
-target 'BGGeolocation' do  
+target 'BGGeolocation' do
   # Pods for BGGeolocation
 
   rn_path = '../node_modules/react-native'
-  
+
   pod 'React', path: rn_path, subspecs: [
     'Core',
     'CxxBridge',
@@ -24,7 +24,7 @@ target 'BGGeolocation' do
 
   # React Native third party dependencies podspecs
   pod 'DoubleConversion', :podspec => "#{rn_path}/third-party-podspecs/DoubleConversion.podspec"
-  pod 'glog', :podspec => "#{rn_path}/third-party-podspecs/glog.podspec"  
+  pod 'glog', :podspec => "#{rn_path}/third-party-podspecs/glog.podspec"
   pod 'Folly', :podspec => "#{rn_path}/third-party-podspecs/Folly.podspec"
   pod 'yoga', path: "#{rn_path}/ReactCommon/yoga/yoga.podspec"
 
@@ -36,5 +36,21 @@ target 'BGGeolocation' do
 
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
+  # @see https://github.com/facebook/react-native/issues/20492#issuecomment-422958184
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      # The following is needed to ensure the "archive" step works in XCode.
+      # It removes React & Yoga from the Pods project, as it is already included in the main project.
+      # Without this, you'd see errors when you archive like:
+      # "Multiple commands produce ... libReact.a"
+      # "Multiple commands produce ... libyoga.a"
+
+      targets_to_ignore = %w(React yoga)
+
+      if targets_to_ignore.include? target.name
+        target.remove_from_project
+      end
+    end
+  end
 end
 
