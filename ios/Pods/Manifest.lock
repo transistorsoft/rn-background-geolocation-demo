@@ -6,69 +6,69 @@ PODS:
   - CocoaLumberjack/Default (3.4.2)
   - CocoaLumberjack/Extensions (3.4.2):
     - CocoaLumberjack/Default
-  - DoubleConversion (1.1.5)
+  - DoubleConversion (1.1.6)
   - Folly (2016.10.31.00):
     - boost-for-react-native
     - DoubleConversion
     - glog
-  - glog (0.3.4)
-  - React (0.56.0):
-    - React/Core (= 0.56.0)
+  - glog (0.3.5)
+  - React (0.57.1):
+    - React/Core (= 0.57.1)
   - react-native-maps (0.21.0):
     - React
-  - React/Core (0.56.0):
-    - yoga (= 0.56.0.React)
-  - React/CxxBridge (0.56.0):
+  - React/Core (0.57.1):
+    - yoga (= 0.57.1.React)
+  - React/CxxBridge (0.57.1):
     - Folly (= 2016.10.31.00)
     - React/Core
     - React/cxxreact
-  - React/cxxreact (0.56.0):
+  - React/cxxreact (0.57.1):
     - boost-for-react-native (= 1.63.0)
     - Folly (= 2016.10.31.00)
     - React/jschelpers
     - React/jsinspector
-  - React/DevSupport (0.56.0):
+  - React/DevSupport (0.57.1):
     - React/Core
     - React/RCTWebSocket
-  - React/fishhook (0.56.0)
-  - React/jschelpers (0.56.0):
+  - React/fishhook (0.57.1)
+  - React/jschelpers (0.57.1):
     - Folly (= 2016.10.31.00)
     - React/PrivateDatabase
-  - React/jsinspector (0.56.0)
-  - React/PrivateDatabase (0.56.0)
-  - React/RCTActionSheet (0.56.0):
+  - React/jsinspector (0.57.1)
+  - React/PrivateDatabase (0.57.1)
+  - React/RCTActionSheet (0.57.1):
     - React/Core
-  - React/RCTAnimation (0.56.0):
+  - React/RCTAnimation (0.57.1):
     - React/Core
-  - React/RCTBlob (0.56.0):
+  - React/RCTBlob (0.57.1):
     - React/Core
-  - React/RCTGeolocation (0.56.0):
+  - React/RCTGeolocation (0.57.1):
     - React/Core
-  - React/RCTImage (0.56.0):
+  - React/RCTImage (0.57.1):
     - React/Core
     - React/RCTNetwork
-  - React/RCTLinkingIOS (0.56.0):
+  - React/RCTLinkingIOS (0.57.1):
     - React/Core
-  - React/RCTNetwork (0.56.0):
+  - React/RCTNetwork (0.57.1):
     - React/Core
-  - React/RCTSettings (0.56.0):
+  - React/RCTSettings (0.57.1):
     - React/Core
-  - React/RCTText (0.56.0):
+  - React/RCTText (0.57.1):
     - React/Core
-  - React/RCTVibration (0.56.0):
+  - React/RCTVibration (0.57.1):
     - React/Core
-  - React/RCTWebSocket (0.56.0):
+  - React/RCTWebSocket (0.57.1):
     - React/Core
     - React/fishhook
     - React/RCTBlob
   - RNBackgroundFetch (2.4.3):
     - React
-  - RNBackgroundGeolocation (2.13.0):
+  - RNBackgroundGeolocation (2.13.4):
     - CocoaLumberjack (~> 3.0)
     - React
   - RNDeviceInfo (0.21.5):
     - React
-  - yoga (0.56.0.React)
+  - yoga (0.57.1.React)
 
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -121,9 +121,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
-  DoubleConversion: a9706f16e388b53ff12cca34473428ee29746a26
+  DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Folly: c89ac2d5c6ab169cd7397ef27485c44f35f742c7
-  glog: b3b0330915eccea41c5cc9731a77cf564a9be5ea
+  glog: e8acf0ebbf99759d3ff18c86c292a5898282dcde
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
   react-native-maps: 066c2afcc89e18726377bcc685315f989ca22449
   RNBackgroundFetch: 8c4f77f83c398c659bce82af2f0a885079417b9e
@@ -131,6 +131,6 @@ SPEC CHECKSUMS:
   RNDeviceInfo: 568c5641057313b4912d08a7742ff0b2f753ed5c
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: beb7c076a45158d500528a81885f1b9d57a466e9
+PODFILE CHECKSUM: 28587ca8d6e737ec1cb6f410bc9f8a941e1ff574
 
 COCOAPODS: 1.5.3
