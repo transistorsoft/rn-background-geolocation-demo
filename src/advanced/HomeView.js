@@ -162,7 +162,6 @@ export default class HomeView extends Component<{}> {
     // config.stopTimeout = 5;
     //
     BackgroundGeolocation.ready({
-      reset: false,
       debug: true,
       logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
       foregroundService: true,
@@ -174,7 +173,7 @@ export default class HomeView extends Component<{}> {
       enabledHeadless: true,
       params: {
         device: {
-          uuid: DeviceInfo.getUniqueID(),
+          uuid: (DeviceInfo.getModel() + '-' + DeviceInfo.getSystemVersion()).replace(/[\s\.,]/g, '-'),
           model: DeviceInfo.getModel(),
           platform: DeviceInfo.getSystemName(),
           manufacturer: DeviceInfo.getManufacturer(),

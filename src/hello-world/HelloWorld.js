@@ -70,7 +70,7 @@ export default class HelloWorld extends Component<{}> {
       params: {
         // Required for tracker.transistorsoft.com
         device: {
-          uuid: DeviceInfo.getUniqueID(),
+          uuid: (DeviceInfo.getModel() + '-' + DeviceInfo.getSystemVersion()).replace(/[\s\.,]/g, '-'),
           model: DeviceInfo.getModel(),
           platform: DeviceInfo.getSystemName(),
           manufacturer: DeviceInfo.getManufacturer(),

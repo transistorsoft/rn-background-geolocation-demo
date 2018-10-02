@@ -13,14 +13,14 @@ import App from '../App';
 import DeviceInfo from 'react-native-device-info';
 
 // Import native-base UI components
-import { 
+import {
   Container,
   Button, Icon,
   Text,
   Header, Footer, Title,
-  Content, 
+  Content,
   Left, Body, Right,
-  Switch 
+  Switch
 } from 'native-base';
 
 ////
@@ -73,7 +73,7 @@ export default class SimpleMap extends Component<{}> {
       params: {
         // Required for tracker.transistorsoft.com
         device: {
-          uuid: DeviceInfo.getUniqueID(),
+          uuid: (DeviceInfo.getModel() + '-' + DeviceInfo.getSystemVersion()).replace(/[\s\.,]/g, '-'),
           model: DeviceInfo.getModel(),
           platform: DeviceInfo.getSystemName(),
           manufacturer: DeviceInfo.getManufacturer(),
@@ -92,7 +92,7 @@ export default class SimpleMap extends Component<{}> {
         enabled: state.enabled,
         isMoving: state.isMoving,
         showsUserLocation: state.enabled
-      });      
+      });
     });
   }
 
@@ -118,7 +118,7 @@ export default class SimpleMap extends Component<{}> {
     this.setState({
       isMoving: event.isMoving
     });
-    let location = event.location;    
+    let location = event.location;
   }
   /**
   * @event activitychange
@@ -162,7 +162,7 @@ export default class SimpleMap extends Component<{}> {
           showsUserLocation: true
         });
       });
-    } else {      
+    } else {
       BackgroundGeolocation.stop();
     }
   }
@@ -267,7 +267,7 @@ export default class SimpleMap extends Component<{}> {
             strokeColor='rgba(0,179,253, 0.6)'
             strokeWidth={6}
             zIndex={0}
-          />        
+          />
           {this.state.markers.map((marker) => (
             <MapView.Marker
               key={marker.key}
@@ -277,7 +277,7 @@ export default class SimpleMap extends Component<{}> {
               <View style={[styles.markerIcon]}></View>
             </MapView.Marker>))
           }
-        </MapView>        
+        </MapView>
 
         <Footer style={styles.footer}>
           <Left style={{flex:0.3}}>
@@ -307,9 +307,9 @@ export default class SimpleMap extends Component<{}> {
     this.setState({
       showsUserLocation: false
     });
-    
+
     App.goHome(this.props.navigation);
-  }  
+  }
 }
 
 var styles = StyleSheet.create({
@@ -324,7 +324,7 @@ var styles = StyleSheet.create({
   },
   footer: {
     backgroundColor: '#fedd1e',
-    paddingLeft: 10, 
+    paddingLeft: 10,
     paddingRight: 10
   },
   footerBody: {
