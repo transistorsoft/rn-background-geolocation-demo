@@ -114,7 +114,7 @@ export default class SimpleMap extends Component<{}> {
   * @event motionchange
   */
   onMotionChange(event) {
-    console.log('[event] motionchange: ', event.isMovign, event.location);
+    console.log('[event] motionchange: ', event.isMoving, event.location);
     this.setState({
       isMoving: event.isMoving
     });
