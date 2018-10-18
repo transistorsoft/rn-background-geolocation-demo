@@ -1,5 +1,7 @@
 
-import React, { Component } from 'react';
+import React from 'react'
+import {Component} from 'react';
+
 import {
   Platform,
   StyleSheet,
@@ -33,12 +35,29 @@ import {
 // 2.  private github repo (customers only):  react-native-background-geolocation-android
 //
 // This simply allows one to change the import in a single file.
-import BackgroundGeolocation from '../react-native-background-geolocation';
+import BackgroundGeolocation, {
+  State,
+  Location,
+  LocationError,
+  Geofence,
+  HttpEvent,
+  MotionActivityEvent,
+  ProviderChangeEvent,
+  MotionChangeEvent,
+  GeofenceEvent,
+  GeofencesChangeEvent,
+  HeartbeatEvent,
+  ConnectivityChangeEvent
+} from '../react-native-background-geolocation';
+
 import BackgroundFetch from "react-native-background-fetch";
+
+declare var global:any;
 global.BackgroundFetch = BackgroundFetch;
 
 // react-native-maps
-import MapView from 'react-native-maps';
+import MapView, {Marker, Polyline, Circle} from 'react-native-maps';
+
 const LATITUDE_DELTA = 0.00922;
 const LONGITUDE_DELTA = 0.00421;
 
@@ -65,18 +84,52 @@ if (Platform.OS == 'android') {
   ACTION_BUTTON_OFFSET_Y = 95;
 }
 
+type IProps = {
+  navigation: any;
+}
+type IState = {
+  username?: string;
+  enabled?: boolean;
+  isMoving?: boolean;
+  isMainMenuOpen?: boolean;
+  isSyncing?: boolean;
+  isEmailingLog?: boolean;
+  isDestroyingLocations?: boolean;
+  isPressingOnMap?: boolean;
+  isResettingOdometer?: boolean;
+  mapScrollEnabled?: boolean,
+  showsUserLocation?: boolean,
+  followsUserLocation?: boolean,
 
-export default class HomeView extends Component<{}> {
-  constructor(props) {
+  motionActivity: MotionActivityEvent;
+  odometer?: string;
+  centerCoordinate?: any;
+  stationaryLocation?: any;
+  stationaryRadius?: number;
+  markers?: any;
+  stopZones?: any;
+  geofences?: any;
+  geofencesHit?: any;
+  geofencesHitEvents?: any;
+  coordinates?: any,
+  // Application settings
+  settings?: any,
+  // BackgroundGeolocation state
+  bgGeo: State
+}
+export default class HomeView extends Component<IProps, IState> {
+  private lastMotionChangeLocation?:Location;
+
+  private settingsService:SettingsService;
+
+  constructor(props:any) {
     super(props);
-
-    this.lastMotionChangeLocation = undefined;
 
     this.state = {
       enabled: false,
       isMoving: false,
       motionActivity: {activity: 'unknown', confidence: 100},
-      odometer: 0,
+      odometer: '0.0',
       username: props.navigation.state.params.username,
       // ActionButton state
       isMainMenuOpen: true,
@@ -92,6 +145,7 @@ export default class HomeView extends Component<{}> {
       mapScrollEnabled: false,
       showsUserLocation: false,
       followsUserLocation: false,
+      isResettingOdometer: false,
       stationaryLocation: {timestamp: '',latitude:0,longitude:0},
       stationaryRadius: 0,
       markers: [],
@@ -103,7 +157,7 @@ export default class HomeView extends Component<{}> {
       // Application settings
       settings: {},
       // BackgroundGeolocation state
-      bgGeo: {}
+      bgGeo: {enabled: false, schedulerEnabled: false, trackingMode: 1, odometer: 0}
     };
 
     this.settingsService = SettingsService.getInstance();
@@ -118,7 +172,7 @@ export default class HomeView extends Component<{}> {
     this.configureBackgroundGeolocation();
 
     // Fetch current app settings state.
-    this.settingsService.getApplicationState((state) => {
+    this.settingsService.getApplicationState((state:any) => {
       this.setState({
         settings: state
       });
@@ -140,23 +194,23 @@ export default class HomeView extends Component<{}> {
       let location = await BackgroundGeolocation.getCurrentPosition({persist: true, samples:1, extras: {'context': 'background-fetch-position'}});
       console.log('- BackgroundFetch current position: ', location) // <-- don't see this
       BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA);
-    }, error => {
+    }, (error:string) => {
       console.log('[js] RNBackgroundFetch failed to start')
     });
 
     // Step 1:  Listen to events:
-    BackgroundGeolocation.on('location', this.onLocation.bind(this));
-    BackgroundGeolocation.on('motionchange', this.onMotionChange.bind(this));
-    BackgroundGeolocation.on('heartbeat', this.onHeartbeat.bind(this));
-    BackgroundGeolocation.on('http', this.onHttp.bind(this));
-    BackgroundGeolocation.on("geofence", this.onGeofence.bind(this));
-    BackgroundGeolocation.on("schedule", this.onSchedule.bind(this));
-    BackgroundGeolocation.on('activitychange', this.onActivityChange.bind(this));
-    BackgroundGeolocation.on('providerchange', this.onProviderChange.bind(this));
-    BackgroundGeolocation.on('geofenceschange', this.onGeofencesChange.bind(this));
-    BackgroundGeolocation.on('powersavechange', this.onPowerSaveChange.bind(this));
-    BackgroundGeolocation.on("connectivitychange", this.onConnectivityChange.bind(this));
-    BackgroundGeolocation.on("enabledchange", this.onEnabledChange.bind(this));
+    BackgroundGeolocation.onLocation(this.onLocation.bind(this), this.onLocationError.bind(this));
+    BackgroundGeolocation.onMotionChange(this.onMotionChange.bind(this));
+    BackgroundGeolocation.onHeartbeat(this.onHeartbeat.bind(this));
+    BackgroundGeolocation.onHttp(this.onHttp.bind(this));
+    BackgroundGeolocation.onGeofence(this.onGeofence.bind(this));
+    BackgroundGeolocation.onSchedule(this.onSchedule.bind(this));
+    BackgroundGeolocation.onActivityChange(this.onActivityChange.bind(this));
+    BackgroundGeolocation.onProviderChange(this.onProviderChange.bind(this));
+    BackgroundGeolocation.onGeofencesChange(this.onGeofencesChange.bind(this));
+    BackgroundGeolocation.onPowerSaveChange(this.onPowerSaveChange.bind(this));
+    BackgroundGeolocation.onConnectivityChange(this.onConnectivityChange.bind(this));
+    BackgroundGeolocation.onEnabledChange(this.onEnabledChange.bind(this));
     // Step 2:  #ready:
     // If you want to override any config options provided by the Settings screen, this is the place to do it, eg:
     // config.stopTimeout = 5;
@@ -170,19 +224,10 @@ export default class HomeView extends Component<{}> {
       stopOnTerminate: false,
       startOnBoot: true,
       heartbeatInterval: 60,
-      enabledHeadless: true,
-      params: {
-        device: {
-          uuid: (DeviceInfo.getModel() + '-' + DeviceInfo.getSystemVersion()).replace(/[\s\.,]/g, '-'),
-          model: DeviceInfo.getModel(),
-          platform: DeviceInfo.getSystemName(),
-          manufacturer: DeviceInfo.getManufacturer(),
-          version: DeviceInfo.getSystemVersion(),
-          framework: 'ReactNative'
-        }
-      },
+      enableHeadless: true,
+      params: BackgroundGeolocation.transistorTrackerParams(DeviceInfo),
       maxDaysToPersist: 14
-    }, (state) => {
+    }, (state:State) => {
       this.setState({
         enabled: state.enabled,
         isMoving: state.isMoving,
@@ -190,14 +235,14 @@ export default class HomeView extends Component<{}> {
         showsUserLocation: state.enabled,
         bgGeo: state
       });
-    }, (error) => {
+    }, (error:string) => {
       console.warn('BackgroundGeolocation error: ', error)
     });
   }
   /**
   * @event location
   */
-  onLocation(location) {
+  onLocation(location:Location) {
     console.log('[location] - ', location);
 
     if (!location.sample) {
@@ -208,14 +253,22 @@ export default class HomeView extends Component<{}> {
     }
     this.setCenter(location);
   }
+
+  /**
+  * @event location error
+  */
+  onLocationError(errorCode:LocationError) {
+    console.log('[location] ERROR - ', errorCode);
+  }
+
   /**
   * @event motionchange
   */
-  onMotionChange(event) {
+  onMotionChange(event:MotionChangeEvent) {
     console.log('[motionchange] - ', event.isMoving, event.location);
     let location = event.location;
 
-    let state = {
+    let state:any = {
       isMoving: event.isMoving
     };
     if (event.isMoving) {
@@ -235,7 +288,8 @@ export default class HomeView extends Component<{}> {
         longitude: 0
       };
     } else {
-      state.stationaryRadius = (this.state.bgGeo.trackingMode) ? 200 : (this.state.bgGeo.geofenceProximityRadius/2);
+      let geofenceProximityRadius = this.state.bgGeo.geofenceProximityRadius || 1000;
+      state.stationaryRadius = (this.state.bgGeo.trackingMode == 1) ? 200 : (geofenceProximityRadius/2);
       state.stationaryLocation = {
         timestamp: location.timestamp,
         latitude: location.coords.latitude,
@@ -248,7 +302,7 @@ export default class HomeView extends Component<{}> {
   /**
   * @event activitychange
   */
-  onActivityChange(event) {
+  onActivityChange(event:MotionActivityEvent) {
     console.log('[activitychange] - ', event);
     this.setState({
       motionActivity: event
@@ -257,42 +311,42 @@ export default class HomeView extends Component<{}> {
   /**
   * @event heartbeat
   */
-  onHeartbeat(params) {
+  onHeartbeat(params:HeartbeatEvent) {
     console.log("[heartbeat] - ", params.location);
   }
 
   /**
   * @event providerchange
   */
-  onProviderChange(event) {
+  onProviderChange(event:ProviderChangeEvent) {
     console.log('[providerchange] - ', event);
   }
   /**
   * @event http
   */
-  onHttp(response) {
+  onHttp(response:HttpEvent) {
     console.log('[http] - ', JSON.stringify(response));
   }
   /**
   * @event geofenceschange
   */
-  onGeofencesChange(event) {
+  onGeofencesChange(event:GeofencesChangeEvent) {
     var on  = event.on;
     var off = event.off;
-    var geofences  = this.state.geofences;
+    var geofences  = this.state.geofences || [];
 
     // Filter out all "off" geofences.
-    geofences = geofences.filter(function(geofence) {
+    geofences = geofences.filter(function(geofence:Geofence) {
       return off.indexOf(geofence.identifier) < 0;
     });
 
     console.log('[geofenceschange] - ', event);
     // Add new "on" geofences.
-    on.forEach(function(geofence) {
-      var marker = geofences.find(function(m) { return m.identifier === geofence.identifier;});
+    on.forEach((geofence:Geofence) => {
+      var marker = geofences.find(function(m:Geofence) { return m.identifier === geofence.identifier;});
       if (marker) { return; }
       geofences.push(this.createGeofenceMarker(geofence));
-    }.bind(this));
+    });
 
     this.setState({
       geofences: geofences
@@ -301,11 +355,12 @@ export default class HomeView extends Component<{}> {
   /**
   * @event geofence
   */
-  onGeofence(geofence) {
-    console.log('[geofence] - ', geofence);
-    let location = geofence.location;
-    var marker = this.state.geofences.find((m) => {
-      return m.identifier === geofence.identifier;
+  onGeofence(event:GeofenceEvent) {
+    console.log('[geofence] - ', event);
+    let location:Location = event.location;
+    let geofences = this.state.geofences || [];
+    var marker = geofences.find((m:any) => {
+      return m.identifier === event.identifier;
     });
     if (!marker) { return; }
 
@@ -314,13 +369,14 @@ export default class HomeView extends Component<{}> {
 
     let coords = location.coords;
 
-    let hit = this.state.geofencesHit.find((hit) => {
-      return hit.identifier === geofence.identifier;
+    let geofencesHit = this.state.geofencesHit || [];
+    let hit = geofencesHit.find((hit:any) => {
+      return hit.identifier === event.identifier;
     });
 
     if (!hit) {
       hit = {
-        identifier: geofence.identifier,
+        identifier: event.identifier,
         radius: marker.radius,
         center: {
           latitude: marker.center.latitude,
@@ -335,22 +391,22 @@ export default class HomeView extends Component<{}> {
     // Get bearing of location relative to geofence center.
     let bearing = this.getBearing(marker.center, location.coords);
     let edgeCoordinate = this.computeOffsetCoordinate(marker.center, marker.radius, bearing);
-    let event = {
+    let record = {
       coordinates: [
         edgeCoordinate,
         {latitude: coords.latitude, longitude: coords.longitude},
       ],
-      action: geofence.action,
-      key: geofence.identifier + ":" + geofence.action + ":" + location.timestamp
+      action: event.action,
+      key: event.identifier + ":" + event.action + ":" + location.timestamp
     };
     this.setState({
-      geofencesHitEvents: [...this.state.geofencesHitEvents, event]
+      geofencesHitEvents: [...this.state.geofencesHitEvents, record]
     });
   }
   /**
   * @event schedule
   */
-  onSchedule(state) {
+  onSchedule(state:State) {
     console.log("[schedule] - ", state.enabled, state);
     this.setState({
       enabled: state.enabled
@@ -359,27 +415,27 @@ export default class HomeView extends Component<{}> {
   /**
   * @event powersavechange
   */
-  onPowerSaveChange(isPowerSaveMode) {
+  onPowerSaveChange(isPowerSaveMode:boolean) {
     console.log('[powersavechange] - ', isPowerSaveMode);
   }
   /**
   * @event connectivitychange
   */
-  onConnectivityChange(event) {
-    console.log('[event] - connectivitychange', event);
+  onConnectivityChange(event:ConnectivityChangeEvent) {
+    console.log('[connectivitychange] - ', event);
     this.settingsService.toast('[connectivitychange] - ' + event.connected);
   }
   /**
   * @event enabledchange
   */
-  onEnabledChange(event) {
-    console.log('[event] - enabledchange', event);
-    this.settingsService.toast('[enabledchange] - ' + event.enabled);
+  onEnabledChange(enabled:boolean) {
+    console.log('[enabledchange] - ', enabled);
+    this.settingsService.toast('[enabledchange] - ' + enabled);
   }
   /**
   * Toggle button handler to #start / #stop the plugin
   */
-  async onToggleEnabled(value) {
+  async onToggleEnabled() {
     this.settingsService.playSound('BUTTON_CLICK');
 
     let enabled = !this.state.enabled;
@@ -394,15 +450,22 @@ export default class HomeView extends Component<{}> {
     if (enabled) {
       let state = await BackgroundGeolocation.getState();
       let startMethod = (state.trackingMode) ? 'start' : 'startGeofences';
-      BackgroundGeolocation[startMethod]((state) => {
-        // We tell react-native-maps to access location only AFTER
-        // the plugin has requested location, otherwise we have a permissions tug-of-war,
-        // since react-native-maps wants WhenInUse permission
-        this.setState({
-          showsUserLocation: enabled,
-          followsUserLocation: enabled
+
+      if (state.trackingMode) {
+        BackgroundGeolocation.start((state:State) => {
+          this.setState({
+            showsUserLocation: enabled,
+            followsUserLocation: enabled
+          });
         });
-      });
+      } else {
+        BackgroundGeolocation.startGeofences((state:State) => {
+          this.setState({
+            showsUserLocation: enabled,
+            followsUserLocation: enabled
+          });
+        });
+      }
     } else {
       BackgroundGeolocation.stop();
       // Clear markers, polyline, geofences, stationary-region
@@ -430,9 +493,9 @@ export default class HomeView extends Component<{}> {
       followsUserLocation: true
     });
 
-    BackgroundGeolocation.getCurrentPosition({persist: true, samples: 1}).then(location => {
+    BackgroundGeolocation.getCurrentPosition({persist: true, samples: 1}).then((location:Location) => {
       console.log('[getCurrentPosition] success: ', location);
-    }).catch(error => {
+    }).catch((error:LocationError) => {
       console.warn('[getCurrentPosition] error: ', error);
     });
   }
@@ -464,12 +527,12 @@ export default class HomeView extends Component<{}> {
   }
 
   getMainMenuIcon() {
-    return <Icon name="ios-add" size={20}/>
+    return <Icon name="ios-add" />
   }
   /**
   * FAB Button command handler
   */
-  onSelectMainMenu(command) {
+  onSelectMainMenu(command:string) {
     switch(command) {
       case 'settings':
         this.settingsService.playSound('OPEN');
@@ -508,7 +571,7 @@ export default class HomeView extends Component<{}> {
 
   emailLog() {
     // First fetch the email from settingsService.
-    this.settingsService.getEmail((email) => {
+    this.settingsService.getEmail((email:string) => {
       if (!email) { return; }  // <-- [Cancel] returns null
       // Confirm email
       this.settingsService.yesNo('Email log', 'Use email address: ' + email + '?', () => {
@@ -540,7 +603,7 @@ export default class HomeView extends Component<{}> {
         this.settingsService.toast('Sync success (' + count + ' records)');
         this.settingsService.playSound('MESSAGE_SENT');
         this.setState({isSyncing: false});
-      }, (error) => {
+      }, (error:string) => {
         this.settingsService.toast('Sync error: ' + error);
         this.setState({isSyncing: false});
       });
@@ -548,7 +611,7 @@ export default class HomeView extends Component<{}> {
   }
 
   async destroyLocations() {
-    let count = BackgroundGeolocation.getCount();
+    let count = await BackgroundGeolocation.getCount();
     if (!count) {
       this.settingsService.toast('Locations database is empty');
       return;
@@ -558,9 +621,9 @@ export default class HomeView extends Component<{}> {
       BackgroundGeolocation.destroyLocations(() => {
         this.setState({isDestroyingLocations: false});
         this.settingsService.toast('Destroyed ' + count + ' records');
-      }, (error) => {
+      }, (error:string) => {
         this.setState({isDestroyingLocations: false});
-        this.settingsService.toast('Destroy locations error: ' + error, null, 'LONG');
+        this.settingsService.toast('Destroy locations error: ' + error, 'LONG');
       });
     });
   }
@@ -569,7 +632,7 @@ export default class HomeView extends Component<{}> {
   * Top-right map menu button-handler
   * [show/hide marker] [show/hide polyline] [show/hide geofence hits]
   */
-  onClickMapMenu(command) {
+  onClickMapMenu(command:string) {
     this.settingsService.playSound('BUTTON_CLICK');
 
     let enabled = !this.state.settings[command];
@@ -627,15 +690,15 @@ export default class HomeView extends Component<{}> {
           showsScale={false}
           showsTraffic={false}
           toolbarEnabled={false}>
-          <MapView.Circle
+          <Circle
             key={this.state.stationaryLocation.timestamp}
-            radius={this.state.stationaryRadius}
+            radius={this.state.stationaryRadius||200}
             fillColor={STATIONARY_REGION_FILL_COLOR}
             strokeColor={STATIONARY_REGION_STROKE_COLOR}
             strokeWidth={1}
             center={{latitude: this.state.stationaryLocation.latitude, longitude: this.state.stationaryLocation.longitude}}
           />
-          <MapView.Polyline
+          <Polyline
             key="polyline"
             coordinates={(!this.state.settings.hidePolyline) ? this.state.coordinates : []}
             geodesic={true}
@@ -713,10 +776,12 @@ export default class HomeView extends Component<{}> {
       </Container>
     );
   }
+  onPressGeofence() {
 
+  }
   getMotionActivityIcon() {
-    this.state.motionActivity.activity
-    switch (this.state.motionActivity.activity) {
+    let activity = (this.state.motionActivity != null) ? this.state.motionActivity.activity : undefined;
+    switch (activity) {
       case 'unknown':
         return 'ios-help-circle';
       case 'still':
@@ -738,35 +803,35 @@ export default class HomeView extends Component<{}> {
 
   renderMarkers() {
     if (this.state.settings.hideMarkers) { return; }
-    let rs = [];
-    this.state.markers.map((marker) => {
+    let rs:any = [];
+    this.state.markers.map((marker:any) => {
       rs.push((
-        <MapView.Marker
+        <Marker
           key={marker.key}
           coordinate={marker.coordinate}
           anchor={{x:0, y:0.1}}
           title={marker.title}>
           <View style={[styles.markerIcon]}></View>
-        </MapView.Marker>
+        </Marker>
       ));
     });
     return rs;
   }
 
   renderStopZoneMarkers() {
-    return this.state.stopZones.map((stopZone) => (
-      <MapView.Marker
+    return this.state.stopZones.map((stopZone:any) => (
+      <Marker
         key={stopZone.key}
         coordinate={stopZone.coordinate}
         anchor={{x:0, y:0}}>
         <View style={[styles.stopZoneMarker]}></View>
-      </MapView.Marker>
+      </Marker>
     ));
   }
 
   renderActiveGeofences() {
-    return this.state.geofences.map((geofence) => (
-      <MapView.Circle
+    return this.state.geofences.map((geofence:any) => (
+      <Circle
         key={geofence.identifier}
         radius={geofence.radius}
         center={geofence.center}
@@ -781,22 +846,22 @@ export default class HomeView extends Component<{}> {
   renderGeofencesHit() {
     if (this.state.settings.hideGeofenceHits) { return; }
     let rs = [];
-    return this.state.geofencesHit.map((hit) => {
+    return this.state.geofencesHit.map((hit:any) => {
       return (
-        <MapView.Circle
+        <Circle
           key={"hit:" + hit.identifier}
           radius={hit.radius+1}
           center={hit.center}
           strokeWidth={1}
           strokeColor={COLORS.black}>
-        </MapView.Circle>
+        </Circle>
       );
     });
   }
 
   renderGeofencesHitEvents() {
     if (this.state.settings.hideGeofenceHits) { return; }
-    return this.state.geofencesHitEvents.map((event) => {
+    return this.state.geofencesHitEvents.map((event:any) => {
       let isEnter = (event.action === 'ENTER');
       let color = undefined;
       switch(event.action) {
@@ -815,27 +880,26 @@ export default class HomeView extends Component<{}> {
       };
       return (
         <View key={event.key}>
-          <MapView.Polyline
+          <Polyline
             key="polyline"
             coordinates={event.coordinates}
             geodesic={true}
             strokeColor={COLORS.black}
             strokeWidth={1}
-            style={styles.geofenceHitPolyline}
             zIndex={1}
             lineCap="square" />
-          <MapView.Marker
+          <Marker
             key="edge_marker"
             coordinate={event.coordinates[0]}
             anchor={{x:0, y:0.1}}>
             <View style={[styles.geofenceHitMarker, markerStyle]}></View>
-          </MapView.Marker>
-          <MapView.Marker
+          </Marker>
+          <Marker
             key="location_marker"
             coordinate={event.coordinates[1]}
             anchor={{x:0, y:0.1}}>
             <View style={styles.markerIcon}></View>
-          </MapView.Marker>
+          </Marker>
         </View>
       );
     });
@@ -844,7 +908,7 @@ export default class HomeView extends Component<{}> {
   /**
   * Map methods
   */
-  setCenter(location) {
+  setCenter(location:Location) {
     if (!this.refs.map) { return; }
     if (!this.state.followsUserLocation) { return; }
 
@@ -856,7 +920,7 @@ export default class HomeView extends Component<{}> {
     });
   }
 
-  addMarker(location) {
+  addMarker(location:Location) {
     let marker = {
       key: location.uuid,
       title: location.timestamp,
@@ -876,7 +940,7 @@ export default class HomeView extends Component<{}> {
     });
   }
 
-  createGeofenceMarker(geofence) {
+  createGeofenceMarker(geofence:Geofence) {
     return {
       radius: geofence.radius,
       center: {
@@ -896,7 +960,7 @@ export default class HomeView extends Component<{}> {
     });
   }
 
-  onLongPress(params) {
+  onLongPress(params:any) {
     var coordinate = params.nativeEvent.coordinate;
     this.settingsService.playSound('LONG_PRESS_ACTIVATE');
     this.props.navigation.navigate('Geofence', {
@@ -909,6 +973,7 @@ export default class HomeView extends Component<{}> {
       coordinates: [],
       markers: [],
       stopZones: [],
+      geofences: [],
       geofencesHit: [],
       geofencesHitEvents: []
     });
@@ -925,7 +990,7 @@ export default class HomeView extends Component<{}> {
     return n * (180 / Math.PI);
   }
 
-  getBearing(start, end){
+  getBearing(start:any, end:any){
     let startLat = this.toRad(start.latitude);
     let startLong = this.toRad(start.longitude);
     let endLat = this.toRad(end.latitude);
@@ -943,7 +1008,7 @@ export default class HomeView extends Component<{}> {
     return (this.toDeg(Math.atan2(dLong, dPhi)) + 360.0) % 360.0;
   }
 
-  computeOffsetCoordinate(coordinate, distance, heading) {
+  computeOffsetCoordinate(coordinate:any, distance:number, heading:number) {
     distance = distance / (6371*1000);
     heading = this.toRad(heading);
 
@@ -997,14 +1062,6 @@ var styles = StyleSheet.create({
   status: {
     fontSize: 12
   },
-  markerIcon: {
-    borderWidth:1,
-    borderColor:'#000000',
-    backgroundColor: 'rgba(0,179,253, 0.6)',
-    width: 10,
-    height: 10,
-    borderRadius: 5
-  },
   stopZoneMarker: {
     borderWidth:1,
     borderColor: 'red',
@@ -1016,7 +1073,7 @@ var styles = StyleSheet.create({
     height: 30
   },
   geofenceHitMarker: {
-    borderWidth:1,
+    borderWidth: 1,
     borderColor:'black',
     borderRadius: 6,
     zIndex: 10,
@@ -1027,6 +1084,7 @@ var styles = StyleSheet.create({
     borderWidth:1,
     borderColor:'#000000',
     backgroundColor: COLORS.polyline_color,
+    //backgroundColor: 'rgba(0,179,253, 0.6)',
     width: 10,
     height: 10,
     borderRadius: 5

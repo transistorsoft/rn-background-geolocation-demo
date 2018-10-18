@@ -2,6 +2,8 @@ import { AppRegistry } from 'react-native';
 import App from './src/App';
 
 import BackgroundGeolocation from "./src/react-native-background-geolocation";
+
+
 // Make BackgroundGeolocation API global for handy access in Javascript Debugger console
 global.BackgroundGeolocation = BackgroundGeolocation;
 
@@ -28,6 +30,7 @@ let BackgroundGeolocationHeadlessTask = async (event) => {
       break;
   }
 }
+
 
 BackgroundGeolocation.registerHeadlessTask(BackgroundGeolocationHeadlessTask);
 

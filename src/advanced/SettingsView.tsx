@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
-import {  
+import React from 'react'
+import {Component} from 'react';
+
+import {
   View,
   StyleSheet,
   Platform,
 } from 'react-native';
 
-import { 
+import {
   Container,
   Button, Icon,
   Text,
   Header, Title,
-  Content, 
+  Content,
   Left, Body, Right,
   Form, Label, Input, Picker, Switch,
   Item as FormItem,
@@ -28,17 +30,20 @@ const Item = Picker.Item;
 // 2.  private github repo (customers only):  react-native-background-geolocation-android
 //
 // This simply allows one to change the import in a single file.
-import BackgroundGeolocation from "../react-native-background-geolocation";
+import BackgroundGeolocation, {State} from "../react-native-background-geolocation";
 
 import SettingsService from './lib/SettingsService';
 import {SOUNDS, COLORS} from './lib/config';
 
-export default class SettingsView extends Component<{}> {
+export default class SettingsView extends Component<any, any> {
+  settingsService: SettingsService;
+  changeBuffer:number;
 
-  constructor(props) {
+  constructor(props:any) {
     super(props);
 
     this.settingsService = SettingsService.getInstance();
+    this.changeBuffer = 0;
 
     // Default state
     this.state = {
@@ -55,7 +60,7 @@ export default class SettingsView extends Component<{}> {
   }
 
   componentDidMount() {
-    this.settingsService.getPluginState((state) => {
+    this.settingsService.getPluginState((state:State) => {
       this.setState({
         ...state,
         logLevel: this.decodeLogLevel(state.logLevel),
@@ -68,7 +73,7 @@ export default class SettingsView extends Component<{}> {
     this.settingsService.getApplicationState((state) => {
       this.setState(state);
     });
-  }  
+  }
 
   /**
   * Navigate back to home-screen app-switcher
@@ -85,7 +90,7 @@ export default class SettingsView extends Component<{}> {
     this.props.navigation.navigate('About');
   }
 
-  onChangeTrackingMode(value) {    
+  onChangeTrackingMode(value:any) {
     if (this.state.trackingMode === value) { return; }
     this.setState({trackingMode: value});
     if (value === 'location') {
@@ -99,7 +104,7 @@ export default class SettingsView extends Component<{}> {
     }
   }
 
-  onChangeEmail(value) {
+  onChangeEmail(value:any) {
     this.settingsService.onChange('email', value);
     this.setState({email: value});
   }
@@ -118,7 +123,7 @@ export default class SettingsView extends Component<{}> {
     if (this.state.isLoadingGeofences) { return false; }
     this.setState({isLoadingGeofences: true});
 
-    this.settingsService.getApplicationState((state) => {
+    this.settingsService.getApplicationState((state:any) => {
       let geofences = this.settingsService.getTestGeofences('city_drive', state);
 
       BackgroundGeolocation.addGeofences(geofences, () => {
@@ -137,7 +142,7 @@ export default class SettingsView extends Component<{}> {
     BackgroundGeolocation.removeGeofences();
   }
 
-  onFieldChange(setting, value) {
+  onFieldChange(setting:any, value:any) {
     let currentValue = this.state[setting.name];
 
     switch (setting.dataType) {
@@ -150,12 +155,12 @@ export default class SettingsView extends Component<{}> {
       return;
     }
 
-    let state = {};
+    let state:any = {};
     state[setting.name] = value;
     this.setState(state);
 
     // Buffer field-changes by 500ms
-    function doChange() {
+    let doChange = () => {
       // Encode applicable settings for consumption by plugin.
       switch(setting.name) {
         case 'logLevel':
@@ -165,7 +170,7 @@ export default class SettingsView extends Component<{}> {
           value = this.encodeNotficationPriority(value);
           break;
       }
-      let config = {};
+      let config:any = {};
       config[setting.name] = value;
 
       BackgroundGeolocation.setConfig(config, (state) => {
@@ -174,14 +179,15 @@ export default class SettingsView extends Component<{}> {
     }
 
     if (this.changeBuffer) {
-      this.changeBuffer = clearTimeout(this.changeBuffer);
+      clearTimeout(this.changeBuffer);
+      this.changeBuffer = 0;
     }
     this.changeBuffer = setTimeout(doChange.bind(this), 500);
   }
 
-  onChangeGeofence(setting, value) {
+  onChangeGeofence(setting:any, value:any) {
     this.settingsService.onChange(setting, value);
-    let state = {};
+    let state:any = {};
     state[setting.name] = value;
     this.setState(state);
   }
@@ -245,37 +251,37 @@ export default class SettingsView extends Component<{}> {
                 <Button full danger onPress={this.onClickClearGeofences.bind(this)}>
                   <Text>Clear</Text>
                 </Button>
-              </Left>              
+              </Left>
               <Right style={{marginLeft: 3}}>
-                <Button full onPress={this.onClickLoadGeofences.bind(this)} isLoading={this.state.isLoadingGeofences}>                  
+                <Button full onPress={this.onClickLoadGeofences.bind(this)} isLoading={this.state.isLoadingGeofences}>
                   {!this.state.isLoadingGeofences ? (<Text>Load</Text>) : (<Spinner color="white" size="small" />)}
                 </Button>
               </Right>
             </FormItem>
-            
+
             {this.getGeofenceTestSettings()}
           </Form>
         </Content>
-                  
+
       </Container>
     );
   }
 
-  renderPluginSettings(section) {
-    return this.settingsService.getPluginSettings(section).map((setting) => {
+  renderPluginSettings(section:string) {
+    return this.settingsService.getPluginSettings(section).map((setting:any) => {
       return this.buildField(setting, this.onFieldChange.bind(this));
     });
   }
 
   getGeofenceTestSettings() {
-    return this.settingsService.getApplicationSettings('geofence').map((setting) => {
+    return this.settingsService.getApplicationSettings('geofence').map((setting:any) => {
       console.log('- setting: ', setting);
 
       return this.buildField(setting, this.onChangeGeofence.bind(this));
     });
   }
 
-  buildField(setting, onValueChange) {
+  buildField(setting:any, onValueChange:Function) {
     let field = null;
     switch(setting.inputType) {
       case 'text':
@@ -286,8 +292,8 @@ export default class SettingsView extends Component<{}> {
         );
         break;
       case 'select':
-        let items = [];
-        setting.values.forEach((value) => {
+        let items:any = [];
+        setting.values.forEach((value:any) => {
           items.push((<Item label={value.toString()} value={value} key={setting.name + ":" + value} />));
         });
         field = (
@@ -446,12 +452,15 @@ export default class SettingsView extends Component<{}> {
 const styles = StyleSheet.create({
   container: {
     //backgroundColor: '#fefefe'
-  }, 
+  },
   header: {
     backgroundColor: '#fedd1e'
   },
   title: {
     color: '#000'
+  },
+  content: {
+
   },
   headerItem: {
     marginTop: 20,

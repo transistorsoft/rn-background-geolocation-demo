@@ -4,7 +4,8 @@
 * - GeofenceView
 * - AboutView
 */
-import React, { Component } from 'react';
+import React from 'react'
+import {Component} from 'react';
 
 import { createStackNavigator, NavigationActions } from 'react-navigation';
 
@@ -13,7 +14,7 @@ import SettingsView from './SettingsView';
 import GeofenceView from './GeofenceView';
 import AboutView from './AboutView';
 
-export default AdvancedApp = createStackNavigator({
+const AdvancedApp = createStackNavigator({
   Home: {
     screen: HomeView
   },
@@ -29,5 +30,7 @@ export default AdvancedApp = createStackNavigator({
 }, {
   initialRouteName: 'Home',
   headerMode: 'none',
-  mode: 'modal'  
+  mode: 'modal'
 });
+
+export default AdvancedApp;

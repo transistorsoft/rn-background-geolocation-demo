@@ -17,7 +17,7 @@ export default class App extends Component<{}> {
   /**
   * Helper method for resetting the router to Home screen
   */
-  static goHome(navigation) {
+  static goHome(navigation:any) {
     AsyncStorage.setItem("@transistorsoft:initialRouteName", 'Home');
     let action = StackActions.reset({
       index: 0,
@@ -26,10 +26,10 @@ export default class App extends Component<{}> {
       ],
       key: null
     });
-    navigation.dispatch(action);    
+    navigation.dispatch(action);
   }
 
-  static setRootRoute(routeName) {
+  static setRootRoute(routeName:string) {
     AsyncStorage.setItem("@transistorsoft:initialRouteName", routeName);
   }
 

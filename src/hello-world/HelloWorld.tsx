@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react'
+import {Component} from 'react';
+
 import {
   Platform,
   StyleSheet,
@@ -30,13 +32,29 @@ import { Row } from 'react-native-easy-grid';
 // 2.  private github repo (customers only):  react-native-background-geolocation-android
 //
 // This simply allows one to change the import in a single file.
-import BackgroundGeolocation from "../react-native-background-geolocation";
+import BackgroundGeolocation, {
+  Location,
+  MotionChangeEvent,
+  ProviderChangeEvent,
+  HttpEvent,
+  HeartbeatEvent,
+  MotionActivityEvent
+} from "../react-native-background-geolocation";
 
 const TRACKER_HOST = 'http://tracker.transistorsoft.com/locations/';
 
-export default class HelloWorld extends Component<{}> {
-
-  constructor(props) {
+type IProps = {
+  navigation: any;
+};
+type IState = {
+  enabled?: boolean;
+  isMoving?: boolean;
+  username?: string;
+  events: Array<any>
+};
+export default class HelloWorld extends Component<IProps, IState> {
+  eventId: number;
+  constructor(props:IProps) {
     super(props);
 
     this.eventId = 1;
@@ -51,13 +69,13 @@ export default class HelloWorld extends Component<{}> {
 
   componentDidMount() {
     // Step 1:  Listen to events:
-    BackgroundGeolocation.on('location', this.onLocation.bind(this));
-    BackgroundGeolocation.on('motionchange', this.onMotionChange.bind(this));
-    BackgroundGeolocation.on('activitychange', this.onActivityChange.bind(this));
-    BackgroundGeolocation.on('providerchange', this.onProviderChange.bind(this));
-    BackgroundGeolocation.on('powersavechange', this.onPowerSaveChange.bind(this));
-    BackgroundGeolocation.on('http', this.onHttp.bind(this));
-    BackgroundGeolocation.on('heartbeat', this.onHeartbeat.bind(this));
+    BackgroundGeolocation.onLocation(this.onLocation.bind(this));
+    BackgroundGeolocation.onMotionChange(this.onMotionChange.bind(this));
+    BackgroundGeolocation.onActivityChange(this.onActivityChange.bind(this));
+    BackgroundGeolocation.onProviderChange(this.onProviderChange.bind(this));
+    BackgroundGeolocation.onPowerSaveChange(this.onPowerSaveChange.bind(this));
+    BackgroundGeolocation.onHttp(this.onHttp.bind(this));
+    BackgroundGeolocation.onHeartbeat(this.onHeartbeat.bind(this));
 
     // Step 2:  #configure:
     BackgroundGeolocation.ready({
@@ -93,15 +111,15 @@ export default class HelloWorld extends Component<{}> {
   /**
   * @event location
   */
-  onLocation(location) {
+  onLocation(location:Location) {
     console.log('[event] location: ', location);
     this.addEvent('location', new Date(location.timestamp), location);
   }
   /**
   * @event motionchange
   */
-  onMotionChange(event) {
-    console.log('[event] motionchange: ', event.isMovign, event.location);
+  onMotionChange(event:MotionChangeEvent) {
+    console.log('[event] motionchange: ', event.isMoving, event.location);
     this.setState({
       isMoving: event.isMoving
     });
@@ -110,7 +128,7 @@ export default class HelloWorld extends Component<{}> {
   /**
   * @event activitychange
   */
-  onActivityChange(event) {
+  onActivityChange(event:MotionActivityEvent) {
     console.log('[event] activitychange: ', event);
     this.addEvent('activitychange', new Date(), event);
   }
@@ -118,33 +136,33 @@ export default class HelloWorld extends Component<{}> {
   /**
   * @event providerchange
   */
-  onProviderChange(event) {
+  onProviderChange(event:ProviderChangeEvent) {
     console.log('[event] providerchange', event);
     this.addEvent('providerchange', new Date(), event);
   }
   /**
   * @event powersavechange
   */
-  onPowerSaveChange(isPowerSaveMode) {
+  onPowerSaveChange(isPowerSaveMode:boolean) {
     console.log('[event] powersavechange', isPowerSaveMode);
     this.addEvent('powersavechange', new Date(), {isPowerSaveMode: isPowerSaveMode});
   }
   /**
   * @event heartbeat
   */
-  onHttp(response) {
+  onHttp(response:HttpEvent) {
     console.log('[event] http: ', response);
     this.addEvent('http', new Date(), response);
   }
   /**
   * @event heartbeat
   */
-  onHeartbeat(event) {
+  onHeartbeat(event:HeartbeatEvent) {
     console.log('[event] heartbeat: ', event);
     this.addEvent('heartbeat', new Date(), event);
   }
 
-  onToggleEnabled(value) {
+  onToggleEnabled() {
     let enabled = !this.state.enabled;
     this.setState({
       enabled: enabled,
@@ -158,14 +176,14 @@ export default class HelloWorld extends Component<{}> {
   }
 
   onClickGetCurrentPosition() {
-    BackgroundGeolocation.getCurrentPosition((location) => {
-      console.log('- getCurrentPosition success: ', location);
-    }, (error) => {
-      console.warn('- getCurrentPosition error: ', error);
-    }, {
+    BackgroundGeolocation.getCurrentPosition({
       persist: true,
       samples: 1,
       maximumAge: 5000
+    }, (location:Location) => {
+      console.log('- getCurrentPosition success: ', location);
+    }, (error:number) => {
+      console.warn('- getCurrentPosition error: ', error);
     });
   }
 
@@ -183,7 +201,7 @@ export default class HelloWorld extends Component<{}> {
   /**
   * Add an event to list
   */
-  addEvent(name, date, object) {
+  addEvent(name:string, date:Date, object:any) {
     let event = {
       key: this.eventId++,
       name: name,
@@ -198,7 +216,7 @@ export default class HelloWorld extends Component<{}> {
   }
 
   renderEvents() {
-    return this.state.events.map((event) => (
+    return this.state.events.map((event:any) => (
       <View key={event.key} style={styles.listItem}>
         <Row style={styles.itemHeader}>
           <Left style={{flex:1}}><Text style={styles.eventName}>[event] {event.name}</Text></Left>
@@ -263,6 +281,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#272727'
   },
+  content: {},
+  list: {},
   header: {
     backgroundColor: '#fedd1e'
   },

@@ -25,13 +25,13 @@ import HelloWorld from './hello-world/HelloWorld';
 import SimpleMap from './simple-map/SimpleMap';
 import AdvancedApp from './advanced/AdvancedApp';
 
-class Root extends Component<{}> {  
+class Root extends Component<any, any> {
   componentDidMount() {
     let navigation = this.props.navigation;
 
     // Fetch current routeName (ie: HelloWorld, SimpleMap, Advanced)
     AsyncStorage.getItem("@transistorsoft:initialRouteName", (err, page) => {
-      let params = {username: undefined};
+      let params:any = {username: undefined};
       if (!page) {
         // Default route:  Home
         page = "Home";
@@ -76,7 +76,7 @@ export default Navigator = createStackNavigator({
 }, {
   initialRouteName: 'Root',
   headerMode: 'none',
-  onTransitionStart: (transition) => {
+  onTransitionStart: (transition:any) => {
     // Store the current page route as the initialRouteName so that app boots immediately
     // into the currently selected SampleApp
     // - HelloWorld
