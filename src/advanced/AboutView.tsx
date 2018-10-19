@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react'
+import {Component} from 'react';
+
 import {
   StyleSheet,
   View,
   WebView
 } from 'react-native';
 
-import { 
+import {
   Container,
   Button, Icon,
   Text,
@@ -13,7 +15,7 @@ import {
   Left, Body, Right
 } from 'native-base';
 
-export default class AboutView extends Component<{}> {
+export default class AboutView extends Component<any, any> {
 
   render() {
     return (
@@ -28,10 +30,10 @@ export default class AboutView extends Component<{}> {
             <Title style={styles.title}>About</Title>
           </Body>
           <Right>
-            
+
           </Right>
         </Header>
-        
+
         <Container>
           <WebView
             source={{uri: 'http://www.transistorsoft.com/shop/products/react-native-background-geolocation'}}

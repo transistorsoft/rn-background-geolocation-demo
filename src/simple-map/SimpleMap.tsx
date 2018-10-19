@@ -1,5 +1,6 @@
+import React from 'react'
+import {Component} from 'react';
 
-import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -23,6 +24,12 @@ import {
   Switch
 } from 'native-base';
 
+// react-native-maps
+import MapView, {
+  Marker,
+  Polyline
+} from 'react-native-maps';
+
 ////
 // Import BackgroundGeolocation plugin
 // Note: normally you will not specify a relative url ../ here.  I do this in the sample app
@@ -32,24 +39,41 @@ import {
 // 2.  private github repo (customers only):  react-native-background-geolocation-android
 //
 // This simply allows one to change the import in a single file.
-import BackgroundGeolocation from '../react-native-background-geolocation';
+import BackgroundGeolocation, {
+  Location,
+  MotionChangeEvent,
+  MotionActivityEvent,
+  ProviderChangeEvent
+} from '../react-native-background-geolocation';
 
-// react-native-maps
-import MapView from 'react-native-maps';
 const LATITUDE_DELTA = 0.00922;
 const LONGITUDE_DELTA = 0.00421;
 
 const TRACKER_HOST = 'http://tracker.transistorsoft.com/locations/';
 
-export default class SimpleMap extends Component<{}> {
-  constructor(props) {
+type IProps = {
+  navigation: any
+};
+type IState = {
+  enabled?: boolean;
+  isMoving?: boolean;
+  showsUserLocation?: boolean;
+  motionActivity: MotionActivityEvent;
+  odometer: string;
+  username: string;
+  markers: Array<any>;
+  coordinates: Array<any>;
+
+};
+export default class SimpleMap extends Component<IProps, IState> {
+  constructor(props:any) {
     super(props);
 
     this.state = {
       enabled: false,
       isMoving: false,
       motionActivity: {activity: 'unknown', confidence: 100},
-      odometer: 0,
+      odometer: '0.0',
       username: props.navigation.state.params.username,
       // MapView
       markers: [],
@@ -60,11 +84,11 @@ export default class SimpleMap extends Component<{}> {
 
   componentDidMount() {
     // Step 1:  Listen to events:
-    BackgroundGeolocation.on('location', this.onLocation.bind(this));
-    BackgroundGeolocation.on('motionchange', this.onMotionChange.bind(this));
-    BackgroundGeolocation.on('activitychange', this.onActivityChange.bind(this));
-    BackgroundGeolocation.on('providerchange', this.onProviderChange.bind(this));
-    BackgroundGeolocation.on('powersavechange', this.onPowerSaveChange.bind(this));
+    BackgroundGeolocation.onLocation(this.onLocation.bind(this));
+    BackgroundGeolocation.onMotionChange(this.onMotionChange.bind(this));
+    BackgroundGeolocation.onActivityChange(this.onActivityChange.bind(this));
+    BackgroundGeolocation.onProviderChange(this.onProviderChange.bind(this));
+    BackgroundGeolocation.onPowerSaveChange(this.onPowerSaveChange.bind(this));
 
     // Step 2:  #configure:
     BackgroundGeolocation.configure({
@@ -99,7 +123,7 @@ export default class SimpleMap extends Component<{}> {
   /**
   * @event location
   */
-  onLocation(location) {
+  onLocation(location:Location) {
     console.log('[event] location: ', location);
 
     if (!location.sample) {
@@ -113,8 +137,8 @@ export default class SimpleMap extends Component<{}> {
   /**
   * @event motionchange
   */
-  onMotionChange(event) {
-    console.log('[event] motionchange: ', event.isMovign, event.location);
+  onMotionChange(event:MotionChangeEvent) {
+    console.log('[event] motionchange: ', event.isMoving, event.location);
     this.setState({
       isMoving: event.isMoving
     });
@@ -123,7 +147,7 @@ export default class SimpleMap extends Component<{}> {
   /**
   * @event activitychange
   */
-  onActivityChange(event) {
+  onActivityChange(event:MotionActivityEvent) {
     console.log('[event] activitychange: ', event);
     this.setState({
       motionActivity: event
@@ -132,17 +156,17 @@ export default class SimpleMap extends Component<{}> {
   /**
   * @event providerchange
   */
-  onProviderChange(event) {
+  onProviderChange(event:ProviderChangeEvent) {
     console.log('[event] providerchange', event);
   }
   /**
   * @event powersavechange
   */
-  onPowerSaveChange(isPowerSaveMode) {
+  onPowerSaveChange(isPowerSaveMode:boolean) {
     console.log('[event] powersavechange', isPowerSaveMode);
   }
 
-  onToggleEnabled(value) {
+  onToggleEnabled() {
     let enabled = !this.state.enabled;
 
     this.setState({
@@ -168,13 +192,13 @@ export default class SimpleMap extends Component<{}> {
   }
 
   onClickGetCurrentPosition() {
-    BackgroundGeolocation.getCurrentPosition((location) => {
+    BackgroundGeolocation.getCurrentPosition({
+      persist: true,
+      samples: 1
+    }, (location:Location) => {
       console.log('- getCurrentPosition success: ', location);
     }, (error) => {
       console.warn('- getCurrentPosition error: ', error);
-    }, {
-      persist: true,
-      samples: 1
     });
   }
 
@@ -185,7 +209,7 @@ export default class SimpleMap extends Component<{}> {
     BackgroundGeolocation.changePace(isMoving);
   }
 
-  addMarker(location) {
+  addMarker(location:Location) {
     let marker = {
       key: location.uuid,
       title: location.timestamp,
@@ -205,7 +229,7 @@ export default class SimpleMap extends Component<{}> {
     });
   }
 
-  setCenter(location) {
+  setCenter(location:Location) {
     if (!this.refs.map) { return; }
 
     this.refs.map.animateToRegion({
@@ -217,16 +241,16 @@ export default class SimpleMap extends Component<{}> {
   }
 
   renderMarkers() {
-    let rs = [];
-    this.state.markers.map((marker) => {
+    let rs:any = [];
+    this.state.markers.map((marker:any) => {
       rs.push((
-        <MapView.Marker
+        <Marker
           key={marker.key}
           coordinate={marker.coordinate}
           anchor={{x:0, y:0.1}}
           title={marker.title}>
           <View style={[styles.markerIcon]}></View>
-        </MapView.Marker>
+        </Marker>
       ));
     });
     return rs;
@@ -260,7 +284,7 @@ export default class SimpleMap extends Component<{}> {
           showsScale={false}
           showsTraffic={false}
           toolbarEnabled={false}>
-          <MapView.Polyline
+          <Polyline
             key="polyline"
             coordinates={this.state.coordinates}
             geodesic={true}
@@ -268,14 +292,14 @@ export default class SimpleMap extends Component<{}> {
             strokeWidth={6}
             zIndex={0}
           />
-          {this.state.markers.map((marker) => (
-            <MapView.Marker
+          {this.state.markers.map((marker:any) => (
+            <Marker
               key={marker.key}
               coordinate={marker.coordinate}
               anchor={{x:0, y:0.1}}
               title={marker.title}>
               <View style={[styles.markerIcon]}></View>
-            </MapView.Marker>))
+            </Marker>))
           }
         </MapView>
 

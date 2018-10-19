@@ -1,5 +1,7 @@
 
-import React, { Component } from 'react';
+import React from 'react'
+import {Component} from 'react';
+
 import {
   Platform,
   StyleSheet,
@@ -8,7 +10,9 @@ import {
   Linking,
   View
 } from 'react-native';
+
 import { NavigationActions, StackActions } from 'react-navigation';
+
 import {
   Container, Header, Content, Footer,
   Left, Body, Right,
@@ -32,14 +36,20 @@ const USERNAME_KEY = '@transistorsoft:username';
 // Only allow alpha-numeric usernames with '-' and '_'
 const USERNAME_VALIDATOR =  /^[a-zA-Z0-9_-]*$/;
 
-export default class Home extends Component<{}> {
-  constructor(props) {
+type IProps = {
+  navigation: any
+}
+type IState = {
+  username: string
+}
+
+export default class Home extends Component<IProps, IState> {
+  constructor(props:IProps) {
     super(props);
 
     let navigation = props.navigation;
     this.state = {
       username: navigation.state.params.username,
-      url: TRACKER_HOST + navigation.state.params.username
     }
   }
 
@@ -54,7 +64,7 @@ export default class Home extends Component<{}> {
       });
     }
   }
-  onClickNavigate(routeName) {
+  onClickNavigate(routeName:string) {
     App.setRootRoute(routeName);
     let action = StackActions.reset({
       index: 0,
@@ -65,8 +75,8 @@ export default class Home extends Component<{}> {
       ],
       key: null
     });
-    this.props.navigation.dispatch(action);    
-    
+    this.props.navigation.dispatch(action);
+
   }
 
   onClickEditUsername() {
@@ -74,23 +84,24 @@ export default class Home extends Component<{}> {
       AsyncStorage.removeItem(USERNAME_KEY);
       this.getUsername(username).then(this.doGetUsername.bind(this)).catch(() => {
         // Revert to current username on [Cancel]
-        AsyncStorage.setItem(USERNAME_KEY, username);
+        AsyncStorage.setItem(USERNAME_KEY, username || DEFAULT_USERNAME);
         this.onClickEditUsername();
       });
     });
   }
 
   onClickViewServer() {
-     Linking.canOpenURL(this.state.url).then(supported => {
+    let url = TRACKER_HOST + this.state.username;
+    Linking.canOpenURL(url).then(supported => {
       if (supported) {
-        Linking.openURL(this.state.url);
+        Linking.openURL(url);
       } else {
-        console.log("Don't know how to open URI: " + this.props.url);
+        console.log("Don't know how to open URI: " + url);
       }
     });
   }
 
-  getUsername(defaultValue) {
+  getUsername(defaultValue?:string) {
     return new Promise((resolve, reject) => {
       AsyncStorage.getItem(USERNAME_KEY, (err, username) => {
         if (username) {
@@ -128,14 +139,13 @@ export default class Home extends Component<{}> {
         }
       });
     });
-  }  
+  }
 
-  doGetUsername(username) {
+  doGetUsername(username:string) {
     AsyncStorage.setItem(USERNAME_KEY, username);
 
     this.setState({
-      username: username,
-      url: TRACKER_HOST + username
+      username: username
     });
 
     BackgroundGeolocation.setConfig({url: TRACKER_HOST + 'locations/' + username});
@@ -159,7 +169,7 @@ export default class Home extends Component<{}> {
         <Footer style={styles.footer}>
             <Card style={styles.userInfo}>
               <Text style={styles.p}>These apps will post locations to Transistor Software's demo server.  You can view your tracking in the browser by visiting:</Text>
-              <Text style={styles.url}>{this.state.url}</Text>
+              <Text style={styles.url}>{TRACKER_HOST + this.state.username}</Text>
 
               <Item inlineLabel disabled>
                 <Label>Username</Label>

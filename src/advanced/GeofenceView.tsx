@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react'
+import {Component} from 'react';
+
 import {
   StyleSheet
 } from 'react-native';
 
-import { 
+import {
   Container,
   Button, Icon,
   Text,
   Header, Title,
-  Content, 
+  Content,
   Left, Body, Right,
   Form, Label, Input, Picker, Switch,
   Item as FormItem
@@ -28,8 +30,8 @@ import BackgroundGeolocation from "../react-native-background-geolocation";
 import {COLORS} from './lib/config';
 import SettingsService from './lib/SettingsService';
 
-export default class GeofenceView extends Component<{}> {
-  constructor(props) {
+export default class GeofenceView extends Component<any, any> {
+  constructor(props:any) {
     super(props);
     this.state = {
       identifier: undefined,
@@ -49,15 +51,15 @@ export default class GeofenceView extends Component<{}> {
   onAddGeofence() {
     console.log('- onAddGeofence', this.state);
     let settingsService = SettingsService.getInstance();
-    
-  
+
+
     settingsService.playSound('ADD_GEOFENCE');
 
     let coordinate = this.props.navigation.state.params.coordinate;
     let radius = parseInt(this.state.radius, 10);
     let loiteringDelay = parseInt(this.state.loiteringDelay, 10);
 
-    let params = {
+    BackgroundGeolocation.addGeofence({
       latitude: coordinate.latitude,
       longitude: coordinate.longitude,
       identifier: this.state.identifier,
@@ -69,10 +71,8 @@ export default class GeofenceView extends Component<{}> {
         radius: radius,
         center: coordinate
       }
-    };
-
-    BackgroundGeolocation.addGeofence(params, (identifier) => {
-      console.log('- addGeofence success: ', identifier);
+    }, () => {
+      console.log('- addGeofence success');
     }, (error) => {
       console.warn('- addGeofence error: ', error);
     });
@@ -80,14 +80,14 @@ export default class GeofenceView extends Component<{}> {
     this.props.navigation.goBack();
   }
 
-  onChangeText(field, value) {
-    let state = {};
+  onChangeText(field:any, value:any) {
+    let state:any = {};
     state[field] = value;
     this.setState(state);
   }
 
-  onToggle(field, value) {
-    let state = {};
+  onToggle(field:any, value:any) {
+    let state:any = {};
     state[field] = value;
     this.setState(state);
   }
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#000'
   },
+  content: {},
   headerItem: {
     marginTop: 20,
     marginLeft: 0,

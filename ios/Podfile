@@ -30,13 +30,15 @@ target 'BGGeolocation' do
 
   pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
 
-  pod 'RNBackgroundGeolocation', :path => '../node_modules/react-native-background-geolocation'
 
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
 
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
   # @see https://github.com/facebook/react-native/issues/20492#issuecomment-422958184
+
+  pod 'RNBackgroundGeolocation', :path => '../node_modules/react-native-background-geolocation'
+
   post_install do |installer|
     installer.pods_project.targets.each do |target|
       # The following is needed to ensure the "archive" step works in XCode.
