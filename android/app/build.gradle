@@ -101,8 +101,8 @@ android {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 213
-        versionName "2.13.0"
+        versionCode 214
+        versionName "2.14.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -114,7 +114,7 @@ android {
             universalApk false  // If true, also generate a universal APK
             include "armeabi-v7a", "x86"
         }
-    }    
+    }
     signingConfigs {
         release {
             /**
