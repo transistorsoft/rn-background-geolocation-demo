@@ -215,6 +215,7 @@ export default class HomeView extends Component<IProps, IState> {
     // If you want to override any config options provided by the Settings screen, this is the place to do it, eg:
     // config.stopTimeout = 5;
     //
+
     BackgroundGeolocation.ready({
       debug: true,
       logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
