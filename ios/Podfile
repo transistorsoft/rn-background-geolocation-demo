@@ -28,7 +28,6 @@ target 'BGGeolocation' do
   pod 'Folly', :podspec => "#{rn_path}/third-party-podspecs/Folly.podspec"
   pod 'yoga', path: "#{rn_path}/ReactCommon/yoga/yoga.podspec"
 
-  pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
 
 
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
@@ -37,7 +36,11 @@ target 'BGGeolocation' do
 
   # @see https://github.com/facebook/react-native/issues/20492#issuecomment-422958184
 
+
+
   pod 'RNBackgroundGeolocation', :path => '../node_modules/react-native-background-geolocation'
+
+  pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
 
   post_install do |installer|
     installer.pods_project.targets.each do |target|
