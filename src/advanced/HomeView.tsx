@@ -88,6 +88,7 @@ type IProps = {
   navigation: any;
 }
 type IState = {
+  appState: any,
   username?: string;
   enabled?: boolean;
   isMoving?: boolean;
@@ -126,6 +127,7 @@ export default class HomeView extends Component<IProps, IState> {
     super(props);
 
     this.state = {
+      appState: AppState.currentState,
       enabled: false,
       isMoving: false,
       motionActivity: {activity: 'unknown', confidence: 100},
@@ -165,11 +167,13 @@ export default class HomeView extends Component<IProps, IState> {
   }
 
   componentDidMount() {
-
-    // Fetch BackgroundGeolocation current state and use that as our config object.  we use the config as persisted by the
-    // Settings screen to configure the plugin.
-
+    // Configure BackgroundGeolocation
     this.configureBackgroundGeolocation();
+
+    // [Optional] Configure BackgroundFetch
+    this.configureBackgroundFetch();
+
+    AppState.addEventListener('change', this._handleAppStateChange);
 
     // Fetch current app settings state.
     this.settingsService.getApplicationState((state:any) => {
@@ -179,25 +183,16 @@ export default class HomeView extends Component<IProps, IState> {
     });
   }
 
+  _handleAppStateChange(state:any) {
+    console.log('[handleAppStateChange] ', state);
+  }
+
   componentWillUnmount() {
     BackgroundGeolocation.removeListeners();
+    AppState.removeEventListener('change', this._handleAppStateChange);
   }
 
   configureBackgroundGeolocation() {
-    BackgroundFetch.configure({
-      minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
-      stopOnTerminate: false, // <-- Android-only,
-      startOnBoot: true, // <-- Android-only
-      enableHeadless: true
-    }, async () => {
-      console.log('- BackgroundFetch start');
-      let location = await BackgroundGeolocation.getCurrentPosition({persist: true, samples:1, extras: {'context': 'background-fetch-position'}});
-      console.log('- BackgroundFetch current position: ', location) // <-- don't see this
-      BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA);
-    }, (error:string) => {
-      console.log('[js] RNBackgroundFetch failed to start')
-    });
-
     // Step 1:  Listen to events:
     BackgroundGeolocation.onLocation(this.onLocation.bind(this), this.onLocationError.bind(this));
     BackgroundGeolocation.onMotionChange(this.onMotionChange.bind(this));
@@ -211,11 +206,11 @@ export default class HomeView extends Component<IProps, IState> {
     BackgroundGeolocation.onPowerSaveChange(this.onPowerSaveChange.bind(this));
     BackgroundGeolocation.onConnectivityChange(this.onConnectivityChange.bind(this));
     BackgroundGeolocation.onEnabledChange(this.onEnabledChange.bind(this));
+
     // Step 2:  #ready:
     // If you want to override any config options provided by the Settings screen, this is the place to do it, eg:
     // config.stopTimeout = 5;
     //
-
     BackgroundGeolocation.ready({
       debug: true,
       logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
@@ -240,6 +235,24 @@ export default class HomeView extends Component<IProps, IState> {
       console.warn('BackgroundGeolocation error: ', error)
     });
   }
+
+  configureBackgroundFetch() {
+    // [Optional] Configure BackgroundFetch.
+    BackgroundFetch.configure({
+      minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
+      stopOnTerminate: false, // <-- Android-only,
+      startOnBoot: true, // <-- Android-only
+      enableHeadless: true
+    }, async () => {
+      console.log('- BackgroundFetch start');
+      let location = await BackgroundGeolocation.getCurrentPosition({persist: true, samples:1, extras: {'context': 'background-fetch-position'}});
+      console.log('- BackgroundFetch current position: ', location) // <-- don't see this
+      BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA);
+    }, (error) => {
+      console.log('[js] RNBackgroundFetch failed to start')
+    });
+  }
+
   /**
   * @event location
   */
