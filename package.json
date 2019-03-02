@@ -1,6 +1,6 @@
 {
   "name": "BGGeolocation",
-  "version": "2.14.1",
+  "version": "3.0.0-beta.3",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -12,10 +12,11 @@
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.3",
     "react-native-action-button": "^2.8.4",
-    "react-native-background-geolocation": "^2.14.1",
-    "react-native-device-info": "^0.22.4",
+    "react-native-background-fetch": "^2.5.0",
+    "react-native-background-geolocation": "^3.0.0-beta.3",
+    "react-native-device-info": "^0.26.2",
     "react-native-easy-grid": "^0.2.0",
-    "react-native-maps": "^0.21.0",
+    "react-native-maps": "^0.23.0",
     "react-native-prompt-android": "^0.3.4",
     "react-native-root-siblings": "git+https://github.com/neilzhengzx/react-native-root-siblings.git",
     "react-native-root-toast": "^3.0.1",

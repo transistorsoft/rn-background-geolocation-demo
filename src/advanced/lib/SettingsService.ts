@@ -85,6 +85,7 @@ const PLUGIN_SETTINGS:any = {
     {name: 'maxBatchSize', group: 'http', dataType: 'integer', inputType: 'select', values: [-1, 50, 100, 250, 500], defaultValue: 250},
     {name: 'maxRecordsToPersist', group: 'http', dataType: 'integer', inputType: 'select', values: [-1, 0, 1, 10, 100, 1000], defaultValue: -1},
     {name: 'maxDaysToPersist', group: 'http', dataType: 'integer', inputType: 'select', values: [-1, 1, 2, 3, 4, 5, 6, 7], defaultValue: -1},
+    {name: 'persistMode', group: 'http', dataType: 'integer', inputType: 'select', values: [2, 1, -1, 0], defaultValue: 2},
     // Application
     {name: 'stopOnTerminate', group: 'application', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: true},
     {name: 'startOnBoot', group: 'application', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
@@ -137,15 +138,15 @@ const SOUND_MAP:any = {
     "FLOURISH": 1509
   },
   "android": {
-    "LONG_PRESS_ACTIVATE": 27,
-    "LONG_PRESS_CANCEL": 94,
-    "ADD_GEOFENCE": 28,
-    "BUTTON_CLICK": 19,
-    "MESSAGE_SENT": 90,
-    "ERROR": 89,
-    "OPEN": 37,
-    "CLOSE": 94,
-    "FLOURISH": 37
+    "LONG_PRESS_ACTIVATE": "DOT_START",
+    "LONG_PRESS_CANCEL": "DOT_STOP",
+    "ADD_GEOFENCE": "DOT_SUCCESS",
+    "BUTTON_CLICK": "BUTTON_CLICK",
+    "MESSAGE_SENT": "SENT",
+    "ERROR": "ERROR",
+    "OPEN": "OPEN",
+    "CLOSE": "CLOSE",
+    "FLOURISH": "MOTIONCHANGE_TRUE"
   }
 };
 

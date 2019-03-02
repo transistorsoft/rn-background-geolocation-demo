@@ -47,7 +47,8 @@ import BackgroundGeolocation, {
   GeofenceEvent,
   GeofencesChangeEvent,
   HeartbeatEvent,
-  ConnectivityChangeEvent
+  ConnectivityChangeEvent,
+  DeviceSettingsRequest
 } from '../react-native-background-geolocation';
 
 import BackgroundFetch from "react-native-background-fetch";

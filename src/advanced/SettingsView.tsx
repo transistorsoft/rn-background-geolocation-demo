@@ -30,7 +30,10 @@ const Item = Picker.Item;
 // 2.  private github repo (customers only):  react-native-background-geolocation-android
 //
 // This simply allows one to change the import in a single file.
-import BackgroundGeolocation, {State} from "../react-native-background-geolocation";
+import BackgroundGeolocation, {
+  State,
+  DeviceSettingsRequest
+} from "../react-native-background-geolocation";
 
 import SettingsService from './lib/SettingsService';
 import {SOUNDS, COLORS} from './lib/config';
@@ -142,6 +145,41 @@ export default class SettingsView extends Component<any, any> {
     BackgroundGeolocation.removeGeofences();
   }
 
+  async onClickShowIgnoreBatteryOptimizations() {
+    let isIgnoring = await BackgroundGeolocation.deviceSettings.isIgnoringBatteryOptimizations();
+    BackgroundGeolocation.deviceSettings.showIgnoreBatteryOptimizations().then((request:DeviceSettingsRequest) => {
+      let message = [
+        `isIgnoring: ${isIgnoring}`,
+        `Device: ${request.manufacturer} ${request.model} @ ${request.version}`,
+        `Seen? ${request.seen} on ${request.lastSeenAt}`
+      ];
+      // First show a popup to the user instructing them what to do on the resulting settings screen.
+      // The DeviceSettingsRequest provides device information.
+      this.settingsService.confirm('Show Battery Optimizations?', message.join("\n"), () => {
+        BackgroundGeolocation.deviceSettings.show(request);
+      });
+    }).catch((error:string) => {
+      console.warn('[showIgnoreBatteryOptimizations] ', error);
+      this.settingsService.toast(error);
+    });
+  }
+
+  onClickShowPowerManager() {
+    BackgroundGeolocation.deviceSettings.showPowerManager().then((request:DeviceSettingsRequest) => {
+      let message = [
+        `Device: ${request.manufacturer} ${request.model} @ ${request.version}`,
+        `Seen? ${request.seen} on ${request.lastSeenAt}`
+      ];
+      // First show a popup to the user instructing them what to do on the resulting settings screen.
+      // The DeviceSettingsRequest provides device information.
+      this.settingsService.confirm('Show Power Manager?', message.join("\n"), () => {
+        BackgroundGeolocation.deviceSettings.show(request);
+      });
+    }).catch((error:string) => {
+      console.warn('[showPowerManager] ', error);
+      this.settingsService.toast(error);
+    });
+  }
   onFieldChange(setting:any, value:any) {
     let currentValue = this.state[setting.name];
 
@@ -258,8 +296,23 @@ export default class SettingsView extends Component<any, any> {
                 </Button>
               </Right>
             </FormItem>
-
             {this.getGeofenceTestSettings()}
+
+            <FormItem style={styles.headerItem}>
+              <Text>DeviceSettings API</Text>
+            </FormItem>
+
+            <Content style={styles.formItem}>
+              <Button full onPress={this.onClickShowIgnoreBatteryOptimizations.bind(this)}>
+                <Text>Show Ignore Battery Optimizations</Text>
+              </Button>
+            </Content>
+
+            <Content style={styles.formItem}>
+              <Button full onPress={this.onClickShowPowerManager.bind(this)}>
+                <Text>Show Power Manager</Text>
+              </Button>
+            </Content>
           </Form>
         </Content>
 
