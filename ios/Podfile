@@ -44,6 +44,10 @@ target 'BGGeolocation' do
 
   pod 'RNBackgroundGeolocation', :path => '../node_modules/react-native-background-geolocation'
 
+  pod 'react-native-async-storage', :path => '../node_modules/@react-native-community/async-storage'
+
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
   post_install do |installer|
     installer.pods_project.targets.each do |target|
       # The following is needed to ensure the "archive" step works in XCode.

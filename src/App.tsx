@@ -4,16 +4,17 @@
  */
 
 import React, { Component } from 'react';
-import {
-  AsyncStorage
-} from 'react-native';
 
-import { NavigationActions, StackActions } from 'react-navigation';
+import AsyncStorage from '@react-native-community/async-storage';
+
+import { createAppContainer, NavigationActions, StackActions } from 'react-navigation';
 
 import {StyleProvider} from "native-base";
 import Navigator from './Navigator';
 
-export default class App extends Component<{}> {
+const AppContainer = createAppContainer(Navigator);
+
+export default class App extends React.Component<{}> {
   /**
   * Helper method for resetting the router to Home screen
   */
@@ -35,7 +36,7 @@ export default class App extends Component<{}> {
 
   render() {
     return (
-      <Navigator />
+      <AppContainer />
     );
   }
 }

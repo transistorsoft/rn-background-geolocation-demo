@@ -40,7 +40,7 @@ import {SOUNDS, COLORS} from './lib/config';
 
 export default class SettingsView extends Component<any, any> {
   settingsService: SettingsService;
-  changeBuffer:number;
+  changeBuffer:any;
 
   constructor(props:any) {
     super(props);
@@ -63,6 +63,7 @@ export default class SettingsView extends Component<any, any> {
   }
 
   componentDidMount() {
+    /*
     this.settingsService.getPluginState((state:State) => {
       this.setState({
         ...state,
@@ -76,6 +77,7 @@ export default class SettingsView extends Component<any, any> {
     this.settingsService.getApplicationState((state) => {
       this.setState(state);
     });
+    */
   }
 
   /**
@@ -235,8 +237,8 @@ export default class SettingsView extends Component<any, any> {
       <Container style={styles.container}>
         <Header style={styles.header}>
           <Left>
-            <Button transparent dark onPress={this.onClickClose.bind(this)}>
-              <Icon color="#000" active name="ios-arrow-dropdown-circle" />
+            <Button transparent onPress={this.onClickClose.bind(this)}>
+              <Icon color="#000" style={{color: "#000"}} active name="close" />
             </Button>
           </Left>
           <Body>
@@ -252,6 +254,7 @@ export default class SettingsView extends Component<any, any> {
             <FormItem style={styles.headerItem}>
               <Text>GEOLOCATION</Text>
             </FormItem>
+
             {this.renderTrackingModeField()}
             {this.renderPluginSettings('geolocation')}
             <FormItem style={styles.headerItem}>

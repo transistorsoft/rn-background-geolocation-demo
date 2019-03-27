@@ -11,9 +11,10 @@ import React from 'react'
 import {Component} from 'react';
 
 import {
-  AsyncStorage,
   Alert
 } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 import Toast from 'react-native-root-toast';
 import prompt from 'react-native-prompt-android';

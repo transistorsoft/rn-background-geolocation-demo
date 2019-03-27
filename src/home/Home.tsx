@@ -5,11 +5,12 @@ import {Component} from 'react';
 import {
   Platform,
   StyleSheet,
-  AsyncStorage,
   Alert,
   Linking,
   View
 } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { NavigationActions, StackActions } from 'react-navigation';
 
@@ -27,8 +28,6 @@ import BackgroundGeolocation from "../react-native-background-geolocation";
 
 import prompt from 'react-native-prompt-android';
 
-import App from '../App';
-
 const DEFAULT_USERNAME = "react-native-anonymous";
 const TRACKER_HOST = 'http://tracker.transistorsoft.com/';
 const USERNAME_KEY = '@transistorsoft:username';
@@ -44,6 +43,22 @@ type IState = {
 }
 
 export default class Home extends Component<IProps, IState> {
+
+  /**
+  * Helper method for resetting the router to Home screen
+  */
+  static navigate(navigation:any) {
+    AsyncStorage.setItem("@transistorsoft:initialRouteName", 'Home');
+    let action = StackActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Home', params: navigation.state.params})
+      ],
+      key: null
+    });
+    navigation.dispatch(action);
+  }
+
   constructor(props:IProps) {
     super(props);
 
@@ -54,6 +69,8 @@ export default class Home extends Component<IProps, IState> {
   }
 
   componentDidMount() {
+    BackgroundGeolocation.setConfig({logLevel: 5});
+
     // #stop BackroundGeolocation and remove-listeners when Home Screen is rendered.
     BackgroundGeolocation.stop();
     BackgroundGeolocation.removeListeners();
@@ -65,7 +82,7 @@ export default class Home extends Component<IProps, IState> {
     }
   }
   onClickNavigate(routeName:string) {
-    App.setRootRoute(routeName);
+    AsyncStorage.setItem("@transistorsoft:initialRouteName", routeName);
     let action = StackActions.reset({
       index: 0,
       actions: [
@@ -101,7 +118,7 @@ export default class Home extends Component<IProps, IState> {
     });
   }
 
-  getUsername(defaultValue?:string) {
+  getUsername(defaultValue?:string):any {
     return new Promise((resolve, reject) => {
       AsyncStorage.getItem(USERNAME_KEY, (err, username) => {
         if (username) {

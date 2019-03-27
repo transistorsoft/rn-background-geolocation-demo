@@ -63,7 +63,7 @@ import MapView, {Marker, Polyline, Circle} from 'react-native-maps';
 const LATITUDE_DELTA = 0.00922;
 const LONGITUDE_DELTA = 0.00421;
 
-import App from '../App';
+import Home from '../home/Home';
 
 import {COLORS, SOUNDS} from './lib/config';
 import SettingsView from './SettingsView';
@@ -120,12 +120,13 @@ type IState = {
   // BackgroundGeolocation state
   bgGeo: State
 }
+
 export default class HomeView extends Component<IProps, IState> {
   private lastMotionChangeLocation?:Location;
   private settingsService:SettingsService;
 
   private testModeClicks:number;
-  private testModeTimer?:number;
+  private testModeTimer?:any;
 
   constructor(props:any) {
     super(props);
@@ -533,7 +534,7 @@ export default class HomeView extends Component<IProps, IState> {
 
   onClickHome() {
     this.settingsService.playSound('BUTTON_CLICK');
-    App.goHome(this.props.navigation);
+    Home.navigate(this.props.navigation);
   }
 
   /**
