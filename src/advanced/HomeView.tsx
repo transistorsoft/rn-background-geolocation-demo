@@ -539,17 +539,20 @@ export default class HomeView extends Component<IProps, IState> {
   /**
   * FAB button show/hide handler
   */
-  onClickMainMenu() {
+  async onClickMainMenu(){
     let soundId = (this.state.isMainMenuOpen) ? 'CLOSE' : 'OPEN';
 
     // Test #startBackgroundTask on menu-button clicks.
-    BackgroundGeolocation.startBackgroundTask().then((taskId) => {
-      console.log('[HomeView onClickMainMenu] startBackgroundTask: ', taskId);
-      setTimeout(() => {
-        console.log('[HomeView onClickMainMenu] setTimeout expired: ', taskId);
-        BackgroundGeolocation.stopBackgroundTask(taskId);
-      }, 1000);
-    });
+    let taskId = await BackgroundGeolocation.startBackgroundTask();
+
+    console.log('[HomeView onClickMainMenu] startBackgroundTask: ', taskId);
+
+    setTimeout(() => {
+      console.log('[HomeView onClickMainMenu] setTimeout expired: ', taskId);
+      BackgroundGeolocation.stopBackgroundTask(taskId).then((tid) => {
+        console.log('[HomeView onClickMainMenu] stopBackgroundTask success: ', tid);
+      });
+    }, 1000);
 
     this.setState({
       isMainMenuOpen: !this.state.isMainMenuOpen
