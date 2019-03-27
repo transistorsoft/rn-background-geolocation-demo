@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -40,7 +39,6 @@
 		4A6FEE0E4DCB4335B9716C66 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0F92817F214827A332DABD /* RNBackgroundFetch+AppDelegate.m */; };
 		4B56365662A9197DE7F947D3 /* libPods-BGGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06C390CEDD64A61A3677EC06 /* libPods-BGGeolocation.a */; };
 		4E60F8DAF94D4170A8C653F2 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8391CDCA3FDE4DC9BBB4D606 /* Entypo.ttf */; };
-		56C32C161CCD49CC8BA43F12 /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84257D7988D64E1CB86519C8 /* TSLocationManager.framework */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		69C42C1B62B244CE8F99B6F6 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8CEFF9D4E62B4673B13EF0C5 /* Octicons.ttf */; };
 		6B661F64B5C84B9393FDBF67 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 382BB0E662D042B8974F5331 /* EvilIcons.ttf */; };
@@ -57,6 +55,7 @@
 		D2CC0DCCBDE34A679AB6421E /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C9AD4F4F1DD240EA8216E06A /* Foundation.ttf */; };
 		E8008F0493AE46ECB2D36E68 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA06CDC1291741B4B5479699 /* Zocial.ttf */; };
 		F72EE9E79F2F4DB38EF8E262 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E60FCF9788645328CC79BD5 /* FontAwesome.ttf */; };
+		688C4A729C4941AD83854201 /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD25E2110DD4BC0A0B6A99F /* TSLocationManager.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -372,7 +371,6 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8391CDCA3FDE4DC9BBB4D606 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		84257D7988D64E1CB86519C8 /* TSLocationManager.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = SDKROOT; };
 		8CEFF9D4E62B4673B13EF0C5 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		AB0F92817F214827A332DABD /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
@@ -383,6 +381,7 @@
 		CA06CDC1291741B4B5479699 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		F06B72B223A041B7A50E5B49 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
 		F6BC326209ED473AA3EA35B1 /* TSBackgroundFetch.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = TSBackgroundFetch.framework; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/TSBackgroundFetch.framework"; sourceTree = SDKROOT; };
+		7FD25E2110DD4BC0A0B6A99F /* TSLocationManager.framework */ = {isa = PBXFileReference; name = "TSLocationManager.framework"; path = "../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -413,8 +412,8 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				4B56365662A9197DE7F947D3 /* libPods-BGGeolocation.a in Frameworks */,
 				A9A4249569114F4F96FEC888 /* libCocoaLumberjack.a in Frameworks */,
-				56C32C161CCD49CC8BA43F12 /* TSLocationManager.framework in Frameworks */,
 				75DF41FA021E436998B61461 /* TSBackgroundFetch.framework in Frameworks */,
+				688C4A729C4941AD83854201 /* TSLocationManager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,8 +574,8 @@
 			children = (
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				06C390CEDD64A61A3677EC06 /* libPods-BGGeolocation.a */,
-				84257D7988D64E1CB86519C8 /* TSLocationManager.framework */,
 				F6BC326209ED473AA3EA35B1 /* TSBackgroundFetch.framework */,
+				7FD25E2110DD4BC0A0B6A99F /* TSLocationManager.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

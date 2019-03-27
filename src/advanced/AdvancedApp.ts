@@ -4,10 +4,21 @@
 * - GeofenceView
 * - AboutView
 */
+
+//////////////////////////////////////////////////////////////////////////////////////
+//
+// IGNORE WARNINGS FOR NOW.  I think react-navigation is responsible for following:
+// - ViewPagerAndroid has been extracted from react-native core
+// - Slider has been extracted from react-native core.
+//
+///////////////////////////////////////////////////////////////////////////////////////
+
+console.disableYellowBox = true;
+
 import React from 'react'
 import {Component} from 'react';
 
-import { createStackNavigator, NavigationActions } from 'react-navigation';
+import { createAppContainer, createStackNavigator } from 'react-navigation';
 
 import HomeView from './HomeView';
 import SettingsView from './SettingsView';
@@ -33,4 +44,4 @@ const AdvancedApp = createStackNavigator({
   mode: 'modal'
 });
 
-export default AdvancedApp;
+export default createAppContainer(AdvancedApp);

@@ -5,6 +5,7 @@ import {Component} from 'react';
 import {
   Platform,
   StyleSheet,
+  TouchableHighlight,
   View,
   AppState
 } from 'react-native';
@@ -62,7 +63,7 @@ import MapView, {Marker, Polyline, Circle} from 'react-native-maps';
 const LATITUDE_DELTA = 0.00922;
 const LONGITUDE_DELTA = 0.00421;
 
-import App from '../App';
+import Home from '../home/Home';
 
 import {COLORS, SOUNDS} from './lib/config';
 import SettingsView from './SettingsView';
@@ -119,10 +120,13 @@ type IState = {
   // BackgroundGeolocation state
   bgGeo: State
 }
+
 export default class HomeView extends Component<IProps, IState> {
   private lastMotionChangeLocation?:Location;
-
   private settingsService:SettingsService;
+
+  private testModeClicks:number;
+  private testModeTimer?:any;
 
   constructor(props:any) {
     super(props);
@@ -160,11 +164,14 @@ export default class HomeView extends Component<IProps, IState> {
       // Application settings
       settings: {},
       // BackgroundGeolocation state
-      bgGeo: {enabled: false, schedulerEnabled: false, trackingMode: 1, odometer: 0}
+      bgGeo: {enabled: false, schedulerEnabled: false, trackingMode: 1, odometer: 0},
     };
 
     this.settingsService = SettingsService.getInstance();
     this.settingsService.setUsername(this.state.username);
+
+    this.testModeClicks = 0;
+    this.testModeTimer = 0;
   }
 
   componentDidMount() {
@@ -527,14 +534,27 @@ export default class HomeView extends Component<IProps, IState> {
 
   onClickHome() {
     this.settingsService.playSound('BUTTON_CLICK');
-    App.goHome(this.props.navigation);
+    Home.navigate(this.props.navigation);
   }
 
   /**
   * FAB button show/hide handler
   */
-  onClickMainMenu() {
+  async onClickMainMenu(){
     let soundId = (this.state.isMainMenuOpen) ? 'CLOSE' : 'OPEN';
+
+    // Test #startBackgroundTask on menu-button clicks.
+    let taskId = await BackgroundGeolocation.startBackgroundTask();
+
+    console.log('[HomeView onClickMainMenu] startBackgroundTask: ', taskId);
+
+    setTimeout(() => {
+      console.log('[HomeView onClickMainMenu] setTimeout expired: ', taskId);
+      BackgroundGeolocation.stopBackgroundTask(taskId).then((tid) => {
+        console.log('[HomeView onClickMainMenu] stopBackgroundTask success: ', tid);
+      });
+    }, 1000);
+
     this.setState({
       isMainMenuOpen: !this.state.isMainMenuOpen
     });
@@ -573,7 +593,6 @@ export default class HomeView extends Component<IProps, IState> {
   }
 
   resetOdometer() {
-    this.clearMarkers();
     this.setState({isResettingOdometer: true, odometer: '0.0'});
     BackgroundGeolocation.setOdometer(0).then(location => {
       this.setState({isResettingOdometer: false});
@@ -675,6 +694,23 @@ export default class HomeView extends Component<IProps, IState> {
     this.settingsService.toast(message, 'SHORT');
   }
 
+  // @private My private test mode.
+  // DO NOT USE.
+  onClickTestMode() {
+    this.testModeClicks++;
+    BackgroundGeolocation.playSound('POP');
+    if (this.testModeClicks == 10) {
+      BackgroundGeolocation.playSound('BEEP_ON');
+      SettingsService.getInstance().applyTestConfig();
+    }
+
+    if (this.testModeTimer) {
+      clearTimeout(this.testModeTimer);
+    }
+    this.testModeTimer = setTimeout(() => {
+      this.testModeClicks = 0;
+    }, 2000);
+  }
   render() {
     return (
       <Container style={styles.container}>
@@ -777,7 +813,10 @@ export default class HomeView extends Component<IProps, IState> {
             </Button>
           </Left>
           <Body style={styles.footerBody}>
-            <Text style={styles.status}>{this.state.motionActivity.activity}:{this.state.motionActivity.confidence}% &middot; {this.state.odometer}km</Text>
+            <TouchableHighlight onPress={this.onClickTestMode.bind(this)} underlayColor="transparent">
+              <Text style={styles.status}>{this.state.motionActivity.activity}:{this.state.motionActivity.confidence}% &middot; {this.state.odometer}km</Text>
+            </TouchableHighlight>
+
           </Body>
           <Right style={{flex: 0.3}}>
             <Button danger={this.state.isMoving}

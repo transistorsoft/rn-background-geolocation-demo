@@ -12,20 +12,23 @@
 */
 import React, { Component } from 'react';
 import {
-  AsyncStorage,
   View,
   Text,
   StyleSheet
 } from 'react-native';
 
-import { createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
+import AsyncStorage from '@react-native-community/async-storage';
+
+import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
 
 import Home from './home/Home';
 import HelloWorld from './hello-world/HelloWorld';
 import SimpleMap from './simple-map/SimpleMap';
 import AdvancedApp from './advanced/AdvancedApp';
 
-class Root extends Component<any, any> {
+class Root extends React.Component<any, any> {
+  static DEFAULT_PAGE = "Home";
+
   componentDidMount() {
     let navigation = this.props.navigation;
 
@@ -34,8 +37,7 @@ class Root extends Component<any, any> {
       let params:any = {username: undefined};
       if (!page) {
         // Default route:  Home
-        page = "Home";
-        AsyncStorage.setItem("@transistorsoft:initialRouteName", page);
+        AsyncStorage.setItem("@transistorsoft:initialRouteName", Root.DEFAULT_PAGE);
       }
       // Append username to route params.
       AsyncStorage.getItem("@transistorsoft:username", (err, username) => {
@@ -44,7 +46,10 @@ class Root extends Component<any, any> {
         let action = StackActions.reset({
           index: 0,
           actions: [
-            NavigationActions.navigate({ routeName: page, params: params})
+            NavigationActions.navigate({
+              routeName: page || Root.DEFAULT_PAGE,
+              params: params,
+            })
           ],
           key: null
         });
@@ -57,7 +62,7 @@ class Root extends Component<any, any> {
   }
 }
 
-export default Navigator = createStackNavigator({
+const AppNavigator = createStackNavigator({
   Root: {
     screen: Root,
   },
@@ -86,3 +91,6 @@ export default Navigator = createStackNavigator({
     AsyncStorage.setItem("@transistorsoft:initialRouteName", routeName);
   }
 });
+
+export default createAppContainer(AppNavigator);
+

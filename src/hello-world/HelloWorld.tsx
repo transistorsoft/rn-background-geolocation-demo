@@ -7,7 +7,7 @@ import {
   View
 } from 'react-native';
 
-import App from '../App';
+import Home from '../home/Home';
 
 import DeviceInfo from 'react-native-device-info';
 
@@ -273,7 +273,7 @@ export default class HelloWorld extends Component<IProps, IState> {
   * Navigate back to home-screen app-switcher
   */
   onClickHome() {
-    App.goHome(this.props.navigation);
+    Home.navigate(this.props.navigation);
   }
 }
 

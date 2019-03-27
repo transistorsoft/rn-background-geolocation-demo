@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 // For dispatching back to HomeScreen
-import App from '../App';
+import Home from '../home/Home';
 
 // For posting to tracker.transistorsoft.com
 import DeviceInfo from 'react-native-device-info';
@@ -332,7 +332,7 @@ export default class SimpleMap extends Component<IProps, IState> {
       showsUserLocation: false
     });
 
-    App.goHome(this.props.navigation);
+    Home.navigate(this.props.navigation);
   }
 }
 

@@ -91,9 +91,28 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
+
+/**
+ * Purge BackgroundGeolocation debug sounds from release build.
+ */
+def purgeBackgroundGeolocationDebugResources(applicationVariants) {
+    applicationVariants.all { variant ->
+        if (variant.buildType.name == 'release') {
+            variant.mergeResources.doLast {
+                delete(fileTree(dir: variant.mergeResources.outputDir, includes: ['raw_tslocationmanager*']))
+
+            }
+        }
+    }
+}
 
 android {
+    ////
+    /// Enable to purge Background Geolocation debug sound files in RELEASE builds.
+    //purgeBackgroundGeolocationDebugResources(applicationVariants);
+    //
+
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
@@ -101,8 +120,8 @@ android {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 214
-        versionName "2.14.0"
+        versionCode 301
+        versionName "3.0.0-rc.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -151,8 +170,10 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-background-fetch')
+    implementation project(':react-native-gesture-handler')
+    implementation project(':@react-native-community_async-storage')
     compile project(':react-native-background-geolocation')
+    compile project(':react-native-background-fetch')
     compile project(':react-native-maps')
     compile project(':react-native-prompt-android')
     compile project(':react-native-device-info')

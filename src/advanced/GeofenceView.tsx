@@ -37,7 +37,7 @@ export default class GeofenceView extends Component<any, any> {
       identifier: undefined,
       radius: '200',
       notifyOnEntry: true,
-      notifyOnExit: false,
+      notifyOnExit: true,
       notifyOnDwell: false,
       loiteringDelay: '0'
     }
@@ -97,8 +97,8 @@ export default class GeofenceView extends Component<any, any> {
       <Container style={styles.container}>
         <Header style={styles.header}>
           <Left>
-            <Button transparent primary onPress={this.onClickCancel.bind(this)}>
-              <Icon name="close" style={{color: '#000'}}/>
+            <Button transparent onPress={this.onClickCancel.bind(this)}>
+              <Icon color="#000" style={{color: "#000"}} active name="close" />
             </Button>
           </Left>
           <Body>
@@ -111,11 +111,11 @@ export default class GeofenceView extends Component<any, any> {
 
         <Content style={styles.content}>
           <Form>
-            <FormItem inlinelabel style={styles.formItem}>
+            <FormItem inlineLabel style={styles.formItem}>
               <Label style={styles.label}>Identifier</Label>
               <Input value={this.state.identifier} onChangeText={(value) => {this.onChangeText('identifier', value)}} />
             </FormItem>
-            <FormItem inlinelabel style={styles.formItem}>
+            <FormItem inlineLabel style={styles.formItem}>
               <Label style={styles.label}>Radius (meters)</Label>
               <Input value={this.state.radius} onChangeText={(value) => {this.onChangeText('radius', value)}}/>
             </FormItem>

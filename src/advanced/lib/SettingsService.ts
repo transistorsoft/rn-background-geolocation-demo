@@ -11,9 +11,10 @@ import React from 'react'
 import {Component} from 'react';
 
 import {
-  AsyncStorage,
   Alert
 } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 import Toast from 'react-native-root-toast';
 import prompt from 'react-native-prompt-android';
@@ -74,8 +75,8 @@ const PLUGIN_SETTINGS:any = {
     {name: 'geofenceProximityRadius', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [1000, 1500, 2000, 5000, 10000, 100000], defaultValue: 1000 },
     {name: 'stopAfterElapsedMinutes', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [-1, 0, 1, 2, 5, 10, 15], defaultValue: 0},
     {name: 'desiredOdometerAccuracy', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [10, 20, 50, 100, 500], defaultValue: 100},
+    {name: 'useSignificantChangesOnly', group: 'geolocation', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
     // Activity Recognition
-    {name: 'activityRecognitionInterval', group: 'activity recognition', dataType: 'integer', inputType: 'select', values: [0, 1000, 5000, 10000, 30000], defaultValue: 10000},
     {name: 'stopTimeout', group: 'activity recognition', dataType: 'integer', inputType: 'select', values: [0, 1, 5, 10, 15], defaultValue: 1},
     // HTTP & Persistence
     {name: 'url', group: 'http', inputType: 'text', dataType: 'string', defaultValue: 'http://your.server.com/endpoint'},
@@ -99,7 +100,6 @@ const PLUGIN_SETTINGS:any = {
     // Geolocation
     {name: 'stationaryRadius', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 25, 50, 100, 500, 1000, 5000], defaultValue: 25 },
     {name: 'activityType', group: 'geolocation', dataType: 'string', inputType: 'select', values: ['Other', 'AutomotiveNavigation', 'Fitness', 'OtherNavigation'], defaultValue: 'Other'},
-    {name: 'useSignificantChangesOnly', group: 'geolocation', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
     // Application
     {name: 'preventSuspend', group: 'application', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
     // Activity Recognition
@@ -111,6 +111,7 @@ const PLUGIN_SETTINGS:any = {
     {name: 'locationUpdateInterval', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 1000, 5000, 10000, 30000, 60000], defaultValue: 5000},
     {name: 'fastestLocationUpdateInterval', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 1000, 5000, 10000, 30000, 60000], defaultValue: 1000},
     {name: 'deferTime', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, (10*1000), (30*1000), (60*1000), (5*60*1000)], defaultValue: 0},
+    {name: 'geofenceModeHighAccuracy', group: 'geolocation', dataType: 'boolean', inputType: 'toggle', value: [true, false], defaultValue: false},
     // Activity Recognition
     //{name: 'triggerActivities', group: 'activity recognition', dataType: 'string', inputType: 'select', values: ['in_vehicle', 'on_bicycle', 'on_foot', 'running', 'walking'], defaultValue: 'in_vehicle, on_bicycle, running, walking, on_foot'},
     // Application
@@ -142,7 +143,7 @@ const SOUND_MAP:any = {
     "LONG_PRESS_CANCEL": "DOT_STOP",
     "ADD_GEOFENCE": "DOT_SUCCESS",
     "BUTTON_CLICK": "BUTTON_CLICK",
-    "MESSAGE_SENT": "SENT",
+    "MESSAGE_SENT": "WHOO_SEND_SHARE",
     "ERROR": "ERROR",
     "OPEN": "OPEN",
     "CLOSE": "CLOSE",
@@ -485,6 +486,116 @@ export default class SettingsService {
       });
     }
     return geofences;
+  }
+
+  /**
+  * My private test config.
+  * DO NOT USE
+  * @private
+  */
+  applyTestConfig() {
+    let geofences = [{
+      "identifier": "Jfk",
+      "radius": 200,
+      "latitude": 45.52193435702239,
+      "longitude": -73.61602026242679,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": false,
+      "loiteringDelay": 0,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.52193435702239,
+          "longitude": -73.61602026242679
+        }
+      }
+    }, {
+      "identifier": "Laj",
+      "radius": 200,
+      "latitude": 45.52011166353691,
+      "longitude": -73.61188565687189,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": false,
+      "loiteringDelay": 0,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.52011166353691,
+          "longitude": -73.61188565687189
+        }
+      }
+    }, {
+      "identifier": "Bernard",
+      "radius": 200,
+      "latitude": 45.51890341224348,
+      "longitude": -73.60920346871359,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": false,
+      "loiteringDelay": 0,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.51890341224348,
+          "longitude": -73.60920346871359
+        }
+      }
+    }, {
+      "identifier": "Park",
+      "radius": 200,
+      "latitude": 45.51793055832324,
+      "longitude": -73.60288022069346,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": false,
+      "loiteringDelay": 0,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.51793055832324,
+          "longitude": -73.60288022069346
+        }
+      }
+    }, {
+      "identifier": "Dollard",
+      "radius": 200,
+      "latitude": 45.51722612373795,
+      "longitude": -73.61367125021673,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": false,
+      "loiteringDelay": 0,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.51722612373795,
+          "longitude": -73.61367125021673
+        }
+      }
+    }];
+
+    BackgroundGeolocation.removeGeofences().then(() => {
+      BackgroundGeolocation.addGeofences(geofences);
+    });
+
+    BackgroundGeolocation.setConfig({
+      debug: true,
+      logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+      desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_NAVIGATION,
+      distanceFilter: 50,
+      locationUpdateInterval: 5000,
+      fastestLocationUpdateInterval: -1,
+      stopTimeout: 0,
+      url: 'http://tracker.transistorsoft.com/locations/' + this.username,
+      params: BackgroundGeolocation.transistorTrackerParams(DeviceInfo),
+      geofenceModeHighAccuracy: true,
+      stopOnTerminate: false,
+      startOnBoot: true,
+      enableHeadless: true,
+      heartbeatInterval: -1
+    });
   }
 
   /**
