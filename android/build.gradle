@@ -8,6 +8,7 @@ buildscript {
         targetSdkVersion = 27
         supportLibVersion = "27.1.1"
         googlePlayServicesVersion = "16.0.0"
+        removeBackgroundGeolocationDebugSoundsInRelase = true
     }
     repositories {
         jcenter()

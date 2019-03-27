@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- 1/3 [RELEASE:REMOVE] Remove this in release -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/> -->
 
     <!-- 2/3 [RELEASE:ADD] Add these in release
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" tools:node="remove" />
@@ -34,7 +34,7 @@
 
       <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCINS2dyuBipK8MZzOQnzyKdrS2I1_b5I4"/>
 
-      <meta-data android:name="com.transistorsoft.locationmanager.license" android:value="1a5558143dedd16e0887f78e303b0fd28250b2b3e61b60b8c421a1bd8be98774" />
+      <meta-data android:name="com.transistorsoft.locationmanager.license" android:value="eb8ee62a24ca51c5d4c87f4fad356fb8660a6ae401b9d95642f7b80e7cc59c06" />
 
     </application>
 
