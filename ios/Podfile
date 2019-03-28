@@ -6,6 +6,8 @@ target 'BGGeolocation' do
 
   rn_path = '../node_modules/react-native'
 
+  pod 'yoga', path: "#{rn_path}/ReactCommon/yoga/yoga.podspec"
+
   pod 'React', path: rn_path, subspecs: [
     'Core',
     'CxxBridge',
@@ -26,13 +28,9 @@ target 'BGGeolocation' do
   pod 'DoubleConversion', :podspec => "#{rn_path}/third-party-podspecs/DoubleConversion.podspec"
   pod 'glog', :podspec => "#{rn_path}/third-party-podspecs/glog.podspec"
   pod 'Folly', :podspec => "#{rn_path}/third-party-podspecs/Folly.podspec"
-  pod 'yoga', path: "#{rn_path}/ReactCommon/yoga/yoga.podspec"
-
-
 
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
 
-  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
   # @see https://github.com/facebook/react-native/issues/20492#issuecomment-422958184
 
@@ -48,20 +46,20 @@ target 'BGGeolocation' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+
   post_install do |installer|
     installer.pods_project.targets.each do |target|
-      # The following is needed to ensure the "archive" step works in XCode.
-      # It removes React & Yoga from the Pods project, as it is already included in the main project.
-      # Without this, you'd see errors when you archive like:
-      # "Multiple commands produce ... libReact.a"
-      # "Multiple commands produce ... libyoga.a"
-
-      targets_to_ignore = %w(React yoga)
-
-      if targets_to_ignore.include? target.name
+      if target.name == 'react-native-google-maps'
+        target.build_configurations.each do |config|
+          config.build_settings['CLANG_ENABLE_MODULES'] = 'No'
+        end
+      end
+      if target.name == "React"
         target.remove_from_project
       end
     end
   end
 end
+
 

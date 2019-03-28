@@ -1,17 +1,14 @@
 {
   "name": "RNBackgroundGeolocation",
-  "version": "2.13.4",
+  "version": "3.0.0-rc.3",
   "summary": "The most sophisticated cross-platform background location-tracking & geofencing module with battery-conscious motion-detection intelligence",
   "description": "Cross-platform background geolocation module for React Native with\nbattery-saving circular stationary-region monitoring and stop detection.",
   "homepage": "https://www.transistorsoft.com/shop/products/react-native-background-geolocation",
   "license": "MIT",
-  "authors": {
-    "name": "Chris Scott",
-    "email": "chris@transistorsoft.com"
-  },
+  "authors": "Chris Scott <chris@transistorsoft.com>",
   "source": {
     "git": "https://github.com/transistorsoft/react-native-background-geolocation.git",
-    "tag": "2.13.4"
+    "tag": "3.0.0-rc.3"
   },
   "platforms": {
     "ios": "8.0"
