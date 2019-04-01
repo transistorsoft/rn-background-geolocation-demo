@@ -63,7 +63,6 @@ export default class SettingsView extends Component<any, any> {
   }
 
   componentDidMount() {
-    /*
     this.settingsService.getPluginState((state:State) => {
       this.setState({
         ...state,
@@ -77,7 +76,6 @@ export default class SettingsView extends Component<any, any> {
     this.settingsService.getApplicationState((state) => {
       this.setState(state);
     });
-    */
   }
 
   /**
