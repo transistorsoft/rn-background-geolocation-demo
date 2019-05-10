@@ -493,7 +493,7 @@ export default class SettingsService {
   * DO NOT USE
   * @private
   */
-  applyTestConfig() {
+  async applyTestConfig() {
     let geofences = [{
       "identifier": "Jfk",
       "radius": 200,
@@ -576,11 +576,10 @@ export default class SettingsService {
       }
     }];
 
-    BackgroundGeolocation.removeGeofences().then(() => {
-      BackgroundGeolocation.addGeofences(geofences);
-    });
+    await BackgroundGeolocation.removeGeofences();
+    await BackgroundGeolocation.addGeofences(geofences);
 
-    BackgroundGeolocation.setConfig({
+    await BackgroundGeolocation.setConfig({
       debug: true,
       logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
       desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_NAVIGATION,
@@ -588,14 +587,16 @@ export default class SettingsService {
       locationUpdateInterval: 5000,
       fastestLocationUpdateInterval: -1,
       stopTimeout: 0,
+      schedule: [],
       url: 'http://tracker.transistorsoft.com/locations/' + this.username,
       params: BackgroundGeolocation.transistorTrackerParams(DeviceInfo),
       geofenceModeHighAccuracy: true,
       stopOnTerminate: false,
       startOnBoot: true,
       enableHeadless: true,
-      heartbeatInterval: -1
+      heartbeatInterval: 60
     });
+    await BackgroundGeolocation.stopSchedule();
   }
 
   /**

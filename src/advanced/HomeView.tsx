@@ -49,7 +49,8 @@ import BackgroundGeolocation, {
   GeofencesChangeEvent,
   HeartbeatEvent,
   ConnectivityChangeEvent,
-  DeviceSettingsRequest
+  DeviceSettingsRequest,
+  Notification
 } from '../react-native-background-geolocation';
 
 import BackgroundFetch from "react-native-background-fetch";
@@ -200,7 +201,7 @@ export default class HomeView extends Component<IProps, IState> {
     AppState.removeEventListener('change', this._handleAppStateChange);
   }
 
-  configureBackgroundGeolocation() {
+  async configureBackgroundGeolocation() {
     // Step 1:  Listen to events:
     BackgroundGeolocation.onLocation(this.onLocation.bind(this), this.onLocationError.bind(this));
     BackgroundGeolocation.onMotionChange(this.onMotionChange.bind(this));
@@ -214,12 +215,14 @@ export default class HomeView extends Component<IProps, IState> {
     BackgroundGeolocation.onPowerSaveChange(this.onPowerSaveChange.bind(this));
     BackgroundGeolocation.onConnectivityChange(this.onConnectivityChange.bind(this));
     BackgroundGeolocation.onEnabledChange(this.onEnabledChange.bind(this));
-
+    BackgroundGeolocation.onNotificationAction(this.onNotificationAction.bind(this));
     // Step 2:  #ready:
     // If you want to override any config options provided by the Settings screen, this is the place to do it, eg:
     // config.stopTimeout = 5;
     //
     BackgroundGeolocation.ready({
+      reset: false,
+      stopTimeout: 1,
       debug: true,
       logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
       foregroundService: true,
@@ -227,6 +230,10 @@ export default class HomeView extends Component<IProps, IState> {
       url: TRACKER_HOST + this.state.username,
       stopOnTerminate: false,
       startOnBoot: true,
+      notification: {
+        title: 'react-native-background-geolocation',
+        text: 'Tracking engaged'
+      },
       heartbeatInterval: 60,
       enableHeadless: true,
       params: BackgroundGeolocation.transistorTrackerParams(DeviceInfo),
@@ -455,6 +462,18 @@ export default class HomeView extends Component<IProps, IState> {
     this.settingsService.toast('[enabledchange] - ' + enabled);
   }
   /**
+  * @event notificationaction
+  */
+  onNotificationAction(buttonId:string) {
+    console.log('[notificationaction] - ', buttonId);
+    switch(buttonId) {
+      case 'notificationActionFoo':
+        break;
+      case 'notificationActionBar':
+        break;
+    }
+  }
+  /**
   * Toggle button handler to #start / #stop the plugin
   */
   async onToggleEnabled() {
@@ -515,7 +534,11 @@ export default class HomeView extends Component<IProps, IState> {
       followsUserLocation: true
     });
 
-    BackgroundGeolocation.getCurrentPosition({persist: true, samples: 1}).then((location:Location) => {
+    BackgroundGeolocation.getCurrentPosition({
+      persist: true,
+      samples: 1,
+      timeout: 30
+    }).then((location:Location) => {
       console.log('[getCurrentPosition] success: ', location);
     }).catch((error:LocationError) => {
       console.warn('[getCurrentPosition] error: ', error);
@@ -548,7 +571,7 @@ export default class HomeView extends Component<IProps, IState> {
 
     console.log('[HomeView onClickMainMenu] startBackgroundTask: ', taskId);
 
-    setTimeout(() => {
+    setTimeout(() => {  // <-- simulate a long-running async task with setTimeout.  Don't actually use a setTimeout here!
       console.log('[HomeView onClickMainMenu] setTimeout expired: ', taskId);
       BackgroundGeolocation.stopBackgroundTask(taskId).then((tid) => {
         console.log('[HomeView onClickMainMenu] stopBackgroundTask success: ', tid);
@@ -714,6 +737,7 @@ export default class HomeView extends Component<IProps, IState> {
   render() {
     return (
       <Container style={styles.container}>
+
         <Header style={styles.header}>
           <Left>
             <Button transparent onPress={this.onClickHome.bind(this)}>
@@ -776,36 +800,6 @@ export default class HomeView extends Component<IProps, IState> {
           </Button>
         </View>
 
-        <ActionButton
-          position="left"
-          hideShadow={false}
-          autoInactive={false}
-          active={this.state.isMainMenuOpen}
-          backgroundTappable={true}
-          onPress={this.onClickMainMenu.bind(this)}
-          verticalOrientation="down"
-          buttonColor="rgba(254,221,30,1)"
-          buttonTextStyle={{color: "#000"}}
-          spacing={15}
-          offsetX={10}
-          offsetY={ACTION_BUTTON_OFFSET_Y}>
-          <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('settings')}>
-            <Icon name="ios-cog" style={styles.actionButtonIcon} />
-          </ActionButton.Item>
-          <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('resetOdometer')}>
-            {!this.state.isResettingOdometer ? (<Icon name="ios-speedometer" style={styles.actionButtonIcon} />) : (<Spinner color="#000" size="small" />)}
-          </ActionButton.Item>
-          <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('emailLog')}>
-            {!this.state.isEmailingLog ? (<Icon name="ios-mail" style={styles.actionButtonIcon} />) : (<Spinner color="#000" size="small" />)}
-          </ActionButton.Item>
-          <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('sync')}>
-            {!this.state.isSyncing ? (<Icon name="ios-cloud-upload" style={styles.actionButtonIcon} />) : (<Spinner color="#000" size="small" />)}
-          </ActionButton.Item>
-          <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('destroyLocations')}>
-            {!this.state.isDestroyingLocations ? (<Icon name="ios-trash" style={styles.actionButtonIcon} />) : (<Spinner color="#000" size="small" />)}
-          </ActionButton.Item>
-        </ActionButton>
-
         <Footer style={styles.footer}>
           <Left style={{flex:0.3}}>
             <Button info onPress={this.onClickGetCurrentPosition.bind(this)}>
@@ -827,6 +821,38 @@ export default class HomeView extends Component<IProps, IState> {
             </Button>
           </Right>
         </Footer>
+
+        <ActionButton
+          position="right"
+          hideShadow={false}
+          autoInactive={false}
+          active={this.state.isMainMenuOpen}
+          backgroundTappable={true}
+          onPress={this.onClickMainMenu.bind(this)}
+          verticalOrientation="up"
+          buttonColor="rgba(254,221,30,1)"
+          buttonTextStyle={{color: "#000"}}
+          spacing={15}
+          offsetX={10}
+          offsetY={ACTION_BUTTON_OFFSET_Y}>
+
+          <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('destroyLocations')}>
+            {!this.state.isDestroyingLocations ? (<Icon name="ios-trash" style={styles.actionButtonIcon} />) : (<Spinner color="#000" size="small" />)}
+          </ActionButton.Item>
+          <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('sync')}>
+            {!this.state.isSyncing ? (<Icon name="ios-cloud-upload" style={styles.actionButtonIcon} />) : (<Spinner color="#000" size="small" />)}
+          </ActionButton.Item>
+          <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('emailLog')}>
+            {!this.state.isEmailingLog ? (<Icon name="ios-mail" style={styles.actionButtonIcon} />) : (<Spinner color="#000" size="small" />)}
+          </ActionButton.Item>
+          <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('resetOdometer')}>
+            {!this.state.isResettingOdometer ? (<Icon name="ios-speedometer" style={styles.actionButtonIcon} />) : (<Spinner color="#000" size="small" />)}
+          </ActionButton.Item>
+          <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('settings')}>
+            <Icon name="ios-cog" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+        </ActionButton>
+
       </Container>
     );
   }

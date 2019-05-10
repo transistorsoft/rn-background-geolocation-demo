@@ -1,6 +1,6 @@
 {
   "name": "BGGeolocation",
-  "version": "3.0.0-rc.3",
+  "version": "3.0.5",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -13,8 +13,8 @@
     "react": "16.8.3",
     "react-native": "0.59.2",
     "react-native-action-button": "^2.8.5",
-    "react-native-background-fetch": "^2.5.1",
-    "react-native-background-geolocation": "^3.0.0-rc.3",
+    "react-native-background-fetch": "^2.5.6",
+    "react-native-background-geolocation": "^3.0.5",
     "react-native-device-info": "^1.1.0",
     "react-native-easy-grid": "^0.2.0",
     "react-native-gesture-handler": "^1.1.0",

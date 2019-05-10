@@ -1,8 +1,8 @@
 PODS:
   - boost-for-react-native (1.63.0)
-  - CocoaLumberjack (3.5.2):
-    - CocoaLumberjack/Core (= 3.5.2)
-  - CocoaLumberjack/Core (3.5.2)
+  - CocoaLumberjack (3.5.3):
+    - CocoaLumberjack/Core (= 3.5.3)
+  - CocoaLumberjack/Core (3.5.3)
   - DoubleConversion (1.1.6)
   - Folly (2018.10.22.00):
     - boost-for-react-native
@@ -11,8 +11,6 @@ PODS:
   - glog (0.3.5)
   - React (0.59.2):
     - React/Core (= 0.59.2)
-  - react-native-async-storage (1.2.2):
-    - React
   - react-native-maps (0.23.0):
     - React
   - React/Core (0.59.2):
@@ -68,14 +66,16 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
-  - RNBackgroundFetch (2.5.1):
+  - RNBackgroundFetch (2.5.6):
     - React
-  - RNBackgroundGeolocation (3.0.0-rc.3):
+  - RNBackgroundGeolocation (3.0.5):
     - CocoaLumberjack (~> 3.0)
     - React
-  - RNDeviceInfo (1.1.0):
+  - RNCAsyncStorage (1.3.4):
     - React
-  - RNGestureHandler (1.1.0):
+  - RNDeviceInfo (1.6.1):
+    - React
+  - RNGestureHandler (1.2.1):
     - React
   - yoga (0.59.2.React)
 
@@ -83,7 +83,6 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
-  - "react-native-async-storage (from `../node_modules/@react-native-community/async-storage`)"
   - react-native-maps (from `../node_modules/react-native-maps`)
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
@@ -100,6 +99,7 @@ DEPENDENCIES:
   - React/RCTWebSocket (from `../node_modules/react-native`)
   - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
   - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
+  - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga/yoga.podspec`)
@@ -118,14 +118,14 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   React:
     :path: "../node_modules/react-native"
-  react-native-async-storage:
-    :path: "../node_modules/@react-native-community/async-storage"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
   RNBackgroundFetch:
     :path: "../node_modules/react-native-background-fetch"
   RNBackgroundGeolocation:
     :path: "../node_modules/react-native-background-geolocation"
+  RNCAsyncStorage:
+    :path: "../node_modules/@react-native-community/async-storage"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNGestureHandler:
@@ -135,19 +135,19 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  CocoaLumberjack: 118bf4a820efc641f79fa487b75ed928dccfae23
+  CocoaLumberjack: 2f44e60eb91c176d471fdba43b9e3eae6a721947
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Folly: de497beb10f102453a1afa9edbf8cf8a251890de
   glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
   React: 1d605e098d69bdf08960787f3446f0a9dc2e2ccf
-  react-native-async-storage: 8b91703e95887488a180f3cae839981f55687dd5
   react-native-maps: bb480348a3fe1e5a811fed1ba3387b329161c5cc
   RNBackgroundFetch: 8c4f77f83c398c659bce82af2f0a885079417b9e
-  RNBackgroundGeolocation: c9bbf69b9aa277f0b46754cc5f853bd26051a18f
-  RNDeviceInfo: 8a21b2687c7c829362ca0ccc3a8b5380a42dd59f
-  RNGestureHandler: afde2addc517e85cc97a25bfe119acbee779a7ce
+  RNBackgroundGeolocation: c67e471879d8a077b1dbd7fcdac591a4a5c63afb
+  RNCAsyncStorage: 6ae5aba8a41bfe0a9f21885ec91faf23ca3fe7ee
+  RNDeviceInfo: 08dd79c5adef48b6dc103bf3ddf208039aa78664
+  RNGestureHandler: 7ccf2f3f60458e084f9ada01fbaf610f6fef073c
   yoga: 128daf064cacaede0c3bb27424b6b4c71052e6cd
 
-PODFILE CHECKSUM: 759403a48375f10883ebdeb10af477b69e4d6442
+PODFILE CHECKSUM: 11136ed7f342c95089b06a5b33e86447348c0391
 
 COCOAPODS: 1.5.3
