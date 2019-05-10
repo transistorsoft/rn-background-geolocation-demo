@@ -22,7 +22,8 @@ import BackgroundGeolocation, {
   HeartbeatEvent,
   ConnectivityChangeEvent,
   DeviceSettings,
-  DeviceSettingsRequest
+  DeviceSettingsRequest,
+  Notification
 } from "react-native-background-geolocation";
 
 ////
@@ -47,5 +48,6 @@ export {
   HeartbeatEvent,
   ConnectivityChangeEvent,
   DeviceSettings,
-  DeviceSettingsRequest
+  DeviceSettingsRequest,
+  Notification
 };

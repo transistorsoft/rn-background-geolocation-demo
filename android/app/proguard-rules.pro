@@ -17,6 +17,7 @@
 #}
 
 -keepnames class com.facebook.react.ReactActivity
+-keepnames class com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation
 
 # BackgroundGeolocation lib tslocationmanager.aar is *already* proguarded
 -keep class com.transistorsoft.** { *; }
