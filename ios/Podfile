@@ -42,6 +42,8 @@ target 'BGGeolocation' do
 
   pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
 
+
+
   pod 'RNBackgroundGeolocation', :path => '../node_modules/react-native-background-geolocation'
 
   post_install do |installer|

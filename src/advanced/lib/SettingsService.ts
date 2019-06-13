@@ -495,7 +495,23 @@ export default class SettingsService {
   */
   async applyTestConfig() {
     let geofences = [{
-      "identifier": "Jfk",
+      "identifier": "[RN] Home",
+      "radius": 200,
+      "latitude": 45.5192534,
+      "longitude": -73.6169719,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": false,
+      "loiteringDelay": 0,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.5192534,
+          "longitude": -73.6169719
+        }
+      }
+    }, {
+      "identifier": "[RN] Jfk",
       "radius": 200,
       "latitude": 45.52193435702239,
       "longitude": -73.61602026242679,
@@ -511,7 +527,7 @@ export default class SettingsService {
         }
       }
     }, {
-      "identifier": "Laj",
+      "identifier": "[RN] Laj",
       "radius": 200,
       "latitude": 45.52011166353691,
       "longitude": -73.61188565687189,
@@ -527,7 +543,7 @@ export default class SettingsService {
         }
       }
     }, {
-      "identifier": "Bernard",
+      "identifier": "[RN] Bernard",
       "radius": 200,
       "latitude": 45.51890341224348,
       "longitude": -73.60920346871359,
@@ -543,7 +559,7 @@ export default class SettingsService {
         }
       }
     }, {
-      "identifier": "Park",
+      "identifier": "[RN] Park",
       "radius": 200,
       "latitude": 45.51793055832324,
       "longitude": -73.60288022069346,
@@ -559,7 +575,7 @@ export default class SettingsService {
         }
       }
     }, {
-      "identifier": "Dollard",
+      "identifier": "[RN] Dollard",
       "radius": 200,
       "latitude": 45.51722612373795,
       "longitude": -73.61367125021673,
@@ -587,7 +603,10 @@ export default class SettingsService {
       locationUpdateInterval: 5000,
       fastestLocationUpdateInterval: -1,
       stopTimeout: 0,
-      schedule: [],
+      schedule: [
+        //'2-6 09:00-17:00'
+      ],
+      scheduleUseAlarmManager: true,
       url: 'http://tracker.transistorsoft.com/locations/' + this.username,
       params: BackgroundGeolocation.transistorTrackerParams(DeviceInfo),
       geofenceModeHighAccuracy: true,
