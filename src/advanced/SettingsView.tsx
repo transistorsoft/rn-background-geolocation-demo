@@ -351,22 +351,24 @@ export default class SettingsView extends Component<any, any> {
           items.push((<Item label={value.toString()} value={value} key={setting.name + ":" + value} />));
         });
         field = (
-          <FormItem inlineLabel key={setting.name} style={styles.formItem}>
+          <FormItem picker key={setting.name} style={styles.formItem}>
             <Label style={styles.formLabel}>{setting.name}</Label>
-            <Right>
-              <Picker
-                mode="dropdown"
-                style={{width:(Platform.OS === 'ios') ? undefined : 150}}
-                selectedValue={this.state[setting.name]}
-                onValueChange={value => {onValueChange(setting, value)}}
-              >{items}</Picker>
-            </Right>
+              <Right>
+                <Picker
+                  mode="dropdown"
+                  iosIcon={<Icon name="arrow-down" />}
+                  style={{width:(Platform.OS === 'ios') ? undefined : 150}}
+                  placeholder={setting.name}
+                  selectedValue={this.state[setting.name]}
+                  onValueChange={value => {onValueChange(setting, value)}}
+                >{items}</Picker>
+              </Right>
           </FormItem>
         );
         break;
       case 'toggle':
         field = (
-          <FormItem inlineLabel key={setting.name} style={styles.formItem}>
+          <FormItem picker inlineLabel key={setting.name} style={styles.formItem}>
             <Label style={styles.formLabel}>{setting.name}</Label>
             <Right style={{paddingRight:10}}>
               <Switch value={this.state[setting.name]} onValueChange={value => {onValueChange(setting, value)}} />
@@ -387,11 +389,12 @@ export default class SettingsView extends Component<any, any> {
 
   renderTrackingModeField() {
     return (
-      <FormItem inlineLabel key="trackingMode" style={styles.formItem}>
+      <FormItem inlineLabel picker key="trackingMode" style={styles.formItem}>
         <Label style={styles.formLabel}>trackingMode</Label>
         <Right>
           <Picker
             mode="dropdown"
+            iosIcon={<Icon name="arrow-down" />}
             selectedValue={this.state.trackingMode}
             onValueChange={this.onChangeTrackingMode.bind(this)}
             style={{width:(Platform.OS === 'ios') ? undefined : 150}}>

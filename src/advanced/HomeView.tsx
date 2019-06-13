@@ -239,6 +239,9 @@ export default class HomeView extends Component<IProps, IState> {
       params: BackgroundGeolocation.transistorTrackerParams(DeviceInfo),
       maxDaysToPersist: 14
     }, (state:State) => {
+      if (state.schedule && state.schedule.length > 0) {
+        BackgroundGeolocation.startSchedule();
+      }
       this.setState({
         enabled: state.enabled,
         isMoving: state.isMoving,
@@ -257,7 +260,12 @@ export default class HomeView extends Component<IProps, IState> {
       minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
       stopOnTerminate: false, // <-- Android-only,
       startOnBoot: true, // <-- Android-only
-      enableHeadless: true
+      enableHeadless: true,
+      requiresCharging: false,
+      requiredNetworkType: BackgroundFetch.NETWORK_TYPE_NONE,
+      requiresDeviceIdle: false,
+      requiresBatteryNotLow: false,
+      requiresStorageNotLow: false
     }, async () => {
       console.log('- BackgroundFetch start');
       let location = await BackgroundGeolocation.getCurrentPosition({persist: true, samples:1, extras: {'context': 'background-fetch-position'}});
