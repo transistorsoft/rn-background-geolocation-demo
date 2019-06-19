@@ -3,6 +3,7 @@
 buildscript {
     ext {
 		googlePlayServicesLocationVersion = "16.0.0"
+        googlePlayServicesVersion = "16.1.0"
         removeBackgroundGeolocationDebugSoundsInRelease = false
         buildToolsVersion = "28.0.3"
         minSdkVersion = 16
