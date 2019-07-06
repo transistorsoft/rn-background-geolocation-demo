@@ -613,7 +613,7 @@ export default class SettingsService {
       stopOnTerminate: false,
       startOnBoot: true,
       enableHeadless: true,
-      heartbeatInterval: 60
+      heartbeatInterval: -1
     });
     await BackgroundGeolocation.stopSchedule();
   }
