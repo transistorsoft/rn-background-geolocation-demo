@@ -10,6 +10,10 @@ buildscript {
         compileSdkVersion = 28
         targetSdkVersion = 28
         supportLibVersion = "1.0.2"
+        supportV4Version = "1.0.0"
+        mediaCompatVersion = "1.0.1"
+
+
     }
     repositories {
         jcenter()
