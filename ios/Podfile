@@ -39,7 +39,6 @@ target 'BGGeolocation' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
-  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
@@ -54,6 +53,9 @@ target 'BGGeolocation' do
   pod 'RNBackgroundGeolocation', :path => '../node_modules/react-native-background-geolocation'
 
   use_native_modules!
+
+
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
   target 'BGGeolocationTests' do
     inherit! :search_paths

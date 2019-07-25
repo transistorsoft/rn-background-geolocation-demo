@@ -30,10 +30,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNGestureHandlerPackage(),
             new RNBackgroundGeolocation(),
             new RNBackgroundFetchPackage(),
             new MapsPackage(),
-            new RNGestureHandlerPackage(),
             new AsyncStoragePackage(),
             new RNPromptPackage(),
             new RNDeviceInfo()
