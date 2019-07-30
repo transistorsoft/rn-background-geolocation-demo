@@ -15,7 +15,7 @@
     "react-native": "0.60.0",
     "react-native-action-button": "^2.8.5",
     "react-native-background-fetch": "^2.6.1",
-    "react-native-background-geolocation": "../react-native-background-geolocation",
+    "react-native-background-geolocation": "^3.0.9",
     "react-native-device-info": "https://github.com/react-native-community/react-native-device-info.git#b1bd802344d2206a0f8d3460144f0a02f95e7419",
     "react-native-easy-grid": "^0.2.0",
     "react-native-gesture-handler": "https://github.com/hyochan/react-native-gesture-handler#410858b1c0319bdac2791a9c633d715ab2014366",
