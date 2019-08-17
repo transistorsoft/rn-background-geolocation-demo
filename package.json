@@ -1,6 +1,6 @@
 {
   "name": "BGGeolocation",
-  "version": "3.0.9",
+  "version": "3.2.0",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -8,38 +8,38 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-community/async-storage": "^1.2.2",
-    "@types/react-navigation": "^3.0.5",
-    "native-base": "2.12.0",
+    "@react-native-community/async-storage": "^1.6.1",
+    "@types/react-navigation": "^3.0.8",
+    "native-base": "^2.13.5",
     "react": "16.8.6",
-    "react-native": "0.60.0",
+    "react-native": "0.60.4",
     "react-native-action-button": "^2.8.5",
-    "react-native-background-fetch": "^2.6.1",
-    "react-native-background-geolocation": "^3.0.9",
-    "react-native-device-info": "https://github.com/react-native-community/react-native-device-info.git#b1bd802344d2206a0f8d3460144f0a02f95e7419",
+    "react-native-background-fetch": "^2.7.0",
+    "react-native-background-geolocation": "^3.2.0",
+    "react-native-device-info": "^2.3.2",
     "react-native-easy-grid": "^0.2.0",
     "react-native-gesture-handler": "https://github.com/hyochan/react-native-gesture-handler#410858b1c0319bdac2791a9c633d715ab2014366",
-    "react-native-maps": "https://github.com/transistorsoft/react-native-maps.git",
+    "react-native-maps": "^0.25.0",
     "react-native-prompt-android": "https://github.com/transistorsoft/react-native-prompt-android.git",
     "react-native-root-siblings": "git+https://github.com/neilzhengzx/react-native-root-siblings.git",
     "react-native-root-toast": "^3.0.2",
-    "react-navigation": "^3.5.1",
+    "react-navigation": "^3.11.1",
     "redux": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.0",
-    "@babel/runtime": "^7.5.1",
+    "@babel/core": "^7.5.5",
+    "@babel/runtime": "^7.5.5",
     "@react-native-community/eslint-config": "^0.0.5",
-    "@types/jest": "^24.0.15",
-    "@types/react": "^16.8.23",
-    "@types/react-native": "^0.60.0",
-    "@types/react-test-renderer": "^16.8.2",
+    "@types/jest": "^24.0.17",
+    "@types/react": "^16.8.24",
+    "@types/react-native": "^0.60.3",
+    "@types/react-test-renderer": "^16.8.3",
     "babel-jest": "^24.8.0",
-    "eslint": "^6.0.1",
+    "eslint": "^6.1.0",
     "jest": "^24.8.0",
     "metro-react-native-babel-preset": "^0.55.0",
     "react-test-renderer": "16.8.6",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.3"
   },
   "jest": {
     "preset": "react-native"

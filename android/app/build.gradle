@@ -73,10 +73,12 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    entryFile: "index.js"
+    entryFile: "index.js",
+    enableHermes: false,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-background-geolocation/android/app.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -94,24 +96,34 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = true
 
 /**
- * Use international variant JavaScriptCore
- * International variant includes ICU i18n library and necessary data allowing to use
- * e.g. Date.toLocaleString and String.localeCompare that give correct results
- * when using with locales other than en-US.
- * Note that this variant is about 6MiB larger per architecture than default.
+ * The preferred build flavor of JavaScriptCore.
+ *
+ * For example, to use the international variant, you can use:
+ * `def jscFlavor = 'org.webkit:android-jsc-intl:+'`
+ *
+ * The international variant includes ICU i18n library and necessary data
+ * allowing to use e.g. `Date.toLocaleString` and `String.localeCompare` that
+ * give correct results when using with locales other than en-US.  Note that
+ * this variant is about 6MiB larger per architecture than default.
  */
-def useIntlJsc = false
+def jscFlavor = 'org.webkit:android-jsc:+'
+
+/**
+ * Whether to enable the Hermes VM.
+ *
+ * This should be set on project.ext.react and mirrored here.  If it is not set
+ * on project.ext.react, JavaScript will not be compiled to Hermes Bytecode
+ * and the benefits of using Hermes will therefore be sharply reduced.
+ */
+def enableHermes = project.ext.react.get("enableHermes", false);
 
 android {
-	purgeBackgroundGeolocationDebugResources(applicationVariants)
 	compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
-    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
@@ -161,25 +173,26 @@ android {
             }
         }
     }
+    packagingOptions {
+        pickFirst '**/armeabi-v7a/libc++_shared.so'
+        pickFirst '**/x86/libc++_shared.so'
+        pickFirst '**/arm64-v8a/libc++_shared.so'
+        pickFirst '**/x86_64/libc++_shared.so'
+        pickFirst '**/x86/libjsc.so'
+        pickFirst '**/armeabi-v7a/libjsc.so'
+    }
 }
 
 dependencies {
-    implementation project(':react-native-gesture-handler')
-    implementation project(':react-native-background-geolocation')
-    implementation project(':react-native-background-fetch')
-    implementation project(':react-native-maps')
-    implementation project(':@react-native-community_async-storage')
-    compile project(':react-native-prompt-android')
-    compile project(':react-native-device-info')
-    compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    compile "com.facebook.react:react-native:+"  // From node_modules
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.facebook.react:react-native:+"  // From node_modules
 
-    // JSC from node_modules
-    if (useIntlJsc) {
-        implementation 'org.webkit:android-jsc-intl:+'
+    if (enableHermes) {
+      def hermesPath = "../../node_modules/hermesvm/android/";
+      debugImplementation files(hermesPath + "hermes-debug.aar")
+      releaseImplementation files(hermesPath + "hermes-release.aar")
     } else {
-        implementation 'org.webkit:android-jsc:+'
+      implementation jscFlavor
     }
 }
 
@@ -192,16 +205,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 
-// [Added by react-native-background-geolocation] Purge debug sounds from release build.
-def purgeBackgroundGeolocationDebugResources(applicationVariants) {
-    if ((rootProject.ext.has("removeBackgroundGeolocationDebugSoundsInRelease")) && (rootProject.ext.removeBackgroundGeolocationDebugSoundsInRelease == false)) return
-    applicationVariants.all { variant ->
-        if (variant.buildType.name == "release") {
-            println("[react-native-background-geolocation] Purging debug resources in release build")
-            variant.mergeResources.doLast {
-                delete(fileTree(dir: variant.mergeResources.outputDir, includes: ["raw_tslocationmanager*"]))
-            }
-        }
-    }
-}
 
