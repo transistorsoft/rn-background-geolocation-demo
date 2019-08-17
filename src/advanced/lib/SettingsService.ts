@@ -501,8 +501,8 @@ export default class SettingsService {
       "longitude": -73.6169719,
       "notifyOnEntry": true,
       "notifyOnExit": true,
-      "notifyOnDwell": false,
-      "loiteringDelay": 0,
+      "notifyOnDwell": true,
+      "loiteringDelay": 10000,
       "extras": {
         "radius": 200,
         "center": {
@@ -517,8 +517,8 @@ export default class SettingsService {
       "longitude": -73.61602026242679,
       "notifyOnEntry": true,
       "notifyOnExit": true,
-      "notifyOnDwell": false,
-      "loiteringDelay": 0,
+      "notifyOnDwell": true,
+      "loiteringDelay": 10000,
       "extras": {
         "radius": 200,
         "center": {
@@ -533,8 +533,8 @@ export default class SettingsService {
       "longitude": -73.61188565687189,
       "notifyOnEntry": true,
       "notifyOnExit": true,
-      "notifyOnDwell": false,
-      "loiteringDelay": 0,
+      "notifyOnDwell": true,
+      "loiteringDelay": 10000,
       "extras": {
         "radius": 200,
         "center": {
@@ -549,8 +549,8 @@ export default class SettingsService {
       "longitude": -73.60920346871359,
       "notifyOnEntry": true,
       "notifyOnExit": true,
-      "notifyOnDwell": false,
-      "loiteringDelay": 0,
+      "notifyOnDwell": true,
+      "loiteringDelay": 10000,
       "extras": {
         "radius": 200,
         "center": {
@@ -565,8 +565,8 @@ export default class SettingsService {
       "longitude": -73.60288022069346,
       "notifyOnEntry": true,
       "notifyOnExit": true,
-      "notifyOnDwell": false,
-      "loiteringDelay": 0,
+      "notifyOnDwell": true,
+      "loiteringDelay": 10000,
       "extras": {
         "radius": 200,
         "center": {
@@ -581,8 +581,8 @@ export default class SettingsService {
       "longitude": -73.61367125021673,
       "notifyOnEntry": true,
       "notifyOnExit": true,
-      "notifyOnDwell": false,
-      "loiteringDelay": 0,
+      "notifyOnDwell": true,
+      "loiteringDelay": 10000,
       "extras": {
         "radius": 200,
         "center": {
@@ -602,7 +602,7 @@ export default class SettingsService {
       distanceFilter: 50,
       locationUpdateInterval: 5000,
       fastestLocationUpdateInterval: -1,
-      stopTimeout: 0,
+      stopTimeout: 1,
       schedule: [
         //'2-6 09:00-17:00'
       ],
