@@ -78,7 +78,9 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
-apply from: "../../node_modules/react-native-background-geolocation/android/app.gradle"
+
+Project background_geolocation = project(':react-native-background-geolocation')
+apply from: "${background_geolocation.projectDir}/app.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -93,7 +95,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = true
+def enableProguardInReleaseBuilds = false
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -129,8 +131,8 @@ android {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 305
-        versionName "3.0.5"
+        versionCode 324
+        versionName "3.2.2+2"
     }
     splits {
         abi {
@@ -157,7 +159,25 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFiles "${background_geolocation.projectDir}/proguard-rules.pro"
             signingConfig signingConfigs.release
+            matchingFallbacks = ['release']
+        }
+        releaseStaging {
+            initWith release
+            applicationIdSuffix ".staging"
+        }
+        releaseQa {
+            initWith release
+            applicationIdSuffix ".qa"
+        }
+        releaseUat {
+            initWith release
+            applicationIdSuffix ".uat"
+        }
+        releaseDev {
+            initWith release
+            applicationIdSuffix ".dev"
         }
     }
     // applicationVariants are e.g. debug, release
@@ -183,12 +203,13 @@ android {
     }
 }
 
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     if (enableHermes) {
-      def hermesPath = "../../node_modules/hermesvm/android/";
+      def hermesPath = "../../node_modules/hermesvm/android/"
       debugImplementation files(hermesPath + "hermes-debug.aar")
       releaseImplementation files(hermesPath + "hermes-release.aar")
     } else {

@@ -4,8 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- 1/3 [RELEASE:REMOVE] Remove this in release -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <!-- 1/3 [RELEASE:REMOVE] Remove this in release 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/> -->
 
     <!-- 2/3 [RELEASE:ADD] Add these in release
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" tools:node="remove" />
