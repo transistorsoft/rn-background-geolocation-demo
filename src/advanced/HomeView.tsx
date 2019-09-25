@@ -2,6 +2,8 @@
 import React from 'react'
 import {Component} from 'react';
 
+import isEqual from 'lodash.isequal'
+
 import {
   Platform,
   StyleSheet,
@@ -104,7 +106,7 @@ type IState = {
   mapScrollEnabled?: boolean,
   showsUserLocation?: boolean,
   followsUserLocation?: boolean,
-
+  tracksViewChanges?: boolean,
   motionActivity: MotionActivityEvent;
   odometer?: string;
   centerCoordinate?: any;
@@ -144,6 +146,7 @@ export default class HomeView extends Component<IProps, IState> {
       isSyncing: false,
       isEmailingLog: false,
       isDestroyingLocations: false,
+      tracksViewChanges: true,
       // Map state
       centerCoordinate: {
         latitude: 0,
@@ -192,6 +195,21 @@ export default class HomeView extends Component<IProps, IState> {
     });
   }
 
+  componentWillReceiveProps(nextProps: any) {
+    if (!isEqual(this.props, nextProps)) {
+      this.setState(() => ({
+        tracksViewChanges: true,
+      }))
+    }
+  }
+  componentDidUpdate() {
+    if (this.state.tracksViewChanges) {
+      this.setState(() => ({
+        tracksViewChanges: false,
+      }))
+    }
+  }
+
   _handleAppStateChange(state:any) {
     console.log('[handleAppStateChange] ', state);
   }
@@ -220,6 +238,7 @@ export default class HomeView extends Component<IProps, IState> {
     // If you want to override any config options provided by the Settings screen, this is the place to do it, eg:
     // config.stopTimeout = 5;
     //
+
     BackgroundGeolocation.ready({
       reset: false,
       stopTimeout: 1,
@@ -782,6 +801,7 @@ export default class HomeView extends Component<IProps, IState> {
             center={{latitude: this.state.stationaryLocation.latitude, longitude: this.state.stationaryLocation.longitude}}
           />
           <Polyline
+            tracksViewChanges={this.state.tracksViewChanges}
             key="polyline"
             coordinates={(!this.state.settings.hidePolyline) ? this.state.coordinates : []}
             geodesic={true}
@@ -896,6 +916,7 @@ export default class HomeView extends Component<IProps, IState> {
       rs.push((
         <Marker
           key={marker.key}
+          tracksViewChanges={this.state.tracksViewChanges}
           coordinate={marker.coordinate}
           anchor={{x:0, y:0.1}}
           title={marker.title}>
@@ -910,6 +931,7 @@ export default class HomeView extends Component<IProps, IState> {
     return this.state.stopZones.map((stopZone:any) => (
       <Marker
         key={stopZone.key}
+        tracksViewChanges={this.state.tracksViewChanges}
         coordinate={stopZone.coordinate}
         anchor={{x:0, y:0}}>
         <View style={[styles.stopZoneMarker]}></View>
@@ -920,6 +942,7 @@ export default class HomeView extends Component<IProps, IState> {
   renderActiveGeofences() {
     return this.state.geofences.map((geofence:any) => (
       <Circle
+        tracksViewChanges={this.state.tracksViewChanges}
         key={geofence.identifier}
         radius={geofence.radius}
         center={geofence.center}
@@ -937,6 +960,7 @@ export default class HomeView extends Component<IProps, IState> {
     return this.state.geofencesHit.map((hit:any) => {
       return (
         <Circle
+          tracksViewChanges={this.state.tracksViewChanges}
           key={"hit:" + hit.identifier}
           radius={hit.radius+1}
           center={hit.center}
@@ -969,6 +993,7 @@ export default class HomeView extends Component<IProps, IState> {
       return (
         <View key={event.key}>
           <Polyline
+            tracksViewChanges={this.state.tracksViewChanges}
             key="polyline"
             coordinates={event.coordinates}
             geodesic={true}
@@ -977,12 +1002,14 @@ export default class HomeView extends Component<IProps, IState> {
             zIndex={1}
             lineCap="square" />
           <Marker
+            tracksViewChanges={this.state.tracksViewChanges}
             key="edge_marker"
             coordinate={event.coordinates[0]}
             anchor={{x:0, y:0.1}}>
             <View style={[styles.geofenceHitMarker, markerStyle]}></View>
           </Marker>
           <Marker
+            tracksViewChanges={this.state.tracksViewChanges}
             key="location_marker"
             coordinate={event.coordinates[1]}
             anchor={{x:0, y:0.1}}>
