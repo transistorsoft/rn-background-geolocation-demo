@@ -1,6 +1,6 @@
 {
   "name": "BGGeolocation",
-  "version": "3.2.0",
+  "version": "3.2.2",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.6.1",
+    "@types/lodash.isequal": "^4.5.5",
     "@types/react-navigation": "^3.0.8",
+    "lodash.isequal": "^4.5.0",
     "native-base": "^2.13.5",
     "react": "16.8.6",
     "react-native": "0.60.5",
