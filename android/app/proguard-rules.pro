@@ -16,3 +16,5 @@
 #   public *;
 #}
 
+# For hermes
+-keep class com.facebook.hermes.unicode.** { *; }
