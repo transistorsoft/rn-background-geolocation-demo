@@ -131,8 +131,8 @@ android {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 324
-        versionName "3.2.2+2"
+        versionCode 327
+        versionName "3.2.3#2"
     }
     splits {
         abi {
