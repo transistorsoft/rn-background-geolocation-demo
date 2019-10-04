@@ -4,8 +4,9 @@ import {Component} from 'react';
 import {
   StyleSheet,
   View,
-  WebView
 } from 'react-native';
+
+import { WebView } from 'react-native-webview';
 
 import {
   Container,
@@ -22,8 +23,8 @@ export default class AboutView extends Component<any, any> {
       <Container style={styles.container}>
         <Header style={styles.header}>
           <Left>
-            <Button dark transparent onPress={this.onClickClose.bind(this)}>
-              <Icon color="#000" active name="ios-arrow-dropdown-circle" />
+            <Button transparent onPress={this.onClickClose.bind(this)}>
+              <Icon color="#000" style={{color: "#000"}} active name="close" />
             </Button>
           </Left>
           <Body>
