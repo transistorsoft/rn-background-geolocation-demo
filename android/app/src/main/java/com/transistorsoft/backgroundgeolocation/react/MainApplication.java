@@ -2,6 +2,8 @@ package com.transistorsoft.backgroundgeolocation.react;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.StrictMode;
+
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
@@ -12,8 +14,7 @@ import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
 
-  private final ReactNativeHost mReactNativeHost =
-          new ReactNativeHost(this) {
+  private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
             @Override
             public boolean getUseDeveloperSupport() {
               return BuildConfig.DEBUG;
@@ -41,6 +42,22 @@ public class MainApplication extends Application implements ReactApplication {
 
   @Override
   public void onCreate() {
+      // Strict mode.  Should be disabled on RELEASE.
+        /*
+      StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+              .detectDiskReads()
+              .detectDiskWrites()
+              .detectAll()
+              .penaltyLog()
+              .build());
+
+      StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+              .detectLeakedSqlLiteObjects()
+              .detectLeakedClosableObjects()
+              .penaltyLog()
+              .penaltyDeath()
+              .build());
+    */
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this); // Remove this line if you don't want Flipper enabled
