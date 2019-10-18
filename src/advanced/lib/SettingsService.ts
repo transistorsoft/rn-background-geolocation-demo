@@ -79,6 +79,8 @@ const PLUGIN_SETTINGS:any = {
     // Activity Recognition
     {name: 'stopTimeout', group: 'activity recognition', dataType: 'integer', inputType: 'select', values: [0, 1, 5, 10, 15], defaultValue: 1},
     {name: 'disableMotionActivityUpdates', group: 'activity recognition', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
+    {name: 'disableStopDetection', group: 'activity recognition', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
+
     // HTTP & Persistence
     {name: 'url', group: 'http', inputType: 'text', dataType: 'string', defaultValue: 'http://your.server.com/endpoint'},
     {name: 'autoSync', group: 'http', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: true},
@@ -104,7 +106,6 @@ const PLUGIN_SETTINGS:any = {
     // Application
     {name: 'preventSuspend', group: 'application', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
     // Activity Recognition
-    {name: 'disableStopDetection', group: 'activity recognition', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
     {name: 'stopDetectionDelay', group: 'activity recognition', dataType: 'integer', inputType: 'select', values: [0, 1, 5, 10, 15], defaultValue: 0}
   ],
   android: [
@@ -595,13 +596,15 @@ export default class SettingsService {
 
     await BackgroundGeolocation.removeGeofences();
     await BackgroundGeolocation.addGeofences(geofences);
+    await BackgroundGeolocation.resetOdometer();
 
     await BackgroundGeolocation.setConfig({
       debug: true,
       logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
-      desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_NAVIGATION,
+      desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
       distanceFilter: 50,
-      locationUpdateInterval: 5000,
+      disableElasticity: false,
+      locationUpdateInterval: 1000,
       fastestLocationUpdateInterval: -1,
       stopTimeout: 1,
       schedule: [

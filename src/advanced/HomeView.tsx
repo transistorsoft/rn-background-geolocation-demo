@@ -261,6 +261,7 @@ export default class HomeView extends Component<IProps, IState> {
       if (state.schedule && state.schedule.length > 0) {
         BackgroundGeolocation.startSchedule();
       }
+
       this.setState({
         enabled: state.enabled,
         isMoving: state.isMoving,
@@ -274,6 +275,7 @@ export default class HomeView extends Component<IProps, IState> {
   }
 
   configureBackgroundFetch() {
+
     // [Optional] Configure BackgroundFetch.
     BackgroundFetch.configure({
       minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
