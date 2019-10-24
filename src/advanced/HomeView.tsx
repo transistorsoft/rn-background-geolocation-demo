@@ -51,11 +51,14 @@ import BackgroundGeolocation, {
   GeofencesChangeEvent,
   HeartbeatEvent,
   ConnectivityChangeEvent,
+  DeviceSettings,
   DeviceSettingsRequest,
   Notification
 } from '../react-native-background-geolocation';
 
 import BackgroundFetch from "react-native-background-fetch";
+
+import Moment from 'moment';
 
 declare var global:any;
 global.BackgroundFetch = BackgroundFetch;
@@ -168,7 +171,7 @@ export default class HomeView extends Component<IProps, IState> {
       // Application settings
       settings: {},
       // BackgroundGeolocation state
-      bgGeo: {enabled: false, schedulerEnabled: false, trackingMode: 1, odometer: 0},
+      bgGeo: {didLaunchInBackground: false, enabled: false, schedulerEnabled: false, trackingMode: 1, odometer: 0},
     };
 
     this.settingsService = SettingsService.getInstance();
@@ -220,6 +223,7 @@ export default class HomeView extends Component<IProps, IState> {
   }
 
   async configureBackgroundGeolocation() {
+
     // Step 1:  Listen to events:
     BackgroundGeolocation.onLocation(this.onLocation.bind(this), this.onLocationError.bind(this));
     BackgroundGeolocation.onMotionChange(this.onMotionChange.bind(this));
@@ -238,7 +242,6 @@ export default class HomeView extends Component<IProps, IState> {
     // If you want to override any config options provided by the Settings screen, this is the place to do it, eg:
     // config.stopTimeout = 5;
     //
-
     BackgroundGeolocation.ready({
       reset: false,
       stopTimeout: 1,
@@ -275,6 +278,7 @@ export default class HomeView extends Component<IProps, IState> {
   }
 
   configureBackgroundFetch() {
+
 
     // [Optional] Configure BackgroundFetch.
     BackgroundFetch.configure({
@@ -655,17 +659,21 @@ export default class HomeView extends Component<IProps, IState> {
     });
   }
 
-  emailLog() {
+  async emailLog() {
     // First fetch the email from settingsService.
+    let Logger = BackgroundGeolocation.logger;
+
     this.settingsService.getEmail((email:string) => {
       if (!email) { return; }  // <-- [Cancel] returns null
       // Confirm email
       this.settingsService.yesNo('Email log', 'Use email address: ' + email + '?', () => {
         // Here we go...
         this.setState({isEmailingLog: true});
-        BackgroundGeolocation.emailLog(email, () => {
+
+        Logger.emailLog(email).then((succes) => {
+          console.log('[emailLog] success');
           this.setState({isEmailingLog: false});
-        }, (error) => {
+        }).catch((error) => {
           this.setState({isEmailingLog: false});
           this.settingsService.toast("Email log failure: " + error);
         });
