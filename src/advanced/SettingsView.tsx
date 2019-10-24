@@ -115,7 +115,7 @@ export default class SettingsView extends Component<any, any> {
   onClickDestroyLog() {
     this.settingsService.confirm('Confirm Destroy', 'Destroy Logs?', () => {
       this.setState({isDestroyingLog: true});
-      BackgroundGeolocation.destroyLog(() => {
+      BackgroundGeolocation.logger.destroyLog().then((success) => {
         this.setState({isDestroyingLog: false});
         this.settingsService.toast('Destroyed logs');
       });

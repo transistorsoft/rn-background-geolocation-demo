@@ -29,7 +29,7 @@ import BackgroundGeolocation, {
 ////
 // 2.  For importing the private plugin (customers only)
 //
-// import BackgroundGeolocation from "react-native-background-geolocation-android";
+// import BackgroundGeolocation from "react-native-background-geolocation";
 
 export default BackgroundGeolocation;
 

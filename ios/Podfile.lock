@@ -185,7 +185,7 @@ PODS:
     - React-cxxreact (= 0.61.2)
     - React-jsi (= 0.61.2)
   - React-jsinspector (0.61.2)
-  - react-native-maps (0.25.0):
+  - react-native-maps (0.26.1):
     - React
   - react-native-webview (7.2.5):
     - React
@@ -226,7 +226,7 @@ PODS:
     - ReactCommon/jscallinvoker (= 0.61.2)
   - RNBackgroundFetch (2.7.1):
     - React
-  - RNBackgroundGeolocation (3.3.0):
+  - RNBackgroundGeolocation (3.3.1):
     - CocoaLumberjack (~> 3.5.1)
     - React
   - RNCAsyncStorage (1.6.1):
@@ -275,8 +275,9 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - boost-for-react-native
+  trunk:
     - CocoaLumberjack
 
 EXTERNAL SOURCES:
@@ -362,7 +363,7 @@ SPEC CHECKSUMS:
   React-jsi: 32285a21b1b24c36060493ed3057a34677d58d09
   React-jsiexecutor: 8909917ff7d8f21a57e443a866fd8d4560e50c65
   React-jsinspector: 111d7d342b07a904c400592e02a2b958f1098b60
-  react-native-maps: 190c02ca533fddac5bb49cf17bdece3644612107
+  react-native-maps: 6e499eee4eabf422ba8b6f94e993cc768bf35153
   react-native-webview: 8a5e811e1716e401ebea4a327c7e193ebadcd572
   React-RCTActionSheet: 89b037c0fb7d2671607cb645760164e7e0c013f6
   React-RCTAnimation: e3cefa93c38c004c318f7ec04b883eb14b8b8235
@@ -375,7 +376,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: fb54c732fd20405a76598e431aa2f8c2bf527de9
   ReactCommon: 5848032ed2f274fcb40f6b9ec24067787c42d479
   RNBackgroundFetch: 8d8d66b47eafcb9e772b2eb95057939038b3ef95
-  RNBackgroundGeolocation: 55ee0257c198805082e72404d704b6c78d33d8d2
+  RNBackgroundGeolocation: 8cf7f9803816e37f588fa912e1251f6f8c35e6c4
   RNCAsyncStorage: 2e2e3feb9bdadc752a026703d8c4065ca912e75a
   RNDeviceInfo: 17e34f6dd902f08d88cbe2c0b7a01be948d43641
   RNGestureHandler: 5329a942fce3d41c68b84c2c2276ce06a696d8b0
@@ -383,4 +384,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 75dde7977d47ea5cd3333531e2830dc109109a9c
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4

@@ -4699,6 +4699,11 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
+moment@^2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+
 morgan@^1.9.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.9.1.tgz#0a8d16734a1d9afbc824b99df87e738e58e2da59"
@@ -5516,10 +5521,10 @@ react-native-background-fetch@^2.7.1, react-native-background-fetch@~2.7.1:
     plist "^3.0.1"
     xcode "^2.0.0"
 
-react-native-background-geolocation@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-3.3.0.tgz#7fc1dfc9bf26c147a7d3f20c7b1788566fa8a4e4"
-  integrity sha512-wGpDW0h+kh5+4XmfaUOvFsK268VuwhSpk2BHAQXAXo7p0fIiw12nZeGsKYgdIJeOdNGEsrfOEq6eDnwTmcYhOA==
+react-native-background-geolocation@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-3.3.1.tgz#94fd523a9a05906776cdd9e0cd8c6e2164f7003c"
+  integrity sha512-kYd8t5r7QZbR+Wj6NVaXCz+xLSjJJRRlLaE/kR3//dRzylGNXkvBZdrBrcUkwShzAHF3eYwSMXZlGVAMHEZgMw==
   dependencies:
     fast-plist "^0.1.2"
     plist "^2.0.1"
@@ -5567,10 +5572,10 @@ react-native-keyboard-aware-scroll-view@0.9.1:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
-react-native-maps@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.25.0.tgz#81bc51eb50e33811a9e1c345cc48869413ead67d"
-  integrity sha512-PFJuW1pt+HnnnN0m0OGk29RSvICFVkK/DScX6cUk0SuCSN2DAHx0y6y57lZyYXcYqU4J4usNpfxgp/ccjASDiw==
+react-native-maps@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.26.1.tgz#6ec316259b38d259c8974448d894bd7a23101da4"
+  integrity sha512-p4VTB8YB5ZmOmDRCUpoHZkm05amZwhIo04AJMBbB9+JAR2PNNfpo0vceoWX0Mag4wnePkdzPomeWMplr/wimTg==
 
 "react-native-prompt-android@https://github.com/transistorsoft/react-native-prompt-android.git":
   version "0.3.5"
