@@ -5531,10 +5531,10 @@ react-native-background-geolocation@^3.3.1:
     react-native-background-fetch "~2.7.1"
     xcode "^0.9.1"
 
-react-native-device-info@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-2.3.2.tgz#db2b8f135aaf2515583e367ab791dcc7d2f0d14c"
-  integrity sha512-ccpPuUbwhw5uYdVwN1UJp6ykMZz6U/u82HNM3oJ7O6MP8RIMlMDkHbqR4O0sDtUSuRMGiqqRzFtmOLFYeQ0ODw==
+react-native-device-info@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-5.0.1.tgz#e941424f9ab18688fb343dc1542b2cfaaabb330a"
+  integrity sha512-wK1D+kpgDW4J4KipOblU8kKtqU090YUWWydvb4r530BlUqtmU5l/Prq46ej6lYuagsQnoOurrBn+nNSWltwjwg==
 
 react-native-drawer@2.5.1:
   version "2.5.1"
