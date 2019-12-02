@@ -18,7 +18,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import Toast from 'react-native-root-toast';
 import prompt from 'react-native-prompt-android';
-import DeviceInfo from 'react-native-device-info';
+
 import BackgroundGeolocation, {
   State,
   Location,
@@ -32,6 +32,8 @@ import BackgroundGeolocation, {
   HeartbeatEvent,
   ConnectivityChangeEvent
 } from "../../react-native-background-geolocation";
+
+import ENV from "../../ENV";
 
 const STORAGE_KEY:string = "@transistorsoft:";
 const TRACKER_HOST:string = 'http://tracker.transistorsoft.com/locations/';
@@ -84,12 +86,14 @@ const PLUGIN_SETTINGS:any = {
     // HTTP & Persistence
     {name: 'url', group: 'http', inputType: 'text', dataType: 'string', defaultValue: 'http://your.server.com/endpoint'},
     {name: 'autoSync', group: 'http', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: true},
+    {name: 'disableAutoSyncOnCellular', group: 'http', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
     {name: 'autoSyncThreshold', group: 'http', dataType: 'integer', inputType: 'select', values: [0, 5, 10, 25, 50, 100], defaultValue: 0},
     {name: 'batchSync', group: 'http', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
     {name: 'maxBatchSize', group: 'http', dataType: 'integer', inputType: 'select', values: [-1, 50, 100, 250, 500], defaultValue: 250},
     {name: 'maxRecordsToPersist', group: 'http', dataType: 'integer', inputType: 'select', values: [-1, 0, 1, 10, 100, 1000], defaultValue: -1},
     {name: 'maxDaysToPersist', group: 'http', dataType: 'integer', inputType: 'select', values: [-1, 1, 2, 3, 5, 7, 14], defaultValue: 2},
     {name: 'persistMode', group: 'http', dataType: 'integer', inputType: 'select', values: [2, 1, -1, 0], defaultValue: 2},
+    {name: 'encrypt', group: 'http', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
     // Application
     {name: 'stopOnTerminate', group: 'application', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: true},
     {name: 'startOnBoot', group: 'application', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
@@ -138,7 +142,9 @@ const SOUND_MAP:any = {
     "ERROR": 1006,
     "OPEN": 1502,
     "CLOSE": 1503,
-    "FLOURISH": 1509
+    "FLOURISH": 1509,
+    "TEST_MODE_CLICK": 1130,
+    "TEST_MODE_SUCCESS": 1114
   },
   "android": {
     "LONG_PRESS_ACTIVATE": "DOT_START",
@@ -149,7 +155,9 @@ const SOUND_MAP:any = {
     "ERROR": "ERROR",
     "OPEN": "OPEN",
     "CLOSE": "CLOSE",
-    "FLOURISH": "MOTIONCHANGE_TRUE"
+    "FLOURISH": "MOTIONCHANGE_TRUE",
+    "TEST_MODE_CLICK": "POP",
+    "TEST_MODE_SUCCESS": "BEEP_ON"
   }
 };
 
@@ -176,27 +184,29 @@ export default class SettingsService {
 
   constructor(props:any) {
     this._loadApplicationState();
-    this.pluginState = {enabled: false, trackingMode: 1, odometer: 0, schedulerEnabled: false};
+    this.pluginState = {enabled: false, trackingMode: 1, odometer: 0, schedulerEnabled: false, didLaunchInBackground: false};
 
     this.getUUID((uuid:any) => {
       this.uuid = uuid;
     });
 
-    let platform = DeviceInfo.getSystemName();
-    if (platform.match(/iPhone/)) {
-      platform = 'ios'
-    };
-    this.platform = platform.toLowerCase();
+    let deviceInfo = BackgroundGeolocation.getDeviceInfo().then((deviceInfo) => {
+      let platform = deviceInfo.platform;
+      if (platform.match(/iPhone/)) {
+        platform = 'ios'
+      };
+      this.platform = platform.toLowerCase();
 
-    let items = [].concat(PLUGIN_SETTINGS.common).concat(PLUGIN_SETTINGS[this.platform]);
+      let items = [].concat(PLUGIN_SETTINGS.common).concat(PLUGIN_SETTINGS[this.platform]);
 
-    this.settings = {
-      items: items,
-      map: {}
-    };
-    // Create a Map of Settings for speedy lookup.
-    items.forEach((item:any) => {
-      this.settings.map[item.name] = item;
+      this.settings = {
+        items: items,
+        map: {}
+      };
+      // Create a Map of Settings for speedy lookup.
+      items.forEach((item:any) => {
+        this.settings.map[item.name] = item;
+      });
     });
   }
 
@@ -598,12 +608,19 @@ export default class SettingsService {
     await BackgroundGeolocation.addGeofences(geofences);
     await BackgroundGeolocation.resetOdometer();
 
-    await BackgroundGeolocation.setConfig({
+    let orgname = await AsyncStorage.getItem('orgname') || '';
+    let username = await AsyncStorage.getItem('username') || '';
+
+    let token = await BackgroundGeolocation.findOrCreateTransistorAuthorizationToken(orgname, username, ENV.TRACKER_HOST);
+
+    await BackgroundGeolocation.reset({
+      transistorAuthorizationToken: token,
       debug: true,
       logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
       desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
       distanceFilter: 50,
       disableElasticity: false,
+      encrypt: true,
       locationUpdateInterval: 1000,
       fastestLocationUpdateInterval: -1,
       stopTimeout: 1,
@@ -611,8 +628,6 @@ export default class SettingsService {
         //'2-6 09:00-17:00'
       ],
       scheduleUseAlarmManager: true,
-      url: 'http://tracker.transistorsoft.com/locations/' + this.username,
-      params: BackgroundGeolocation.transistorTrackerParams(DeviceInfo),
       maxDaysToPersist: 14,
       geofenceModeHighAccuracy: true,
       stopOnTerminate: false,

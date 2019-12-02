@@ -12,8 +12,7 @@ import {
   AppState
 } from 'react-native';
 
-// For posting to tracker.transistorsoft.com
-import DeviceInfo from 'react-native-device-info';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import ActionButton from 'react-native-action-button';
 
@@ -53,15 +52,14 @@ import BackgroundGeolocation, {
   ConnectivityChangeEvent,
   DeviceSettings,
   DeviceSettingsRequest,
-  Notification
+  Notification,
+  Authorization,
+  TransistorAuthorizationToken
 } from '../react-native-background-geolocation';
 
 import BackgroundFetch from "react-native-background-fetch";
 
 import Moment from 'moment';
-
-declare var global:any;
-global.BackgroundFetch = BackgroundFetch;
 
 // react-native-maps
 import MapView, {Marker, Polyline, Circle} from 'react-native-maps';
@@ -69,13 +67,14 @@ import MapView, {Marker, Polyline, Circle} from 'react-native-maps';
 const LATITUDE_DELTA = 0.00922;
 const LONGITUDE_DELTA = 0.00421;
 
-import Home from '../home/Home';
+import Util from '../lib/Util';
+import {registerTransistorAuthorizationListener} from '../lib/Authorization';
+import ENV from '../ENV';
 
 import {COLORS, SOUNDS} from './lib/config';
 import SettingsView from './SettingsView';
 import SettingsService from './lib/SettingsService';
 
-const TRACKER_HOST = 'http://tracker.transistorsoft.com/locations/';
 const STATIONARY_REGION_FILL_COLOR = "rgba(200,0,0,0.2)"
 const STATIONARY_REGION_STROKE_COLOR = "rgba(200,0,0,0.2)"
 const GEOFENCE_STROKE_COLOR = "rgba(17,183,0,0.5)"
@@ -88,9 +87,10 @@ const POLYLINE_STROKE_COLOR = "rgba(32,64,255,0.6)";
 let ACTION_BUTTON_OFFSET_Y  = 70;
 if (Platform.OS == 'android') {
   ACTION_BUTTON_OFFSET_Y = 65;
-} else if (DeviceInfo.getModel() === 'iPhone X') {
+} /*else if (DeviceInfo.getModel() === 'iPhone X') {
   ACTION_BUTTON_OFFSET_Y = 95;
 }
+*/
 
 type IProps = {
   navigation: any;
@@ -196,9 +196,19 @@ export default class HomeView extends Component<IProps, IState> {
         settings: state
       });
     });
+
+    // Nothing to see here -- just demo app boilerplace authorization handling with Demo server.
+    registerTransistorAuthorizationListener(this.props.navigation);
   }
 
-  componentWillReceiveProps(nextProps: any) {
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+    // It's a good idea to #removeListeners when your component is unmounted, especially when hot-relaoding
+    // Otherwise, you'll accumulate event-listeners.
+    BackgroundGeolocation.removeListeners();
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps: any) {
     if (!isEqual(this.props, nextProps)) {
       this.setState(() => ({
         tracksViewChanges: true,
@@ -217,12 +227,12 @@ export default class HomeView extends Component<IProps, IState> {
     console.log('[handleAppStateChange] ', state);
   }
 
-  componentWillUnmount() {
-    BackgroundGeolocation.removeListeners();
-    AppState.removeEventListener('change', this._handleAppStateChange);
-  }
-
   async configureBackgroundGeolocation() {
+    let orgname = await AsyncStorage.getItem('orgname');
+    let username = await AsyncStorage.getItem('username');
+
+    // Sanity check orgname / username.
+    if (orgname == null || username == null) return this.onClickHome();
 
     // Step 1:  Listen to events:
     BackgroundGeolocation.onLocation(this.onLocation.bind(this), this.onLocationError.bind(this));
@@ -242,14 +252,22 @@ export default class HomeView extends Component<IProps, IState> {
     // If you want to override any config options provided by the Settings screen, this is the place to do it, eg:
     // config.stopTimeout = 5;
     //
+
+    // Special token to automatically authenticate with Demo server.
+    let token = await BackgroundGeolocation.findOrCreateTransistorAuthorizationToken(
+      orgname,
+      username,
+      ENV.TRACKER_HOST
+    );
+
     BackgroundGeolocation.ready({
+      transistorAuthorizationToken: token,
       reset: false,
       stopTimeout: 1,
       debug: true,
       logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
       foregroundService: true,
       autoSync: true,
-      url: TRACKER_HOST + this.state.username,
       stopOnTerminate: false,
       startOnBoot: true,
       notification: {
@@ -258,9 +276,9 @@ export default class HomeView extends Component<IProps, IState> {
       },
       heartbeatInterval: 60,
       enableHeadless: true,
-      params: BackgroundGeolocation.transistorTrackerParams(DeviceInfo),
       maxDaysToPersist: 14
     }, (state:State) => {
+      console.log('- state: ', state);
       if (state.schedule && state.schedule.length > 0) {
         BackgroundGeolocation.startSchedule();
       }
@@ -278,8 +296,6 @@ export default class HomeView extends Component<IProps, IState> {
   }
 
   configureBackgroundFetch() {
-
-
     // [Optional] Configure BackgroundFetch.
     BackgroundFetch.configure({
       minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
@@ -590,7 +606,7 @@ export default class HomeView extends Component<IProps, IState> {
 
   onClickHome() {
     this.settingsService.playSound('BUTTON_CLICK');
-    Home.navigate(this.props.navigation);
+    Util.navigateHome(this.props.navigation);
   }
 
   /**
@@ -758,9 +774,9 @@ export default class HomeView extends Component<IProps, IState> {
   // DO NOT USE.
   onClickTestMode() {
     this.testModeClicks++;
-    BackgroundGeolocation.playSound('POP');
+    this.settingsService.playSound('TEST_MODE_CLICK');
     if (this.testModeClicks == 10) {
-      BackgroundGeolocation.playSound('BEEP_ON');
+      this.settingsService.playSound('TEST_MODE_SUCCESS');
       SettingsService.getInstance().applyTestConfig();
     }
 

@@ -7,11 +7,12 @@ import {
   View
 } from 'react-native';
 
-// For dispatching back to HomeScreen
-import Home from '../home/Home';
+import AsyncStorage from '@react-native-community/async-storage';
 
-// For posting to tracker.transistorsoft.com
-import DeviceInfo from 'react-native-device-info';
+// For dispatching back to HomeScreen
+import Util from '../lib/Util';
+import {registerTransistorAuthorizationListener} from '../lib/Authorization';
+import ENV from '../ENV';
 
 // Import native-base UI components
 import {
@@ -43,13 +44,12 @@ import BackgroundGeolocation, {
   Location,
   MotionChangeEvent,
   MotionActivityEvent,
-  ProviderChangeEvent
+  ProviderChangeEvent,
+  TransistorAuthorizationToken
 } from '../react-native-background-geolocation';
 
 const LATITUDE_DELTA = 0.00922;
 const LONGITUDE_DELTA = 0.00421;
-
-const TRACKER_HOST = 'http://tracker.transistorsoft.com/locations/';
 
 type IProps = {
   navigation: any
@@ -83,6 +83,26 @@ export default class SimpleMap extends Component<IProps, IState> {
   }
 
   componentDidMount() {
+    this.configureBackgroundGeolocation();
+    // Nothing to see here -- just demo app boilerplace authorization handling with Demo server.
+    registerTransistorAuthorizationListener(this.props.navigation);
+  }
+
+  componentWillUnmount() {
+    // It's a good idea to #removeListeners when your component is unmounted, especially when hot-relaoding
+    // Otherwise, you'll accumulate event-listeners.
+    BackgroundGeolocation.removeListeners();
+  }
+
+  async configureBackgroundGeolocation() {
+    let orgname = await AsyncStorage.getItem('orgname');
+    let username = await AsyncStorage.getItem('username');
+
+    // Sanity check orgname / username.
+    if (orgname == null || username == null) return this.onClickHome();
+
+    let token:TransistorAuthorizationToken = await BackgroundGeolocation.findOrCreateTransistorAuthorizationToken(orgname, username, ENV.TRACKER_HOST);
+
     // Step 1:  Listen to events:
     BackgroundGeolocation.onLocation(this.onLocation.bind(this));
     BackgroundGeolocation.onMotionChange(this.onMotionChange.bind(this));
@@ -91,26 +111,25 @@ export default class SimpleMap extends Component<IProps, IState> {
     BackgroundGeolocation.onPowerSaveChange(this.onPowerSaveChange.bind(this));
 
     // Step 2:  #configure:
-    BackgroundGeolocation.configure({
+    BackgroundGeolocation.ready({
+      debug: true,
+      logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+      desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
       distanceFilter: 10,
-      url: TRACKER_HOST + this.state.username,
-      params: {
-        // Required for tracker.transistorsoft.com
-        device: {
-          uuid: (DeviceInfo.getModel() + '-' + DeviceInfo.getSystemVersion()).replace(/[\s\.,]/g, '-'),
-          model: DeviceInfo.getModel(),
-          platform: DeviceInfo.getSystemName(),
-          manufacturer: DeviceInfo.getManufacturer(),
-          version: DeviceInfo.getSystemVersion(),
-          framework: 'ReactNative'
-        }
+      url: ENV.TRACKER_HOST + '/api/locations',
+      authorization: {  // <-- JWT authorization for tracker.transistorsoft.com
+        strategy: 'JWT',
+        accessToken: token.accessToken,
+        refreshToken: token.refreshToken,
+        refreshUrl: ENV.TRACKER_HOST + '/api/refresh_token',
+        refreshPayload: {
+          refresh_token: '{refreshToken}'
+        },
+        expires: token.expires
       },
       autoSync: true,
       stopOnTerminate: false,
-      startOnBoot: true,
-      foregroundService: true,
-      debug: true,
-      logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+      startOnBoot: true
     }, (state) => {
       this.setState({
         enabled: state.enabled,
@@ -332,7 +351,7 @@ export default class SimpleMap extends Component<IProps, IState> {
       showsUserLocation: false
     });
 
-    Home.navigate(this.props.navigation);
+    Util.navigateHome(this.props.navigation);
   }
 }
 

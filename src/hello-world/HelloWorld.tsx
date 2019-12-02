@@ -1,15 +1,13 @@
 import React from 'react'
 import {Component} from 'react';
 
+import AsyncStorage from '@react-native-community/async-storage';
+
 import {
   Platform,
   StyleSheet,
   View
 } from 'react-native';
-
-import Home from '../home/Home';
-
-import DeviceInfo from 'react-native-device-info';
 
 import {
   Container,
@@ -38,10 +36,14 @@ import BackgroundGeolocation, {
   ProviderChangeEvent,
   HttpEvent,
   HeartbeatEvent,
-  MotionActivityEvent
+  MotionActivityEvent,
+  AuthorizationEvent,
+  TransistorAuthorizationToken
 } from "../react-native-background-geolocation";
 
-const TRACKER_HOST = 'http://tracker.transistorsoft.com/locations/';
+import Util from '../lib/Util';
+import ENV from '../ENV';
+import {registerTransistorAuthorizationListener} from '../lib/Authorization';
 
 type IProps = {
   navigation: any;
@@ -52,6 +54,7 @@ type IState = {
   username?: string;
   events: Array<any>
 };
+
 export default class HelloWorld extends Component<IProps, IState> {
   eventId: number;
   constructor(props:IProps) {
@@ -68,6 +71,26 @@ export default class HelloWorld extends Component<IProps, IState> {
   }
 
   componentDidMount() {
+    this.configureBackgroundGeolocation();
+    // Nothing to see here -- just demo app boilerplace authorization handling with Demo server.
+    registerTransistorAuthorizationListener(this.props.navigation);
+  }
+
+  componentWillUnmount() {
+    // It's a good idea to #removeListeners when your component is unmounted, especially when hot-relaoding
+    // Otherwise, you'll accumulate event-listeners.
+    BackgroundGeolocation.removeListeners();
+  }
+
+  async configureBackgroundGeolocation() {
+    let orgname = await AsyncStorage.getItem('orgname');
+    let username = await AsyncStorage.getItem('username');
+
+    // Sanity check orgname / username.
+    if (orgname == null || username == null) return this.onClickHome();
+
+    let token:TransistorAuthorizationToken = await BackgroundGeolocation.findOrCreateTransistorAuthorizationToken(orgname, username, ENV.TRACKER_HOST);
+
     // Step 1:  Listen to events:
     BackgroundGeolocation.onLocation(this.onLocation.bind(this));
     BackgroundGeolocation.onMotionChange(this.onMotionChange.bind(this));
@@ -76,6 +99,7 @@ export default class HelloWorld extends Component<IProps, IState> {
     BackgroundGeolocation.onPowerSaveChange(this.onPowerSaveChange.bind(this));
     BackgroundGeolocation.onHttp(this.onHttp.bind(this));
     BackgroundGeolocation.onHeartbeat(this.onHeartbeat.bind(this));
+    BackgroundGeolocation.onAuthorization(this.onAuthorization.bind(this));
 
     // Step 2:  #configure:
     BackgroundGeolocation.ready({
@@ -84,17 +108,16 @@ export default class HelloWorld extends Component<IProps, IState> {
       startOnBoot: true,
       foregroundService: true,
       heartbeatInterval: 60,
-      url: TRACKER_HOST + this.state.username,
-      params: {
-        // Required for tracker.transistorsoft.com
-        device: {
-          uuid: (DeviceInfo.getModel() + '-' + DeviceInfo.getSystemVersion()).replace(/[\s\.,]/g, '-'),
-          model: DeviceInfo.getModel(),
-          platform: DeviceInfo.getSystemName(),
-          manufacturer: DeviceInfo.getManufacturer(),
-          version: DeviceInfo.getSystemVersion(),
-          framework: 'ReactNative'
-        }
+      url: ENV.TRACKER_HOST + '/api/locations',
+      authorization: {  // <-- JWT authorization for tracker.transistorsoft.com
+        strategy: 'JWT',
+        accessToken: token.accessToken,
+        refreshToken: token.refreshToken,
+        refreshUrl: ENV.TRACKER_HOST + '/api/refresh_token',
+        refreshPayload: {
+          refresh_token: '{refreshToken}'
+        },
+        expires: token.expires
       },
       autoSync: true,
       debug: true,
@@ -161,6 +184,13 @@ export default class HelloWorld extends Component<IProps, IState> {
     console.log('[event] heartbeat: ', event);
     this.addEvent('heartbeat', new Date(), event);
   }
+  /**
+  * @event authorization
+  */
+  onAuthorization(event:AuthorizationEvent) {
+    console.log('[event] authorization: ', event);
+    this.addEvent('authorization', new Date(), event);
+  }
 
   onToggleEnabled() {
     let enabled = !this.state.enabled;
@@ -179,7 +209,7 @@ export default class HelloWorld extends Component<IProps, IState> {
     BackgroundGeolocation.getCurrentPosition({
       persist: true,
       samples: 1,
-      maximumAge: 5000
+      maximumAge: 0
     }, (location:Location) => {
       console.log('- getCurrentPosition success: ', location);
     }, (error:number) => {
@@ -273,7 +303,7 @@ export default class HelloWorld extends Component<IProps, IState> {
   * Navigate back to home-screen app-switcher
   */
   onClickHome() {
-    Home.navigate(this.props.navigation);
+    Util.navigateHome(this.props.navigation);
   }
 }
 
