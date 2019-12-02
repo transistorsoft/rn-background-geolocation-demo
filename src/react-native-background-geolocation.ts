@@ -21,9 +21,11 @@ import BackgroundGeolocation, {
   GeofencesChangeEvent,
   HeartbeatEvent,
   ConnectivityChangeEvent,
-  DeviceSettings,
-  DeviceSettingsRequest,
-  Notification
+  DeviceSettings, DeviceSettingsRequest,
+  Notification,
+  DeviceInfo,
+  Authorization, AuthorizationEvent,
+  TransistorAuthorizationToken
 } from "react-native-background-geolocation";
 
 ////
@@ -47,7 +49,9 @@ export {
   GeofencesChangeEvent,
   HeartbeatEvent,
   ConnectivityChangeEvent,
-  DeviceSettings,
-  DeviceSettingsRequest,
-  Notification
+  DeviceSettings, DeviceSettingsRequest,
+  Notification,
+  DeviceInfo,
+  Authorization, AuthorizationEvent,
+  TransistorAuthorizationToken
 };

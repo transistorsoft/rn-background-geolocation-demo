@@ -5,8 +5,9 @@ import {Component} from 'react';
 import {
   Platform,
   StyleSheet,
-  Alert,
   Linking,
+  Alert,
+  TextInput,
   View
 } from 'react-native';
 
@@ -24,13 +25,12 @@ import {
   Form, Item, Input, Label
 } from 'native-base';
 
-import BackgroundGeolocation from "../react-native-background-geolocation";
+import Modal, { ModalTitle, ModalContent, ModalFooter, ModalButton } from 'react-native-modals';
 
-import prompt from 'react-native-prompt-android';
+import BackgroundGeolocation, {DeviceInfo, TransistorAuthorizationToken} from "../react-native-background-geolocation";
 
-const DEFAULT_USERNAME = "react-native-anonymous";
-const TRACKER_HOST = 'http://tracker.transistorsoft.com/';
-const USERNAME_KEY = '@transistorsoft:username';
+import {registerTransistorAuthorizationListener} from '../lib/Authorization';
+import ENV from "../ENV";
 
 // Only allow alpha-numeric usernames with '-' and '_'
 const USERNAME_VALIDATOR =  /^[a-zA-Z0-9_-]*$/;
@@ -39,50 +39,81 @@ type IProps = {
   navigation: any
 }
 type IState = {
-  username: string
+  username: string,
+  usernameRaw: string,
+  orgname: string,
+  orgnameRaw: string,
+  deviceManufacturer: string,
+  deviceModel: string,
+  deviceIdentifier: string,
+  orgnameIsValid: boolean,
+  usernameIsValid: boolean,
+  visible: boolean
 }
 
 export default class Home extends Component<IProps, IState> {
-
-  /**
-  * Helper method for resetting the router to Home screen
-  */
-  static navigate(navigation:any) {
-    AsyncStorage.setItem("@transistorsoft:initialRouteName", 'Home');
-    let action = StackActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'Home', params: navigation.state.params})
-      ],
-      key: null
-    });
-    navigation.dispatch(action);
-  }
 
   constructor(props:IProps) {
     super(props);
 
     let navigation = props.navigation;
     this.state = {
-      username: navigation.state.params.username,
+      visible: false,
+      deviceModel: '',
+      deviceManufacturer: '',
+      deviceIdentifier: '',
+      orgname: '',
+      orgnameRaw: '',
+      orgnameIsValid: false,
+      username: '',
+      usernameRaw: '',
+      usernameIsValid: false
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    // #stop BackroundGeolocation and remove-listeners when Home Screen is rendered.
+    await BackgroundGeolocation.stop();
+    await BackgroundGeolocation.removeListeners();
+
+    let deviceInfo:DeviceInfo = await BackgroundGeolocation.getDeviceInfo();
+
+    let orgname = await AsyncStorage.getItem('orgname') || '';
+    let username = await AsyncStorage.getItem('username') || '';
+    let deviceIdentifier = deviceInfo.model;
+
+    if (this.usernameIsValid(username) && !this.usernameIsValid(orgname)) {
+      await AsyncStorage.setItem('orgname', username);
+      await AsyncStorage.removeItem('username');
+      orgname = username;
+      username = '';
+    }
+    if (username && username.length) {
+      deviceIdentifier += '-' + username;
+    }
+
+    this.setState({
+      orgname: orgname,
+      orgnameIsValid: this.usernameIsValid(orgname),
+      username: username,
+      usernameIsValid: this.usernameIsValid(username),
+      deviceModel: deviceInfo.model,
+      deviceManufacturer: deviceInfo.manufacturer,
+      deviceIdentifier: deviceIdentifier
+    });
+
     BackgroundGeolocation.setConfig({logLevel: 5});
 
-    // #stop BackroundGeolocation and remove-listeners when Home Screen is rendered.
-    BackgroundGeolocation.stop();
-    BackgroundGeolocation.removeListeners();
-
-    if (!this.state.username) {
-      this.getUsername().then(this.doGetUsername.bind(this)).catch(() => {
-        this.onClickEditUsername();
-      });
+    if (!this.state.usernameIsValid || !this.state.orgnameIsValid) {
+      this.onClickEditUsername();
     }
   }
-  onClickNavigate(routeName:string) {
-    AsyncStorage.setItem("@transistorsoft:initialRouteName", routeName);
+
+  async onClickNavigate(routeName:string) {
+    if (!this.usernameIsValid(this.state.orgname) || !this.usernameIsValid(this.state.username)) {
+      return this.onClickEditUsername();
+    }
+    await AsyncStorage.setItem("@transistorsoft:initialRouteName", routeName);
     let action = StackActions.reset({
       index: 0,
       actions: [
@@ -92,23 +123,22 @@ export default class Home extends Component<IProps, IState> {
       ],
       key: null
     });
-    this.props.navigation.dispatch(action);
 
+    this.props.navigation.dispatch(action);
   }
 
   onClickEditUsername() {
-    AsyncStorage.getItem(USERNAME_KEY, (err, username) => {
-      AsyncStorage.removeItem(USERNAME_KEY);
-      this.getUsername(username).then(this.doGetUsername.bind(this)).catch(() => {
-        // Revert to current username on [Cancel]
-        AsyncStorage.setItem(USERNAME_KEY, username || DEFAULT_USERNAME);
-        this.onClickEditUsername();
-      });
+    this.setState({
+      visible: true,
+      orgnameRaw: this.state.orgname,
+      orgnameIsValid: true,
+      usernameRaw: this.state.username,
+      usernameIsValid: true
     });
   }
 
   onClickViewServer() {
-    let url = TRACKER_HOST + this.state.username;
+    let url = ENV.TRACKER_HOST + '/' + this.state.orgname;
     Linking.canOpenURL(url).then(supported => {
       if (supported) {
         Linking.openURL(url);
@@ -118,59 +148,105 @@ export default class Home extends Component<IProps, IState> {
     });
   }
 
-  getUsername(defaultValue?:string):any {
-    return new Promise((resolve, reject) => {
-      AsyncStorage.getItem(USERNAME_KEY, (err, username) => {
-        if (username) {
-          resolve(username);
-        } else {
-          prompt('Tracking Server Username', 'Please enter a unique identifier (eg: Github username) so the plugin can post loctions to tracker.transistorsoft.com/{identifier}', [{
-            text: 'OK',
-            onPress: (username) => {
-              username = username.replace(/\s+/, "");
-              console.log('OK Pressed, username: ', username, username.length);
-              if (!username.length) {
-                Alert.alert('Username required','You must enter a username.  It can be any unique alpha-numeric identifier.', [{
-                  text: 'OK', onPress: () => {
-                    reject();
-                  }
-                }],{
-                  cancelable: false
-                });
-              } else if (!USERNAME_VALIDATOR.test(username)) {
-                Alert.alert("Invalid Username", "Username must be alpha-numeric\n('-' and '_' are allowed)", [{
-                  text: 'OK', onPress: () => {
-                    reject();
-                  }
-                }],{
-                  cancelable: false
-                });
-              } else {
-                resolve(username);
-              }
-            }
-          }],{
-            type: 'plain-text',
-            defaultValue: defaultValue || ''
-          });
-        }
-      });
-    });
+  usernameIsValid(value:string):boolean {
+    return (value.length>0) && USERNAME_VALIDATOR.test(value);
   }
 
-  doGetUsername(username:string) {
-    AsyncStorage.setItem(USERNAME_KEY, username);
+  async onClickSave() {
+    let orgname = this.state.orgnameRaw.replace(/\s+/, "");
+    let username = this.state.usernameRaw.replace(/\s+/, "");
+
+    // Handle install of previous version, where orgname didn't exist and reverse the values, placing username into orgname.
+    if (this.usernameIsValid(username) && orgname == null) {
+      await AsyncStorage.setItem('orgname', username);
+      await AsyncStorage.removeItem('username');
+      orgname = username;
+      username = '';
+    }
+
+    let usernameIsValid = this.usernameIsValid(username);
+    let orgnameIsValid = this.usernameIsValid(orgname);
 
     this.setState({
-      username: username
+      usernameIsValid: usernameIsValid,
+      orgnameIsValid: orgnameIsValid
     });
 
-    BackgroundGeolocation.setConfig({url: TRACKER_HOST + 'locations/' + username});
+    // No supper for you
+    if (!usernameIsValid || !orgnameIsValid) {
+      return;
+    }
+    // Persist org & username.
+    await AsyncStorage.setItem('orgname', orgname);
+    await AsyncStorage.setItem('username', username);
+
+    // Ensure any current cached token is destroyed.
+    await BackgroundGeolocation.destroyTransistorAuthorizationToken(ENV.TRACKER_HOST);
+    // Register device with tracker.transistorsoft.com to receive a JSON Web Token (JWT).
+    await BackgroundGeolocation.findOrCreateTransistorAuthorizationToken(orgname, username, ENV.TRACKER_HOST);
+
+    let deviceInfo = await BackgroundGeolocation.getDeviceInfo();
+    let deviceIdentifier = deviceInfo.model + '-' + username;
+
+    this.setState({
+      orgname: orgname,
+      username: username,
+      deviceIdentifier: deviceIdentifier,
+      visible: false
+    });
+
   }
 
   render() {
     return (
       <Container>
+        <Modal visible={this.state.visible} width={0.9} modalTitle={<ModalTitle title="Register Device" />} footer={
+            <ModalFooter>
+              <ModalButton
+                text="CANCEL"
+                onPress={() => {this.setState({visible: false})}}
+              />
+              <ModalButton
+                text="REGISTER"
+                onPress={() => {this.onClickSave()}}
+              />
+            </ModalFooter>
+          }>
+          <ModalContent>
+            <Text style={styles.deviceModel}>{this.state.deviceManufacturer} {this.state.deviceModel}</Text>
+            {/**
+              * This content is too long for the modal dialog.
+            <Text style={styles.p}>Please provide an Organization and User identifier to register with the demo server.  You may register multiple devices with the same organization &amp; username.</Text>
+
+            *
+            */}
+            <Form>
+              <Item error={!this.state.orgnameIsValid} stackedLabel key="orgname">
+                <Label style={styles.formLabel}>Organization</Label>
+                <Input
+                  autoCapitalize="none"
+                  autoCompleteType="username"
+                  autoCorrect={false}
+                  placeholder="eg: Company name"
+                  value={this.state.orgnameRaw}
+                  onChangeText={value => {this.setState({orgnameRaw: value, orgnameIsValid:this.usernameIsValid(value)})}}
+                />
+              </Item>
+              <Item error={!this.state.usernameIsValid} stackedLabel key="username">
+                <Label style={styles.formLabel}>Username</Label>
+                <Input
+                  autoCapitalize="none"
+                  autoCompleteType="username"
+                  autoCorrect={false}
+                  placeholder="eg: Github username or initials"
+                  value={this.state.usernameRaw}
+                  onChangeText={value => {this.setState({usernameRaw: value, usernameIsValid:this.usernameIsValid(value)})}}
+                />
+              </Item>
+            </Form>
+          </ModalContent>
+        </Modal>
+
         <Header style={styles.header}>
           <Body>
             <Title style={styles.title}>BG Geolocation</Title>
@@ -185,19 +261,21 @@ export default class Home extends Component<IProps, IState> {
 
         <Footer style={styles.footer}>
             <Card style={styles.userInfo}>
-              <Text style={styles.p}>These apps will post locations to Transistor Software's demo server.  You can view your tracking in the browser by visiting:</Text>
-              <Text style={styles.url}>{TRACKER_HOST + this.state.username}</Text>
+              <Text style={styles.p}>These apps will post locations to Transistor Software's demo server.  View your tracking in the browser by visiting:</Text>
+              <Text style={styles.url}>{ENV.TRACKER_HOST + '/' + this.state.orgname}</Text>
 
-              <Item inlineLabel disabled>
-                <Label>Username</Label>
-                <Input value={this.state.username} />
-              </Item>
-              <CardItem style={{margin: 0}}>
+              <CardItem cardBody>
+                <Text style={styles.formLabel}>Organization: </Text><Text>{this.state.orgname}</Text>
+              </CardItem>
+              <CardItem cardBody>
+                <Text style={styles.formLabel}>Device ID: </Text><Text>{this.state.deviceIdentifier}</Text>
+              </CardItem>
+              <CardItem footer bordered>
                 <Left>
-                  <Button danger small full onPress={this.onClickEditUsername.bind(this)}><Text>Edit username</Text></Button>
+                  <Button danger full onPress={this.onClickEditUsername.bind(this)}><Text>Edit username</Text></Button>
                 </Left>
                 <Right>
-                  <Button small full onPress={this.onClickViewServer.bind(this)}><Text>View server</Text></Button>
+                  <Button full onPress={this.onClickViewServer.bind(this)}><Text>View server</Text></Button>
                 </Right>
               </CardItem>
             </Card>
@@ -223,12 +301,19 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginBottom: 20
   },
+  deviceModel: {
+    textAlign:'center',
+    fontWeight:'bold',
+    fontStyle:'italic',
+    paddingTop: 10
+  },
   p: {
-    fontSize: 12,
+    fontSize: 13,
     marginBottom: 5
   },
   url: {
-    fontSize: 12,
+    fontSize: 13,
+    fontStyle: 'italic',
     textAlign: 'center'
   },
   button: {
@@ -242,9 +327,12 @@ const styles = StyleSheet.create({
   },
   footer: {
     backgroundColor:"transparent",
-    height: 215
+    height: 190
   },
   userInfo: {
     padding: 10
+  },
+  formLabel: {
+    color: '#337AB7'
   }
 });
