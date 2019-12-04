@@ -183,7 +183,11 @@ export default class Home extends Component<IProps, IState> {
     // Ensure any current cached token is destroyed.
     await BackgroundGeolocation.destroyTransistorAuthorizationToken(ENV.TRACKER_HOST);
     // Register device with tracker.transistorsoft.com to receive a JSON Web Token (JWT).
-    await BackgroundGeolocation.findOrCreateTransistorAuthorizationToken(orgname, username, ENV.TRACKER_HOST);
+    let token = await BackgroundGeolocation.findOrCreateTransistorAuthorizationToken(orgname, username, ENV.TRACKER_HOST);
+
+    BackgroundGeolocation.setConfig({
+      transistorAuthorizationToken: token
+    });
 
     let deviceInfo = await BackgroundGeolocation.getDeviceInfo();
     let deviceIdentifier = deviceInfo.model + '-' + username;
