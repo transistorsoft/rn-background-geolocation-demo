@@ -68,7 +68,9 @@ export async function registerTransistorAuthorizationListener(navigation:any) {
     // The BackgroundGeolocation onHttp listener.
     onHttp = async (event:HttpEvent) => {
       switch(event.status) {
+        case 403:
         case 406:
+          await BackgroundGeolocation.destroyTransistorAuthorizationToken(ENV.TRACKER_HOST);
           let token = await register(navigation);
           if (token.accessToken != 'DUMMY_TOKEN') {
             BackgroundGeolocation.sync();
