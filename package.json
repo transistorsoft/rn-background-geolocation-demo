@@ -1,6 +1,6 @@
 {
   "name": "BGGeolocation",
-  "version": "3.4.2",
+  "version": "3.4.3",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -20,11 +20,10 @@
     "react-native": "0.61.5",
     "react-native-action-button": "^2.8.5",
     "react-native-background-fetch": "^2.7.1",
-    "react-native-background-geolocation": "^3.4.2",
+    "react-native-background-geolocation": "../react-native-background-geolocation",
     "react-native-easy-grid": "^0.2.0",
     "react-native-gesture-handler": "https://github.com/hyochan/react-native-gesture-handler#410858b1c0319bdac2791a9c633d715ab2014366",
     "react-native-maps": "^0.26.1",
-    "react-native-modals": "^0.19.9",
     "react-native-prompt-android": "https://github.com/transistorsoft/react-native-prompt-android.git",
     "react-native-root-siblings": "git+https://github.com/neilzhengzx/react-native-root-siblings.git",
     "react-native-root-toast": "^3.0.2",
