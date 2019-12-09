@@ -21,20 +21,24 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
 
-import Home from './home/Home';
+import HomeApp from './home/HomeApp';
+import RegistrationView from './home/RegistrationView';
+
 import HelloWorld from './hello-world/HelloWorld';
 import SimpleMap from './simple-map/SimpleMap';
 import AdvancedApp from './advanced/AdvancedApp';
 
 class Root extends React.Component<any, any> {
-  static DEFAULT_PAGE = "Home";
+  static DEFAULT_PAGE = "HomeApp";
 
   componentDidMount() {
     let navigation = this.props.navigation;
 
     // Fetch current routeName (ie: HelloWorld, SimpleMap, Advanced)
     AsyncStorage.getItem("@transistorsoft:initialRouteName", (err, page) => {
-      let params:any = {username: undefined};
+      let params:any = {username: undefined, orgname: undefined};
+      page = 'Home';
+
       if (!page) {
         // Default route:  Home
         AsyncStorage.setItem("@transistorsoft:initialRouteName", Root.DEFAULT_PAGE);
@@ -67,7 +71,7 @@ const AppNavigator = createStackNavigator({
     screen: Root,
   },
   Home: {
-    screen: Home
+    screen: HomeApp
   },
   HelloWorld: {
     screen: HelloWorld
