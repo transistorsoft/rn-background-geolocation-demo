@@ -73,7 +73,7 @@ export default class SettingsView extends Component<any, any> {
     });
 
     // Load app settings
-    this.settingsService.getApplicationState((state) => {
+    this.settingsService.getApplicationState((state:any) => {
       this.setState(state);
     });
   }
