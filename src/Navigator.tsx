@@ -37,8 +37,6 @@ class Root extends React.Component<any, any> {
     // Fetch current routeName (ie: HelloWorld, SimpleMap, Advanced)
     AsyncStorage.getItem("@transistorsoft:initialRouteName", (err, page) => {
       let params:any = {username: undefined, orgname: undefined};
-      page = 'Home';
-
       if (!page) {
         // Default route:  Home
         AsyncStorage.setItem("@transistorsoft:initialRouteName", Root.DEFAULT_PAGE);
