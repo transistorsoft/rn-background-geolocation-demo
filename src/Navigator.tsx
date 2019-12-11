@@ -22,14 +22,12 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
 
 import HomeApp from './home/HomeApp';
-import RegistrationView from './home/RegistrationView';
-
 import HelloWorld from './hello-world/HelloWorld';
 import SimpleMap from './simple-map/SimpleMap';
 import AdvancedApp from './advanced/AdvancedApp';
 
 class Root extends React.Component<any, any> {
-  static DEFAULT_PAGE = "HomeApp";
+  static DEFAULT_PAGE = "Home";
 
   componentDidMount() {
     let navigation = this.props.navigation;
@@ -69,6 +67,9 @@ const AppNavigator = createStackNavigator({
     screen: Root,
   },
   Home: {
+    screen: HomeApp
+  },
+  HomeApp: {
     screen: HomeApp
   },
   HelloWorld: {
