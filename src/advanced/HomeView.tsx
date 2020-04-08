@@ -248,6 +248,7 @@ export default class HomeView extends Component<IProps, IState> {
     BackgroundGeolocation.onConnectivityChange(this.onConnectivityChange.bind(this));
     BackgroundGeolocation.onEnabledChange(this.onEnabledChange.bind(this));
     BackgroundGeolocation.onNotificationAction(this.onNotificationAction.bind(this));
+
     // Step 2:  #ready:
     // If you want to override any config options provided by the Settings screen, this is the place to do it, eg:
     // config.stopTimeout = 5;
@@ -307,13 +308,28 @@ export default class HomeView extends Component<IProps, IState> {
       requiresDeviceIdle: false,
       requiresBatteryNotLow: false,
       requiresStorageNotLow: false
-    }, async () => {
-      console.log('- BackgroundFetch start');
-      let location = await BackgroundGeolocation.getCurrentPosition({persist: true, samples:1, extras: {'context': 'background-fetch-position'}});
-      console.log('- BackgroundFetch current position: ', location) // <-- don't see this
-      BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA);
+    }, async (taskId) => {
+      console.log('[BackgroundFetch event]:', taskId);
+      // One could optionally request a location here with #getCurrentPosition
+      //
+      //let location = await BackgroundGeolocation.getCurrentPosition({persist: true, samples:1, extras: {'context': 'background-fetch-position'}});
+      //console.log('- BackgroundFetch current position: ', location);
+      BackgroundFetch.finish(taskId);
     }, (error) => {
       console.log('[js] RNBackgroundFetch failed to start')
+    });
+
+    BackgroundFetch.scheduleTask({
+      taskId: 'com.transistorsoft.customtask',
+      delay: 5000,
+      stopOnTerminate: false,
+      enableHeadless: true,
+      periodic: false,
+      forceAlarmManager: true
+    }).then((success) => {
+      console.log('[BackgroundFetch scheduleTask] success');
+    }).catch((error) => {
+      console.warn('[BackgroundFetch scheduleTask] ERROR: ', error);
     });
   }
 
@@ -841,18 +857,6 @@ export default class HomeView extends Component<IProps, IState> {
           {this.renderGeofencesHit()}
           {this.renderGeofencesHitEvents()}
         </MapView>
-
-        <View style={styles.mapMenu}>
-          <Button success light={this.state.settings.hideMarkers} style={styles.mapMenuButton} onPress={() => this.onClickMapMenu('hideMarkers') }>
-            <Icon name="ios-pin" />
-          </Button>
-          <Button success light={this.state.settings.hidePolyline} style={styles.mapMenuButton} onPress={() => this.onClickMapMenu('hidePolyline')}>
-            <Icon name="ios-pulse" />
-          </Button>
-          <Button success light={this.state.settings.hideGeofenceHits} style={styles.mapMenuButton} onPress={() => this.onClickMapMenu('hideGeofenceHits')}>
-            <Icon name="ios-radio-button-off" />
-          </Button>
-        </View>
 
         <Footer style={styles.footer}>
           <Left style={{flex:0.3}}>
