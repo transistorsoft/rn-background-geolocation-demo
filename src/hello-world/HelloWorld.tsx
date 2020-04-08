@@ -106,7 +106,7 @@ export default class HelloWorld extends Component<IProps, IState> {
       distanceFilter: 10,
       stopOnTerminate: false,
       startOnBoot: true,
-      foregroundService: true,
+      enableHeadless: true,
       heartbeatInterval: 60,
       url: ENV.TRACKER_HOST + '/api/locations',
       authorization: {  // <-- JWT authorization for tracker.transistorsoft.com
@@ -190,6 +190,10 @@ export default class HelloWorld extends Component<IProps, IState> {
   onAuthorization(event:AuthorizationEvent) {
     console.log('[event] authorization: ', event);
     this.addEvent('authorization', new Date(), event);
+
+    BackgroundGeolocation.setConfig({
+      url: ENV.TRACKER_HOST + '/api/locations'
+    });
   }
 
   onToggleEnabled() {

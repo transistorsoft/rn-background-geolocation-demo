@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* BGGeolocationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BGGeolocationTests.m */; };
 		05F0DC7D215A492BA2BF38DB /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92FE4BA708F847AC81ACB7D3 /* EvilIcons.ttf */; };
-		068B8CFD388A327A7A7A6D9E /* libPods-BGGeolocationTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C60CEEDB7F5725CF4B64599E /* libPods-BGGeolocationTests.a */; };
 		081C5DCBAF7747F29143A7B2 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DCADD7374EE14F0494D81469 /* FontAwesome5_Brands.ttf */; };
 		08A37DCBF1874DDB821E96E2 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A982D491358F48F6A682937C /* SimpleLineIcons.ttf */; };
 		0D692DC7853D4DECB9968597 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 39DCD802E68746D7A39A848A /* AntDesign.ttf */; };
@@ -28,12 +27,14 @@
 		6D733537F7FC4405A008E6D8 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3AED04AC98AA4C25A16F3A60 /* Foundation.ttf */; };
 		77C6E1BCB5F14FB9BE4FF235 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB7560DE2A394A0697152D1F /* MaterialIcons.ttf */; };
 		839C411D23084F93008AF109 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 839C411C23084F93008AF109 /* RNBackgroundFetch+AppDelegate.m */; };
+		83B437F7243A5570006017B9 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B437F6243A5570006017B9 /* Dummy.swift */; };
 		940E7B116F054DAB9980A809 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76D28E4257F94CB4A7A50158 /* Feather.ttf */; };
 		97A91DC475884C64BD64FB51 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4EAAD5A176A247DF921A7F11 /* FontAwesome.ttf */; };
 		99ECEB03AC804ABD9CEB0E85 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87F9C3A7982944B4945A3657 /* Octicons.ttf */; };
 		BC81F525AE454F1A852B2534 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 77396853F355435E807F45D4 /* MaterialCommunityIcons.ttf */; };
 		CEB9E88018834E95A877D93B /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F56E893A23E4B7C9EE257C5 /* Zocial.ttf */; };
 		D9A1677C4B1A4B2086735166 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2B2B204678E428DA603DFF7 /* FontAwesome5_Solid.ttf */; };
+		EDF2FF49AAD9DA44D3A701D2 /* libPods-BGGeolocation-BGGeolocationTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F7FB4C91DF66508FE220F27 /* libPods-BGGeolocation-BGGeolocationTests.a */; };
 		EF158EC2AE9B44499DED0589 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A6189509046F429BADD4203F /* Roboto_medium.ttf */; };
 		EF2EF421FB4C4364A32726BD /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E6DB015E033478CAAE0E1AC /* Roboto.ttf */; };
 		FC83681864C942E3839E94D1 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C844989DE144F1D92BB9C0B /* Ionicons.ttf */; };
@@ -71,6 +72,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = BGGeolocation/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = BGGeolocation/main.m; sourceTree = "<group>"; };
 		16F8DBFCBB45B10167161E46 /* Pods-BGGeolocationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocationTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocationTests/Pods-BGGeolocationTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1F7FB4C91DF66508FE220F27 /* libPods-BGGeolocation-BGGeolocationTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BGGeolocation-BGGeolocationTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C560D9E35F5B687BFB4C020 /* Pods-BGGeolocation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation.release.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocation/Pods-BGGeolocation.release.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* BGGeolocation-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BGGeolocation-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* BGGeolocation-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BGGeolocation-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,6 +87,9 @@
 		76D28E4257F94CB4A7A50158 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/native-base/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		77396853F355435E807F45D4 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		839C411C23084F93008AF109 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
+		83B437F5243A5570006017B9 /* BGGeolocation-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BGGeolocation-Bridging-Header.h"; sourceTree = "<group>"; };
+		83B437F6243A5570006017B9 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
+		85D0E6DF813F73456D1CD7B5 /* Pods-BGGeolocation-BGGeolocationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation-BGGeolocationTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocation-BGGeolocationTests/Pods-BGGeolocation-BGGeolocationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		87F9C3A7982944B4945A3657 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		8E6DB015E033478CAAE0E1AC /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		92FE4BA708F847AC81ACB7D3 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
@@ -92,10 +97,10 @@
 		A8ECDABF5C564DD7B9C2AC59 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
 		A982D491358F48F6A682937C /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		B2B2B204678E428DA603DFF7 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
-		C60CEEDB7F5725CF4B64599E /* libPods-BGGeolocationTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BGGeolocationTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C739A68D4A3E4710998F883A /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		DB7560DE2A394A0697152D1F /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		DCADD7374EE14F0494D81469 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		E147B31EA1412D8FC1670252 /* Pods-BGGeolocation-BGGeolocationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation-BGGeolocationTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocation-BGGeolocationTests/Pods-BGGeolocation-BGGeolocationTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				068B8CFD388A327A7A7A6D9E /* libPods-BGGeolocationTests.a in Frameworks */,
+				EDF2FF49AAD9DA44D3A701D2 /* libPods-BGGeolocation-BGGeolocationTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +177,8 @@
 				2C560D9E35F5B687BFB4C020 /* Pods-BGGeolocation.release.xcconfig */,
 				16F8DBFCBB45B10167161E46 /* Pods-BGGeolocationTests.debug.xcconfig */,
 				05E8C70AE8F237865136266C /* Pods-BGGeolocationTests.release.xcconfig */,
+				85D0E6DF813F73456D1CD7B5 /* Pods-BGGeolocation-BGGeolocationTests.debug.xcconfig */,
+				E147B31EA1412D8FC1670252 /* Pods-BGGeolocation-BGGeolocationTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -181,7 +188,7 @@
 			children = (
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				06C390CEDD64A61A3677EC06 /* libPods-BGGeolocation.a */,
-				C60CEEDB7F5725CF4B64599E /* libPods-BGGeolocationTests.a */,
+				1F7FB4C91DF66508FE220F27 /* libPods-BGGeolocation-BGGeolocationTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -228,6 +235,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				83B437F6243A5570006017B9 /* Dummy.swift */,
 				13B07FAE1A68108700A75B9A /* BGGeolocation */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* BGGeolocationTests */,
@@ -236,6 +244,7 @@
 				2201A91E10FF9F9FE4862E82 /* Pods */,
 				83945892212477D5002AB207 /* Recovered References */,
 				58F099B1EEBE456F99BE4A65 /* Resources */,
+				83B437F5243A5570006017B9 /* BGGeolocation-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -346,6 +355,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 32A636YFGZ;
+						LastSwiftMigration = 1140;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -492,7 +502,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BGGeolocationTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-BGGeolocation-BGGeolocationTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -534,6 +544,7 @@
 			files = (
 				839C411D23084F93008AF109 /* RNBackgroundFetch+AppDelegate.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				83B437F7243A5570006017B9 /* Dummy.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -585,8 +596,9 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 16F8DBFCBB45B10167161E46 /* Pods-BGGeolocationTests.debug.xcconfig */;
+			baseConfigurationReference = 85D0E6DF813F73456D1CD7B5 /* Pods-BGGeolocation-BGGeolocationTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -639,8 +651,9 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05E8C70AE8F237865136266C /* Pods-BGGeolocationTests.release.xcconfig */;
+			baseConfigurationReference = E147B31EA1412D8FC1670252 /* Pods-BGGeolocation-BGGeolocationTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -694,6 +707,7 @@
 			baseConfigurationReference = 34D30D4613263368EC35BA01 /* Pods-BGGeolocation.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 32A636YFGZ;
@@ -708,6 +722,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.transistorsoft.backgroundgeolocation.react;
 				PRODUCT_NAME = BGGeolocation;
+				SWIFT_OBJC_BRIDGING_HEADER = "BGGeolocation-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -717,6 +734,7 @@
 			baseConfigurationReference = 2C560D9E35F5B687BFB4C020 /* Pods-BGGeolocation.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 32A636YFGZ;
@@ -731,6 +749,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.transistorsoft.backgroundgeolocation.react;
 				PRODUCT_NAME = BGGeolocation;
+				SWIFT_OBJC_BRIDGING_HEADER = "BGGeolocation-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

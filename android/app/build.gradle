@@ -15,7 +15,9 @@ import com.android.build.OutputFile
  *   // the name of the generated asset file containing your JS bundle
  *   bundleAssetName: "index.android.bundle",
  *
- *   // the entry file for bundle generation
+ *   // the entry file for bundle generation.  If none specified and
+ *   // "index.android.js" exists, it will be used. Otherwise "index.js" is
+ *   // default. Can be overridden with ENTRY_FILE environment variable.
  *   entryFile: "index.android.js",
  *
  *   // whether to bundle JS and assets in debug mode
@@ -131,8 +133,9 @@ android {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 337
-        versionName "3.4.3"
+        versionCode 339
+        versionName "3.6.0"
+        multiDexEnabled true
     }
     splits {
         abi {
@@ -160,6 +163,13 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             proguardFiles "${background_geolocation.projectDir}/proguard-rules.pro"
+            packagingOptions {
+                pickFirst "lib/armeabi-v7a/libc++_shared.so"
+                pickFirst "lib/arm64-v8a/libc++_shared.so"
+                pickFirst "lib/x86/libc++_shared.so"
+                pickFirst "lib/x86_64/libc++_shared.so"
+            }
+
             signingConfig signingConfigs.release
             matchingFallbacks = ['release']
         }
@@ -198,7 +208,22 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+
+    def multidex_version = "2.0.1"
+    implementation "androidx.multidex:multidex:$multidex_version"
+
+    debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
+      exclude group:'com.facebook.fbjni'
+    }
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
+        exclude group:'com.facebook.flipper'
+    }
+    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
+        exclude group:'com.facebook.flipper'
+    }
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

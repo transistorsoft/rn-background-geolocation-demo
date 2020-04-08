@@ -1,0 +1,6 @@
+module Pods_BGGeolocation {
+  umbrella header "Pods-BGGeolocation-umbrella.h"
+
+  export *
+  module * { export * }
+}

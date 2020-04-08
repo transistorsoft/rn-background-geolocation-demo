@@ -1,5 +1,6 @@
 import { AppRegistry } from 'react-native';
 import App from './src/App';
+import ENV from './src/ENV';
 
 import BackgroundGeolocation from "./src/react-native-background-geolocation";
 
@@ -21,14 +22,22 @@ let BackgroundGeolocationHeadlessTask = async (event) => {
 
   switch (event.name) {
     case 'heartbeat':
+      /**
+      * Enable this block to execute #getCurrentPosition in headless heartbeat event (will consume more power)
+      *
       // Use await for async tasks
-      /* DISABLED
       let location = await BackgroundGeolocation.getCurrentPosition({
         samples: 1,
         persist: false
       });
       console.log('[BackgroundGeolocation HeadlessTask] - getCurrentPosition:', location);
+      *
       */
+      break;
+    case 'authorization':
+      BackgroundGeolocation.setConfig({
+        url: ENV.TRACKER_HOST + '/api/locations'
+      });
       break;
   }
 }
@@ -41,7 +50,19 @@ BackgroundGeolocation.registerHeadlessTask(BackgroundGeolocationHeadlessTask);
 * For more information, see:  https://github.com/transistorsoft/react-native-background-fetch#config-boolean-enableheadless-false
 */
 let BackgroundFetchHeadlessTask = async (event) => {
-  console.log('[BackgroundFetch HeadlessTask] start');
+  console.log('[BackgroundFetch HeadlessTask] start', event.taskId);
+
+  if (event.taskId == 'react-native-background-fetch') {
+    /*
+    await BackgroundFetch.scheduleTask({
+      taskId: 'com.transistorsoft.customtask',
+      delay: 5000,
+      stopOnTerminate: false,
+      enableHeadless: true,
+      forceAlarmManager: true
+    });
+    */
+  }
   // Important:  await asychronous tasks when using HeadlessJS.
   /* DISABLED
   let location = await BackgroundGeolocation.getCurrentPosition({persist: false, samples: 1});
@@ -52,7 +73,7 @@ let BackgroundFetchHeadlessTask = async (event) => {
   */
   console.log('[BackgroundFetch HeadlessTask] finished');
 
-  BackgroundFetch.finish();
+  BackgroundFetch.finish(event.taskId);
 }
 
 

@@ -1,0 +1,6 @@
+module Pods_BGGeolocation_BGGeolocationTests {
+  umbrella header "Pods-BGGeolocation-BGGeolocationTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
