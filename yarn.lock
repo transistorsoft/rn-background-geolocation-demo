@@ -5330,7 +5330,7 @@ react-native-action-button@^2.8.5:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-background-fetch@^3.0.3:
+react-native-background-fetch@^3.0.3, react-native-background-fetch@~3.0.3:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-3.0.4.tgz#0b1e8b282e482343ce7f478ffb94cb72dfde054a"
   integrity sha512-ZUfwFPDvTRK4Tkl59Is9t2L8cekgRIUA1jNAzMjNrH2O9hpPJ3jYGzfp/+ipxlVZIs+Y83KsgNbL3g7R83r6zw==
@@ -5339,23 +5339,12 @@ react-native-background-fetch@^3.0.3:
     plist "^3.0.1"
     xcode "^2.0.0"
 
-react-native-background-fetch@~2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.7.1.tgz#1467aed0fd2851edfdf10d3d9ac4ffd0cf069a85"
-  integrity sha512-BNWBVL3kewDJL+B+0gF84iF8viws3AGHwxsWPp+MhWvgb/Su6BPWjgi8u0A9fRYhacozmAcNEPT7E3tah1P8lg==
-  dependencies:
-    fast-plist "^0.1.2"
-    plist "^3.0.1"
-    xcode "^2.0.0"
-
-react-native-background-geolocation@^3.6.2:
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-3.6.2.tgz#2faf894b23af9173f9c0221d4e0ced4bdd4b2a46"
-  integrity sha512-RygZVJmB7YsTUtRJxEdDllor9tK/D2fAHf22KQDqKLlgLs1nGmZfeN6rRxmnj77JPBL642Q1s3+J0t4vLwXtXA==
+react-native-background-geolocation-android@../react-native-background-geolocation-android:
+  version "3.7.0-rc.1"
   dependencies:
     fast-plist "^0.1.2"
     plist "^2.0.1"
-    react-native-background-fetch "~2.7.1"
+    react-native-background-fetch "~3.0.3"
     xcode "^0.9.1"
 
 react-native-drawer@2.5.1:

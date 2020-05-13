@@ -267,6 +267,7 @@ export default class HomeView extends Component<IProps, IState> {
       stopTimeout: 1,
       debug: true,
       logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+      activityType: BackgroundGeolocation.ACTIVITY_TYPE_FITNESS,
       foregroundService: true,
       autoSync: true,
       stopOnTerminate: false,
@@ -283,7 +284,6 @@ export default class HomeView extends Component<IProps, IState> {
       if (state.schedule && state.schedule.length > 0) {
         BackgroundGeolocation.startSchedule();
       }
-
       this.setState({
         enabled: state.enabled,
         isMoving: state.isMoving,

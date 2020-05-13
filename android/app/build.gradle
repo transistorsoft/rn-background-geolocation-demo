@@ -81,7 +81,7 @@ project.ext.react = [
 
 apply from: "../../node_modules/react-native/react.gradle"
 
-Project background_geolocation = project(':react-native-background-geolocation')
+Project background_geolocation = project(':react-native-background-geolocation-android')
 apply from: "${background_geolocation.projectDir}/app.gradle"
 
 /**

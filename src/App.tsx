@@ -12,7 +12,7 @@ import { createAppContainer, NavigationActions, StackActions } from 'react-navig
 import {StyleProvider} from "native-base";
 import Navigator from './Navigator';
 
-import BackgroundGeolocation from "react-native-background-geolocation";
+import BackgroundGeolocation from "./react-native-background-geolocation";
 
 import {registerTransistorAuthorizationListener} from './lib/Authorization';
 
