@@ -283,7 +283,6 @@ export default class HomeView extends Component<IProps, IState> {
       if (state.schedule && state.schedule.length > 0) {
         BackgroundGeolocation.startSchedule();
       }
-
       this.setState({
         enabled: state.enabled,
         isMoving: state.isMoving,

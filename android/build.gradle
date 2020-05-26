@@ -2,7 +2,7 @@
 
 buildscript {
     ext {
-	    googlePlayServicesLocationVersion = "17.0.0"
+        googlePlayServicesLocationVersion = "17.0.0"
         googlePlayServicesVersion = "17.0.0"
         removeBackgroundGeolocationDebugSoundsInRelease = false
         buildToolsVersion = "28.0.3"
@@ -16,12 +16,11 @@ buildscript {
         multidexVersion = "2.0.1"
     }
     repositories {
-        jcenter()
         google()
-        maven { url 'https://www.jitpack.io' }
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath("com.android.tools.build:gradle:3.5.2")
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -31,18 +30,17 @@ buildscript {
 allprojects {
     repositories {
         mavenLocal()
-        google()
-        jcenter()
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url("$rootDir/../node_modules/react-native/android")
+        }
         maven {
             // Android JSC is installed from npm
             url("$rootDir/../node_modules/jsc-android/dist")
         }
-        maven {
-            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-            url "$rootDir/../node_modules/react-native/android"
-        }
+
+        google()
+        jcenter()
+        maven { url 'https://www.jitpack.io' }
     }
 }
-
-
-

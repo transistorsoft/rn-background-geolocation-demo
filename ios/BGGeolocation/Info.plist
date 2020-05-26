@@ -4,6 +4,10 @@
 <dict>
 	<key>BACKGROUND_GEOLOCATION_ENCRYPTION_PASSWORD</key>
 	<string>transistorsoft</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Ionicons.ttf</string>
+	</array>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>com.transistorsoft.customtask</string>
@@ -45,34 +49,11 @@
 		</dict>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>CHANGEME: Location Always And When In Use Usage Description</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>CHANGEME: Location Always Usage Description</string>
+	<string>[CHANGME] Location Always and When  in Use</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>CHANGME: Location When in Use</string>
+	<string>[CHANGME] Location when in use</string>
 	<key>NSMotionUsageDescription</key>
-	<string>CHANGEME: Motion updates increase battery efficiency by intelligently toggling location-services when device is detected to be moving</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>AntDesign.ttf</string>
-		<string>Entypo.ttf</string>
-		<string>EvilIcons.ttf</string>
-		<string>Feather.ttf</string>
-		<string>FontAwesome.ttf</string>
-		<string>FontAwesome5_Brands.ttf</string>
-		<string>FontAwesome5_Regular.ttf</string>
-		<string>FontAwesome5_Solid.ttf</string>
-		<string>Foundation.ttf</string>
-		<string>Ionicons.ttf</string>
-		<string>MaterialCommunityIcons.ttf</string>
-		<string>MaterialIcons.ttf</string>
-		<string>Octicons.ttf</string>
-		<string>Roboto_medium.ttf</string>
-		<string>Roboto.ttf</string>
-		<string>rubicon-icon-font.ttf</string>
-		<string>SimpleLineIcons.ttf</string>
-		<string>Zocial.ttf</string>
-	</array>
+	<string>[CHANGME] Motion description</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
