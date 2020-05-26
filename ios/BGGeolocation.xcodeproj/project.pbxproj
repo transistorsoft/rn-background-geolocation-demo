@@ -8,36 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* BGGeolocationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BGGeolocationTests.m */; };
-		05F0DC7D215A492BA2BF38DB /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92FE4BA708F847AC81ACB7D3 /* EvilIcons.ttf */; };
-		081C5DCBAF7747F29143A7B2 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DCADD7374EE14F0494D81469 /* FontAwesome5_Brands.ttf */; };
-		08A37DCBF1874DDB821E96E2 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A982D491358F48F6A682937C /* SimpleLineIcons.ttf */; };
-		0D692DC7853D4DECB9968597 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 39DCD802E68746D7A39A848A /* AntDesign.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1A173166FF8F526E535DA5ED /* libPods-BGGeolocation-BGGeolocationTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90D0B5A5149BA8A0A11B7FB1 /* libPods-BGGeolocation-BGGeolocationTests.a */; };
+		1EA3A3FFA95A6FA9EEB10781 /* libPods-BGGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBED633A74B2BE0016A69801 /* libPods-BGGeolocation.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* BGGeolocationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BGGeolocationTests.m */; };
-		3ED53526BC8045809EFADEEF /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C55C6F89ABC49D4B9C739C3 /* FontAwesome5_Regular.ttf */; };
-		4B56365662A9197DE7F947D3 /* libPods-BGGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06C390CEDD64A61A3677EC06 /* libPods-BGGeolocation.a */; };
-		4C1692EF69BA47D0AE7B9A4E /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C739A68D4A3E4710998F883A /* Entypo.ttf */; };
-		6D733537F7FC4405A008E6D8 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3AED04AC98AA4C25A16F3A60 /* Foundation.ttf */; };
-		77C6E1BCB5F14FB9BE4FF235 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB7560DE2A394A0697152D1F /* MaterialIcons.ttf */; };
-		839C411D23084F93008AF109 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 839C411C23084F93008AF109 /* RNBackgroundFetch+AppDelegate.m */; };
-		83B437F7243A5570006017B9 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B437F6243A5570006017B9 /* Dummy.swift */; };
-		940E7B116F054DAB9980A809 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76D28E4257F94CB4A7A50158 /* Feather.ttf */; };
-		97A91DC475884C64BD64FB51 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4EAAD5A176A247DF921A7F11 /* FontAwesome.ttf */; };
-		99ECEB03AC804ABD9CEB0E85 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87F9C3A7982944B4945A3657 /* Octicons.ttf */; };
-		BC81F525AE454F1A852B2534 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 77396853F355435E807F45D4 /* MaterialCommunityIcons.ttf */; };
-		CEB9E88018834E95A877D93B /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F56E893A23E4B7C9EE257C5 /* Zocial.ttf */; };
-		D9A1677C4B1A4B2086735166 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2B2B204678E428DA603DFF7 /* FontAwesome5_Solid.ttf */; };
-		EDF2FF49AAD9DA44D3A701D2 /* libPods-BGGeolocation-BGGeolocationTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F7FB4C91DF66508FE220F27 /* libPods-BGGeolocation-BGGeolocationTests.a */; };
-		EF158EC2AE9B44499DED0589 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A6189509046F429BADD4203F /* Roboto_medium.ttf */; };
-		EF2EF421FB4C4364A32726BD /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E6DB015E033478CAAE0E1AC /* Roboto.ttf */; };
-		FC83681864C942E3839E94D1 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C844989DE144F1D92BB9C0B /* Ionicons.ttf */; };
+		796071D3B3A29DC5D6EF96B0 /* libPods-BGGeolocation-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9FB1E075FD61E736D13C741 /* libPods-BGGeolocation-tvOS.a */; };
+		830B24D0247D6E730006A39A /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 830B24CF247D6E730006A39A /* RNBackgroundFetch+AppDelegate.m */; };
+		830B251F247D77270006A39A /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 830B2516247D76EC0006A39A /* Ionicons.ttf */; };
+		BA2B3299FE227CF8ECC3647F /* libPods-BGGeolocation-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 544D227BDA308BEDC5C9D001 /* libPods-BGGeolocation-tvOSTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,8 +46,6 @@
 		00E356EE1AD99517003FC87E /* BGGeolocationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BGGeolocationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* BGGeolocationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BGGeolocationTests.m; sourceTree = "<group>"; };
-		05E8C70AE8F237865136266C /* Pods-BGGeolocationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocationTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocationTests/Pods-BGGeolocationTests.release.xcconfig"; sourceTree = "<group>"; };
-		06C390CEDD64A61A3677EC06 /* libPods-BGGeolocation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BGGeolocation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* BGGeolocation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BGGeolocation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = BGGeolocation/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = BGGeolocation/AppDelegate.m; sourceTree = "<group>"; };
@@ -71,36 +53,42 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BGGeolocation/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = BGGeolocation/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = BGGeolocation/main.m; sourceTree = "<group>"; };
-		16F8DBFCBB45B10167161E46 /* Pods-BGGeolocationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocationTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocationTests/Pods-BGGeolocationTests.debug.xcconfig"; sourceTree = "<group>"; };
-		1F7FB4C91DF66508FE220F27 /* libPods-BGGeolocation-BGGeolocationTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BGGeolocation-BGGeolocationTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2C560D9E35F5B687BFB4C020 /* Pods-BGGeolocation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation.release.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocation/Pods-BGGeolocation.release.xcconfig"; sourceTree = "<group>"; };
+		15E326D9A7760E7FB8FEB887 /* Pods-BGGeolocation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation.debug.xcconfig"; path = "Target Support Files/Pods-BGGeolocation/Pods-BGGeolocation.debug.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* BGGeolocation-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BGGeolocation-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* BGGeolocation-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BGGeolocation-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2F56E893A23E4B7C9EE257C5 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
-		34D30D4613263368EC35BA01 /* Pods-BGGeolocation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocation/Pods-BGGeolocation.debug.xcconfig"; sourceTree = "<group>"; };
-		39DCD802E68746D7A39A848A /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/native-base/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
-		3AED04AC98AA4C25A16F3A60 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		3C844989DE144F1D92BB9C0B /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		4EAAD5A176A247DF921A7F11 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
-		5C55C6F89ABC49D4B9C739C3 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
-		76D28E4257F94CB4A7A50158 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/native-base/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		77396853F355435E807F45D4 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
-		839C411C23084F93008AF109 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
-		83B437F5243A5570006017B9 /* BGGeolocation-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BGGeolocation-Bridging-Header.h"; sourceTree = "<group>"; };
-		83B437F6243A5570006017B9 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
-		85D0E6DF813F73456D1CD7B5 /* Pods-BGGeolocation-BGGeolocationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation-BGGeolocationTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocation-BGGeolocationTests/Pods-BGGeolocation-BGGeolocationTests.debug.xcconfig"; sourceTree = "<group>"; };
-		87F9C3A7982944B4945A3657 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		8E6DB015E033478CAAE0E1AC /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
-		92FE4BA708F847AC81ACB7D3 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
-		A6189509046F429BADD4203F /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
-		A8ECDABF5C564DD7B9C2AC59 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
-		A982D491358F48F6A682937C /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
-		B2B2B204678E428DA603DFF7 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
-		C739A68D4A3E4710998F883A /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		DB7560DE2A394A0697152D1F /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		DCADD7374EE14F0494D81469 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
-		E147B31EA1412D8FC1670252 /* Pods-BGGeolocation-BGGeolocationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation-BGGeolocationTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BGGeolocation-BGGeolocationTests/Pods-BGGeolocation-BGGeolocationTests.release.xcconfig"; sourceTree = "<group>"; };
+		468F948D942A19C9C8EFB317 /* Pods-BGGeolocation-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-BGGeolocation-tvOSTests/Pods-BGGeolocation-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		544D227BDA308BEDC5C9D001 /* libPods-BGGeolocation-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BGGeolocation-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E6BA83ED3780A2354887C92 /* Pods-BGGeolocation-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-BGGeolocation-tvOSTests/Pods-BGGeolocation-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		642E62989D5C15AD5FDF409D /* Pods-BGGeolocation-BGGeolocationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation-BGGeolocationTests.release.xcconfig"; path = "Target Support Files/Pods-BGGeolocation-BGGeolocationTests/Pods-BGGeolocation-BGGeolocationTests.release.xcconfig"; sourceTree = "<group>"; };
+		651F5907BDE2C7C91CF5DC94 /* Pods-BGGeolocation-BGGeolocationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation-BGGeolocationTests.debug.xcconfig"; path = "Target Support Files/Pods-BGGeolocation-BGGeolocationTests/Pods-BGGeolocation-BGGeolocationTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6929445C339A58BE351E5951 /* Pods-BGGeolocation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation.release.xcconfig"; path = "Target Support Files/Pods-BGGeolocation/Pods-BGGeolocation.release.xcconfig"; sourceTree = "<group>"; };
+		830B24CF247D6E730006A39A /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
+		830B250C247D76EC0006A39A /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AntDesign.ttf; sourceTree = "<group>"; };
+		830B250D247D76EC0006A39A /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
+		830B250E247D76EC0006A39A /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
+		830B250F247D76EC0006A39A /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
+		830B2510247D76EC0006A39A /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
+		830B2511247D76EC0006A39A /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
+		830B2512247D76EC0006A39A /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Regular.ttf; sourceTree = "<group>"; };
+		830B2513247D76EC0006A39A /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Solid.ttf; sourceTree = "<group>"; };
+		830B2514247D76EC0006A39A /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
+		830B2515247D76EC0006A39A /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Foundation.ttf; sourceTree = "<group>"; };
+		830B2516247D76EC0006A39A /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
+		830B2517247D76EC0006A39A /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
+		830B2518247D76EC0006A39A /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		830B2519247D76EC0006A39A /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
+		830B251A247D76EC0006A39A /* Roboto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Roboto.ttf; sourceTree = "<group>"; };
+		830B251B247D76EC0006A39A /* Roboto_medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Roboto_medium.ttf; sourceTree = "<group>"; };
+		830B251C247D76EC0006A39A /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "rubicon-icon-font.ttf"; sourceTree = "<group>"; };
+		830B251D247D76EC0006A39A /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
+		830B251E247D76EC0006A39A /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
+		90D0B5A5149BA8A0A11B7FB1 /* libPods-BGGeolocation-BGGeolocationTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BGGeolocation-BGGeolocationTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBED633A74B2BE0016A69801 /* libPods-BGGeolocation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BGGeolocation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD822611298BA00171ACF57A /* Pods-BGGeolocation-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation-tvOS.release.xcconfig"; path = "Target Support Files/Pods-BGGeolocation-tvOS/Pods-BGGeolocation-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F9FB1E075FD61E736D13C741 /* libPods-BGGeolocation-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BGGeolocation-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC12AE84CD154CCBFB2543B2 /* Pods-BGGeolocation-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BGGeolocation-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-BGGeolocation-tvOS/Pods-BGGeolocation-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,7 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDF2FF49AAD9DA44D3A701D2 /* libPods-BGGeolocation-BGGeolocationTests.a in Frameworks */,
+				1A173166FF8F526E535DA5ED /* libPods-BGGeolocation-BGGeolocationTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,7 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B56365662A9197DE7F947D3 /* libPods-BGGeolocation.a in Frameworks */,
+				1EA3A3FFA95A6FA9EEB10781 /* libPods-BGGeolocation.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,7 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */,
+				796071D3B3A29DC5D6EF96B0 /* libPods-BGGeolocation-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA2B3299FE227CF8ECC3647F /* libPods-BGGeolocation-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,7 +147,7 @@
 		13B07FAE1A68108700A75B9A /* BGGeolocation */ = {
 			isa = PBXGroup;
 			children = (
-				839C411C23084F93008AF109 /* RNBackgroundFetch+AppDelegate.m */,
+				830B24CF247D6E730006A39A /* RNBackgroundFetch+AppDelegate.m */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -170,52 +159,59 @@
 			name = BGGeolocation;
 			sourceTree = "<group>";
 		};
-		2201A91E10FF9F9FE4862E82 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				34D30D4613263368EC35BA01 /* Pods-BGGeolocation.debug.xcconfig */,
-				2C560D9E35F5B687BFB4C020 /* Pods-BGGeolocation.release.xcconfig */,
-				16F8DBFCBB45B10167161E46 /* Pods-BGGeolocationTests.debug.xcconfig */,
-				05E8C70AE8F237865136266C /* Pods-BGGeolocationTests.release.xcconfig */,
-				85D0E6DF813F73456D1CD7B5 /* Pods-BGGeolocation-BGGeolocationTests.debug.xcconfig */,
-				E147B31EA1412D8FC1670252 /* Pods-BGGeolocation-BGGeolocationTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2D16E6891FA4F8E400B85C8A /* libReact.a */,
-				06C390CEDD64A61A3677EC06 /* libPods-BGGeolocation.a */,
-				1F7FB4C91DF66508FE220F27 /* libPods-BGGeolocation-BGGeolocationTests.a */,
+				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
+				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
+				BBED633A74B2BE0016A69801 /* libPods-BGGeolocation.a */,
+				90D0B5A5149BA8A0A11B7FB1 /* libPods-BGGeolocation-BGGeolocationTests.a */,
+				F9FB1E075FD61E736D13C741 /* libPods-BGGeolocation-tvOS.a */,
+				544D227BDA308BEDC5C9D001 /* libPods-BGGeolocation-tvOSTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		58F099B1EEBE456F99BE4A65 /* Resources */ = {
+		7E22EB97C301F1159300057A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				39DCD802E68746D7A39A848A /* AntDesign.ttf */,
-				C739A68D4A3E4710998F883A /* Entypo.ttf */,
-				92FE4BA708F847AC81ACB7D3 /* EvilIcons.ttf */,
-				76D28E4257F94CB4A7A50158 /* Feather.ttf */,
-				4EAAD5A176A247DF921A7F11 /* FontAwesome.ttf */,
-				DCADD7374EE14F0494D81469 /* FontAwesome5_Brands.ttf */,
-				5C55C6F89ABC49D4B9C739C3 /* FontAwesome5_Regular.ttf */,
-				B2B2B204678E428DA603DFF7 /* FontAwesome5_Solid.ttf */,
-				3AED04AC98AA4C25A16F3A60 /* Foundation.ttf */,
-				3C844989DE144F1D92BB9C0B /* Ionicons.ttf */,
-				77396853F355435E807F45D4 /* MaterialCommunityIcons.ttf */,
-				DB7560DE2A394A0697152D1F /* MaterialIcons.ttf */,
-				87F9C3A7982944B4945A3657 /* Octicons.ttf */,
-				A6189509046F429BADD4203F /* Roboto_medium.ttf */,
-				8E6DB015E033478CAAE0E1AC /* Roboto.ttf */,
-				A8ECDABF5C564DD7B9C2AC59 /* rubicon-icon-font.ttf */,
-				A982D491358F48F6A682937C /* SimpleLineIcons.ttf */,
-				2F56E893A23E4B7C9EE257C5 /* Zocial.ttf */,
+				15E326D9A7760E7FB8FEB887 /* Pods-BGGeolocation.debug.xcconfig */,
+				6929445C339A58BE351E5951 /* Pods-BGGeolocation.release.xcconfig */,
+				651F5907BDE2C7C91CF5DC94 /* Pods-BGGeolocation-BGGeolocationTests.debug.xcconfig */,
+				642E62989D5C15AD5FDF409D /* Pods-BGGeolocation-BGGeolocationTests.release.xcconfig */,
+				FC12AE84CD154CCBFB2543B2 /* Pods-BGGeolocation-tvOS.debug.xcconfig */,
+				BD822611298BA00171ACF57A /* Pods-BGGeolocation-tvOS.release.xcconfig */,
+				468F948D942A19C9C8EFB317 /* Pods-BGGeolocation-tvOSTests.debug.xcconfig */,
+				5E6BA83ED3780A2354887C92 /* Pods-BGGeolocation-tvOSTests.release.xcconfig */,
 			);
-			name = Resources;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		830B250B247D76EC0006A39A /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				830B250C247D76EC0006A39A /* AntDesign.ttf */,
+				830B250D247D76EC0006A39A /* Entypo.ttf */,
+				830B250E247D76EC0006A39A /* EvilIcons.ttf */,
+				830B250F247D76EC0006A39A /* Feather.ttf */,
+				830B2510247D76EC0006A39A /* FontAwesome.ttf */,
+				830B2511247D76EC0006A39A /* FontAwesome5_Brands.ttf */,
+				830B2512247D76EC0006A39A /* FontAwesome5_Regular.ttf */,
+				830B2513247D76EC0006A39A /* FontAwesome5_Solid.ttf */,
+				830B2514247D76EC0006A39A /* Fontisto.ttf */,
+				830B2515247D76EC0006A39A /* Foundation.ttf */,
+				830B2516247D76EC0006A39A /* Ionicons.ttf */,
+				830B2517247D76EC0006A39A /* MaterialCommunityIcons.ttf */,
+				830B2518247D76EC0006A39A /* MaterialIcons.ttf */,
+				830B2519247D76EC0006A39A /* Octicons.ttf */,
+				830B251A247D76EC0006A39A /* Roboto.ttf */,
+				830B251B247D76EC0006A39A /* Roboto_medium.ttf */,
+				830B251C247D76EC0006A39A /* rubicon-icon-font.ttf */,
+				830B251D247D76EC0006A39A /* SimpleLineIcons.ttf */,
+				830B251E247D76EC0006A39A /* Zocial.ttf */,
+			);
+			name = Fonts;
+			path = "../node_modules/native-base/Fonts";
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -225,26 +221,16 @@
 			name = Libraries;
 			sourceTree = "<group>";
 		};
-		83945892212477D5002AB207 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				83B437F6243A5570006017B9 /* Dummy.swift */,
+				830B250B247D76EC0006A39A /* Fonts */,
 				13B07FAE1A68108700A75B9A /* BGGeolocation */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* BGGeolocationTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				2201A91E10FF9F9FE4862E82 /* Pods */,
-				83945892212477D5002AB207 /* Recovered References */,
-				58F099B1EEBE456F99BE4A65 /* Resources */,
-				83B437F5243A5570006017B9 /* BGGeolocation-Bridging-Header.h */,
+				7E22EB97C301F1159300057A /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -269,7 +255,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "BGGeolocationTests" */;
 			buildPhases = (
-				ABC34E008F541465173F8F98 /* [CP] Check Pods Manifest.lock */,
+				D34ACA0E2386F58F728F8A53 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -288,19 +274,19 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "BGGeolocation" */;
 			buildPhases = (
-				C348553810805325C154C607 /* [CP] Check Pods Manifest.lock */,
+				240F864B96192FFDCD470074 /* [CP] Check Pods Manifest.lock */,
+				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				839C280B22D65FFB00BD4FDC /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = BGGeolocation;
-			productName = "Hello World";
+			productName = BGGeolocation;
 			productReference = 13B07F961A680F5B00A75B9A /* BGGeolocation.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -308,6 +294,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "BGGeolocation-tvOS" */;
 			buildPhases = (
+				EDF0E6127B3BB8359F51B4CD /* [CP] Check Pods Manifest.lock */,
+				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
 				2D02E4791E0B4A5D006451C7 /* Resources */,
@@ -326,6 +314,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "BGGeolocation-tvOSTests" */;
 			buildPhases = (
+				368DFCBD123EB87504B0788C /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -346,23 +335,25 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 610;
-				ORGANIZATIONNAME = Facebook;
+				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 32A636YFGZ;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 32A636YFGZ;
-						LastSwiftMigration = 1140;
+						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 32A636YFGZ;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 32A636YFGZ;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
@@ -370,10 +361,9 @@
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "BGGeolocation" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -404,23 +394,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				0D692DC7853D4DECB9968597 /* AntDesign.ttf in Resources */,
-				4C1692EF69BA47D0AE7B9A4E /* Entypo.ttf in Resources */,
-				05F0DC7D215A492BA2BF38DB /* EvilIcons.ttf in Resources */,
-				940E7B116F054DAB9980A809 /* Feather.ttf in Resources */,
-				97A91DC475884C64BD64FB51 /* FontAwesome.ttf in Resources */,
-				081C5DCBAF7747F29143A7B2 /* FontAwesome5_Brands.ttf in Resources */,
-				3ED53526BC8045809EFADEEF /* FontAwesome5_Regular.ttf in Resources */,
-				D9A1677C4B1A4B2086735166 /* FontAwesome5_Solid.ttf in Resources */,
-				6D733537F7FC4405A008E6D8 /* Foundation.ttf in Resources */,
-				FC83681864C942E3839E94D1 /* Ionicons.ttf in Resources */,
-				BC81F525AE454F1A852B2534 /* MaterialCommunityIcons.ttf in Resources */,
-				77C6E1BCB5F14FB9BE4FF235 /* MaterialIcons.ttf in Resources */,
-				99ECEB03AC804ABD9CEB0E85 /* Octicons.ttf in Resources */,
-				EF158EC2AE9B44499DED0589 /* Roboto_medium.ttf in Resources */,
-				EF2EF421FB4C4364A32726BD /* Roboto.ttf in Resources */,
-				08A37DCBF1874DDB821E96E2 /* SimpleLineIcons.ttf in Resources */,
-				CEB9E88018834E95A877D93B /* Zocial.ttf in Resources */,
+				830B251F247D77270006A39A /* Ionicons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,7 +428,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		240F864B96192FFDCD470074 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BGGeolocation-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -470,7 +466,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		839C280B22D65FFB00BD4FDC /* ShellScript */ = {
+		368DFCBD123EB87504B0788C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -478,16 +474,21 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BGGeolocation-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\nif nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\nif ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\necho \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\nexit 2\nfi\nelse\nopen \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\nfi\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
-		ABC34E008F541465173F8F98 /* [CP] Check Pods Manifest.lock */ = {
+		D34ACA0E2386F58F728F8A53 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -509,22 +510,64 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C348553810805325C154C607 /* [CP] Check Pods Manifest.lock */ = {
+		EDF0E6127B3BB8359F51B4CD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BGGeolocation-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-BGGeolocation-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FD10A7F022414F080027D42C /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FD10A7F122414F3F0027D42C /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -542,9 +585,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				839C411D23084F93008AF109 /* RNBackgroundFetch+AppDelegate.m in Sources */,
+				830B24D0247D6E730006A39A /* RNBackgroundFetch+AppDelegate.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				83B437F7243A5570006017B9 /* Dummy.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -596,54 +638,23 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 85D0E6DF813F73456D1CD7B5 /* Pods-BGGeolocation-BGGeolocationTests.debug.xcconfig */;
+			baseConfigurationReference = 651F5907BDE2C7C91CF5DC94 /* Pods-BGGeolocation-BGGeolocationTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				DEVELOPMENT_TEAM = 32A636YFGZ;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers/Public/CocoaLumberjack\"",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public/RNBackgroundFetch\"",
-					"\"${PODS_ROOT}/Headers/Public/DoubleConversion\"",
-					"\"${PODS_ROOT}/Headers/Public/RNBackgroundGeolocation\"",
-					"\"${PODS_ROOT}/Headers/Public/React-Core\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTActionSheet\"",
-					"\"${PODS_ROOT}/Headers/Public/React-DevSupport\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTAnimation\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTBlob\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTImage\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTLinking\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTNetwork\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTSettings\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTText\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTVibration\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTWebSocket\"",
-					"\"${PODS_ROOT}/Headers/Public/React-cxxreact\"",
-					"\"${PODS_ROOT}/Headers/Public/React-fishhook\"",
-					"\"${PODS_ROOT}/Headers/Public/React-jsi\"",
-					"\"${PODS_ROOT}/Headers/Public/React-jsiexecutor\"",
-					"\"${PODS_ROOT}/Headers/Public/React-jsinspector\"",
-					"\"${PODS_ROOT}/Headers/Public/glog\"",
-					"\"${PODS_ROOT}/Headers/Public/yoga\"",
-				);
 				INFOPLIST_FILE = BGGeolocationTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
 					"$(inherited)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BGGeolocation.app/BGGeolocation";
 			};
@@ -651,52 +662,20 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E147B31EA1412D8FC1670252 /* Pods-BGGeolocation-BGGeolocationTests.release.xcconfig */;
+			baseConfigurationReference = 642E62989D5C15AD5FDF409D /* Pods-BGGeolocation-BGGeolocationTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers/Public/CocoaLumberjack\"",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public/RNBackgroundFetch\"",
-					"\"${PODS_ROOT}/Headers/Public/DoubleConversion\"",
-					"\"${PODS_ROOT}/Headers/Public/RNBackgroundGeolocation\"",
-					"\"${PODS_ROOT}/Headers/Public/React-Core\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTActionSheet\"",
-					"\"${PODS_ROOT}/Headers/Public/React-DevSupport\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTAnimation\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTBlob\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTImage\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTLinking\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTNetwork\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTSettings\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTText\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTVibration\"",
-					"\"${PODS_ROOT}/Headers/Public/React-RCTWebSocket\"",
-					"\"${PODS_ROOT}/Headers/Public/React-cxxreact\"",
-					"\"${PODS_ROOT}/Headers/Public/React-fishhook\"",
-					"\"${PODS_ROOT}/Headers/Public/React-jsi\"",
-					"\"${PODS_ROOT}/Headers/Public/React-jsiexecutor\"",
-					"\"${PODS_ROOT}/Headers/Public/React-jsinspector\"",
-					"\"${PODS_ROOT}/Headers/Public/glog\"",
-					"\"${PODS_ROOT}/Headers/Public/yoga\"",
-				);
+				DEVELOPMENT_TEAM = 32A636YFGZ;
 				INFOPLIST_FILE = BGGeolocationTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
 					"$(inherited)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BGGeolocation.app/BGGeolocation";
 			};
@@ -704,15 +683,17 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 34D30D4613263368EC35BA01 /* Pods-BGGeolocation.debug.xcconfig */;
+			baseConfigurationReference = 15E326D9A7760E7FB8FEB887 /* Pods-BGGeolocation.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 32A636YFGZ;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				HEADER_SEARCH_PATHS = "$(inherited)";
+				ENABLE_BITCODE = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"FB_SONARKIT_ENABLED=1",
+				);
 				INFOPLIST_FILE = BGGeolocation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -722,7 +703,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.transistorsoft.backgroundgeolocation.react;
 				PRODUCT_NAME = BGGeolocation;
-				SWIFT_OBJC_BRIDGING_HEADER = "BGGeolocation-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -731,15 +711,12 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C560D9E35F5B687BFB4C020 /* Pods-BGGeolocation.release.xcconfig */;
+			baseConfigurationReference = 6929445C339A58BE351E5951 /* Pods-BGGeolocation.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 32A636YFGZ;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = BGGeolocation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -749,7 +726,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.transistorsoft.backgroundgeolocation.react;
 				PRODUCT_NAME = BGGeolocation;
-				SWIFT_OBJC_BRIDGING_HEADER = "BGGeolocation-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -757,6 +733,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC12AE84CD154CCBFB2543B2 /* Pods-BGGeolocation-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -765,24 +742,17 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 32A636YFGZ;
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
-				);
 				INFOPLIST_FILE = "BGGeolocation-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.BGGeolocation-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.BGGeolocation-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -792,6 +762,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BD822611298BA00171ACF57A /* Pods-BGGeolocation-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -801,23 +772,16 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				DEVELOPMENT_TEAM = 32A636YFGZ;
 				GCC_NO_COMMON_BLOCKS = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
-				);
 				INFOPLIST_FILE = "BGGeolocation-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.BGGeolocation-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.BGGeolocation-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -827,6 +791,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 468F948D942A19C9C8EFB317 /* Pods-BGGeolocation-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -834,24 +799,17 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 32A636YFGZ;
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
-				);
 				INFOPLIST_FILE = "BGGeolocation-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.BGGeolocation-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.BGGeolocation-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BGGeolocation-tvOS.app/BGGeolocation-tvOS";
@@ -861,6 +819,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5E6BA83ED3780A2354887C92 /* Pods-BGGeolocation-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -869,23 +828,16 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				DEVELOPMENT_TEAM = 32A636YFGZ;
 				GCC_NO_COMMON_BLOCKS = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
-				);
 				INFOPLIST_FILE = "BGGeolocation-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.BGGeolocation-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.BGGeolocation-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BGGeolocation-tvOS.app/BGGeolocation-tvOS";
@@ -897,24 +849,37 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -928,6 +893,12 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -938,17 +909,28 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -956,6 +938,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -963,6 +946,12 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

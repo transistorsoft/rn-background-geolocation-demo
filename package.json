@@ -1,26 +1,26 @@
 {
   "name": "BGGeolocation",
-  "version": "3.4.3",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "react": "16.11.0",
+    "react-native": "0.62.2",
     "@react-native-community/async-storage": "^1.6.1",
     "@types/lodash.isequal": "^4.5.5",
     "@types/react-navigation": "^3.0.8",
     "lodash.isequal": "^4.5.0",
     "moment": "^2.24.0",
     "native-base": "^2.13.5",
-    "react": "16.11.0",
-    "react-native": "0.62.1",
     "react-native-action-button": "^2.8.5",
-    "react-native-background-fetch": "^3.0.3",
-    "react-native-background-geolocation-android": "../react-native-background-geolocation-android",
+    "react-native-background-fetch": "^3.0.5",
+    "react-native-background-geolocation": "^3.6.2",
     "react-native-easy-grid": "^0.2.0",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-maps": "^0.26.1",
@@ -38,19 +38,29 @@
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/runtime": "^7.6.2",
-    "@react-native-community/eslint-config": "^0.0.5",
-    "@types/jest": "^24.0.18",
-    "@types/react": "^16.9.2",
-    "@types/react-native": "^0.60.15",
-    "@types/react-test-renderer": "^16.9.0",
+    "@react-native-community/eslint-config": "^1.0.0",
+    "@types/jest": "^24.0.24",
+    "@types/react-native": "^0.62.0",
+    "@types/react-test-renderer": "16.9.2",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
     "babel-jest": "^24.9.0",
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.58.0",
     "react-test-renderer": "16.11.0",
-    "typescript": "^3.5.3"
+    "prettier": "^2.0.4",
+    "typescript": "^3.8.3"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }

@@ -26,7 +26,7 @@ import BackgroundGeolocation, {
   DeviceInfo,
   Authorization, AuthorizationEvent,
   TransistorAuthorizationToken
-} from "react-native-background-geolocation-android";
+} from "react-native-background-geolocation";
 
 ////
 // 2.  For importing the private plugin (customers only)
