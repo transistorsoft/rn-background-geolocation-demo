@@ -5434,10 +5434,10 @@ react-native-action-button@^2.8.5:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-background-fetch@^3.0.5:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-3.0.5.tgz#e706286bd974dc8858a30cc5339798b9f247c36d"
-  integrity sha512-UEmd0gbM+II/XiJICUl9V6nx2kvUZEWYOUzbFNk/T77AUGMtk+Grz2w6O03XM3GoyQS7RJJcVNRDr1ytAzUXWQ==
+react-native-background-fetch@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-3.0.6.tgz#0123722caa92bcbe4bb191bd37f2d5b0d3e65f2d"
+  integrity sha512-F3C/uHC6PHcyPLEB5iQeX4bU41x1CcjFKYf7P54rTSuYG9BlV3z0oyhzbCkWxCCabMl9yzFozuqpUMKybMGD4w==
   dependencies:
     fast-plist "^0.1.2"
     plist "^3.0.1"

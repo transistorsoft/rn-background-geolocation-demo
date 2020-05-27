@@ -19,7 +19,7 @@
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-action-button": "^2.8.5",
-    "react-native-background-fetch": "^3.0.5",
+    "react-native-background-fetch": "^3.0.6",
     "react-native-background-geolocation": "^3.6.2",
     "react-native-easy-grid": "^0.2.0",
     "react-native-gesture-handler": "^1.6.1",
