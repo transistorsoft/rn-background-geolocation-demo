@@ -299,9 +299,9 @@ PODS:
     - React-cxxreact (= 0.62.2)
     - React-jsi (= 0.62.2)
     - ReactCommon/callinvoker (= 0.62.2)
-  - RNBackgroundFetch (3.0.5):
+  - RNBackgroundFetch (3.0.6):
     - React
-  - RNBackgroundGeolocation (3.6.2):
+  - RNBackgroundGeolocation (3.7.0):
     - CocoaLumberjack (~> 3.5.1)
     - React
   - RNCAsyncStorage (1.9.0):
@@ -496,8 +496,8 @@ SPEC CHECKSUMS:
   React-RCTText: fae545b10cfdb3d247c36c56f61a94cfd6dba41d
   React-RCTVibration: 4356114dbcba4ce66991096e51a66e61eda51256
   ReactCommon: ed4e11d27609d571e7eee8b65548efc191116eb3
-  RNBackgroundFetch: 8597ff4bbd2a644907ebcfb8124fbed87b6f345b
-  RNBackgroundGeolocation: 0064322f9b1aad51884ca10295297663631d3453
+  RNBackgroundFetch: 9adf01bb51658fc205a3dc8802cf38dd7cd9be09
+  RNBackgroundGeolocation: 7e6d7f7627f47602e07612814734a1644359256b
   RNCAsyncStorage: 453cd7c335ec9ba3b877e27d02238956b76f3268
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
   RNReanimated: 4e102df74a9674fa943e05f97f3362b6e44d0b48
