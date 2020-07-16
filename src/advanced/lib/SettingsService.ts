@@ -511,45 +511,61 @@ export default class SettingsService {
   async applyTestConfig() {
     let geofences = [{
       "identifier": "[RN] Home",
-      "radius": 200,
-      "latitude": 45.5192534,
-      "longitude": -73.6169719,
+      "radius": 200.0,
+      "latitude": 45.51872221233045,
+      "longitude": -73.60041976465013,
       "notifyOnEntry": true,
       "notifyOnExit": true,
       "notifyOnDwell": true,
-      "loiteringDelay": 10000,
+      "loiteringDelay": 60000,
       "extras": {
         "radius": 200,
         "center": {
-          "latitude": 45.5192534,
-          "longitude": -73.6169719
+          "latitude": 45.51872221233045,
+          "longitude": -73.60041976465013,
         }
       }
     }, {
-      "identifier": "[RN] Jfk",
-      "radius": 200,
-      "latitude": 45.52193435702239,
-      "longitude": -73.61602026242679,
+      "identifier": "[RN] Parc Outremont",
+      "radius": 200.0,
+      "latitude": 45.51791915253888,
+      "longitude": -73.60480434117284,
       "notifyOnEntry": true,
       "notifyOnExit": true,
       "notifyOnDwell": true,
-      "loiteringDelay": 10000,
+      "loiteringDelay": 60000,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.51791915253888,
+          "longitude": -73.60480434117284,
+        }
+      }
+    }, {
+      "identifier": "[RN] 5 Saison",
+      "radius": 200.0,
+      "latitude": 45.52193435702239,
+      "longitude": -73.60793815706307,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": true,
+      "loiteringDelay": 0,
       "extras": {
         "radius": 200,
         "center": {
           "latitude": 45.52193435702239,
-          "longitude": -73.61602026242679
+          "longitude": -73.60793815706307,
         }
       }
     }, {
       "identifier": "[RN] Laj",
-      "radius": 200,
+      "radius": 200.0,
       "latitude": 45.52011166353691,
       "longitude": -73.61188565687189,
       "notifyOnEntry": true,
       "notifyOnExit": true,
       "notifyOnDwell": true,
-      "loiteringDelay": 10000,
+      "loiteringDelay": 0,
       "extras": {
         "radius": 200,
         "center": {
@@ -558,51 +574,227 @@ export default class SettingsService {
         }
       }
     }, {
-      "identifier": "[RN] Bernard",
-      "radius": 200,
-      "latitude": 45.51890341224348,
-      "longitude": -73.60920346871359,
+      "identifier": "[RN] Park Beaubien",
+      "radius": 200.0,
+      "latitude": 45.51536622906458,
+      "longitude": -73.60916110960558,
       "notifyOnEntry": true,
       "notifyOnExit": true,
-      "notifyOnDwell": true,
-      "loiteringDelay": 10000,
+      "notifyOnDwell": false,
+      "loiteringDelay": 0,
       "extras": {
         "radius": 200,
         "center": {
-          "latitude": 45.51890341224348,
-          "longitude": -73.60920346871359
+          "latitude": 45.51536622906458,
+          "longitude": -73.60916110960558
         }
       }
     }, {
-      "identifier": "[RN] Park",
-      "radius": 200,
-      "latitude": 45.51793055832324,
-      "longitude": -73.60288022069346,
+      "identifier": "[RN] Parc & Fairmount",
+      "radius": 200.0,
+      "latitude": 45.5204308608878,
+      "longitude": -73.59730225310089,
       "notifyOnEntry": true,
       "notifyOnExit": true,
       "notifyOnDwell": true,
-      "loiteringDelay": 10000,
+      "loiteringDelay": 60000,
       "extras": {
         "radius": 200,
         "center": {
-          "latitude": 45.51793055832324,
-          "longitude": -73.60288022069346
+          "latitude": 45.5204308608878,
+          "longitude": -73.59730225310089
         }
       }
     }, {
-      "identifier": "[RN] Dollard",
-      "radius": 200,
-      "latitude": 45.51722612373795,
-      "longitude": -73.61367125021673,
+      "identifier": "[RN] Parc Couches Tard",
+      "radius": 200.0,
+      "latitude": 45.51744539760233,
+      "longitude": -73.5908963928221,
       "notifyOnEntry": true,
       "notifyOnExit": true,
-      "notifyOnDwell": true,
-      "loiteringDelay": 10000,
+      "notifyOnDwell": false,
+      "loiteringDelay": 0,
       "extras": {
         "radius": 200,
         "center": {
-          "latitude": 45.51722612373795,
-          "longitude": -73.61367125021673
+          "latitude": 45.51744539760233,
+          "longitude": -73.5908963928221
+        }
+      }
+    }, {
+      "identifier": "[RN] Laurier & Côtes Saint Catherines",
+      "radius": 200.0,
+      "latitude": 45.51602235252262,
+      "longitude": -73.59890979915006,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": false,
+      "loiteringDelay": 60000,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.51602235252262,
+          "longitude": -73.59890979915006,
+        }
+      }
+    }, {
+      "identifier": "[RN] Mountain 1",
+      "radius": 200.0,
+      "latitude": 45.51339446482965,
+      "longitude": -73.5890430151955,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": false,
+      "loiteringDelay": 60000,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.51339446482965,
+          "longitude": -73.5890430151955
+        }
+      }
+    }, {
+      "identifier": "[RN] Mountain 2",
+      "radius": 200.0,
+      "latitude": 45.511936585973096,
+      "longitude": -73.59662309075495,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": false,
+      "loiteringDelay": 60000,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.511936585973096,
+          "longitude": -73.59662309075495
+        }
+      }
+    }, {
+      "identifier": "[RN] Mountain 3",
+      "radius": 200.0,
+      "latitude": 45.50873361477508,
+      "longitude": -73.59089814860727,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": false,
+      "loiteringDelay": 60000,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.50873361477508,
+          "longitude": -73.59089814860727
+        }
+      }
+    }, {
+      "identifier": "[RN] Mountain 4",
+      "radius": 200.0,
+      "latitude": 45.50414694296492,
+      "longitude": -73.5916710539562,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": false,
+      "loiteringDelay": 60000,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.50414694296492,
+          "longitude": -73.5916710539562
+        }
+      }
+    }, {
+      "identifier": "[RN] Mountain 5",
+      "radius": 200.0,
+      "latitude": 45.50491473767328,
+      "longitude": -73.58654527405864,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": false,
+      "loiteringDelay": 60000,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.50491473767328,
+          "longitude": -73.58654527405864
+        }
+      }
+    }, {
+      "identifier": "[RN] Mountain Lake",
+      "radius": 200.0,
+      "latitude": 45.49860916086097,
+      "longitude": -73.59621565704647,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": false,
+      "loiteringDelay": 60000,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.49860916086097,
+          "longitude": -73.59621565704647
+        }
+      }
+    }, {
+      "identifier": "[RN] Park JFK",
+      "radius": 200.0,
+      "latitude": 45.52135522992923,
+      "longitude": -73.61568446341691,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": false,
+      "loiteringDelay": 60000,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.52135522992923,
+          "longitude": -73.61568446341691
+        }
+      }
+    }, {
+      "identifier": "[RN] Rope Park",
+      "radius": 200.0,
+      "latitude": 45.51335215591131,
+      "longitude": -73.58016477295465,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": true,
+      "loiteringDelay": 60000,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.51335215591131,
+          "longitude": -73.58016477295465
+        }
+      }
+    }, {
+      "identifier": "[RN] Cafe Union",
+      "radius": 200.0,
+      "latitude": 45.5332674993574,
+      "longitude": -73.61939297593483,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": true,
+      "loiteringDelay": 60000,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.5332674993574,
+          "longitude": -73.61939297593483
+        }
+      }
+    }, {
+      "identifier": "[RN] Park Laurier",
+      "radius": 200.0,
+      "latitude": 45.53237479609443,
+      "longitude": -73.58741778627864,
+      "notifyOnEntry": true,
+      "notifyOnExit": true,
+      "notifyOnDwell": true,
+      "loiteringDelay": 60000,
+      "extras": {
+        "radius": 200,
+        "center": {
+          "latitude": 45.53237479609443,
+          "longitude": -73.58741778627864,
         }
       }
     }];
@@ -627,6 +819,7 @@ export default class SettingsService {
       locationUpdateInterval: 1000,
       fastestLocationUpdateInterval: -1,
       stopTimeout: 1,
+      motionTriggerDelay: 30000,
       schedule: [
         //'2-6 09:00-17:00'
       ],
