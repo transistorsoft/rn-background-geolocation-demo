@@ -125,11 +125,6 @@ const PLUGIN_SETTINGS:any = {
     //{name: 'triggerActivities', group: 'activity recognition', dataType: 'string', inputType: 'select', values: ['in_vehicle', 'on_bicycle', 'on_foot', 'running', 'walking'], defaultValue: 'in_vehicle, on_bicycle, running, walking, on_foot'},
     // Application
     {name: 'enableHeadless', group: 'application', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: true},
-    {name: 'foregroundService', group: 'application', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
-    {name: 'forceReloadOnMotionChange', group: 'application', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
-    {name: 'forceReloadOnLocationChange', group: 'application', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
-    {name: 'forceReloadOnGeofence', group: 'application', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
-    {name: 'forceReloadOnHeartbeat', group: 'application', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
     {name: 'notificationPriority', group: 'application', dataType: 'string', inputType: 'select', values: ['DEFAULT', 'HIGH', 'LOW', 'MAX', 'MIN'], defaultValue: 'DEFAULT'}
   ]
 };

@@ -601,7 +601,10 @@ export default class HomeView extends Component<IProps, IState> {
     BackgroundGeolocation.getCurrentPosition({
       persist: true,
       samples: 1,
-      timeout: 30
+      timeout: 30,
+      extras: {
+        getCurrentPosition: true
+      }
     }).then((location:Location) => {
       console.log('[getCurrentPosition] success: ', location);
     }).catch((error:LocationError) => {
