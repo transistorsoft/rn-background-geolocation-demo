@@ -5,7 +5,7 @@ buildscript {
         googlePlayServicesLocationVersion = "17.0.0"
         googlePlayServicesVersion = "17.0.0"
         removeBackgroundGeolocationDebugSoundsInRelease = false
-        buildToolsVersion = "28.0.3"
+        buildToolsVersion = "29.0.2"
         minSdkVersion = 16
         compileSdkVersion = 29
         targetSdkVersion = 29

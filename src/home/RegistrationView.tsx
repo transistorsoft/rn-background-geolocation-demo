@@ -19,7 +19,7 @@ import {
   Card, CardItem,
   Form, Label, Input,
   Item as FormItem,
-} from 'native-base';
+} from '@codler/native-base';
 
 import ENV from "../ENV";
 

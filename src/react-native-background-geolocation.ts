@@ -35,7 +35,7 @@ import BackgroundGeolocation, {
 
 export default BackgroundGeolocation;
 
-export {
+export type {
   State,
   Config,
   Location,
