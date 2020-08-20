@@ -26,7 +26,7 @@ import {
   Left, Body, Right,
   Switch,
   Spinner
-} from 'native-base';
+} from '@codler/native-base';
 
 ////
 // Import BackgroundGeolocation plugin
@@ -264,10 +264,12 @@ export default class HomeView extends Component<IProps, IState> {
     BackgroundGeolocation.ready({
       transistorAuthorizationToken: token,
       reset: false,
-      stopTimeout: 1,
+      desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_NAVIGATION,
+      distanceFilter: 10,
+      locationAuthorizationRequest: 'Always',
+      stopTimeout: 5,
       debug: true,
       logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
-      foregroundService: true,
       autoSync: true,
       stopOnTerminate: false,
       startOnBoot: true,
@@ -316,19 +318,6 @@ export default class HomeView extends Component<IProps, IState> {
       BackgroundFetch.finish(taskId);
     }, (error) => {
       console.log('[js] RNBackgroundFetch failed to start')
-    });
-
-    BackgroundFetch.scheduleTask({
-      taskId: 'com.transistorsoft.customtask',
-      delay: 5000,
-      stopOnTerminate: false,
-      enableHeadless: true,
-      periodic: false,
-      forceAlarmManager: true
-    }).then((success) => {
-      console.log('[BackgroundFetch scheduleTask] success');
-    }).catch((error) => {
-      console.warn('[BackgroundFetch scheduleTask] ERROR: ', error);
     });
   }
 
@@ -413,7 +402,16 @@ export default class HomeView extends Component<IProps, IState> {
   */
   onProviderChange(event:ProviderChangeEvent) {
     console.log('[providerchange] - ', event);
+    // [iOS 14+] Request temporaryFullAccuracy if not authorized.
+    if (this.state.enabled && (event.accuracyAuthorization == BackgroundGeolocation.ACCURACY_AUTHORIZATION_REDUCED)) {
+      BackgroundGeolocation.requestTemporaryFullAccuracy("DemoPurpose").then((accuracyAuthorization) => {
+        console.log('[requestTemporaryFullAccuracy]: ', accuracyAuthorization);
+      }).catch((error) => {
+        console.log('[requestTemporaryFullAccuracy] ERROR: ', error);
+      });
+    }
   }
+
   /**
   * @event http
   */
@@ -556,23 +554,21 @@ export default class HomeView extends Component<IProps, IState> {
       let state = await BackgroundGeolocation.getState();
       let startMethod = (state.trackingMode) ? 'start' : 'startGeofences';
 
+      let onSuccess = (state: State) => {
+        this.setState({
+          showsUserLocation: enabled,
+          followsUserLocation: enabled
+        });
+      };
+
       if (state.trackingMode) {
-        BackgroundGeolocation.start((state:State) => {
-          this.setState({
-            showsUserLocation: enabled,
-            followsUserLocation: enabled
-          });
-        });
+        BackgroundGeolocation.start(onSuccess);
       } else {
-        BackgroundGeolocation.startGeofences((state:State) => {
-          this.setState({
-            showsUserLocation: enabled,
-            followsUserLocation: enabled
-          });
-        });
+        BackgroundGeolocation.startGeofences(onSuccess);
       }
     } else {
-      BackgroundGeolocation.stop();
+      await BackgroundGeolocation.stop();
+
       // Clear markers, polyline, geofences, stationary-region
       this.clearMarkers();
       this.setState({
@@ -632,6 +628,22 @@ export default class HomeView extends Component<IProps, IState> {
   */
   async onClickMainMenu(){
     let soundId = (this.state.isMainMenuOpen) ? 'CLOSE' : 'OPEN';
+
+    BackgroundGeolocation.requestPermission().then(async (status) => {
+      console.log('[requestPermission] success: ', status);
+      // Supply "Purpose" key from Info.plist as 1st argument.
+      BackgroundGeolocation.requestTemporaryFullAccuracy("DemoPurpose").then((accuracyAuthorization) => {
+        if (accuracyAuthorization == BackgroundGeolocation.ACCURACY_AUTHORIZATION_FULL) {
+          console.log('[requestTemporaryFullAccuracy] GRANTED: ', accuracyAuthorization);
+        } else {
+          console.log('[requestTemporaryFullAccuracy] DENIED: ', accuracyAuthorization);
+        }
+      }).catch((error) => {
+        console.warn("[requestTemporaryFullAccuracy] FAILED TO SHOW DIALOG: ", error);
+      });
+    }).catch((status) => {
+      console.log('[requestPermission] failure: ', status);
+    });
 
     // Test #startBackgroundTask on menu-button clicks.
     let taskId = await BackgroundGeolocation.startBackgroundTask();
@@ -812,7 +824,7 @@ export default class HomeView extends Component<IProps, IState> {
         <Header style={styles.header}>
           <Left>
             <Button transparent onPress={this.onClickHome.bind(this)}>
-              <Icon active name="arrow-back" style={{color: '#000'}}/>
+              <Icon active name="chevron-back-outline" style={{color: '#000'}}/>
             </Button>
           </Left>
           <Body>

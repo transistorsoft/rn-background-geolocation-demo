@@ -17,7 +17,7 @@ import {
   Form, Label, Input, Picker, Switch,
   Item as FormItem,
   Spinner
-} from 'native-base';
+} from '@codler/native-base';
 
 const Item = Picker.Item;
 
@@ -356,7 +356,7 @@ export default class SettingsView extends Component<any, any> {
               <Right>
                 <Picker
                   mode="dropdown"
-                  iosIcon={<Icon name="arrow-down" />}
+                  iosIcon={<Icon name="chevron-down-outline" />}
                   style={{width:(Platform.OS === 'ios') ? undefined : 150}}
                   placeholder={setting.name}
                   selectedValue={this.state[setting.name]}
@@ -394,7 +394,7 @@ export default class SettingsView extends Component<any, any> {
         <Right>
           <Picker
             mode="dropdown"
-            iosIcon={<Icon name="arrow-down" />}
+            iosIcon={<Icon name="chevron-down-outline" />}
             selectedValue={this.state.trackingMode}
             onValueChange={this.onChangeTrackingMode.bind(this)}
             style={{width:(Platform.OS === 'ios') ? undefined : 150}}>

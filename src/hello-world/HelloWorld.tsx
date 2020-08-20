@@ -17,7 +17,7 @@ import {
   Content,
   Left, Body, Right,
   Switch
-} from 'native-base';
+} from '@codler/native-base';
 
 import { Row } from 'react-native-easy-grid';
 
@@ -267,7 +267,7 @@ export default class HelloWorld extends Component<IProps, IState> {
         <Header style={styles.header}>
           <Left>
             <Button transparent onPress={this.onClickHome.bind(this)}>
-              <Icon active name="arrow-back" style={{color: '#000'}}/>
+              <Icon active name="chevron-back-outline" style={{color: '#000'}}/>
             </Button>
           </Left>
           <Body>

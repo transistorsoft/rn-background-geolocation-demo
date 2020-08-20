@@ -14,7 +14,7 @@ import {
   Text,
   Header, Title,
   Left, Body, Right
-} from 'native-base';
+} from '@codler/native-base';
 
 export default class AboutView extends Component<any, any> {
 

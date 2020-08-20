@@ -14,7 +14,7 @@ import {
   Left, Body, Right,
   Form, Label, Input, Picker, Switch,
   Item as FormItem
-} from 'native-base';
+} from '@codler/native-base';
 
 ////
 // Import BackgroundGeolocation plugin

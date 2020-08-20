@@ -23,7 +23,7 @@ import {
   Content,
   Left, Body, Right,
   Switch
-} from 'native-base';
+} from '@codler/native-base';
 
 // react-native-maps
 import MapView, {
@@ -281,7 +281,7 @@ export default class SimpleMap extends Component<IProps, IState> {
         <Header style={styles.header}>
           <Left>
             <Button transparent onPress={this.onClickHome.bind(this)}>
-              <Icon active name="arrow-back" style={styles.title} />
+              <Icon active name="chevron-back-outline" style={styles.title} />
             </Button>
           </Left>
           <Body>

@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import { createAppContainer, NavigationActions, StackActions } from 'react-navigation';
 
-import {StyleProvider} from "native-base";
+import {StyleProvider} from "@codler/native-base";
 import Navigator from './Navigator';
 
 import BackgroundGeolocation from "./react-native-background-geolocation";

@@ -23,7 +23,7 @@ import {
   Button, Icon,
   Title,
   Form, Item, Input, Label
-} from 'native-base';
+} from '@codler/native-base';
 
 import BackgroundGeolocation, {DeviceInfo, TransistorAuthorizationToken} from "../react-native-background-geolocation";
 
