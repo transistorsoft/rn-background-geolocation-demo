@@ -273,11 +273,6 @@ export default class HomeView extends Component<IProps, IState> {
       autoSync: true,
       stopOnTerminate: false,
       startOnBoot: true,
-      notification: {
-        title: 'react-native-background-geolocation',
-        text: 'Tracking engaged'
-      },
-      heartbeatInterval: 60,
       enableHeadless: true,
       maxDaysToPersist: 14
     }, (state:State) => {

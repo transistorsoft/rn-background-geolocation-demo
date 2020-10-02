@@ -1,6 +1,6 @@
 {
   "name": "BGGeolocation",
-  "version": "0.0.1",
+  "version": "3.9.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -20,7 +20,7 @@
     "react-native": "0.63.2",
     "react-native-action-button": "^2.8.5",
     "react-native-background-fetch": "^3.0.6",
-    "react-native-background-geolocation": "^3.9.0",
+    "react-native-background-geolocation": "^3.9.1",
     "react-native-easy-grid": "^0.2.0",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-maps": "^0.26.1",
@@ -45,11 +45,13 @@
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
     "babel-jest": "^25.1.0",
+    "chalk": "^4.1.0",
     "eslint": "^6.5.1",
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
     "prettier": "^2.0.4",
     "react-test-renderer": "16.13.1",
+    "rimraf": "^3.0.2",
     "typescript": "^3.8.3"
   },
   "jest": {

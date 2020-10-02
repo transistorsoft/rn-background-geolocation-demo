@@ -815,6 +815,7 @@ export default class SettingsService {
       fastestLocationUpdateInterval: -1,
       stopTimeout: 1,
       motionTriggerDelay: 30000,
+      backgroundPermissionRationale: {},
       schedule: [
         //'2-6 09:00-17:00'
       ],

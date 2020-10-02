@@ -1,1 +1,5 @@
-{}
+{
+  "ignore_dirs": [
+    "./node_modules/react-native-background-geolocation-android/ios/RNBackgroundGeolocation"
+  ]
+}
