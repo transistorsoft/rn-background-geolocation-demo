@@ -1,1 +1,1 @@
-open -a Xcode ios/RNBackgroundGeolocationSample.xcodeproj
+open -a Xcode ios/RNBackgroundGeolocationSample.xcworkspace
