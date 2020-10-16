@@ -119,6 +119,12 @@ export default class HelloWorld extends Component<IProps, IState> {
         },
         expires: token.expires
       },
+      backgroundPermissionRationale: {
+        title: "Allow {applicationName} to access this device's location even when closed or not in use.",
+        message: "This app collects location data to enable recording your trips to work and calculate distance-travelled.",
+        positiveAction: 'Change to "{backgroundPermissionOptionLabel}"',
+        negativeAction: 'Cancel'
+      },
       autoSync: true,
       debug: true,
       logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE

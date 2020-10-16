@@ -267,6 +267,12 @@ export default class HomeView extends Component<IProps, IState> {
       desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_NAVIGATION,
       distanceFilter: 10,
       locationAuthorizationRequest: 'Always',
+      backgroundPermissionRationale: {
+        title: "Allow {applicationName} to access this device's location even when closed or not in use.",
+        message: "This app collects location data to enable recording your trips to work and calculate distance-travelled.",
+        positiveAction: 'Change to "{backgroundPermissionOptionLabel}"',
+        negativeAction: 'Cancel'
+      },
       stopTimeout: 5,
       debug: true,
       logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
