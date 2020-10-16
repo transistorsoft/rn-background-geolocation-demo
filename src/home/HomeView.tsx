@@ -42,7 +42,8 @@ type IState = {
   orgname: string,
   deviceManufacturer: string,
   deviceModel: string,
-  deviceIdentifier: string
+  deviceIdentifier: string,
+  platform: string
 }
 
 export default class HomeView extends Component<IProps, IState> {
@@ -56,8 +57,9 @@ export default class HomeView extends Component<IProps, IState> {
       deviceManufacturer: '',
       deviceIdentifier: '',
       orgname: '',
-      username: ''
-    }
+      username: '',
+      platform: ''
+    };
   }
 
   async componentDidMount() {
@@ -86,7 +88,8 @@ export default class HomeView extends Component<IProps, IState> {
       username: username,
       deviceModel: deviceInfo.model,
       deviceManufacturer: deviceInfo.manufacturer,
-      deviceIdentifier: deviceIdentifier
+      deviceIdentifier: deviceIdentifier,
+      platform: deviceInfo.platform.toLowerCase()
     });
 
     BackgroundGeolocation.setConfig({logLevel: 5});
@@ -100,6 +103,13 @@ export default class HomeView extends Component<IProps, IState> {
     if (!this.usernameIsValid(this.state.orgname) || !this.usernameIsValid(this.state.username)) {
       return this.register();
     }
+
+    // Google Play Store policy requires disclosing background permission usage to the user before requesting run-time location permission.
+    let willDiscloseBackgroundPermission = await this.willDiscloseBackgroundPermission(routeName);
+    if (willDiscloseBackgroundPermission) {
+      return;
+    }
+
     await AsyncStorage.setItem("@transistorsoft:initialRouteName", routeName);
     let action = StackActions.reset({
       index: 0,
@@ -139,6 +149,36 @@ export default class HomeView extends Component<IProps, IState> {
 
   usernameIsValid(value:string):boolean {
     return (value.length>0) && USERNAME_VALIDATOR.test(value);
+  }
+
+  /// [Android] Play Store compatibility requires disclosure of background permission before location runtime permission is requested.
+  /// It seems to be ok to show this alert just once for the lifetime of your app.
+  async willDiscloseBackgroundPermission(routeName:string) {
+    let hasDisclosedBackgroundPermission = await AsyncStorage.getItem('@transistorsoft:hasDisclosedBackgroundPermission');
+
+    if ((this.state.platform !== 'android') || (hasDisclosedBackgroundPermission != null)) {
+      return false;
+    }
+
+    let onSuccess = async () => {
+      // Flag as shown -- we'll never show this Alert ever again.
+      await AsyncStorage.setItem('@transistorsoft:hasDisclosedBackgroundPermission', 'true');
+      this.onClickNavigate(routeName);
+    }
+
+    // Show Play Store compatibility alert.
+    Alert.alert(
+      "Background Location Access",
+      "BG Geolocation collects location data to enable tracking your trips to work and calculate distance travelled even when the app is closed or not in use.\n\nThis data will be uploaded to tracker.transistorsoft.com where you may view and/or delete your location history.",
+      [
+        { text: "Close", onPress: onSuccess}
+      ],
+      {
+        cancelable: true,
+        onDismiss: onSuccess
+      }
+    );
+    return true;
   }
 
   render() {
