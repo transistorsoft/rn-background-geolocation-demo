@@ -9,6 +9,7 @@ import {
   StyleSheet,
   TouchableHighlight,
   View,
+  Alert,
   AppState
 } from 'react-native';
 
@@ -630,34 +631,6 @@ export default class HomeView extends Component<IProps, IState> {
   async onClickMainMenu(){
     let soundId = (this.state.isMainMenuOpen) ? 'CLOSE' : 'OPEN';
 
-    BackgroundGeolocation.requestPermission().then(async (status) => {
-      console.log('[requestPermission] success: ', status);
-      // Supply "Purpose" key from Info.plist as 1st argument.
-      BackgroundGeolocation.requestTemporaryFullAccuracy("DemoPurpose").then((accuracyAuthorization) => {
-        if (accuracyAuthorization == BackgroundGeolocation.ACCURACY_AUTHORIZATION_FULL) {
-          console.log('[requestTemporaryFullAccuracy] GRANTED: ', accuracyAuthorization);
-        } else {
-          console.log('[requestTemporaryFullAccuracy] DENIED: ', accuracyAuthorization);
-        }
-      }).catch((error) => {
-        console.warn("[requestTemporaryFullAccuracy] FAILED TO SHOW DIALOG: ", error);
-      });
-    }).catch((status) => {
-      console.log('[requestPermission] failure: ', status);
-    });
-
-    // Test #startBackgroundTask on menu-button clicks.
-    let taskId = await BackgroundGeolocation.startBackgroundTask();
-
-    console.log('[HomeView onClickMainMenu] startBackgroundTask: ', taskId);
-
-    setTimeout(() => {  // <-- simulate a long-running async task with setTimeout.  Don't actually use a setTimeout here!
-      console.log('[HomeView onClickMainMenu] setTimeout expired: ', taskId);
-      BackgroundGeolocation.stopBackgroundTask(taskId).then((tid) => {
-        console.log('[HomeView onClickMainMenu] stopBackgroundTask success: ', tid);
-      });
-    }, 1000);
-
     this.setState({
       isMainMenuOpen: !this.state.isMainMenuOpen
     });
@@ -691,6 +664,10 @@ export default class HomeView extends Component<IProps, IState> {
       case 'destroyLocations':
         this.settingsService.playSound('BUTTON_CLICK');
         this.destroyLocations();
+        break;
+      case 'requestPermission':
+      this.settingsService.playSound('BUTTON_CLICK');
+        this.requestPermission();
         break;
     }
   }
@@ -767,6 +744,26 @@ export default class HomeView extends Component<IProps, IState> {
         this.settingsService.toast('Destroy locations error: ' + error, 'LONG');
       });
     });
+  }
+
+  async requestPermission() {
+    let providerState = await BackgroundGeolocation.getProviderState();
+    Alert.alert("Request Location Permission", `Current authorization status: ${providerState.status}`, [
+      {text: 'When in Use', onPress: () => {this._doRequestPermission('WhenInUse')}},
+      {text: 'Always', onPress: () => {this._doRequestPermission('Always')}},
+    ], { cancelable: false });
+  }
+
+  async _doRequestPermission(request) {
+    await BackgroundGeolocation.setConfig({locationAuthorizationRequest: request});
+    let status = await BackgroundGeolocation.requestPermission();
+    console.log(`[requestPermission] status: ${status}`);
+
+    setTimeout(() => {
+      Alert.alert("Request Permission Result", `Authorization status: ${status}`, [
+        {text: 'Ok', onPress: () => {}},
+      ], { cancelable: false });
+    }, 10);
   }
 
   /**
@@ -920,6 +917,9 @@ export default class HomeView extends Component<IProps, IState> {
           </ActionButton.Item>
           <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('resetOdometer')}>
             {!this.state.isResettingOdometer ? (<Icon name="ios-speedometer" style={styles.actionButtonIcon} />) : (<Spinner color="#000" size="small" />)}
+          </ActionButton.Item>
+          <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('requestPermission')}>
+            <Icon name="lock-open" style={styles.actionButtonIcon} />
           </ActionButton.Item>
           <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => this.onSelectMainMenu('settings')}>
             <Icon name="ios-cog" style={styles.actionButtonIcon} />
