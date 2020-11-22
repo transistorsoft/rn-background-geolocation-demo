@@ -1,0 +1,211 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:flowtype/recommended"
+  ],
+  "plugins": [
+    "babel",
+    "react",
+    "promise",
+    "immutable",
+    "flowtype"
+  ],
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "globals": {
+    "__line": false,
+    "__DEV__": false,
+    "__TEST__": false,
+    "__PROD__": false,
+    "__COVERAGE__": false,
+    "$PropertyType": false,
+    "$Shape": false,
+    "google": false,
+    "history": false
+  },
+  "rules": {
+    "import/default": 0,
+    "import/named": 0,
+    "import/namespace": 0,
+    "import/no-named-as-default-member": 0,
+    "import/no-named-as-default": 0,
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          [
+            "builtin",
+            "external"
+          ],
+          [
+            "internal",
+            "index"
+          ],
+          [
+            "parent"
+          ],
+          [
+            "sibling"
+          ]
+        ],
+        "newlines-between": "always-and-inside-groups"
+      }
+    ],
+    "no-plusplus": 0,
+    "react/jsx-props-no-spreading": 0,
+    "no-return-assign": 0,
+    "arrow-parens": ["error", "as-needed"],
+    "space-before-function-paren": 0,
+    "lines-between-class-members": 0,
+    "no-nested-ternary": 0,
+    "operator-linebreak": [
+      "error",
+      "after",
+      {
+        "overrides": {
+          "?": "before",
+          ":": "before"
+        }
+      }
+    ],
+    "no-use-before-deinfe": 0,
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
+    "key-spacing": 0,
+    "semi": [
+      2,
+      "always"
+    ],
+    "jsx-quotes": [
+      2,
+      "prefer-single"
+    ],
+    "max-len": [
+      2,
+      120,
+      2
+    ],
+    "object-curly-spacing": [
+      2,
+      "always"
+    ],
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectExpression": {
+          "multiline": true,
+          "minProperties": 3
+        },
+        "ObjectPattern": {
+          "multiline": true,
+          "minProperties": 3
+        },
+        "ImportDeclaration": {
+          "multiline": true,
+          "minProperties": 3
+        },
+        "ExportDeclaration": {
+          "multiline": true,
+          "minProperties": 3
+        }
+      }
+    ],
+    "no-unused-expressions": 0,
+    "no-bitwise": 0,
+    "react/require-default-props": 0,
+    "react/jsx-filename-extension": 0,
+    "react/destructuring-assignment": 1,
+    "react/no-unused-prop-types": 0, //We use flow
+    "react/prop-types": 0, //We use flow
+    /* "immutable/no-let": 2, */
+    /* "immutable/no-mutation": 2, */
+    /* "immutable/no-this": 2, */
+    "flowtype/boolean-style": [
+      2,
+      "boolean"
+    ],
+    "flowtype/define-flow-type": 1,
+    "flowtype/delimiter-dangle": [
+      2,
+      "always-multiline"
+    ],
+    "flowtype/generic-spacing": [
+      2,
+      "never"
+    ],
+    "flowtype/no-primitive-constructor-types": 2,
+    "flowtype/no-types-missing-file-annotation": 2,
+    "flowtype/no-weak-types": 0,
+    "flowtype/object-type-delimiter": [
+      2,
+      "comma"
+    ],
+    "flowtype/require-parameter-type": 2,
+    "flowtype/require-return-type": 0,
+    "flowtype/require-valid-file-annotation": 2,
+    "flowtype/semi": [
+      2,
+      "always"
+    ],
+    "flowtype/space-after-type-colon": [
+      2,
+      "always"
+    ],
+    "flowtype/space-before-generic-bracket": [
+      2,
+      "never"
+    ],
+    "flowtype/space-before-type-colon": [
+      2,
+      "never"
+    ],
+    "flowtype/type-id-match": [
+      0,
+      "^([A-Z][a-z0-9]+)+Type$"
+    ],
+    "flowtype/union-intersection-spacing": [
+      2,
+      "always"
+    ],
+    "flowtype/use-flow-type": 1,
+    "flowtype/valid-syntax": 1
+  },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
+    },
+    "react": {
+      "version": "detect"
+    },
+    "import/parser": "babel-eslint",
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": [
+          "src/server",
+          "src/client",
+          "./",
+          "node_modules"
+        ],
+        "paths": [
+          "src/server",
+          "src/client",
+          "./",
+          "node_modules"
+        ]
+      },
+    },
+    "import/extensions": [
+      ".js"
+    ],
+    "import/ignore": [
+      "\\.(scss|less|css)$"
+    ]
+  }
+}

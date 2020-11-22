@@ -1,16 +1,16 @@
 import React from 'react'
-import {Component} from 'react';
+import { Component } from 'react';
 
 import {
   StyleSheet,
   View,
-  WebView
 } from 'react-native';
+
+import { WebView } from 'react-native-webview';
 
 import {
   Container,
   Button, Icon,
-  Text,
   Header, Title,
   Left, Body, Right
 } from 'native-base';
@@ -36,7 +36,7 @@ export default class AboutView extends Component<any, any> {
 
         <Container>
           <WebView
-            source={{uri: 'http://www.transistorsoft.com/shop/products/react-native-background-geolocation'}}
+            source={{ uri: 'http://www.transistorsoft.com/shop/products/react-native-background-geolocation' }}
           />
         </Container>
       </Container>

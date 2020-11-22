@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* BGGeolocationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BGGeolocationTests.m */; };
 		05F0DC7D215A492BA2BF38DB /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92FE4BA708F847AC81ACB7D3 /* EvilIcons.ttf */; };
@@ -37,6 +36,7 @@
 		EF158EC2AE9B44499DED0589 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A6189509046F429BADD4203F /* Roboto_medium.ttf */; };
 		EF2EF421FB4C4364A32726BD /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E6DB015E033478CAAE0E1AC /* Roboto.ttf */; };
 		FC83681864C942E3839E94D1 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C844989DE144F1D92BB9C0B /* Ionicons.ttf */; };
+		DACEE2C034F5410CAE069B77 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 719E418C9642456D8B29873A /* Fontisto.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +96,7 @@
 		C739A68D4A3E4710998F883A /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		DB7560DE2A394A0697152D1F /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		DCADD7374EE14F0494D81469 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		719E418C9642456D8B29873A /* Fontisto.ttf */ = {isa = PBXFileReference; name = "Fontisto.ttf"; path = "../node_modules/native-base/Fonts/Fontisto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +208,7 @@
 				A8ECDABF5C564DD7B9C2AC59 /* rubicon-icon-font.ttf */,
 				A982D491358F48F6A682937C /* SimpleLineIcons.ttf */,
 				2F56E893A23E4B7C9EE257C5 /* Zocial.ttf */,
+				719E418C9642456D8B29873A /* Fontisto.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -411,6 +413,7 @@
 				EF2EF421FB4C4364A32726BD /* Roboto.ttf in Resources */,
 				08A37DCBF1874DDB821E96E2 /* SimpleLineIcons.ttf in Resources */,
 				CEB9E88018834E95A877D93B /* Zocial.ttf in Resources */,
+				DACEE2C034F5410CAE069B77 /* Fontisto.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

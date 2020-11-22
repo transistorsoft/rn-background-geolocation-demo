@@ -1,5 +1,4 @@
-import React from 'react'
-import {Component} from 'react';
+import React, { Component } from 'react'
 
 import {
   View,
@@ -19,6 +18,8 @@ import {
   Spinner
 } from 'native-base';
 
+import { useForm, Controller } from 'react-hook-form';
+
 const Item = Picker.Item;
 
 ////
@@ -36,30 +37,24 @@ import BackgroundGeolocation, {
 } from "../react-native-background-geolocation";
 
 import SettingsService from './lib/SettingsService';
-import {SOUNDS, COLORS} from './lib/config';
+import { SOUNDS, COLORS } from './lib/config';
+import { LogLevel, NotificationPriority } from 'react-native-background-geolocation';
 
 export default class SettingsView extends Component<any, any> {
-  settingsService: SettingsService;
-  changeBuffer:any;
+  settingsService = SettingsService.getInstance();
+  changeBuffer:any = 0
 
-  constructor(props:any) {
-    super(props);
-
-    this.settingsService = SettingsService.getInstance();
-    this.changeBuffer = 0;
-
-    // Default state
-    this.state = {
-      isDestroyingLog: false,
-      isLoadingGeofences: false,
-      geofence: {
-        radius: '200',
-        notifyOnEntry: true,
-        notifyOnExit: false,
-        notifyOnDwell: false,
-        loiteringDelay: '0'
-      }
-    };
+  state = {
+    trackingMode: '',
+    isDestroyingLog: false,
+    isLoadingGeofences: false,
+    geofence: {
+      radius: '200',
+      notifyOnEntry: true,
+      notifyOnExit: false,
+      notifyOnDwell: false,
+      loiteringDelay: '0'
+    }
   }
 
   componentDidMount() {
@@ -73,7 +68,7 @@ export default class SettingsView extends Component<any, any> {
     });
 
     // Load app settings
-    this.settingsService.getApplicationState((state) => {
+    this.settingsService.getApplicationState((state: any) => {
       this.setState(state);
     });
   }
@@ -95,7 +90,7 @@ export default class SettingsView extends Component<any, any> {
 
   onChangeTrackingMode(value:any) {
     if (this.state.trackingMode === value) { return; }
-    this.setState({trackingMode: value});
+    this.setState({ trackingMode: value });
     if (value === 'location') {
       BackgroundGeolocation.start((state) => {
         console.log('- Start location tracking mode');
@@ -109,14 +104,14 @@ export default class SettingsView extends Component<any, any> {
 
   onChangeEmail(value:any) {
     this.settingsService.onChange('email', value);
-    this.setState({email: value});
+    this.setState({ email: value });
   }
 
   onClickDestroyLog() {
     this.settingsService.confirm('Confirm Destroy', 'Destroy Logs?', () => {
-      this.setState({isDestroyingLog: true});
+      this.setState({ isDestroyingLog: true });
       BackgroundGeolocation.destroyLog(() => {
-        this.setState({isDestroyingLog: false});
+        this.setState({ isDestroyingLog: false });
         this.settingsService.toast('Destroyed logs');
       });
     });
@@ -225,9 +220,7 @@ export default class SettingsView extends Component<any, any> {
 
   onChangeGeofence(setting:any, value:any) {
     this.settingsService.onChange(setting, value);
-    let state:any = {};
-    state[setting.name] = value;
-    this.setState(state);
+    this.setState({ [setting.name]: value } );
   }
 
   render() {
@@ -406,100 +399,75 @@ export default class SettingsView extends Component<any, any> {
     );
   }
 
-  decodeTrackingMode(trackingMode) {
+  decodeTrackingMode(trackingMode: string | number) {
     return (trackingMode === 1 || trackingMode === 'location') ? 'location' : 'geofence';
   }
 
-  decodeLogLevel(logLevel) {
-    let value = 'VERBOSE';
+  decodeLogLevel(logLevel?: LogLevel) {
     switch(logLevel) {
       case BackgroundGeolocation.LOG_LEVEL_OFF:
-        value = 'OFF';
-        break;
+        return 'OFF';
       case BackgroundGeolocation.LOG_LEVEL_ERROR:
-        value = 'ERROR';
-        break;
+        return 'ERROR';
       case BackgroundGeolocation.LOG_LEVEL_WARNING:
-        value = 'WARN';
-        break;
+        return  'WARN';
       case BackgroundGeolocation.LOG_LEVEL_INFO:
-        value = 'INFO';
-        break;
+        return 'INFO';
       case BackgroundGeolocation.LOG_LEVEL_DEBUG:
-        value = 'DEBUG';
-        break;
+        return 'DEBUG';
       case BackgroundGeolocation.LOG_LEVEL_VERBOSE:
-        value = 'VERBOSE';
-        break;
+        return 'VERBOSE';
     }
-    return value;
+    return 'VERBOSE';
   }
 
-  encodeLogLevel(logLevel) {
-    let value = 0;
+  encodeLogLevel(logLevel: string) {
     switch(logLevel) {
       case 'OFF':
-        value = BackgroundGeolocation.LOG_LEVEL_OFF;
-        break;
+        return BackgroundGeolocation.LOG_LEVEL_OFF;
       case 'ERROR':
-        value = BackgroundGeolocation.LOG_LEVEL_ERROR;
-        break;
+        return BackgroundGeolocation.LOG_LEVEL_ERROR;
       case 'WARN':
-        value = BackgroundGeolocation.LOG_LEVEL_WARNING;
-        break;
+        return BackgroundGeolocation.LOG_LEVEL_WARNING;
       case 'INFO':
-        value = BackgroundGeolocation.LOG_LEVEL_INFO;
-        break;
+        return BackgroundGeolocation.LOG_LEVEL_INFO;
       case 'DEBUG':
-        value = BackgroundGeolocation.LOG_LEVEL_DEBUG;
-        break;
+        return BackgroundGeolocation.LOG_LEVEL_DEBUG;
       case 'VERBOSE':
-        value = BackgroundGeolocation.LOG_LEVEL_VERBOSE;
-        break;
+        return BackgroundGeolocation.LOG_LEVEL_VERBOSE;
     }
-    return value;
+    return 0;
   }
 
-  decodeNotificationPriority(value) {
+  decodeNotificationPriority(value?: NotificationPriority) {
     switch(value) {
       case BackgroundGeolocation.NOTIFICATION_PRIORITY_DEFAULT:
-        value = 'DEFAULT';
-        break;
+        return 'DEFAULT';
       case BackgroundGeolocation.NOTIFICATION_PRIORITY_HIGH:
-        value = 'HIGH';
-        break;
+        return 'HIGH';
       case BackgroundGeolocation.NOTIFICATION_PRIORITY_LOW:
-        value = 'LOW';
-        break;
+        return 'LOW';
       case BackgroundGeolocation.NOTIFICATION_PRIORITY_MAX:
-        value = 'MAX';
-        break;
+        return 'MAX';
       case BackgroundGeolocation.NOTIFICATION_PRIORITY_MIN:
-        value = 'MIN';
-        break;
+        return 'MIN';
       default:
-        value = BackgroundGeolocation.NOTIFICATION_PRIORITY_DEFAULT;
+        return BackgroundGeolocation.NOTIFICATION_PRIORITY_DEFAULT;
     }
-    return value;
   }
 
-  encodeNotficationPriority(value) {
+  encodeNotficationPriority(value: string) {
     switch(value) {
       case 'DEFAULT':
-        value = BackgroundGeolocation.NOTIFICATION_PRIORITY_DEFAULT;
-        break;
+        return BackgroundGeolocation.NOTIFICATION_PRIORITY_DEFAULT;
       case 'HIGH':
-        value = BackgroundGeolocation.NOTIFICATION_PRIORITY_HIGH;
-        break;
+        return BackgroundGeolocation.NOTIFICATION_PRIORITY_HIGH;
       case 'LOW':
-        value = BackgroundGeolocation.NOTIFICATION_PRIORITY_LOW;
-        break;
+        return BackgroundGeolocation.NOTIFICATION_PRIORITY_LOW;
       case 'MAX':
-        value = BackgroundGeolocation.NOTIFICATION_PRIORITY_MAX;
-        break;
+        return BackgroundGeolocation.NOTIFICATION_PRIORITY_MAX;
       case 'MIN':
-        value = BackgroundGeolocation.NOTIFICATION_PRIORITY_MIN;
-        break;
+        return BackgroundGeolocation.NOTIFICATION_PRIORITY_MIN;
     }
     return value;
   }

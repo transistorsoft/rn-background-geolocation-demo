@@ -31,16 +31,13 @@ import {COLORS} from './lib/config';
 import SettingsService from './lib/SettingsService';
 
 export default class GeofenceView extends Component<any, any> {
-  constructor(props:any) {
-    super(props);
-    this.state = {
-      identifier: undefined,
-      radius: '200',
-      notifyOnEntry: true,
-      notifyOnExit: true,
-      notifyOnDwell: false,
-      loiteringDelay: '0'
-    }
+  state = {
+    identifier: '',
+    radius: '200',
+    notifyOnEntry: true,
+    notifyOnExit: true,
+    notifyOnDwell: false,
+    loiteringDelay: '0'
   }
 
   onClickCancel() {
