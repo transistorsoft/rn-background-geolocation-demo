@@ -1,8 +1,6 @@
-import React from 'react'
-import {Component} from 'react';
+import React, { Component } from 'react';
 
 import {
-  View,
   StyleSheet,
   Platform,
 } from 'react-native';
@@ -33,10 +31,10 @@ const Item = Picker.Item;
 import BackgroundGeolocation, {
   State,
   DeviceSettingsRequest
-} from "../react-native-background-geolocation";
+} from '../react-native-background-geolocation';
 
 import SettingsService from './lib/SettingsService';
-import {SOUNDS, COLORS} from './lib/config';
+import { COLORS } from './lib/config';
 
 export default class SettingsView extends Component<any, any> {
   settingsService: SettingsService;
@@ -406,100 +404,75 @@ export default class SettingsView extends Component<any, any> {
     );
   }
 
-  decodeTrackingMode(trackingMode) {
+  decodeTrackingMode(trackingMode: string | Number) {
     return (trackingMode === 1 || trackingMode === 'location') ? 'location' : 'geofence';
   }
 
-  decodeLogLevel(logLevel) {
-    let value = 'VERBOSE';
+  decodeLogLevel(logLevel?: BackgroundGeolocation) {
     switch(logLevel) {
       case BackgroundGeolocation.LOG_LEVEL_OFF:
-        value = 'OFF';
-        break;
+        return 'OFF';
       case BackgroundGeolocation.LOG_LEVEL_ERROR:
-        value = 'ERROR';
-        break;
+        return 'ERROR';
       case BackgroundGeolocation.LOG_LEVEL_WARNING:
-        value = 'WARN';
-        break;
+        return 'WARN';
       case BackgroundGeolocation.LOG_LEVEL_INFO:
-        value = 'INFO';
-        break;
+        return 'INFO';
       case BackgroundGeolocation.LOG_LEVEL_DEBUG:
-        value = 'DEBUG';
-        break;
+        return 'DEBUG';
       case BackgroundGeolocation.LOG_LEVEL_VERBOSE:
-        value = 'VERBOSE';
-        break;
+        return 'VERBOSE';
     }
-    return value;
+    return 'VERBOSE';
   }
 
-  encodeLogLevel(logLevel) {
-    let value = 0;
+  encodeLogLevel(logLevel: string) {
     switch(logLevel) {
       case 'OFF':
-        value = BackgroundGeolocation.LOG_LEVEL_OFF;
-        break;
+        return BackgroundGeolocation.LOG_LEVEL_OFF;
       case 'ERROR':
-        value = BackgroundGeolocation.LOG_LEVEL_ERROR;
-        break;
+        return BackgroundGeolocation.LOG_LEVEL_ERROR;
       case 'WARN':
-        value = BackgroundGeolocation.LOG_LEVEL_WARNING;
-        break;
+        return BackgroundGeolocation.LOG_LEVEL_WARNING;
       case 'INFO':
-        value = BackgroundGeolocation.LOG_LEVEL_INFO;
-        break;
+        return BackgroundGeolocation.LOG_LEVEL_INFO;
       case 'DEBUG':
-        value = BackgroundGeolocation.LOG_LEVEL_DEBUG;
-        break;
+        return BackgroundGeolocation.LOG_LEVEL_DEBUG;
       case 'VERBOSE':
-        value = BackgroundGeolocation.LOG_LEVEL_VERBOSE;
-        break;
+        return BackgroundGeolocation.LOG_LEVEL_VERBOSE;
     }
-    return value;
+    return 0;
   }
 
-  decodeNotificationPriority(value) {
+  decodeNotificationPriority(value?: BackgroundGeolocation) {
     switch(value) {
       case BackgroundGeolocation.NOTIFICATION_PRIORITY_DEFAULT:
-        value = 'DEFAULT';
-        break;
+        return 'DEFAULT';
       case BackgroundGeolocation.NOTIFICATION_PRIORITY_HIGH:
-        value = 'HIGH';
-        break;
+        return 'HIGH';
       case BackgroundGeolocation.NOTIFICATION_PRIORITY_LOW:
-        value = 'LOW';
-        break;
+        return 'LOW';
       case BackgroundGeolocation.NOTIFICATION_PRIORITY_MAX:
-        value = 'MAX';
-        break;
+        return 'MAX';
       case BackgroundGeolocation.NOTIFICATION_PRIORITY_MIN:
-        value = 'MIN';
-        break;
+        return 'MIN';
       default:
-        value = BackgroundGeolocation.NOTIFICATION_PRIORITY_DEFAULT;
+        return BackgroundGeolocation.NOTIFICATION_PRIORITY_DEFAULT;
     }
-    return value;
   }
 
-  encodeNotficationPriority(value) {
+  encodeNotficationPriority(value: string) {
     switch(value) {
       case 'DEFAULT':
-        value = BackgroundGeolocation.NOTIFICATION_PRIORITY_DEFAULT;
-        break;
+        return BackgroundGeolocation.NOTIFICATION_PRIORITY_DEFAULT;
       case 'HIGH':
-        value = BackgroundGeolocation.NOTIFICATION_PRIORITY_HIGH;
-        break;
+        return BackgroundGeolocation.NOTIFICATION_PRIORITY_HIGH;
       case 'LOW':
-        value = BackgroundGeolocation.NOTIFICATION_PRIORITY_LOW;
-        break;
+        return BackgroundGeolocation.NOTIFICATION_PRIORITY_LOW;
       case 'MAX':
-        value = BackgroundGeolocation.NOTIFICATION_PRIORITY_MAX;
-        break;
+        return BackgroundGeolocation.NOTIFICATION_PRIORITY_MAX;
       case 'MIN':
-        value = BackgroundGeolocation.NOTIFICATION_PRIORITY_MIN;
-        break;
+        return BackgroundGeolocation.NOTIFICATION_PRIORITY_MIN;
     }
     return value;
   }
