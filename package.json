@@ -1,6 +1,6 @@
 {
   "name": "BGGeolocation",
-  "version": "3.9.2",
+  "version": "4.0.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -17,10 +17,10 @@
     "lodash.isequal": "^4.5.0",
     "moment": "^2.24.0",
     "react": "16.13.1",
-    "react-native": "0.63.2",
+    "react-native": "0.63.4",
     "react-native-action-button": "^2.8.5",
-    "react-native-background-fetch": "^3.0.6",
-    "react-native-background-geolocation": "^3.9.3",
+    "react-native-background-fetch": "^4.0.1",
+    "react-native-background-geolocation": "^4.0.0",
     "react-native-easy-grid": "^0.2.0",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-maps": "^0.26.1",

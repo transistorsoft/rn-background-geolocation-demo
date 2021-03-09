@@ -19,7 +19,7 @@ function registerCommand(name, description, handler) {
 
 /// ACTION: link
 ///
-registerCommand(COMMAND_LINK, 'Symlink TSLocationManager.framework, tslocationmanager.aar', function() {
+registerCommand(COMMAND_LINK, 'Symlink TSLocationManager.xcframework, tslocationmanager.aar', function() {
   link();
 });
 
@@ -29,7 +29,7 @@ registerCommand(COMMAND_REINSTALL, 'Re-install the currently installed backgroun
   reinstall();
 });
 
-/// Symlink the [iOS] TSLocationManager.framework [Android] tslocationmanager.aar
+/// Symlink the [iOS] TSLocationManager.xcframework [Android] tslocationmanager.aar
 ///
 function link() {
   const fs     = require('fs');
@@ -44,7 +44,7 @@ function link() {
   const PRIVATE_MODULE_PATH = PUBLIC_MODULE_PATH + '-android';
 
   const ANDROID_LIBS_DIR    = "android/libs";
-  const IOS_LIBS_DIR        = "ios/RNBackgroundGeolocation/TSLocationManager.framework";
+  const IOS_LIBS_DIR        = "ios/RNBackgroundGeolocation/TSLocationManager.xcframework";
 
   var modulePath = null;
 
@@ -81,7 +81,7 @@ function link() {
   var dest = path.join(modulePath, ANDROID_LIBS_DIR);
   fs.symlinkSync(src, dest);
 
-  // Symlink TSLocationManager.framework -> src project.
+  // Symlink TSLocationManager.xcframework -> src project.
   src = path.join(SRC_MODULE, IOS_LIBS_DIR);
   dest = path.join(modulePath, IOS_LIBS_DIR);
   fs.symlinkSync(src, dest);
