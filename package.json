@@ -30,7 +30,7 @@
     "react-native-root-siblings": "git+https://github.com/neilzhengzx/react-native-root-siblings.git",
     "react-native-root-toast": "^3.0.2",
     "react-native-screens": "^2.4.0",
-    "react-native-webview": "^7.2.5",
+    "react-native-webview": "^11.0.0",
     "react-navigation": "^3.11.1",
     "react-navigation-material-bottom-tabs": "^2.2.10",
     "redux": "^4.0.0"
