@@ -104,7 +104,7 @@ export default class SimpleMap extends Component<IProps, IState> {
     let token:TransistorAuthorizationToken = await BackgroundGeolocation.findOrCreateTransistorAuthorizationToken(orgname, username, ENV.TRACKER_HOST);
 
     // Step 1:  Listen to events:
-    BackgroundGeolocation.onLocation(this.onLocation.bind(this));
+    BackgroundGeolocation.onLocation(this.onLocation.bind(this), this.onLocationError.bind(this));
     BackgroundGeolocation.onMotionChange(this.onMotionChange.bind(this));
     BackgroundGeolocation.onActivityChange(this.onActivityChange.bind(this));
     BackgroundGeolocation.onProviderChange(this.onProviderChange.bind(this));
@@ -158,6 +158,12 @@ export default class SimpleMap extends Component<IProps, IState> {
       });
     }
     this.setCenter(location);
+  }
+  /**
+  * @event location
+  */
+  onLocationError(event:any) {
+    console.warn('[event] location ERROR: ', event);
   }
   /**
   * @event motionchange
