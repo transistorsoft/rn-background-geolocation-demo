@@ -2,9 +2,9 @@ PODS:
   - boost-for-react-native (1.63.0)
   - CocoaAsyncSocket (7.6.4)
   - CocoaLibEvent (1.0.0)
-  - CocoaLumberjack (3.6.2):
-    - CocoaLumberjack/Core (= 3.6.2)
-  - CocoaLumberjack/Core (3.6.2)
+  - CocoaLumberjack (3.7.0):
+    - CocoaLumberjack/Core (= 3.7.0)
+  - CocoaLumberjack/Core (3.7.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.63.4)
   - FBReactNativeSpec (0.63.4):
@@ -305,8 +305,8 @@ PODS:
     - React-jsi (= 0.63.4)
   - RNBackgroundFetch (4.0.1):
     - React-Core
-  - RNBackgroundGeolocation (4.0.0):
-    - CocoaLumberjack (~> 3.6.1)
+  - RNBackgroundGeolocation (4.0.2):
+    - CocoaLumberjack (~> 3.7.0)
     - React-Core
   - RNCAsyncStorage (1.9.0):
     - React
@@ -467,7 +467,7 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   CocoaLibEvent: 2fab71b8bd46dd33ddb959f7928ec5909f838e3f
-  CocoaLumberjack: bd155f2dd06c0e0b03f876f7a3ee55693122ec94
+  CocoaLumberjack: e8955b9d337ac307103b0a34fd141c32f27e53c5
   DoubleConversion: cde416483dac037923206447da6e1454df403714
   FBLazyVector: 3bb422f41b18121b71783a905c10e58606f7dc3e
   FBReactNativeSpec: f2c97f2529dd79c083355182cc158c9f98f4bd6e
@@ -504,7 +504,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   RNBackgroundFetch: 5d7af5d9fa5f0a56a301d3124e11b25edb1995c5
-  RNBackgroundGeolocation: 2461cd39cd688148131a66d79d7c7cd921ee3a4f
+  RNBackgroundGeolocation: befcf346289b006c0c2009c4354100ab52dd4535
   RNCAsyncStorage: 453cd7c335ec9ba3b877e27d02238956b76f3268
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
   RNReanimated: 4e102df74a9674fa943e05f97f3362b6e44d0b48
