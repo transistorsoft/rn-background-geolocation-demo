@@ -5,16 +5,16 @@ import React from 'react';
 import {
   Alert,
   StyleSheet,
+  Platform
 } from 'react-native';
 
 import {
   Icon,
   Button,
+  SpeedDial
 } from 'react-native-elements'
 
 import { NavigationContext } from '@react-navigation/native';
-
-import ActionButton from 'react-native-action-button';
 
 import BackgroundGeolocation from "../react-native-background-geolocation";
 
@@ -22,7 +22,7 @@ import ENV from "../ENV";
 import {COLORS, SOUNDS} from './lib/config';
 import SettingsService from './lib/SettingsService';
 
-const ACTION_BUTTON_OFFSET_Y = 70;
+const ACTION_BUTTON_OFFSET_Y = (Platform.OS === 'ios') ? 90 : 60;
 
 const FABMenu = (props:any) => {
 
@@ -37,11 +37,9 @@ const FABMenu = (props:any) => {
   const settingsService = SettingsService.getInstance();
 
   /// FAB Menu handler.
-  const onClickMainMenu = () => {
-    const value = !isOpen;
-    setIsOpen(value);
-
-    settingsService.playSound((value) ? 'OPEN' : 'CLOSE');
+  const onClickMainMenu = (open:boolean) => {
+    setIsOpen(open);
+    settingsService.playSound((open) ? 'OPEN' : 'CLOSE');
   }
 
   /// FABItem handler.
@@ -168,48 +166,65 @@ const FABMenu = (props:any) => {
     }, 10);
   }
 
-  return (
-    <ActionButton
-      position="right"
-      hideShadow={false}
-      autoInactive={false}
-      active={isOpen}
-      backgroundTappable={true}
-      onPress={onClickMainMenu}
-      verticalOrientation="up"
-      buttonColor="rgba(254,221,30,1)"
-      buttonTextStyle={styles.actionButton}
-      spacing={15}
-      offsetX={10}
-      offsetY={ACTION_BUTTON_OFFSET_Y}>
 
-      <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => onClickAction('destroyLocations')}>
-        <Icon name="trash-sharp" type='ionicon' style={styles.itemIcon} />
-      </ActionButton.Item>
-      <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => onClickAction('sync')}>
-        <Icon name="cloud-upload-sharp" type='ionicon' style={styles.itemIcon} />
-      </ActionButton.Item>
-      <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => onClickAction('emailLog')}>
-        {!isEmailingLog ? (<Icon name="mail-sharp" type='ionicon' style={styles.actionButtonIcon} />) : (<Button type="clear" loading="true" />)}
-      </ActionButton.Item>
-      <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => onClickAction('resetOdometer')}>
-        {!isResettingOdometer ? (<Icon name="speedometer-sharp" type='ionicon' style={styles.itemIcon} />) : (<Button type="clear" loading="true" />)}
-      </ActionButton.Item>
-      <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => onClickAction('requestPermission')}>
-        <Icon name="lock-open-sharp" type='ionicon' style={styles.itemIcon} />
-      </ActionButton.Item>
-      <ActionButton.Item size={40} buttonColor={COLORS.gold} onPress={() => onClickAction('settings')}>
-        <Icon name="cog-sharp" type='ionicon' style={styles.itemIcon} />
-      </ActionButton.Item>
-    </ActionButton>
+  return (
+    <SpeedDial
+      isOpen={isOpen}
+      color={COLORS.gold}
+      style={styles.speedDial}
+      icon={<Icon name="add-sharp" color={COLORS.black} type="ionicon" />}
+      openIcon={<Icon name="close-sharp" color={COLORS.black} type="ionicon" />}
+      onOpen={() => onClickMainMenu(true)}
+      onClose={() => onClickMainMenu(false)}
+      transitionDuration={0}
+      overlayColor="transparent"
+    >
+      <SpeedDial.Action
+        title="Destroy locations"
+        onPress={() => onClickAction('destroyLocations')}
+        icon={<Icon name="trash-sharp" type='ionicon' style={styles.itemIcon} />}
+        color={COLORS.gold}
+
+      />
+      <SpeedDial.Action
+        icon={<Icon name="cloud-upload-sharp" type='ionicon' style={styles.itemIcon} />}
+        title="Sync"
+        onPress={() => onClickAction('sync')}
+        color={COLORS.gold}
+      />
+      <SpeedDial.Action
+        title="Email logs"
+        onPress={() => onClickAction('emailLog')}
+        icon={<Icon name="mail-sharp" type='ionicon' style={styles.itemIcon} />}
+        color={COLORS.gold}
+      />
+      <SpeedDial.Action
+        icon={<Icon name="speedometer-sharp" type='ionicon' style={styles.itemIcon} />}
+        onPress={() => onClickAction('resetOdometer')}
+        title="Reset odometer"
+        color={COLORS.gold}
+      />
+      <SpeedDial.Action
+        title="Request permission"
+        onPress={() => onClickAction('requestPermission')}
+        icon={<Icon name="lock-open-sharp" type='ionicon' style={styles.itemIcon} />}
+        color={COLORS.gold}
+      />
+      <SpeedDial.Action
+        title="Config"
+        onPress={() => onClickAction('settings')}
+        icon={<Icon name="cog-sharp" type='ionicon' style={styles.itemIcon} />}
+        color={COLORS.gold}
+      />
+    </SpeedDial>
   )
 }
 
 export default FABMenu;
 
 var styles = StyleSheet.create({
-  actionButton: {
-    color: COLORS.black
+  speedDial: {
+    bottom: ACTION_BUTTON_OFFSET_Y
   },
   itemIcon: {
     fontSize: 24
