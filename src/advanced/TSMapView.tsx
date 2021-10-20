@@ -55,26 +55,26 @@ const GEOFENCE_FILL_COLOR_ACTIVATED = "rgba(127,127,127, 0.2)";
 const POLYLINE_STROKE_COLOR = "rgba(32,64,255,0.6)";
 
 const TSMapView = (props) => {
-	const navigation = props.navigation;
+  const navigation = props.navigation;
 
-	/// MapView State.
-	const [markers, setMarkers] = React.useState<any[]>([]);
-	const [showsUserLocation, setShowsUserLocation] = React.useState(false);
-	const [tracksViewChanges, setTracksViewChanges] = React.useState(false);
-	const [followsUserLocation, setFollowUserLocation] = React.useState(false);
-	const [mapScrollEnabled, setMapScrollEnabled] = React.useState(false);
-	const [stationaryLocation, setStationaryLocation] = React.useState(UNDEFINED_LOCATION);
-	const [mapCenter, setMapCenter] = React.useState({
-		latitude: 45.518853,
-		longitude: -73.60055,
-		latitudeDelta: LATITUDE_DELTA,
-		longitudeDelta: LONGITUDE_DELTA
-	});
-	const [stationaryRadius, setStationaryRadius] = React.useState(200);
-	const [geofencesHit, setGeofencesHit] = React.useState<any[]>([]);
-	const [geofencesHitEvents, setGeofenceHitEvents] = React.useState<any[]>([]);
-	const [coordinates, setCoordinates] = React.useState<any[]>([]);
-	const [stopZones, setStopZones] = React.useState<any[]>([]);
+  /// MapView State.
+  const [markers, setMarkers] = React.useState<any[]>([]);
+  const [showsUserLocation, setShowsUserLocation] = React.useState(false);
+  const [tracksViewChanges, setTracksViewChanges] = React.useState(false);
+  const [followsUserLocation, setFollowUserLocation] = React.useState(false);
+  const [mapScrollEnabled, setMapScrollEnabled] = React.useState(false);
+  const [stationaryLocation, setStationaryLocation] = React.useState(UNDEFINED_LOCATION);
+  const [mapCenter, setMapCenter] = React.useState({
+  	latitude: 45.518853,
+  	longitude: -73.60055,
+  	latitudeDelta: LATITUDE_DELTA,
+  	longitudeDelta: LONGITUDE_DELTA
+  });
+  const [stationaryRadius, setStationaryRadius] = React.useState(200);
+  const [geofencesHit, setGeofencesHit] = React.useState<any[]>([]);
+  const [geofencesHitEvents, setGeofenceHitEvents] = React.useState<any[]>([]);
+  const [coordinates, setCoordinates] = React.useState<any[]>([]);
+  const [stopZones, setStopZones] = React.useState<any[]>([]);
 
   /// BackgroundGeolocation Events.
   const [motionChangeEvent, setMotionChangeEvent] = React.useState<MotionChangeEvent>(null);
