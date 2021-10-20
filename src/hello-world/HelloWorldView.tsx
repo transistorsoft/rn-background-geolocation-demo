@@ -33,7 +33,7 @@ const HelloWorldView = ({route, navigation}) => {
 
     registerTransistorAuthorizationListener(navigation);
     return () => {
-      //BackgroundGeolocation.removeListeners()
+
     }
   }, []);
 
