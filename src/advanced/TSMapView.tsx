@@ -36,9 +36,9 @@ import {
 
 /// A default empty location object for the MapView.
 const UNDEFINED_LOCATION = {
-	timestamp: '',
-	latitude:0,
-	longitude:0
+  timestamp: '',
+  latitude:0,
+  longitude:0
 }
 
 /// Zoom values for the MapView
@@ -65,10 +65,10 @@ const TSMapView = (props) => {
   const [mapScrollEnabled, setMapScrollEnabled] = React.useState(false);
   const [stationaryLocation, setStationaryLocation] = React.useState(UNDEFINED_LOCATION);
   const [mapCenter, setMapCenter] = React.useState({
-  	latitude: 45.518853,
-  	longitude: -73.60055,
-  	latitudeDelta: LATITUDE_DELTA,
-  	longitudeDelta: LONGITUDE_DELTA
+    latitude: 45.518853,
+    longitude: -73.60055,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA
   });
   const [stationaryRadius, setStationaryRadius] = React.useState(200);
   const [geofencesHit, setGeofencesHit] = React.useState<any[]>([]);
@@ -79,17 +79,17 @@ const TSMapView = (props) => {
   /// BackgroundGeolocation Events.
   const [motionChangeEvent, setMotionChangeEvent] = React.useState<MotionChangeEvent>(null);
   const [lastMotionChangeEvent, setLastMotionChangeEvent] = React.useState<MotionChangeEvent>(null);
-	const [geofences, setGeofences] = React.useState<any[]>([]);
+  const [geofences, setGeofences] = React.useState<any[]>([]);
   const [geofenceEvent, setGeofenceEvent] = React.useState<GeofenceEvent>(null);
   const [location, setLocation] = React.useState<Location>(null);
   const [geofencesChangeEvent, setGeofencesChangeEvent] = React.useState<GeofencesChangeEvent>(null);
   const [enabled, setEnabled] = React.useState(false);
 
-	/// Handy Util class.
-	const settingsService = SettingsService.getInstance();
+  /// Handy Util class.
+  const settingsService = SettingsService.getInstance();
 
-	/// Register BackgroundGeolocation event-listeners.
-	React.useEffect(() => {
+  /// Register BackgroundGeolocation event-listeners.
+  React.useEffect(() => {
     BackgroundGeolocation.getState().then((state:State) => {
       setEnabled(state.enabled);
     });
@@ -223,16 +223,16 @@ const TSMapView = (props) => {
     setGeofences(geofencesOn);
   }
 
-	/// EnabledChange effect-handler.
+  /// EnabledChange effect-handler.
   /// Removes all MapView Markers when plugin is disabled.
   ///
-	const onEnabledChange = () => {
+  const onEnabledChange = () => {
     console.log('[onEnabledChange]', enabled);
     setShowsUserLocation(enabled);
-		if (!enabled) {
-			clearMarkers();
-		}
-	}
+    if (!enabled) {
+      clearMarkers();
+    }
+  }
 
   /// onMotionChangeEvent effect-handler.
   /// show/hide the red stationary-geofence according isMoving
@@ -246,7 +246,7 @@ const TSMapView = (props) => {
     };
     if (motionChangeEvent.isMoving) {
       if (lastMotionChangeEvent) {
-      	setStopZones(previous => [...previous, {
+        setStopZones(previous => [...previous, {
           coordinate: {
             latitude: lastMotionChangeEvent.location.coords.latitude,
             longitude: lastMotionChangeEvent.location.coords.longitude
@@ -257,7 +257,7 @@ const TSMapView = (props) => {
       setStationaryRadius(0);
       setStationaryLocation(UNDEFINED_LOCATION);
     } else {
-    	let state = await BackgroundGeolocation.getState();
+      let state = await BackgroundGeolocation.getState();
       let geofenceProximityRadius = state.geofenceProximityRadius || 1000;
       setStationaryRadius((state.trackingMode == 1) ? 200 : (geofenceProximityRadius/2));
       setStationaryLocation({
@@ -270,7 +270,7 @@ const TSMapView = (props) => {
   }
 
   /// MapView Location marker-renderer.
-	const renderMarkers = () => {
+  const renderMarkers = () => {
     let rs:any = [];
     markers.map((marker:any) => {
       rs.push((
@@ -383,10 +383,10 @@ const TSMapView = (props) => {
   /// Center the map.
   const setCenter = (location:Location) => {
     setMapCenter({
-    	latitude: location.coords.latitude,
-    	longitude: location.coords.longitude,
-    	latitudeDelta: LATITUDE_DELTA,
-    	longitudeDelta: LONGITUDE_DELTA
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      latitudeDelta: LATITUDE_DELTA,
+      longitudeDelta: LONGITUDE_DELTA
     });
   }
 
@@ -403,11 +403,11 @@ const TSMapView = (props) => {
       }
     };
 
-   	setMarkers(previous => [...previous, marker]);
-   	setCoordinates(previous => [...previous, {
-   		latitude: location.coords.latitude,
+    setMarkers(previous => [...previous, marker]);
+    setCoordinates(previous => [...previous, {
+      latitude: location.coords.latitude,
       longitude: location.coords.longitude
-   	}]);
+    }]);
   }
 
   /// Returns a geofence marker for MapView
@@ -426,8 +426,8 @@ const TSMapView = (props) => {
 
   /// Map pan/drag handler.
   const onMapPanDrag = () => {
-  	setFollowUserLocation(false);
-  	setMapScrollEnabled(true);
+    setFollowUserLocation(false);
+    setMapScrollEnabled(true);
   }
 
   /// Map long-press handler for adding a geofence.
@@ -439,44 +439,44 @@ const TSMapView = (props) => {
 
   /// Geofence press-handler.
   const onPressGeofence = () => {
-  	console.log('[onPressGeofence] NO IMPLEMENTATION');
+    console.log('[onPressGeofence] NO IMPLEMENTATION');
   }
 
   /// Clear all markers from the map when plugin is toggled off.
   const clearMarkers = () => {
-  	setCoordinates([]);
-  	setMarkers([]);
-  	setStopZones([]);
-  	setGeofences([]);
-  	setGeofencesHit([]);
-  	setGeofenceHitEvents([]);
-  	setStationaryRadius(0);
+    setCoordinates([]);
+    setMarkers([]);
+    setStopZones([]);
+    setGeofences([]);
+    setGeofencesHit([]);
+    setGeofenceHitEvents([]);
+    setStationaryRadius(0);
     setGeofenceEvent(null);
   }
 
-	return (
-		<MapView
-	    showsUserLocation={showsUserLocation}
-	    region={mapCenter}
-	    followsUserLocation={false}
-	    onLongPress={onLongPress}
-	    onPanDrag={onMapPanDrag}
-	    scrollEnabled={mapScrollEnabled}
-	    showsMyLocationButton={false}
-	    showsPointsOfInterest={false}
-	    showsScale={false}
-	    showsTraffic={false}
-	    style={styles.map}
-	    toolbarEnabled={false}>
-	    <Circle
+  return (
+    <MapView
+      showsUserLocation={showsUserLocation}
+      region={mapCenter}
+      followsUserLocation={false}
+      onLongPress={onLongPress}
+      onPanDrag={onMapPanDrag}
+      scrollEnabled={mapScrollEnabled}
+      showsMyLocationButton={false}
+      showsPointsOfInterest={false}
+      showsScale={false}
+      showsTraffic={false}
+      style={styles.map}
+      toolbarEnabled={false}>
+      <Circle
         key={"stationary-location:" + stationaryLocation.timestamp}
         radius={stationaryRadius}
         fillColor={STATIONARY_REGION_FILL_COLOR}
         strokeColor={STATIONARY_REGION_STROKE_COLOR}
         strokeWidth={1}
         center={{
-        	latitude: stationaryLocation.latitude,
-        	longitude: stationaryLocation.longitude
+          latitude: stationaryLocation.latitude,
+          longitude: stationaryLocation.longitude
         }}
       />
       <Polyline
@@ -492,8 +492,8 @@ const TSMapView = (props) => {
       {renderActiveGeofences()}
       {renderGeofencesHit()}
       {renderGeofencesHitEvents()}
-	  </MapView>
-	)
+    </MapView>
+  )
 }
 
 export default TSMapView;
@@ -503,7 +503,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#272727'
   },
   map: {
-  	flex: 1
+    flex: 1
   },
   stopZoneMarker: {
     borderWidth:1,

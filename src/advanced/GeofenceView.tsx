@@ -92,7 +92,7 @@ const GeofenceView = ({route, navigation}) => {
       settingsService.alert('Add Geofence Error', error);
     });
   }
-	return (
+  return (
     <View style={styles.form}>
 
       <Input
@@ -180,7 +180,7 @@ const GeofenceView = ({route, navigation}) => {
       />
 
     </View>
-	)
+  )
 }
 
 export default GeofenceView;
