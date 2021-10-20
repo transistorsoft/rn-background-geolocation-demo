@@ -156,6 +156,17 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            /**
+            * My signing configs for publishing SampleApp to play store.  You won't need this
+            */
+            if (project.hasProperty('RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE')) {
+                storeFile file(RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE)
+                storePassword RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_STORE_PASSWORD
+                keyAlias RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_KEY_ALIAS
+                keyPassword RNBACKGROUND_GEOLOCATION_SAMPLEAPP_RELEASE_STORE_FILE_RELEASE_KEY_PASSWORD
+            }
+        }
     }
     buildTypes {
         debug {
@@ -167,12 +178,26 @@ android {
             }
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             proguardFiles "${background_geolocation.projectDir}/proguard-rules.pro"
+        }
+        releaseStaging {
+            initWith release
+            applicationIdSuffix ".staging"
+        }
+        releaseQa {
+            initWith release
+            applicationIdSuffix ".qa"
+        }
+        releaseUat {
+            initWith release
+            applicationIdSuffix ".uat"
+        }
+        releaseDev {
+            initWith release
+            applicationIdSuffix ".dev"
         }
     }
 
