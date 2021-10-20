@@ -19,7 +19,6 @@ import {HeaderBackButton} from '@react-navigation/elements';
 
 import HomeApp from "./src/home/HomeApp";
 import HelloWorldApp from "./src/hello-world/HelloWorldApp";
-import SimpleMapApp from "./src/simple-map/SimpleMapApp";
 import AdvancedApp from "./src/advanced/AdvancedApp";
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -93,11 +92,6 @@ const App = () => {
         <MainStack.Screen
           name="AdvancedApp"
           component={AdvancedApp}
-          options={screenOptions}
-        />
-        <MainStack.Screen
-          name="SimpleMapApp"
-          component={SimpleMapApp}
           options={screenOptions}
         />
         <MainStack.Screen
