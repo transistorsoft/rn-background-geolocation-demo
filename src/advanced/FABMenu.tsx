@@ -26,9 +26,9 @@ const ACTION_BUTTON_OFFSET_Y = 70;
 
 const FABMenu = (props:any) => {
 
-	const [isOpen, setIsOpen] = React.useState(false);
-	const [isEmailingLog, setIsEmailingLog] = React.useState(false);
-	const [isResettingOdometer, setIsResettingOdometer] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [isEmailingLog, setIsEmailingLog] = React.useState(false);
+  const [isResettingOdometer, setIsResettingOdometer] = React.useState(false);
   const [isSyncing, setIsSyncing] = React.useState(false);
   const [isDestroyingLocations, setIsDestroyingLocations] = React.useState(false);
 
@@ -37,17 +37,17 @@ const FABMenu = (props:any) => {
   const settingsService = SettingsService.getInstance();
 
   /// FAB Menu handler.
-	const onClickMainMenu = () => {
+  const onClickMainMenu = () => {
     const value = !isOpen;
-		setIsOpen(value);
+    setIsOpen(value);
 
     settingsService.playSound((value) ? 'OPEN' : 'CLOSE');
-	}
+  }
 
   /// FABItem handler.
-	const onClickAction = (command:string) => {
+  const onClickAction = (command:string) => {
     settingsService.playSound('BUTTON_CLICK');
-		switch(command) {
+    switch(command) {
       case 'settings':
         settingsService.playSound('OPEN');
         navigation.navigate('Settings');
@@ -68,7 +68,7 @@ const FABMenu = (props:any) => {
         requestPermission();
         break;
     }
-	}
+  }
 
   /// Reset the odometer.
   const resetOdometer = async () => {
@@ -168,8 +168,8 @@ const FABMenu = (props:any) => {
     }, 10);
   }
 
-	return (
-		<ActionButton
+  return (
+    <ActionButton
       position="right"
       hideShadow={false}
       autoInactive={false}
@@ -202,15 +202,15 @@ const FABMenu = (props:any) => {
         <Icon name="cog-sharp" type='ionicon' style={styles.itemIcon} />
       </ActionButton.Item>
     </ActionButton>
-	)
+  )
 }
 
 export default FABMenu;
 
 var styles = StyleSheet.create({
-	actionButton: {
-		color: COLORS.black
-	},
+  actionButton: {
+    color: COLORS.black
+  },
   itemIcon: {
     fontSize: 24
   }

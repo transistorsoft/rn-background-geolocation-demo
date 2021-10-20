@@ -28,10 +28,10 @@ const HomeView= ({route, navigation}) => {
   const settingsService = SettingsService.getInstance();
 
   React.useEffect(() => {
-  	if (route.params) {
-  		setOrg(route.params.org);
-  		setUsername(route.params.username);
-  	}
+    if (route.params) {
+      setOrg(route.params.org);
+      setUsername(route.params.username);
+    }
   }, [route, navigation]);
 
   React.useLayoutEffect(() => {
@@ -50,13 +50,13 @@ const HomeView= ({route, navigation}) => {
 
     // Set DeviceModel.
     BackgroundGeolocation.getDeviceInfo().then((deviceInfo) => {
-  		setDeviceModel(deviceInfo.model);
-  	});
+      setDeviceModel(deviceInfo.model);
+    });
   }, [navigation]);
 
   const onClickRegister = () => {
     settingsService.playSound('OPEN');
-  	navigation.navigate('Registration', {org: org, username: username});
+    navigation.navigate('Registration', {org: org, username: username});
   };
 
   const validate = (value:string) => {
@@ -71,7 +71,7 @@ const HomeView= ({route, navigation}) => {
 
   const onClickNavigate = async (route:string) => {
     if (!validate(route) || !validate(org) || !validate(username)) {
-    	// Re-direct to registration screen
+      // Re-direct to registration screen
       onClickRegister();
       return;
     }
@@ -79,9 +79,9 @@ const HomeView= ({route, navigation}) => {
     navigation.navigate(route, {
       screen: route,
       params: {
-      	username: username,
-      	org: org
-			}
+        username: username,
+        org: org
+      }
     });
   };
 
@@ -147,7 +147,7 @@ export default HomeView;
 
 const styles = StyleSheet.create({
   container: {
-  	padding: 20
+    padding: 20
   }
 });
 
