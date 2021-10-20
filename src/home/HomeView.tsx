@@ -1,276 +1,154 @@
-
-import React from 'react'
-import {Component} from 'react';
-
+import React from 'react';
 import {
-  Platform,
   StyleSheet,
-  Linking,
-  Alert,
-  TextInput,
-  View
+  Text,
+  View,
 } from 'react-native';
 
-import AsyncStorage from '@react-native-community/async-storage';
-
-import { NavigationActions, StackActions } from 'react-navigation';
-
 import {
-  Container, Header, Content, Footer,
-  Left, Body, Right,
-  Card, CardItem,
-  Text, H1,
-  Button, Icon,
-  Title,
-  Form, Item, Input, Label
-} from '@codler/native-base';
+  Card,
+  Button,
+  Icon,
+} from 'react-native-elements'
 
-import BackgroundGeolocation, {DeviceInfo, TransistorAuthorizationToken} from "../react-native-background-geolocation";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import {registerTransistorAuthorizationListener} from '../lib/Authorization';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import ENV from "../ENV";
+import {COLORS} from '../lib/config';
+import SettingsService from '../advanced/lib/SettingsService';
 
-// Only allow alpha-numeric usernames with '-' and '_'
-const USERNAME_VALIDATOR =  /^[a-zA-Z0-9_-]*$/;
+import BackgroundGeolocation from "../react-native-background-geolocation";
 
-type IProps = {
-  navigation: any
-}
-type IState = {
-  username: string,
-  orgname: string,
-  deviceManufacturer: string,
-  deviceModel: string,
-  deviceIdentifier: string,
-  platform: string
-}
+const HomeView= ({route, navigation}) => {
+  const [org, setOrg] = React.useState("");
+  const [username, setUsername] = React.useState("");
+  const [deviceModel, setDeviceModel] = React.useState('');
 
-export default class HomeView extends Component<IProps, IState> {
+  const settingsService = SettingsService.getInstance();
 
-  constructor(props:IProps) {
-    super(props);
+  React.useEffect(() => {
+  	if (route.params) {
+  		setOrg(route.params.org);
+  		setUsername(route.params.username);
+  	}
+  }, [route, navigation]);
 
-    let navigation = props.navigation;
-    this.state = {
-      deviceModel: '',
-      deviceManufacturer: '',
-      deviceIdentifier: '',
-      orgname: '',
-      username: '',
-      platform: ''
-    };
-  }
-
-  async componentDidMount() {
-    // #stop BackroundGeolocation and remove-listeners when Home Screen is rendered.
-    await BackgroundGeolocation.stop();
-    await BackgroundGeolocation.removeListeners();
-
-    let deviceInfo:DeviceInfo = await BackgroundGeolocation.getDeviceInfo();
-
-    let orgname = await AsyncStorage.getItem('orgname') || '';
-    let username = await AsyncStorage.getItem('username') || '';
-    let deviceIdentifier = deviceInfo.model;
-
-    if (this.usernameIsValid(username) && !this.usernameIsValid(orgname)) {
-      await AsyncStorage.setItem('orgname', username);
-      await AsyncStorage.removeItem('username');
-      orgname = username;
-      username = '';
-    }
-    if (username && username.length) {
-      deviceIdentifier += '-' + username;
-    }
-
-    this.setState({
-      orgname: orgname,
-      username: username,
-      deviceModel: deviceInfo.model,
-      deviceManufacturer: deviceInfo.manufacturer,
-      deviceIdentifier: deviceIdentifier,
-      platform: deviceInfo.platform.toLowerCase()
-    });
-
-    BackgroundGeolocation.setConfig({logLevel: 5});
-
-    if (!this.usernameIsValid(orgname) || !this.usernameIsValid(username)) {
-      this.register();
-    }
-  }
-
-  async onClickNavigate(routeName:string) {
-    if (!this.usernameIsValid(this.state.orgname) || !this.usernameIsValid(this.state.username)) {
-      return this.register();
-    }
-
-    // Google Play Store policy requires disclosing background permission usage to the user before requesting run-time location permission.
-    let willDiscloseBackgroundPermission = await this.willDiscloseBackgroundPermission(routeName);
-    if (willDiscloseBackgroundPermission) {
-      return;
-    }
-
-    await AsyncStorage.setItem("@transistorsoft:initialRouteName", routeName);
-    let action = StackActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({routeName: routeName, params: {
-          orgname: this.state.orgname,
-          username: this.state.username
-        }})
-      ],
-      key: null
-    });
-
-    this.props.navigation.dispatch(action);
-  }
-
-  register() {
-    this.props.navigation.navigate('Registration', {response: (result:any) => {
-      if (result == null) return;
-      this.setState({
-        orgname: result.orgname,
-        username: result.username,
-        deviceIdentifier: this.state.deviceModel + '-' + result.username
-      })
-    }});
-  }
-
-  onClickViewServer() {
-    let url = ENV.TRACKER_HOST + '/' + this.state.orgname;
-    Linking.canOpenURL(url).then(supported => {
-      if (supported) {
-        Linking.openURL(url);
-      } else {
-        console.log("Don't know how to open URI: " + url);
+  React.useLayoutEffect(() => {
+    // Restore org/username from AsyncStorage.
+    AsyncStorage.getItem('@transistorsoft:org').then((value) => {
+      if (value != null) {
+        setOrg(value);
       }
-    });
-  }
+    })
 
-  usernameIsValid(value:string):boolean {
-    return (value.length>0) && USERNAME_VALIDATOR.test(value);
-  }
+    AsyncStorage.getItem('@transistorsoft:username').then((value) => {
+      if (value != null) {
+        setUsername(value);
+      }
+    })
 
-  /// [Android] Play Store compatibility requires disclosure of background permission before location runtime permission is requested.
-  /// It seems to be ok to show this alert just once for the lifetime of your app.
-  async willDiscloseBackgroundPermission(routeName:string) {
-    let hasDisclosedBackgroundPermission = await AsyncStorage.getItem('@transistorsoft:hasDisclosedBackgroundPermission');
+    // Set DeviceModel.
+    BackgroundGeolocation.getDeviceInfo().then((deviceInfo) => {
+  		setDeviceModel(deviceInfo.model);
+  	});
+  }, [navigation]);
 
-    if ((this.state.platform !== 'android') || (hasDisclosedBackgroundPermission != null)) {
+  const onClickRegister = () => {
+    settingsService.playSound('OPEN');
+  	navigation.navigate('Registration', {org: org, username: username});
+  };
+
+  const validate = (value:string) => {
+    if (value == null) {
       return false;
     }
-
-    let onSuccess = async () => {
-      // Flag as shown -- we'll never show this Alert ever again.
-      await AsyncStorage.setItem('@transistorsoft:hasDisclosedBackgroundPermission', 'true');
-      this.onClickNavigate(routeName);
+    if (value.length === 0) {
+      return false;
     }
-
-    // Show Play Store compatibility alert.
-    Alert.alert(
-      "Background Location Access",
-      "BG Geolocation collects location data to enable tracking your trips to work and calculate distance travelled even when the app is closed or not in use.\n\nThis data will be uploaded to tracker.transistorsoft.com where you may view and/or delete your location history.",
-      [
-        { text: "Close", onPress: onSuccess}
-      ],
-      {
-        cancelable: true,
-        onDismiss: onSuccess
-      }
-    );
     return true;
   }
 
-  render() {
-    return (
-      <Container>
+  const onClickNavigate = async (route:string) => {
+    if (!validate(route) || !validate(org) || !validate(username)) {
+    	// Re-direct to registration screen
+      onClickRegister();
+      return;
+    }
+    settingsService.playSound('OPEN');
+    navigation.navigate(route, {
+      screen: route,
+      params: {
+      	username: username,
+      	org: org
+			}
+    });
+  };
 
-        <Header style={styles.header}>
-          <Body>
-            <Title style={styles.title}>BG Geolocation</Title>
-          </Body>
-        </Header>
-        <Body style={styles.body}>
-            <H1 style={styles.h1}>Example Applications</H1>
-            <Button full style={styles.button} onPress={() => this.onClickNavigate('HelloWorld')}><Text>Hello World</Text></Button>
-            <Button full style={styles.button} onPress={() => this.onClickNavigate('SimpleMap')}><Text>Simple Map</Text></Button>
-            <Button full style={styles.button} onPress={() => this.onClickNavigate('Advanced')}><Text>Advanced</Text></Button>
-        </Body>
+  return (
+    <View style={{
+      flexDirection: 'column',
+      flex: 1,
+      backgroundColor: '#111'
+    }}>
+      <View style={{ height:70, alignItems: 'center'}}>
+        <Text style={{fontSize: 20, color: '#fff', fontWeight: 'bold', padding: 20}}>Example Applications</Text>
+      </View>
+      <View style={{ padding: 20, flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
+        <Button
+          buttonStyle={{backgroundColor: COLORS.gold}}
+          titleStyle={{color: COLORS.black}}
+          title="Advanced App"
+          onPress={() => onClickNavigate('AdvancedApp') }
+        />
+        <Button
+          buttonStyle={{backgroundColor: COLORS.gold}}
+          titleStyle={{color: COLORS.black}}
+          title="Hello World App"
+          onPress={() => onClickNavigate('HelloWorldApp')}
+        />
 
-        <Footer style={styles.footer}>
-            <Card style={styles.userInfo}>
-              <Text style={styles.p}>These apps will post locations to Transistor Software's demo server.  View your tracking in the browser by visiting:</Text>
-              <Text style={styles.url}>{ENV.TRACKER_HOST + '/' + this.state.orgname}</Text>
+      </View>
+      <View style={{padding: 10, backgroundColor: "#fff"}}>
+        <Text style={{marginBottom: 10}}>These apps will post locations to Transistor Software's demo server.  You can view your tracking in the browser by visiting:</Text>
+        <Text style={{fontWeight: 'bold', textAlign: 'center', marginBottom: 10}}>http://tracker.transistorsoft.com/{org}</Text>
+        <View style={{flexDirection: 'row', marginBottom: 10, height: 50}}>
+          <Icon
+            name='person-circle-outline'
+            type='ionicon'
+            color='#517fa4'
+          />
+          <View style={{flex: 1, marginLeft: 10}}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{fontWeight: 'bold', width: 75}}>Org:</Text>
+              <Text style={{flex: 1}}>{org}</Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{fontWeight: 'bold', width: 75}}>Device ID:</Text>
+              <Text>{deviceModel}-{username}</Text>
+            </View>
+          </View>
 
-              <CardItem cardBody>
-                <Text style={styles.formLabel}>Organization: </Text><Text>{this.state.orgname}</Text>
-              </CardItem>
-              <CardItem cardBody>
-                <Text style={styles.formLabel}>Device ID: </Text><Text>{this.state.deviceIdentifier}</Text>
-              </CardItem>
-              <CardItem footer bordered>
-                <Left>
-                  <Button danger full onPress={this.register.bind(this)}><Text>Edit username</Text></Button>
-                </Left>
-                <Right>
-                  <Button full onPress={this.onClickViewServer.bind(this)}><Text>View server</Text></Button>
-                </Right>
-              </CardItem>
-            </Card>
-        </Footer>
-      </Container>
-    );
-  }
-}
+        </View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+          <Button
+            title="Edit"
+            onPress={onClickRegister}
+            buttonStyle={{width: 150, backgroundColor: '#c00'}}
+          />
+          <Button title="View Tracking" buttonStyle={{width:150}} />
+        </View>
+      </View>
+    </View>
+  );
+};
+
+export default HomeView;
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: '#fedd1e'
-  },
-  title: {
-    color: '#000'
-  },
-  body: {
-    width: '100%',
-    justifyContent: 'center',
-    backgroundColor:'#272727'
-  },
-  h1: {
-    color: '#fff',
-    marginBottom: 20
-  },
-  deviceModel: {
-    textAlign:'center',
-    fontWeight:'bold',
-    fontStyle:'italic',
-    paddingTop: 10
-  },
-  p: {
-    fontSize: 13,
-    marginBottom: 5
-  },
-  url: {
-    fontSize: 13,
-    fontStyle: 'italic',
-    textAlign: 'center'
-  },
-  button: {
-    marginBottom: 10
-  },
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  footer: {
-    backgroundColor:"transparent",
-    height: 190
-  },
-  userInfo: {
-    padding: 10
-  },
-  formLabel: {
-    color: '#337AB7'
+  	padding: 20
   }
 });
+
+

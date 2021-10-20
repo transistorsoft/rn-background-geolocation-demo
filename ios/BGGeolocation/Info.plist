@@ -2,12 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>BACKGROUND_GEOLOCATION_ENCRYPTION_PASSWORD</key>
-	<string>transistorsoft</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>com.transistorsoft.customtask</string>
 		<string>com.transistorsoft.fetch</string>
+		<string>com.transistorsoft.customtask</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
@@ -45,16 +43,11 @@
 		</dict>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>[CHANGME] Location Always and When  in Use</string>
-	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
-	<dict>
-		<key>DemoPurpose</key>
-		<string>CHANGEME:  Allow the sample app to track location with high accuracy</string>
-	</dict>
+	<string>[CHANGEME] Location Always and When in Use Usage Description</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>[CHANGME] Location when in use</string>
+	<string>[CHANGEME] Location When In Use Usage Description</string>
 	<key>NSMotionUsageDescription</key>
-	<string>[CHANGME] Motion description</string>
+	<string>[CHANGEME] Motion Usage Description</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>

@@ -1,12 +1,11 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import BackgroundGeolocation, {
   TransistorAuthorizationToken,
   HttpEvent
-} from "../react-native-background-geolocation";
+} from "../react-native-background-geolocation"
 
 import ENV from "../ENV";
-import Util from "../lib/Util";
 
 let onHttp:any = null;
 
@@ -18,10 +17,11 @@ async function register(navigation:any):Promise<TransistorAuthorizationToken> {
   console.log('[TransistorAuth] this device requires reqistration');
   await BackgroundGeolocation.destroyTransistorAuthorizationToken(ENV.TRACKER_HOST);
 
-  let orgname = await AsyncStorage.getItem("orgname");
-  let username = await AsyncStorage.getItem("username");
+  let orgname = await AsyncStorage.getItem("@transistorsoft:org");
+  let username = await AsyncStorage.getItem("@transistorsoft:username");
   if (orgname == null || username == null) {
-    Util.navigateHome(navigation);
+    // TODO
+    //Util.navigateHome(navigation);
     return {
       accessToken: "DUMMY_TOKEN",
       refreshToken: "DUMMY_TOKEN",
@@ -50,8 +50,8 @@ async function goHome(navigation:any) {
   // Our authorization token doesn't seem to be valid anymore.  Re-register this device by removing username
   // and forcing user to the HomeScreen.
   console.log('[TransistorAuth] It seems this device has been destroyed from tracker.transistorsoft.com.  The authentication token is no longer valid.  Redirecting to Home page.');
-  await AsyncStorage.removeItem('username');
-  Util.navigateHome(navigation);
+  await AsyncStorage.removeItem('@transistorsoft:username');
+  navigation.navigate('Home');
 }
 
 /**
