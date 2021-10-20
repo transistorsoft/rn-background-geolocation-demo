@@ -10,8 +10,9 @@ import {
   StyleSheet,
   Text,
   View,
+  SafeAreaView,
   Switch,
-  TouchableHighlight
+  TouchableHighlight,
 } from 'react-native';
 
 import {
@@ -185,7 +186,7 @@ const HomeView = ({route, navigation}) => {
   }
 
   return (
-    <View style={{flexDirection: 'column', flex: 1}}>
+    <SafeAreaView style={styles.container}>
       <TSMapView style={styles.map} navigation={navigation} />
       <View style={{backgroundColor: COLORS.gold, height: 56, flexDirection: 'row'}}>
         <View style={{justifyContent:'center'}}>
@@ -217,7 +218,7 @@ const HomeView = ({route, navigation}) => {
 
       <FABMenu navigation={navigation} />
 
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -225,7 +226,9 @@ export default HomeView;
 
 var styles = StyleSheet.create({
   container: {
-    backgroundColor: '#272727'
+    backgroundColor: COLORS.gold,
+    flexDirection: 'column',
+    flex: 1
   },
   map: {
     flex: 1,

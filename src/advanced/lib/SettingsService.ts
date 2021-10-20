@@ -11,7 +11,8 @@ import React from 'react'
 import {Component} from 'react';
 
 import {
-  Alert
+  Alert,
+  Platform
 } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -229,21 +230,15 @@ export default class SettingsService {
       map: {}
     };
 
-    const deviceInfo = BackgroundGeolocation.getDeviceInfo().then((deviceInfo) => {
-      let platform = deviceInfo.platform;
-      if (platform.match(/iPhone/)) {
-        platform = 'ios'
-      };
-      this.platform = platform.toLowerCase();
+    this.platform = Platform.OS.toLowerCase();
 
-      let items = [].concat(PLUGIN_SETTINGS.common).concat(PLUGIN_SETTINGS[this.platform]);
+    const items = [].concat(PLUGIN_SETTINGS.common).concat(PLUGIN_SETTINGS[this.platform]);
 
-      this.settings.items = items;
+    this.settings.items = items;
 
-      // Create a Map of Settings for speedy lookup.
-      items.forEach((item:any) => {
-        this.settings.map[item.name] = item;
-      });
+    // Create a Map of Settings for speedy lookup.
+    items.forEach((item:any) => {
+      this.settings.map[item.name] = item;
     });
   }
 

@@ -5,6 +5,7 @@ import {
   Text,
   View,
   ScrollView,
+  SafeAreaView
 } from 'react-native';
 
 import {Button, Switch, Icon} from "react-native-elements";
@@ -149,7 +150,7 @@ const HelloWorldView = ({route, navigation}) => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.events}>
         {events.slice().reverse().map((event, i) => (
           <View style={styles.event} key={i}>
@@ -184,7 +185,7 @@ const HelloWorldView = ({route, navigation}) => {
         </View>
       </View>
 
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -193,11 +194,12 @@ export default HelloWorldView;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
+    backgroundColor: COLORS.gold,
     flex: 1
   },
   events: {
     flex: 1,
-    padding: 5
+    //backgroundColor: '#eee'
   },
   event: {
     backgroundColor: '#fff',
