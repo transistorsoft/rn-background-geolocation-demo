@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Linking
 } from 'react-native';
 
 import {
@@ -16,6 +17,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {COLORS} from '../lib/config';
+import ENV from "../ENV";
+
 import SettingsService from '../advanced/lib/SettingsService';
 
 import BackgroundGeolocation from "../react-native-background-geolocation";
@@ -85,6 +88,18 @@ const HomeView= ({route, navigation}) => {
     });
   };
 
+  const onClickViewServer = async() => {
+    if (!validate(route) || !validate(org) || !validate(username)) {
+      // Re-direct to registration screen
+      onClickRegister();
+      return;
+    }
+    const url = `${ENV.TRACKER_HOST}/${org}`;
+    Linking.openURL(url).catch((err) => {
+      settingsService.alert('Error', `Could not open url ${url}`)
+    });
+  }
+
   return (
     <View style={{
       flexDirection: 'column',
@@ -111,7 +126,7 @@ const HomeView= ({route, navigation}) => {
       </View>
       <View style={{padding: 10, backgroundColor: "#fff"}}>
         <Text style={{marginBottom: 10}}>These apps will post locations to Transistor Software's demo server.  You can view your tracking in the browser by visiting:</Text>
-        <Text style={{fontWeight: 'bold', textAlign: 'center', marginBottom: 10}}>http://tracker.transistorsoft.com/{org}</Text>
+        <Text style={{fontWeight: 'bold', textAlign: 'center', marginBottom: 10}}>{ENV.TRACKER_HOST}/{org}</Text>
         <View style={{flexDirection: 'row', marginBottom: 10, height: 50}}>
           <Icon
             name='person-circle-outline'
@@ -136,7 +151,10 @@ const HomeView= ({route, navigation}) => {
             onPress={onClickRegister}
             buttonStyle={{width: 150, backgroundColor: '#c00'}}
           />
-          <Button title="View Tracking" buttonStyle={{width:150}} />
+          <Button
+            title="View Tracking"
+            onPress={onClickViewServer}
+            buttonStyle={{width:150}} />
         </View>
       </View>
     </View>

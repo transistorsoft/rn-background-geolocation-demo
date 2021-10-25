@@ -77,33 +77,47 @@ const TSMapView = (props) => {
   const [stopZones, setStopZones] = React.useState<any[]>([]);
 
   /// BackgroundGeolocation Events.
+  const [location, setLocation] = React.useState<Location>(null);
   const [motionChangeEvent, setMotionChangeEvent] = React.useState<MotionChangeEvent>(null);
   const [lastMotionChangeEvent, setLastMotionChangeEvent] = React.useState<MotionChangeEvent>(null);
   const [geofences, setGeofences] = React.useState<any[]>([]);
   const [geofenceEvent, setGeofenceEvent] = React.useState<GeofenceEvent>(null);
-  const [location, setLocation] = React.useState<Location>(null);
   const [geofencesChangeEvent, setGeofencesChangeEvent] = React.useState<GeofencesChangeEvent>(null);
   const [enabled, setEnabled] = React.useState(false);
 
   /// Handy Util class.
   const settingsService = SettingsService.getInstance();
 
+  /// Collection of BackgroundGeolocation event-subscriptions.
+  const subscriptions:any[] = [];
+
+  /// [Helper] Add a BackgroundGeolocation event subscription to collection
+  const subscribe = (subscription:any) => {
+    subscriptions.push(subscription);
+  }
+  /// [Helper] Iterate BackgroundGeolocation subscriptions and .remove() each.
+  const unsubscribe = () => {
+    subscriptions.forEach((subscription:any) => subscription.remove());
+  }
+
   /// Register BackgroundGeolocation event-listeners.
   React.useEffect(() => {
     BackgroundGeolocation.getState().then((state:State) => {
       setEnabled(state.enabled);
     });
+
     // All BackgroundGeolocation event-listeners use React.useState setters.
-    BackgroundGeolocation.onLocation(setLocation, (error) => {
+    subscribe(BackgroundGeolocation.onLocation(setLocation, (error) => {
       console.warn('[onLocation] ERROR: ', error);
-    });
-    BackgroundGeolocation.onMotionChange(setMotionChangeEvent);
-    BackgroundGeolocation.onGeofence(setGeofenceEvent);
-    BackgroundGeolocation.onGeofencesChange(setGeofencesChangeEvent);
-    BackgroundGeolocation.onEnabledChange(setEnabled);
+    }));
+    subscribe(BackgroundGeolocation.onMotionChange(setMotionChangeEvent));
+    subscribe(BackgroundGeolocation.onGeofence(setGeofenceEvent));
+    subscribe(BackgroundGeolocation.onGeofencesChange(setGeofencesChangeEvent));
+    subscribe(BackgroundGeolocation.onEnabledChange(setEnabled));
 
     return () => {
-      // Important for dev-mode with live-reload.
+      // Important for with live-reload to remove BackgroundGeolocation event subscriptions.
+      unsubscribe();
       clearMarkers();
     }
   }, []);

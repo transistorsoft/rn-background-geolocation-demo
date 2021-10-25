@@ -21,6 +21,7 @@ import {
 } from 'react-native-elements'
 
 import BackgroundGeolocation, {
+  Location,
   State,
   MotionActivityEvent
 } from "../react-native-background-geolocation";
@@ -49,10 +50,29 @@ const HomeView = ({route, navigation}) => {
 
   /// Init BackgroundGeolocation when view renders.
   React.useEffect(() => {
+    // Register BackgroundGeolocation event-listeners.
+    const locationSubscriber:any = BackgroundGeolocation.onLocation(setLocation, (error) => {
+      console.warn('[onLocation] ERROR: ', error);
+    });
+
+    const motionChangeSubscriber:any = BackgroundGeolocation.onMotionChange((location) => {
+      // Auto-toggle [ > ] / [ || ] button in bottom toolbar.
+      setIsMoving(location.isMoving);
+    });
+
+    const activityChangeSubscriber:any = BackgroundGeolocation.onActivityChange(setMotionActivityEvent);
+
+    // Configure BackgroundGeolocation.ready().
     initBackgroundGeolocation();
+
+    // Boilerplate authorization-listener for tracker.transistorsoft.com (nothing interesting)
     registerTransistorAuthorizationListener(navigation);
     return () => {
-      // View-destroyed handler
+      // When view is destroyed (or refreshed with dev live-reload),
+      // Remove BackgroundGeolocation event-listeners.
+      locationSubscriber.remove();
+      motionChangeSubscriber.remove();
+      activityChangeSubscriber.remove();
     }
   }, []);
 
@@ -97,18 +117,6 @@ const HomeView = ({route, navigation}) => {
 
   /// Configure BackgroundGeolocation.ready
   const initBackgroundGeolocation = async () => {
-    // Listen to events, providing ref to React.useState setters.
-    BackgroundGeolocation.onLocation(setLocation, (error) => {
-      console.warn('[onLocation] ERROR: ', error);
-    });
-
-    BackgroundGeolocation.onMotionChange((location) => {
-      // Auto-toggle [ > ] / [ || ] button in bottom toolbar.
-      setIsMoving(location.isMoving);
-    });
-
-    BackgroundGeolocation.onActivityChange(setMotionActivityEvent);
-
     // Get an authorization token from transistorsoft demo server.
     const token = await BackgroundGeolocation.findOrCreateTransistorAuthorizationToken(
       org,
@@ -216,7 +224,7 @@ const HomeView = ({route, navigation}) => {
         </View>
       </View>
 
-      <FABMenu navigation={navigation} />
+      <FABMenu navigation={navigation} onResetOdometer={(location:Location) => setOdometer(location.odometer)}/>
 
     </SafeAreaView>
   );

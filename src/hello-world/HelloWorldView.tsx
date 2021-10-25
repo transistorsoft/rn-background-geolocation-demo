@@ -21,6 +21,10 @@ import {registerTransistorAuthorizationListener} from '../lib/Authorization';
 ///
 ///
 const HelloWorldView = ({route, navigation}) => {
+  // Keep a list of BackgroundGeolocation event-subscriptions so we can later remove them
+  // when the View is destroyed or refreshed during development live-reload.
+  const bgGeoEventSubscriptions:any[] = [];
+
   const {org, username} = route.params;
 
   /// State.
@@ -31,10 +35,12 @@ const HelloWorldView = ({route, navigation}) => {
   /// Return a function to .removeListeners() When view is removed.
   React.useEffect(() => {
     initBackgroundGeolocation();
-
     registerTransistorAuthorizationListener(navigation);
     return () => {
-
+      // Remove BackgroundGeolocation event-subscribers when the View is removed or refreshed
+      // during development live-reload.  Without this, event-listeners will accumulate with
+      // each refresh during live-reload.
+      unsubscribe();
     }
   }, []);
 
@@ -47,49 +53,67 @@ const HelloWorldView = ({route, navigation}) => {
     });
   }, [enabled]);
 
+  /// Helper method to push a BackgroundGeolocation subscription onto our list of subscribers.
+  const subscribe = (subscription:any) => {
+    bgGeoEventSubscriptions.push(subscription);
+  }
+
+  /// Helper method to unsubscribe from all registered BackgroundGeolocation event-listeners.
+  const unsubscribe = () => {
+    bgGeoEventSubscriptions.forEach((subscriber) => subscriber.remove() );
+  }
+
   /// Configure the BackgroundGeolocation plugin.
   const initBackgroundGeolocation = async () => {
-    BackgroundGeolocation.onProviderChange((event) => {
+    // Listen to events.  Each BackgroundGeolocation event-listener returns a subscription instance
+    // with a .remove() method for removing the event-listener.  You should collect a list of these
+    // subcribers and .remove() them all when the View is destroyed or refreshed during dev live-reload.
+    subscribe(BackgroundGeolocation.onProviderChange((event) => {
       console.log('[onProviderChange]', event);
       addEvent('onProviderChange', event);
-    });
+    }));
 
-    BackgroundGeolocation.onLocation((location) => {
+    subscribe(BackgroundGeolocation.onLocation((location) => {
       console.log('[onLocation]', location);
       addEvent('onLocation', location);
     }, (error) => {
       console.warn('[onLocation] ERROR: ', error);
-    });
+    }));
 
-    BackgroundGeolocation.onMotionChange((location) => {
+    subscribe(BackgroundGeolocation.onMotionChange((location) => {
       console.log('[onMotionChange]', location);
       addEvent('onMotionChange', location);
-    });
+    }));
 
-    BackgroundGeolocation.onConnectivityChange((event) => {
+    subscribe(BackgroundGeolocation.onGeofence((event) => {
+      console.log('[onGeofence]', event);
+      addEvent('onGeofence', event);
+    }));
+
+    subscribe(BackgroundGeolocation.onConnectivityChange((event) => {
       console.log('[onConnectivityChange]', event);
       addEvent('onConnectivityChange', event);
-    });
+    }));
 
-    BackgroundGeolocation.onEnabledChange((enabled) => {
+    subscribe(BackgroundGeolocation.onEnabledChange((enabled) => {
       console.log('[onEnabledChange]', enabled);
       addEvent('onEnabledChange', {enabled: enabled});
-    });
+    }));
 
-    BackgroundGeolocation.onHttp((event) => {
+    subscribe(BackgroundGeolocation.onHttp((event) => {
       console.log('[onHttp]', event);
       addEvent('onHttp', event);
-    });
+    }));
 
-    BackgroundGeolocation.onActivityChange((event) => {
+    subscribe(BackgroundGeolocation.onActivityChange((event) => {
       console.log('[onActivityChange]', event);
       addEvent('onActivityChange', event);
-    });
+    }));
 
-    BackgroundGeolocation.onPowerSaveChange((enabled) => {
+    subscribe(BackgroundGeolocation.onPowerSaveChange((enabled) => {
       console.log('[onPowerSaveChange]', enabled);
       addEvent('onPowerSaveChange', {isPowerSaveMode: enabled});
-    });
+    }));
 
     /// Get an authorization token from demo server at tracker.transistorsoft.com
     const token = await BackgroundGeolocation.findOrCreateTransistorAuthorizationToken(org, username, ENV.TRACKER_HOST);
@@ -129,6 +153,7 @@ const HelloWorldView = ({route, navigation}) => {
     setEnabled(value);
     if (value) {
       BackgroundGeolocation.start();
+
     } else {
       BackgroundGeolocation.stop();
     }
