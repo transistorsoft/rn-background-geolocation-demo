@@ -24,7 +24,11 @@ import SettingsService from './lib/SettingsService';
 
 const ACTION_BUTTON_OFFSET_Y = (Platform.OS === 'ios') ? 90 : 60;
 
-const FABMenu = (props:any) => {
+interface Props {
+  onResetOdometer:Function
+};
+
+const FABMenu = (props:Props) => {
 
   const [isOpen, setIsOpen] = React.useState(false);
   const [isEmailingLog, setIsEmailingLog] = React.useState(false);
@@ -71,8 +75,11 @@ const FABMenu = (props:any) => {
   /// Reset the odometer.
   const resetOdometer = async () => {
     setIsResettingOdometer(true);
-    BackgroundGeolocation.setOdometer(123123).then(location => {
+    BackgroundGeolocation.setOdometer(0).then(location => {
       setIsResettingOdometer(false);
+      if (props.onResetOdometer) {
+        props.onResetOdometer(location);
+      }
       settingsService.toast('Reset odometer success');
     }).catch(error => {
       setIsResettingOdometer(false);
@@ -187,7 +194,7 @@ const FABMenu = (props:any) => {
 
       />
       <SpeedDial.Action
-        icon={<Icon name="cloud-upload-sharp" type='ionicon' style={styles.itemIcon} />}
+        icon={(!isSyncing) ? <Icon name="cloud-upload-sharp" type='ionicon' style={styles.itemIcon} /> : <Icon name="spinner" type='font-awesome' style={styles.itemIcon} />}
         title="Sync"
         onPress={() => onClickAction('sync')}
         color={COLORS.gold}
@@ -199,7 +206,7 @@ const FABMenu = (props:any) => {
         color={COLORS.gold}
       />
       <SpeedDial.Action
-        icon={<Icon name="speedometer-sharp" type='ionicon' style={styles.itemIcon} />}
+        icon={(!isResettingOdometer) ? <Icon name="speedometer-sharp" type='ionicon' style={styles.itemIcon} /> : <Icon name="spinner" type='font-awesome' style={styles.itemIcon} />}
         onPress={() => onClickAction('resetOdometer')}
         title="Reset odometer"
         color={COLORS.gold}

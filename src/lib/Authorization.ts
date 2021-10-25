@@ -7,8 +7,7 @@ import BackgroundGeolocation, {
 
 import ENV from "../ENV";
 
-let onHttp:any = null;
-
+let onHttpSubscription:any = null;
 /**
 * If the app registers for a TransistorAuthorizationToken while disconnected from network, the app configures an accessToken: "DUMMY_TOKEN".
 * When the server receives a DUMMY_TOKEN, it will return an HTTP status "406 Unacceptable".  This is the signal to re-register for a token.
@@ -60,29 +59,22 @@ async function goHome(navigation:any) {
 export async function registerTransistorAuthorizationListener(navigation:any) {
   console.log('[Authorization registerTransistorAuthorizationHandler]');
   // If we already have a listener, remove it.
-  if (typeof(onHttp) === 'function') {
-	  await BackgroundGeolocation.removeListener('http', onHttp);
+  if (onHttpSubscription !== null) {
+    onHttpSubscription.remove();
   }
-
-  setTimeout(() => {
-    // The BackgroundGeolocation onHttp listener.
-    onHttp = async (event:HttpEvent) => {
-      switch(event.status) {
-        case 403:
-        case 406:
-          await BackgroundGeolocation.destroyTransistorAuthorizationToken(ENV.TRACKER_HOST);
-          let token = await register(navigation);
-          if (token.accessToken != 'DUMMY_TOKEN') {
-            BackgroundGeolocation.sync();
-          }
-          break;
-        case 410:
-          goHome(navigation);
-          break;
-      }
-
+  onHttpSubscription = BackgroundGeolocation.onHttp(async (event:HttpEvent) => {
+    switch(event.status) {
+      case 403:
+      case 406:
+        await BackgroundGeolocation.destroyTransistorAuthorizationToken(ENV.TRACKER_HOST);
+        let token = await register(navigation);
+        if (token.accessToken != 'DUMMY_TOKEN') {
+          BackgroundGeolocation.sync();
+        }
+        break;
+      case 410:
+        goHome(navigation);
+        break;
     }
-
-	  BackgroundGeolocation.onHttp(onHttp);
-  }, 500);
+  });
 }
