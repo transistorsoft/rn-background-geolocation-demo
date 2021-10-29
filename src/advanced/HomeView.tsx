@@ -51,15 +51,16 @@ const HomeView = ({route, navigation}) => {
   /// Init BackgroundGeolocation when view renders.
   React.useEffect(() => {
     // Register BackgroundGeolocation event-listeners.
+
+    // For printing odometer in bottom toolbar.
     const locationSubscriber:any = BackgroundGeolocation.onLocation(setLocation, (error) => {
       console.warn('[onLocation] ERROR: ', error);
     });
-
+    // Auto-toggle [ play ] / [ pause ] button in bottom toolbar on motionchange events.
     const motionChangeSubscriber:any = BackgroundGeolocation.onMotionChange((location) => {
-      // Auto-toggle [ > ] / [ || ] button in bottom toolbar.
       setIsMoving(location.isMoving);
     });
-
+    // For printing the motion-activity in bottom toolbar.
     const activityChangeSubscriber:any = BackgroundGeolocation.onActivityChange(setMotionActivityEvent);
 
     // Configure BackgroundGeolocation.ready().
