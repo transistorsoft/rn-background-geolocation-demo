@@ -16,7 +16,9 @@ import BackgroundGeolocation, {
   Notification,
   DeviceInfo,
   Authorization, AuthorizationEvent,
-  TransistorAuthorizationToken
+  TransistorAuthorizationToken,
+  Subscription
+
 } from "react-native-background-geolocation";
 
 ////
@@ -44,5 +46,6 @@ export type {
   Notification,
   DeviceInfo,
   Authorization, AuthorizationEvent,
-  TransistorAuthorizationToken
+  TransistorAuthorizationToken,
+  Subscription
 };

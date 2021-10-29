@@ -13,7 +13,7 @@ import {Button, Switch, Icon} from "react-native-elements";
 import ENV from "../ENV";
 import {COLORS} from "../lib/config";
 
-import BackgroundGeolocation from "../react-native-background-geolocation";
+import BackgroundGeolocation, {Subscription} from "../react-native-background-geolocation";
 import {registerTransistorAuthorizationListener} from '../lib/Authorization';
 
 //////
@@ -23,7 +23,7 @@ import {registerTransistorAuthorizationListener} from '../lib/Authorization';
 const HelloWorldView = ({route, navigation}) => {
   // Keep a list of BackgroundGeolocation event-subscriptions so we can later remove them
   // when the View is destroyed or refreshed during development live-reload.
-  const bgGeoEventSubscriptions:any[] = [];
+  const bgGeoEventSubscriptions:Subscription[] = [];
 
   const {org, username} = route.params;
 
@@ -54,13 +54,13 @@ const HelloWorldView = ({route, navigation}) => {
   }, [enabled]);
 
   /// Helper method to push a BackgroundGeolocation subscription onto our list of subscribers.
-  const subscribe = (subscription:any) => {
+  const subscribe = (subscription:Subscription) => {
     bgGeoEventSubscriptions.push(subscription);
   }
 
   /// Helper method to unsubscribe from all registered BackgroundGeolocation event-listeners.
   const unsubscribe = () => {
-    bgGeoEventSubscriptions.forEach((subscriber) => subscriber.remove() );
+    bgGeoEventSubscriptions.forEach((subscription:Subscription) => subscription.remove() );
   }
 
   /// Configure the BackgroundGeolocation plugin.
@@ -137,7 +137,7 @@ const HelloWorldView = ({route, navigation}) => {
   };
 
   /// Adds events to List
-  const addEvent = (name, params) => {
+  const addEvent = (name:string, params:any) => {
     let timestamp = new Date();
     const event = {
       expanded: false,

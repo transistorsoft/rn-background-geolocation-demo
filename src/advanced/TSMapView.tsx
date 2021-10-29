@@ -98,10 +98,12 @@ const TSMapView = (props) => {
   /// [Helper] Iterate BackgroundGeolocation subscriptions and .remove() each.
   const unsubscribe = () => {
     subscriptions.forEach((subscription:any) => subscription.remove());
+    subscriptions.splice(0, subscriptions.length);
   }
 
   /// Register BackgroundGeolocation event-listeners.
   React.useEffect(() => {
+
     BackgroundGeolocation.getState().then((state:State) => {
       setEnabled(state.enabled);
     });
