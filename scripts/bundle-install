@@ -1,0 +1,56 @@
+#!/bin/bash
+
+environment="debug"
+
+if [ -z "$1" ]
+then
+  echo "You may provide an 'environment' as 1st arg:  debug | release.  Defaulting to debug"
+else
+  # Strip trailing /
+  environment=$(echo $1 | tr -s /)
+  environment=${environment%/}
+fi
+
+dev="false"
+
+if [[ "$environment" == "debug" ]]; then
+  dev="true"
+fi
+
+echo "npx react-native bundle --platform android --dev $dev"
+
+# Have to make sure this dir exists, sucks.
+assets_path="./android/app/src/main/assets"
+if [ ! -d "$assets_path" ]
+then
+    mkdir "$assets_path"
+fi
+
+environment=`echo ${environment:0:1} | tr  '[a-z]' '[A-Z]'`${environment:1}
+
+cmd="install$environment"
+
+# And away we go:  Bundle the RN Javascript!
+npx react-native bundle --platform android \
+  --dev "$dev" \
+  --entry-file index.js \
+  --bundle-output ./android/app/src/main/assets/index.android.bundle \
+  --assets-dest ./android/app/src/main/res
+
+# Remove resources or you get "Duplicate Resource error"
+# https://stackoverflow.com/questions/53239705/react-native-error-duplicate-resources-android
+rm -rf ./android/app/src/main/res/drawable-*
+rm -rf ./android/app/src/main/res/raw/
+
+# Now ./gradlew
+cd android
+echo ""
+echo "./gradlew $cmd"
+
+./gradlew "$cmd"
+
+
+
+
+
+

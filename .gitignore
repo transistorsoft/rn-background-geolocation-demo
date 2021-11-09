@@ -61,3 +61,7 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# For running ./scripts/bundle-install, we manually create this folder
+android/app/src/main/assets
+
