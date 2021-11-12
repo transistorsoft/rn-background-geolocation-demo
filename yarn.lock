@@ -999,10 +999,10 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@react-native-async-storage/async-storage@^1.15.9":
-  version "1.15.9"
-  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.15.9.tgz#744ecd566f108e86b6b59e617c23fdb4b8d53358"
-  integrity sha512-LrVPfhKqodRiDWCgZp7J2X55JQqOhdQUxbl17RrktIGCZ0ud2XHdNoTIvyI1VccqHoF/CZK6v+G0IoX5NYZ1JA==
+"@react-native-async-storage/async-storage@^1.15.11":
+  version "1.15.11"
+  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.15.11.tgz#da625b906529076414c32fd337d813b565149858"
+  integrity sha512-l/I+PK+lh5M25QSdk44aX+UR63ian2d2CSx6WbydwU+RUZmKP7eOEPe+OeaTWgfOFSVtlEqEcP2AbW2YM7ukMA==
   dependencies:
     merge-options "^3.0.4"
 
@@ -5492,6 +5492,11 @@ react-devtools-core@^4.13.0:
     shell-quote "^1.6.1"
     ws "^7"
 
+react-freeze@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-freeze/-/react-freeze-1.0.0.tgz#b21c65fe1783743007c8c9a2952b1c8879a77354"
+  integrity sha512-yQaiOqDmoKqks56LN9MTgY06O0qQHgV4FUrikH357DydArSZHQhl0BJFqGKIZoTqi8JizF9Dxhuk1FIZD6qCaw==
+
 "react-is@^16.12.0 || ^17.0.0", react-is@^17.0.1, react-is@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
@@ -5507,10 +5512,10 @@ react-native-background-fetch@^4.0.4, react-native-background-fetch@~4.0.4:
   resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-4.0.4.tgz#2a7a29bc24ec1e740f9457ccf7108766957d9f24"
   integrity sha512-vGcsIbv5TXblIqBonsMw1dbh/x/1np1NTMArLVz5rjdgUu330pc4o7X6VTxCWtzadajz0Fe1Y71xqXylpmBekA==
 
-react-native-background-geolocation@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-4.4.2.tgz#436dc5b40ea63e8061bccf6d0f512d9f0411b426"
-  integrity sha512-P0iDfp3Sk+Zid90XRhKEy5phZCvnusdGfh8VdfDb9UNLl0+NQT7UuOaHovldIuri6PnhNfN2DLKXP+LQkplXyw==
+react-native-background-geolocation@^4.4.4:
+  version "4.4.4"
+  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-4.4.4.tgz#dfd9aa959c2e383c292fa04eea998029c9a5c4a6"
+  integrity sha512-c8G0bze/dEt9BnzHpYnO9LmLwn1tNGX6JbO41/yeogYrb/IMTHeJpRZFnrQwZ2g3uHIrdRhvV/snnegl2DdpQg==
   dependencies:
     react-native-background-fetch "~4.0.4"
 
@@ -5542,10 +5547,10 @@ react-native-elements@^3.4.2:
     react-native-ratings "8.0.4"
     react-native-size-matters "^0.3.1"
 
-react-native-maps@^0.29.3:
-  version "0.29.3"
-  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.29.3.tgz#ab873fa5e7301c29f07886df5f3cbef667d46cca"
-  integrity sha512-742ipC71NdGHXmrCHPY9SEGDuKoSx2l0RMC1W9WXe/jd6+Eg5OllRBcR6Y+ORnzvuYZrd0Hj6q6bK3QR5ZL8sA==
+react-native-maps@^0.29.4:
+  version "0.29.4"
+  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.29.4.tgz#eb4a446104ed2aca5361422d06712f26d4c0d562"
+  integrity sha512-Td2KE8+KODcHOxfB1GBNnzFo4/89rlLiC7yTvqQZh0tGVrEzIcgSleUZRrjtq/WvSWSR4rql4AS+0VsBgDkYrw==
   dependencies:
     "@types/geojson" "^7946.0.7"
 
@@ -5565,11 +5570,12 @@ react-native-safe-area-context@^3.3.2:
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.3.2.tgz#9549a2ce580f2374edb05e49d661258d1b8bcaed"
   integrity sha512-yOwiiPJ1rk+/nfK13eafbpW6sKW0jOnsRem2C1LPJjM3tfTof6hlvV5eWHATye3XOpu2cJ7N+HdkUvUDGwFD2Q==
 
-react-native-screens@^3.8.0:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.8.0.tgz#4ec84c55a7b4a4aa9405c812978ca2ba5c0242a4"
-  integrity sha512-lHrnB/elAoMJKv8O12U6BLgeup4lB6ZKJHEOVuG/D72nv/OE9wUusbou6YCB5tp3YbaSpHflPnkFmHA/vCejpw==
+react-native-screens@^3.9.0:
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.9.0.tgz#39b79f0e50b9d68ec822d333bc76e7aaee90f3fd"
+  integrity sha512-TP/kASLQ/2iGCz4/n9CHeveKC9urzbfYXFH+1TfBnqaBwjIszhVuadiIOQ0qWKdSs6qnBR2xPTp9U18sNoc34A==
   dependencies:
+    react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
 react-native-size-matters@^0.3.1:
@@ -5577,10 +5583,10 @@ react-native-size-matters@^0.3.1:
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.3.1.tgz#24d0cfc335a2c730f6d58bd7b43ea5a41be4b49f"
   integrity sha512-mKOfBLIBFBcs9br1rlZDvxD5+mAl8Gfr5CounwJtxI6Z82rGrMO+Kgl9EIg3RMVf3G855a85YVqHJL2f5EDRlw==
 
-react-native-vector-icons@^8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-8.1.0.tgz#e8ee2b17bc4d9f636da1c6f67feee8e2a850c3d8"
-  integrity sha512-sHIdBB6Y0dHaot2fMXgy5J/hhCn5YuyN7SKDNFgPzL8KA1oF2/v7mgYMavnK7LIIs2dJoGnDANKf61dsU+TZlg==
+react-native-vector-icons@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-9.0.0.tgz#ab38ec6941f3f340d39846f1e8300e59863e2fb1"
+  integrity sha512-qKX5d5/TafHmI4B7UOSZCL3BAGh7ZfF30iLwRgxBkKfZl2lKSuHp8Ottj9OyWh9b5fFtlg+LtyvZrns3g2kh+w==
   dependencies:
     lodash.frompairs "^4.0.1"
     lodash.isequal "^4.5.0"
@@ -5591,10 +5597,10 @@ react-native-vector-icons@^8.1.0:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
-react-native@0.66.0:
-  version "0.66.0"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.66.0.tgz#99bdd83a9a612a71b94242767989d666d445b007"
-  integrity sha512-m26TKwzsfHVdZ1hDG+7mZ4M4ftxFFZrhtiT0OXuwfBzmNtB3xhsJtYszPeizw33c9YNp8rvehKT3c4ldDCW6kA==
+react-native@0.66.3:
+  version "0.66.3"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.66.3.tgz#25c7c4c7d81867326b3eb7a36f0fe6a61fa4104e"
+  integrity sha512-B/dQpuvta9YvF5MihDWefoGlTvxzUHK5X5RjdrXHAu/ihTehJXxEA+m6z/tufp1ZUMDjU+tMZK6gnehzCuYfzw==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^6.0.0"
