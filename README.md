@@ -14,6 +14,7 @@ Fully-featured, React Native demo application for [React Native Background Geolo
   yarn install
 // <or with npm>
   npm install
+  npx pod-install
 ```
 
 Now run it:
@@ -24,9 +25,8 @@ Now run it:
 
 :warning: If you get an iOS build error, this usually fixes it:
 ```bash
-  cd ios
-  rm Podfile.lock
-  pod install
+  rm ios/Podfile.lock
+  npx pod-install
 ```
 
 The quickest way to see the plugin in-action is to boot the **iOS** simulator and *simulate location* with *Freeway Drive*.

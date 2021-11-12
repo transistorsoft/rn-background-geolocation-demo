@@ -10,21 +10,21 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.15.9",
+    "@react-native-async-storage/async-storage": "^1.15.11",
     "@react-navigation/elements": "^1.1.2",
     "@react-navigation/native": "^6.0.4",
     "@react-navigation/native-stack": "^6.2.2",
     "react": "17.0.2",
-    "react-native": "0.66.0",
+    "react-native": "0.66.3",
     "react-native-background-fetch": "^4.0.4",
-    "react-native-background-geolocation": "^4.4.2",
+    "react-native-background-geolocation": "^4.4.4",
     "react-native-dropdown-picker": "^5.1.28",
     "react-native-elements": "^3.4.2",
-    "react-native-maps": "^0.29.3",
+    "react-native-maps": "^0.29.4",
     "react-native-prompt-android": "https://github.com/transistorsoft/react-native-prompt-android.git",
     "react-native-safe-area-context": "^3.3.2",
-    "react-native-screens": "^3.8.0",
-    "react-native-vector-icons": "^8.1.0"
+    "react-native-screens": "^3.9.0",
+    "react-native-vector-icons": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
