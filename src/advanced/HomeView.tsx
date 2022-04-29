@@ -26,6 +26,8 @@ import BackgroundGeolocation, {
   MotionActivityEvent
 } from "../react-native-background-geolocation";
 
+import BackgroundFetch from "react-native-background-fetch";
+
 import SettingsService from './lib/SettingsService';
 import FABMenu from './FABMenu';
 import TSMapView from './TSMapView';
@@ -62,6 +64,9 @@ const HomeView = ({route, navigation}) => {
     });
     // For printing the motion-activity in bottom toolbar.
     const activityChangeSubscriber:any = BackgroundGeolocation.onActivityChange(setMotionActivityEvent);
+
+    // Configure BackgroundFetch (optional)
+    initBackgroundFetch();
 
     // Configure BackgroundGeolocation.ready().
     initBackgroundGeolocation();
@@ -153,10 +158,23 @@ const HomeView = ({route, navigation}) => {
       enableHeadless: true
     });
 
+
     setOdometer(state.odometer);
     setEnabled(state.enabled);
     setIsMoving(state.isMoving||false);  // <-- TODO re-define @prop isMoving? as REQUIRED in State
   };
+
+  const initBackgroundFetch = async () => {
+    await BackgroundFetch.configure({
+      minimumFetchInterval: 15,
+      stopOnTerminate: true
+    }, (taskId) => {
+      console.log('[BackgroundFetch] ', taskId);
+      BackgroundFetch.finish(taskId);
+    }, (taskId) => {
+      BackgroundFetch.finish(taskId);
+    });
+  }
 
   /// <Switch> handler to toggle the plugin on/off.
   const onClickEnable = (value:boolean) => {

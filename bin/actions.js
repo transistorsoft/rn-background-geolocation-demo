@@ -36,7 +36,7 @@ function link() {
   const path   = require('path');
   const rimraf = require("rimraf");
 
-  const SRC_ROOT            = path.join('/Volumes/Glyph2TB/Users/chris/workspace/react/background-geolocation');
+  const SRC_ROOT            = path.join('/Users/chris/workspace/react/background-geolocation');
   const MODULE_NAME         = "react-native-background-geolocation";
   const SRC_MODULE          = path.join(SRC_ROOT, MODULE_NAME + "-android");
   const NODE_MODULES        = path.join('.', 'node_modules');
