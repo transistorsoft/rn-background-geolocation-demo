@@ -825,8 +825,7 @@ export default class SettingsService {
       }
     }];
 
-    await BackgroundGeolocation.removeGeofences();
-    await BackgroundGeolocation.addGeofences(geofences);
+
     await BackgroundGeolocation.resetOdometer();
 
     let orgname = await AsyncStorage.getItem('orgname') || '';
@@ -852,7 +851,7 @@ export default class SettingsService {
         negativeAction: 'Cancel'
       },
       schedule: [
-        //'2-6 09:00-17:00'
+        //'1-6 09:00-17:00'
       ],
       scheduleUseAlarmManager: true,
       maxDaysToPersist: 14,
@@ -862,8 +861,14 @@ export default class SettingsService {
       enableHeadless: true,
       heartbeatInterval: -1
     });
-    await BackgroundGeolocation.stopSchedule();
+
+    await BackgroundGeolocation.removeGeofences();
+    await BackgroundGeolocation.addGeofences(geofences);
+
+    //await BackgroundGeolocation.stopSchedule();
+    //await BackgroundGeolocation.startSchedule();
   }
+
 
   /**
   * Helper method to play a UI sound via BackgroundGeolocation#playSound

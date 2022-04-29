@@ -16,6 +16,8 @@ import {COLORS} from "../lib/config";
 import BackgroundGeolocation, {Subscription} from "../react-native-background-geolocation";
 import {registerTransistorAuthorizationListener} from '../lib/Authorization';
 
+import BackgroundFetch from "react-native-background-fetch";
+
 //////
 /// A simple implementation of the BackgroundGeolocation plugin.
 ///
@@ -34,6 +36,7 @@ const HelloWorldView = ({route, navigation}) => {
   /// Init BackgroundGeolocation when view renders.
   /// Return a function to .removeListeners() When view is removed.
   React.useEffect(() => {
+    initBackgroundFetch();  // <-- optional
     initBackgroundGeolocation();
     registerTransistorAuthorizationListener(navigation);
     return () => {
@@ -135,6 +138,19 @@ const HelloWorldView = ({route, navigation}) => {
     setEnabled(state.enabled);
 
   };
+
+  const initBackgroundFetch = async () => {
+    await BackgroundFetch.configure({
+      minimumFetchInterval: 15,
+      stopOnTerminate: true
+    }, (taskId) => {
+      console.log('[BackgroundFetch] ', taskId);
+      BackgroundFetch.finish(taskId);
+    }, (taskId) => {
+      console.log('[BackgroundFetch] TIMEOUT: ', taskId);
+      BackgroundFetch.finish(taskId);
+    });
+  }
 
   /// Adds events to List
   const addEvent = (name:string, params:any) => {
