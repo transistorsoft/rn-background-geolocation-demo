@@ -13,6 +13,7 @@ import {
   SafeAreaView,
   Switch,
   TouchableHighlight,
+  AppState
 } from 'react-native';
 
 import {
@@ -73,6 +74,9 @@ const HomeView = ({route, navigation}) => {
 
     // Boilerplate authorization-listener for tracker.transistorsoft.com (nothing interesting)
     registerTransistorAuthorizationListener(navigation);
+
+    AppState.addEventListener('change', _handleAppStateChange);
+
     return () => {
       // When view is destroyed (or refreshed with dev live-reload),
       // Remove BackgroundGeolocation event-listeners.
@@ -121,6 +125,13 @@ const HomeView = ({route, navigation}) => {
     }
   }, [testClicks]);
 
+  const _handleAppStateChange = async (nextAppState) => {
+    console.log('[_handleAppStateChange]', nextAppState);
+    if (nextAppState === 'background') {
+      // App entered background.
+    }
+  }
+
   /// Configure BackgroundGeolocation.ready
   const initBackgroundGeolocation = async () => {
     // Get an authorization token from transistorsoft demo server.
@@ -164,23 +175,29 @@ const HomeView = ({route, navigation}) => {
     setIsMoving(state.isMoving||false);  // <-- TODO re-define @prop isMoving? as REQUIRED in State
   };
 
-  const initBackgroundFetch = async () => {
-    await BackgroundFetch.configure({
+  const initBackgroundFetch = async() => {
+    BackgroundFetch.configure({
       minimumFetchInterval: 15,
-      stopOnTerminate: true
-    }, (taskId) => {
-      console.log('[BackgroundFetch] ', taskId);
+      enableHeadless: true,
+      stopOnTerminate: false
+    }, async (taskId) => {
+      console.log('[BackgroundFetch]', taskId);
       BackgroundFetch.finish(taskId);
     }, (taskId) => {
+      console.log('[BackgroundFetch] TIMEOUT:', taskId);
       BackgroundFetch.finish(taskId);
     });
   }
-
   /// <Switch> handler to toggle the plugin on/off.
-  const onClickEnable = (value:boolean) => {
+  const onClickEnable = async (value:boolean) => {
+    let state = await BackgroundGeolocation.getState();
     setEnabled(value);
     if (value) {
-      BackgroundGeolocation.start();
+      if (state.trackingMode == 1) {
+        BackgroundGeolocation.start();
+      } else {
+        BackgroundGeolocation.startGeofences();
+      }
     } else {
       BackgroundGeolocation.stop();
       // Toggle the [ > ] / [ || ] button in bottom-toolbar back to [ > ]
