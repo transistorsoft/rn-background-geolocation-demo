@@ -1,5 +1,5 @@
 const ENV = {
-	TRACKER_HOST: 'http://tracker.transistorsoft.com'
+	TRACKER_HOST: 'https://tracker.transistorsoft.com'
 };
 
 export default ENV;
