@@ -13,7 +13,8 @@ import {
   SafeAreaView,
   Switch,
   TouchableHighlight,
-  AppState
+  AppState,
+  Platform
 } from 'react-native';
 
 import {
@@ -245,7 +246,7 @@ const HomeView = ({route, navigation}) => {
           <TouchableHighlight onPress={() => setTestClicks(testClicks + 1)} underlayColor="transparent">
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
               <Text style={styles.statusBar}>{(motionActivityEvent) ? motionActivityEvent.activity : 'unknown'}</Text>
-              <Text>&nbsp;•&nbsp;</Text>
+              <Text style={{color: '#000'}}>&nbsp;•&nbsp;</Text>
               <Text style={styles.statusBar}>{(odometer/1000).toFixed(1)}km</Text>
             </View>
           </TouchableHighlight>
@@ -278,6 +279,7 @@ var styles = StyleSheet.create({
     flex: 1,
   },
   statusBar: {
-    fontSize: 16
+    fontSize: 16,
+    color: '#000'
   }
 });

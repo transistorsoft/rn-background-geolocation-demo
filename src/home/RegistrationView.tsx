@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ENV from "../ENV";
 import SettingsService from "../advanced/lib/SettingsService";
 import BackgroundGeolocation from "../react-native-background-geolocation";
+import COLORS from "../lib/config";
 
 const USERNAME_VALIDATOR =  /^[a-zA-Z0-9_-]*$/;
 const ERROR_MESSAGE = "Invalid format.  Do not use spaces or special characters";
@@ -131,6 +132,7 @@ export default RegistrationView;
 const styles = StyleSheet.create({
   device: {
     fontWeight: 'bold',
+    color: '#000',
     fontStyle: 'italic',
     fontSize: 20,
     textAlign: 'center',
@@ -140,10 +142,12 @@ const styles = StyleSheet.create({
     padding: 0
   },
   bodyText: {
-    marginBottom: 10
+    marginBottom: 10,
+    color: '#000'
   },
   url: {
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#36c'
   }
 });

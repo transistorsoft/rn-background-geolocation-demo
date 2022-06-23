@@ -3,7 +3,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Linking
+  Linking,
+  Alert
 } from 'react-native';
 
 import {
@@ -78,6 +79,22 @@ const HomeView= ({route, navigation}) => {
       onClickRegister();
       return;
     }
+
+    // Have we shown the one-time Alert for "background permission disclosure"?
+    const hasDisclosedBackgroundPermission = await AsyncStorage.getItem('@transistorsoft:hasDisclosedBackgroundPermission') == 'true';
+
+    if ((Platform.OS === 'android') && !hasDisclosedBackgroundPermission) {
+      // For Google Play Console Submission:  "disclosure for background permission".
+      // This is just a simple one-time Alert.  This is your own responsibility to do this.
+      Alert.alert('Background Location Access', [
+        'BG Geo collects location data to enable tracking your trips to work and calculate distance travelled even when the app is closed or not in use.',
+        'This data will be uploaded to tracker.transistorsoft.com where you may view and/or delete your location history.'
+      ].join("\n\n"), [
+        {text: 'Close', onPress: () => {onDiscloseBackgroundPermission(route)}}
+      ]);
+      return;
+    }
+
     settingsService.playSound('OPEN');
     navigation.navigate(route, {
       screen: route,
@@ -88,6 +105,11 @@ const HomeView= ({route, navigation}) => {
     });
   };
 
+  const onDiscloseBackgroundPermission = async (route:string) => {
+    await AsyncStorage.setItem('@transistorsoft:hasDisclosedBackgroundPermission', 'true');
+    onClickNavigate(route);
+
+  }
   const onClickViewServer = async() => {
     if (!validate(route) || !validate(org) || !validate(username)) {
       // Re-direct to registration screen
@@ -125,8 +147,8 @@ const HomeView= ({route, navigation}) => {
 
       </View>
       <View style={{padding: 10, backgroundColor: "#fff"}}>
-        <Text style={{marginBottom: 10}}>These apps will post locations to Transistor Software's demo server.  You can view your tracking in the browser by visiting:</Text>
-        <Text style={{fontWeight: 'bold', textAlign: 'center', marginBottom: 10}}>{ENV.TRACKER_HOST}/{org}</Text>
+        <Text style={{marginBottom: 10, color: COLORS.black}}>These apps will post locations to Transistor Software's demo server.  You can view your tracking in the browser by visiting:</Text>
+        <Text style={{fontWeight: 'bold', textAlign: 'center', marginBottom: 10, color: COLORS.black}}>{ENV.TRACKER_HOST}/{org}</Text>
         <View style={{flexDirection: 'row', marginBottom: 10, height: 50}}>
           <Icon
             name='person-circle-outline'
@@ -135,12 +157,12 @@ const HomeView= ({route, navigation}) => {
           />
           <View style={{flex: 1, marginLeft: 10}}>
             <View style={{flexDirection: 'row'}}>
-              <Text style={{fontWeight: 'bold', width: 75}}>Org:</Text>
-              <Text style={{flex: 1}}>{org}</Text>
+              <Text style={{fontWeight: 'bold', width: 75, color: COLORS.black}}>Org:</Text>
+              <Text style={{flex: 1, color: COLORS.black}}>{org}</Text>
             </View>
             <View style={{flexDirection: 'row'}}>
-              <Text style={{fontWeight: 'bold', width: 75}}>Device ID:</Text>
-              <Text>{deviceModel}-{username}</Text>
+              <Text style={{fontWeight: 'bold', width: 75, color: COLORS.black}}>Device ID:</Text>
+              <Text style={{color: COLORS.black}}>{deviceModel}-{username}</Text>
             </View>
           </View>
 

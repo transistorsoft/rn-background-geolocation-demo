@@ -59,8 +59,9 @@ buck-out/
 # Bundle artifact
 *.jsbundle
 
-# CocoaPods
+# Ruby / CocoaPods
 /ios/Pods/
+/vendor/bundle/
 
 # For running ./scripts/bundle-install, we manually create this folder
 android/app/src/main/assets
