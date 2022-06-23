@@ -83,7 +83,7 @@ const HomeView= ({route, navigation}) => {
     // Have we shown the one-time Alert for "background permission disclosure"?
     const hasDisclosedBackgroundPermission = await AsyncStorage.getItem('@transistorsoft:hasDisclosedBackgroundPermission') == 'true';
 
-    if (!hasDisclosedBackgroundPermission) {
+    if ((Platform.OS === 'android') && !hasDisclosedBackgroundPermission) {
       // For Google Play Console Submission:  "disclosure for background permission".
       // This is just a simple one-time Alert.  This is your own responsibility to do this.
       Alert.alert('Background Location Access', [

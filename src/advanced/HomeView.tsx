@@ -13,7 +13,8 @@ import {
   SafeAreaView,
   Switch,
   TouchableHighlight,
-  AppState
+  AppState,
+  Platform
 } from 'react-native';
 
 import {
