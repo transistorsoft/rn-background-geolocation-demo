@@ -1,0 +1,4 @@
+#!/bin/sh
+
+adb shell "run-as com.transistorsoft.backgroundgeolocation.react cat /data/user/0/com.transistorsoft.backgroundgeolocation.react/databases/transistor_logback.db" > transistor_logback.db
+
