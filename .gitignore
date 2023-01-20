@@ -66,3 +66,5 @@ buck-out/
 # For running ./scripts/bundle-install, we manually create this folder
 android/app/src/main/assets
 
+tmp
+transistor_logback.db
