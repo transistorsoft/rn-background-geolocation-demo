@@ -183,8 +183,17 @@ const HomeView = ({route, navigation}) => {
       stopOnTerminate: false
     }, async (taskId) => {
       console.log('[BackgroundFetch]', taskId);
+      const location = await BackgroundGeolocation.getCurrentPosition({
+        extras: {
+          "background-fetch": true
+        },
+        persist: true,
+        timeout: 30,
+        samples: 2
+      });
+      console.log('[getCurrentPosition]', location);
       BackgroundFetch.finish(taskId);
-    }, (taskId) => {
+    }, async (taskId) => {
       console.log('[BackgroundFetch] TIMEOUT:', taskId);
       BackgroundFetch.finish(taskId);
     });
@@ -212,8 +221,9 @@ const HomeView = ({route, navigation}) => {
 
     BackgroundGeolocation.getCurrentPosition({
       persist: true,
-      samples: 1,
+      samples: 2,
       timeout: 30,
+      persist: true,
       extras: {
         getCurrentPosition: true
       }

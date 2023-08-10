@@ -267,6 +267,7 @@ const styles = StyleSheet.create({
   },
   params: {
     fontFamily: 'Courier',
+    color: '#000',
     padding: 5
   },
   bottomToolbar: {
