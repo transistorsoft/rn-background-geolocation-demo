@@ -354,14 +354,14 @@ PODS:
     - React-jsi (= 0.68.5)
     - React-logger (= 0.68.5)
     - React-perflogger (= 0.68.5)
-  - RNBackgroundFetch (4.1.7):
+  - RNBackgroundFetch (4.1.10):
     - React-Core
-  - RNBackgroundGeolocation (4.9.5):
+  - RNBackgroundGeolocation (4.12.0):
     - CocoaLumberjack (~> 3.7.2)
     - React-Core
-  - RNCAsyncStorage (1.17.11):
+  - RNCAsyncStorage (1.18.0):
     - React-Core
-  - RNScreens (3.18.2):
+  - RNScreens (3.20.0):
     - React-Core
     - React-RCTImage
   - RNVectorIcons (9.2.0):
@@ -579,10 +579,10 @@ SPEC CHECKSUMS:
   React-RCTVibration: 9819a3bf6230e4b2a99877c21268b0b2416157a1
   React-runtimeexecutor: b1f1995089b90696dbc2a7ffe0059a80db5c8eb1
   ReactCommon: 149e2c0acab9bac61378da0db5b2880a1b5ff59b
-  RNBackgroundFetch: 13fbe7b23d4a082eac8caa7b08c5bcbeabd92f79
-  RNBackgroundGeolocation: 36556cb7690b95928c9936663f2ec176be70ae21
-  RNCAsyncStorage: 8616bd5a58af409453ea4e1b246521bb76578d60
-  RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
+  RNBackgroundFetch: 9fcdeee8aa00e1e1b3895ff9bbaaf10275288a87
+  RNBackgroundGeolocation: ef78e7fd69eab7b46c54925eb362d73656853a10
+  RNCAsyncStorage: a46ee6bf15cf1ba863d0a47287236f9c95d5b213
+  RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: c4d61225a466f250c35c1ee78d2d0b3d41fe661c

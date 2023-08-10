@@ -18,7 +18,6 @@ import BackgroundGeolocation, {
   Authorization, AuthorizationEvent,
   TransistorAuthorizationToken,
   Subscription
-
 } from "react-native-background-geolocation";
 
 ////
