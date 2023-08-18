@@ -862,7 +862,7 @@ export default class SettingsService {
       heartbeatInterval: -1
     });
 
-    await BackgroundGeolocation.removeGeofences();
+    //await BackgroundGeolocation.removeGeofences();
     await BackgroundGeolocation.addGeofences(geofences);
 
     //await BackgroundGeolocation.stopSchedule();
