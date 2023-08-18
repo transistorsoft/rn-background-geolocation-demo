@@ -67,6 +67,10 @@ const HomeView = ({route, navigation}) => {
     // For printing the motion-activity in bottom toolbar.
     const activityChangeSubscriber:any = BackgroundGeolocation.onActivityChange(setMotionActivityEvent);
 
+    const notificationActionSubscriber:any = BackgroundGeolocation.onNotificationAction((button) => {
+      console.log('[onNotificationAction]', button);
+    });
+
     // Configure BackgroundFetch (optional)
     initBackgroundFetch();
 
@@ -84,6 +88,7 @@ const HomeView = ({route, navigation}) => {
       locationSubscriber.remove();
       motionChangeSubscriber.remove();
       activityChangeSubscriber.remove();
+      notificationActionSubscriber.remove();
     }
   }, []);
 
@@ -187,6 +192,7 @@ const HomeView = ({route, navigation}) => {
         extras: {
           "background-fetch": true
         },
+        maximumAge: 10000,
         persist: true,
         timeout: 30,
         samples: 2
@@ -223,7 +229,7 @@ const HomeView = ({route, navigation}) => {
       persist: true,
       samples: 2,
       timeout: 30,
-      persist: true,
+      maximumAge: 10000,
       extras: {
         getCurrentPosition: true
       }
