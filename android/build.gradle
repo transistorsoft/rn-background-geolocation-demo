@@ -27,7 +27,10 @@ buildscript {
 
 allprojects {
     repositories {
-        mavenLocal()
+        // It's been reported that some people might require mavenLocal() repo here.
+        // I leave it disabled for now.
+        //mavenLocal()
+
         // Required for react-native-background-geolocation
         maven { url("${project(':react-native-background-geolocation').projectDir}/libs") }
         maven { url 'https://developer.huawei.com/repo/' }
