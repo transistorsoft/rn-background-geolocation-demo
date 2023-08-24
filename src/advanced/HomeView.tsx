@@ -71,6 +71,23 @@ const HomeView = ({route, navigation}) => {
       console.log('[onNotificationAction]', button);
     });
 
+    const heartbeatSubscriber:any = BackgroundGeolocation.onHeartbeat(async (event) => {
+      const taskId = await BackgroundGeolocation.startBackgroundTask();
+      try {
+        const location = await BackgroundGeolocation.getCurrentPosition({
+          samples: 2,
+          timeout: 10,
+          extras: {
+            "event": "heartbeat"
+          }
+        });
+        console.log('[heartbeat] getCurrentPosition', location);
+      } catch(error) {
+        console.log('[getCurrentPosition] ERROR: ', error);
+      }
+      BackgroundGeolocation.stopBackgroundTask(taskId);
+    });
+
     // Configure BackgroundFetch (optional)
     initBackgroundFetch();
 
@@ -190,7 +207,7 @@ const HomeView = ({route, navigation}) => {
       console.log('[BackgroundFetch]', taskId);
       const location = await BackgroundGeolocation.getCurrentPosition({
         extras: {
-          "background-fetch": true
+          "event": "background-fetch"
         },
         maximumAge: 10000,
         persist: true,
