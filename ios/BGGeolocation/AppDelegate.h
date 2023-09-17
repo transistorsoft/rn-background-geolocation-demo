@@ -4,4 +4,3 @@
 @interface AppDelegate : RCTAppDelegate
 
 @end
-

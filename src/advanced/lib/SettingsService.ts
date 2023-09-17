@@ -825,7 +825,17 @@ export default class SettingsService {
       }
     }];
 
-
+    geofences = [{
+      identifier: 'Home',
+      notifyOnExit: true,
+      notifyOnEntry: true,
+      vertices: [
+        [45.517731,-73.606035],
+        [45.522155,-73.602184],
+        [45.519453,-73.595895],
+        [45.515314,-73.600494]
+      ]
+    }]
     await BackgroundGeolocation.resetOdometer();
 
     let orgname = await AsyncStorage.getItem('orgname') || '';

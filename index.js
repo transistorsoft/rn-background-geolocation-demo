@@ -25,15 +25,17 @@ const BackgroundGeolocationHeadlessTask = async (event) => {
     case 'heartbeat':
       /**
       * Enable this block to execute #getCurrentPosition in headless heartbeat event (will consume more power)
-      *
+      */
       // Use await for async tasks
       const location = await BackgroundGeolocation.getCurrentPosition({
-        samples: 1,
-        persist: false
+        samples: 2,
+        persist: true,
+        extras: {
+          event: 'heartbeat',
+          headless: true
+        }
       });
       console.log('[BackgroundGeolocation HeadlessTask] - getCurrentPosition:', location);
-      *
-      */
       break;
     case 'authorization':
       BackgroundGeolocation.setConfig({
@@ -54,6 +56,15 @@ const BackgroundFetchHeadlessTask = async (event) => {
   console.log('[BackgroundFetch HeadlessTask] start', event.taskId);
 
   if (event.taskId == 'react-native-background-fetch') {
+    const location = await BackgroundGeolocation.getCurrentPosition({
+      samples: 2,
+      extras: {
+        event: 'background-fetch',
+        headless: true
+      }
+    });
+    console.log('[BackgroundFetch] getCurrentPosition: ', location);
+
     /*
     await BackgroundFetch.scheduleTask({
       taskId: 'com.transistorsoft.customtask',
