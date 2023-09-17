@@ -28,7 +28,8 @@
 
       <meta-data android:name="com.transistorsoft.locationmanager.license" android:value="eb8ee62a24ca51c5d4c87f4fad356fb8660a6ae401b9d95642f7b80e7cc59c06" />
       <meta-data android:name="com.transistorsoft.locationmanager.hms.license" android:value="b06590e9ec3def41145d33973670a9bcddc79274e9a46de971ce408cd102980d" />
-
+      <meta-data android:name="com.transistorsoft.locationmanager.polygon.license" android:value="35e9f2104963438fac4b5407f194c1fbd25a1ca571ca366d1d6578e306495c0d" />
+      
       <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCINS2dyuBipK8MZzOQnzyKdrS2I1_b5I4"/>
 
     </application>
