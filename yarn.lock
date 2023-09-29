@@ -1185,6 +1185,14 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@expo/react-native-action-sheet@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@expo/react-native-action-sheet/-/react-native-action-sheet-4.0.1.tgz#fa78e55a87a741f235be2c4ce0b0ea2b6afd06cf"
+  integrity sha512-FwCFpjpB6yzrK8CIWssLlh/i6zQFytFBiJfNdz0mJ2ckU4hWk8SrjB37P0Q4kF7w0bnIdYzPgRbdPR9hnfFqPw==
+  dependencies:
+    "@types/hoist-non-react-statics" "^3.3.1"
+    hoist-non-react-statics "^3.3.0"
+
 "@hapi/hoek@^9.0.0":
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.3.0.tgz#8368869dcb735be2e7f5cb7647de78e167a251fb"
@@ -1891,6 +1899,14 @@
   integrity sha512-Sig0SNORX9fdW+bQuTEovKj3uHcUL6LQKbCrrqb1X7J6/ReAbhCXRAhc+SMejhLELFj2QcyuxmUooZ4bt5ReSw==
   dependencies:
     "@types/node" "*"
+
+"@types/hoist-non-react-statics@^3.3.1":
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#dc1e9ded53375d37603c479cc12c693b0878aa2a"
+  integrity sha512-YIQtIg4PKr7ZyqNPZObpxfHsHEmuB8dXCxd6qVcGuQVDK2bpsF7bYNnBJ4Nn7giuACZg+WewExgrtAJ3XnA4Xw==
+  dependencies:
+    "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.4"
@@ -3766,7 +3782,7 @@ hermes-profile-transformer@^0.0.6:
   dependencies:
     source-map "^0.7.3"
 
-hoist-non-react-statics@^3.3.2:
+hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -5971,10 +5987,10 @@ react-native-background-fetch@^4.2.1, react-native-background-fetch@~4.2.1:
   resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-4.2.1.tgz#81351355973f676295cfbb7a7946d7d4902273b6"
   integrity sha512-UePBlP2Az6PWrIDCoGDYl0IlimvV+TFl/5XUmL4KIo7xPK7TSZru1nYHH7uskW2an5AW39ko3mbV2w/+1LxsnQ==
 
-react-native-background-geolocation@^4.13.3:
-  version "4.13.3"
-  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-4.13.3.tgz#ed7b6f21d047464c9a9e998764c6c496ebde9301"
-  integrity sha512-JCulQH7b7jsoFnTKLrp/lO1xtudOiFjP4p/fToHfvbMX5djfYLIQcWLNOMP5ABHVknXJ63kwNuRwOahM8jp79Q==
+react-native-background-geolocation@^4.14.0:
+  version "4.14.0"
+  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-4.14.0.tgz#a059fab249de53555b9d94b55580b35a950d9bd7"
+  integrity sha512-EDDRxx7+t1YX42KxFvTFJxdMxwdDmas3l0CpFOL600iOlGMO3MnVqNbg5SsBy8utB1+Bibk6dVJueeDZdo1Xkg==
   dependencies:
     react-native-background-fetch "~4.2.1"
 
@@ -5996,6 +6012,11 @@ react-native-elements@^3.4.3:
     opencollective-postinstall "^2.0.3"
     react-native-ratings "8.0.4"
     react-native-size-matters "^0.3.1"
+
+react-native-haptic-feedback@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-haptic-feedback/-/react-native-haptic-feedback-2.2.0.tgz#bc46edd1f053265bfbe6c32487cbce074e099429"
+  integrity sha512-3tqJOjCguWhIrX0nkURn4yw6kXdsSDjjrvZCRjKXYGlL28hdQmoW2okAHduDTD9FWj9lA+lHgwFWgGs4aFNN7A==
 
 react-native-maps@^1.7.1:
   version "1.7.1"

@@ -106,7 +106,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#fedd1e'
+    backgroundColor: 'transparent'
   },
   input: {
     height: 40,

@@ -41,7 +41,7 @@ const FABMenu = (props:Props) => {
   const settingsService = SettingsService.getInstance();
 
   /// FAB Menu handler.
-  const onClickMainMenu = (open:boolean) => {
+  const onClickMainMenu = (open:boolean) => {    
     setIsOpen(open);
     settingsService.playSound((open) ? 'OPEN' : 'CLOSE');
   }
