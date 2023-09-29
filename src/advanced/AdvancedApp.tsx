@@ -7,6 +7,8 @@ import {
   Icon
 } from 'react-native-elements'
 
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
+
 import BackgroundGeolocation from "../react-native-background-geolocation";
 
 import HomeView from './HomeView';
@@ -18,6 +20,7 @@ const Stack = createNativeStackNavigator();
 const AdvancedApp = ({route, navigation}) => {
 
   return (
+    <ActionSheetProvider>
     <Stack.Navigator
       initialRouteName="Home"
       screenOptions={{
@@ -64,6 +67,7 @@ const AdvancedApp = ({route, navigation}) => {
         />
       </Stack.Group>
     </Stack.Navigator>
+    </ActionSheetProvider>
   )
 }
 

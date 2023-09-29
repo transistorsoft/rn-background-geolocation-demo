@@ -42,6 +42,7 @@ const GeofenceView = ({route, navigation}) => {
   const [identifier, setIdentifier] = React.useState('');
   const [identifierError, setIdentifierError] = React.useState('');
 
+  const [isPolygon, setIsPolygon] = React.useState(false);
   const [radiusOpen, setRadiusOpen] = React.useState(false);
   const [radius, setRadius] = React.useState(200);
 
@@ -65,6 +66,7 @@ const GeofenceView = ({route, navigation}) => {
 
   React.useEffect(() => {
     DropDownPicker.setListMode("SCROLLVIEW");
+    setIsPolygon(typeof (route.params.vertices) == 'object');
   }, []);
 
   /// [Add] button-handler.  Creates the geofence.
@@ -74,7 +76,7 @@ const GeofenceView = ({route, navigation}) => {
       return;
     }
 
-    const geofence = {
+    const geofence = (!isPolygon) ? {
       identifier: identifier,
       radius: radius,
       latitude: route.params.coordinate.latitude,
@@ -83,14 +85,49 @@ const GeofenceView = ({route, navigation}) => {
       notifyOnExit: notifyOnExit,
       notifyOnDwell: notifyOnDwell,
       loiteringDelay: parseInt(loiteringDelay, 10)
+    } : {
+      identifier: identifier,
+      vertices: route.params.vertices,
+      notifyOnEntry: notifyOnEntry,
+      notifyOnExit: notifyOnExit,
     };
-
+    
     BackgroundGeolocation.addGeofence(geofence).then((result) => {
       settingsService.playSound('ADD_GEOFENCE');
       navigation.goBack();
     }).catch((error) => {
       settingsService.alert('Add Geofence Error', error);
     });
+  }
+
+  const renderRadiusPicker = () => {
+    return !isPolygon ? (
+      <View style={{paddingLeft: 20, paddingRight: 20, marginBottom: 20, zIndex: 1000}}>
+        <ListItem.Title style={styles.formLabel}>radius</ListItem.Title>
+        <DropDownPicker
+          open={radiusOpen}
+          value={radius}
+          items={[
+            {label: '150', value: 150},
+            {label: '200', value: 200},
+            {label: '500', value: 500},
+            {label: '1000', value: 1000},
+            {label: '2000', value: 2000},
+            {label: '5000', value: 5000}
+          ]}
+          setOpen={setRadiusOpen}
+          setValue={setRadius}
+          style={{
+            borderColor: '#ccc'
+          }}
+          dropDownContainerStyle={{
+            backgroundColor: '#fafafa',
+            borderColor: '#ccc'
+          }}
+        />
+      </View>
+    ) : <View />;
+
   }
   return (
     <View style={styles.form}>
@@ -114,27 +151,7 @@ const GeofenceView = ({route, navigation}) => {
         containerStyle={styles.containerStyle}
       />
 
-      <View style={{paddingLeft: 20, paddingRight: 20, marginBottom: 20}}>
-
-        <ListItem.Title style={styles.formLabel}>radius</ListItem.Title>
-        <DropDownPicker
-          open={radiusOpen}
-          value={radius}
-          items={[
-            {label: '150', value: 150},
-            {label: '200', value: 200},
-            {label: '500', value: 500},
-            {label: '1000', value: 1000},
-            {label: '2000', value: 2000},
-            {label: '5000', value: 5000}
-          ]}
-          setOpen={setRadiusOpen}
-          setValue={setRadius}
-          style={{
-            borderColor: '#ccc'
-          }}
-        />
-      </View>
+      {renderRadiusPicker()}
 
       <View style={styles.inlineField}>
         <View style={{flex: 1}}>

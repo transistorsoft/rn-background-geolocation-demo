@@ -23,7 +23,10 @@ export const COLORS = {
   blue: '#337AB7',
   grey: '#404040',
   red: '#FE381E',
+  geofence_red: 'be162d',
   green: '#16BE42',
   dark: '#272727',
-  polyline_color: 'rgba(0,179,253, 0.6)'//'#00B3FD'
+  polyline_color: 'rgba(0,179,253, 0.1)',
+  polygon_fill_color: 'rgba(0,179,253, 0.4)',
+  polygon_stroke_color: "rgba(0, 0, 255, 0.6)",
 };
