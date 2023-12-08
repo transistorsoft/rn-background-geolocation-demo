@@ -10,10 +10,10 @@ buildscript {
         ndkVersion = "23.1.7779620"
 
         // background-geolocation
-        playServicesLocationVersion = "20.0.0"  // Or higher.
+        playServicesLocationVersion = "21.0.1"  // Or higher.
         hmsLocationVersion = "6.9.0.300" // Huawei HMS location version
-    appCompatVersion = "1.4.1"
-    removeBackgroundGeolocationDebugSoundsInRelease = false
+        appCompatVersion = "1.4.1"
+        removeBackgroundGeolocationDebugSoundsInRelease = false
     }
     repositories {
         google()
