@@ -1060,9 +1060,9 @@ PODS:
     - React-jsi (= 0.73.0)
     - React-logger (= 0.73.0)
     - React-perflogger (= 0.73.0)
-  - RNBackgroundFetch (4.2.4):
+  - RNBackgroundFetch (4.2.5):
     - React-Core
-  - RNBackgroundGeolocation (4.16.0):
+  - RNBackgroundGeolocation (4.17.0-beta.1):
     - CocoaLumberjack (~> 3.8.5)
     - React-Core
   - RNCAsyncStorage (1.23.1):
@@ -1316,8 +1316,8 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 77543c74df984ce56c09d49d427149c53784aaf6
   React-utils: 42708ea436853045ef1eaff29996813d9fbbe209
   ReactCommon: 851280fb976399ca1aabc74cc2c3612069ea70a2
-  RNBackgroundFetch: 7c2d0c55e2b8924ecbdcd56b010feddff0f8463d
-  RNBackgroundGeolocation: 571f9d04aec86435d9166f053823a1640bbbae36
+  RNBackgroundFetch: 2f800a04434620db15ede2e8f21886608a2d1743
+  RNBackgroundGeolocation: ac27a6e8631f87392ecb4f01fea447d894de7eed
   RNCAsyncStorage: 826b603ae9c0f88b5ac4e956801f755109fa4d5c
   RNReactNativeHapticFeedback: ec56a5f81c3941206fd85625fa669ffc7b4545f9
   RNScreens: 77fc79e66b726ee45b091486b348418ee1d792ab
