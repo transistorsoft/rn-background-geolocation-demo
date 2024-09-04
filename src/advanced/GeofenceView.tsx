@@ -62,7 +62,7 @@ const GeofenceView = ({route, navigation}) => {
         <Button onPress={onClickAdd} title="Add" containerStyle={{width: 75}}/>
       ),
     });
-  }, [navigation, identifier, identifierError]);
+  }, [navigation, identifier, radius, identifierError, notifyOnEntry, notifyOnExit, notifyOnDwell, loiteringDelay]);
 
   React.useEffect(() => {
     DropDownPicker.setListMode("SCROLLVIEW");
@@ -90,8 +90,10 @@ const GeofenceView = ({route, navigation}) => {
       vertices: route.params.vertices,
       notifyOnEntry: notifyOnEntry,
       notifyOnExit: notifyOnExit,
+      notifyOnDwell: notifyOnDwell,
+      loiteringDelay: parseInt(loiteringDelay, 10)
     };
-    
+
     BackgroundGeolocation.addGeofence(geofence).then((result) => {
       settingsService.playSound('ADD_GEOFENCE');
       navigation.goBack();

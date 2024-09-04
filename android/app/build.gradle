@@ -80,8 +80,9 @@ android {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 370
-        versionName "4.14.4"
+        versionCode 371
+        versionName "4.16.3"
+        resConfigs "en", "US"
     }
 
     signingConfigs {

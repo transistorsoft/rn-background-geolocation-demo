@@ -2,8 +2,6 @@
   package="com.transistorsoft.backgroundgeolocation.react">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Added for background-geolocation for SDK >= 34:  Allows scheduling of exact alarms with AlarmManager -->
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM" android:minSdkVersion="34"/>
 
     <application
       android:name=".MainApplication"
