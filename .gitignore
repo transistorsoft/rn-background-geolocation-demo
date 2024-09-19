@@ -25,7 +25,7 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-ios/.xcode.env.local
+**/.xcode.env.local
 # Android/IntelliJ
 #
 build/
@@ -60,11 +60,19 @@ yarn-error.log
 *.jsbundle
 
 # Ruby / CocoaPods
-/ios/Pods/
+**/Pods/
 /vendor/bundle/
 
 # For running ./scripts/bundle-install, we manually create this folder
 android/app/src/main/assets
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 tmp
 transistor_logback.db
