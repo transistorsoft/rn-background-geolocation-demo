@@ -25,7 +25,7 @@
     "react-native-maps": "^1.18.0",
     "react-native-prompt-android": "https://github.com/transistorsoft/react-native-prompt-android.git",
     "react-native-safe-area-context": "^4.11.0",
-    "react-native-screens": "^3.28.0",
+    "react-native-screens": "^3.34.0",
     "react-native-vector-icons": "^10.0.0"
   },
   "devDependencies": {
