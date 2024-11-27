@@ -31,7 +31,7 @@ const AdvancedApp = ({route, navigation}) => {
         headerLeft: () => (
           <Button
             type="clear"
-            onPress={() => {
+            onPressIn={() => {
               navigation.goBack()
             }}
             icon={<Icon name='home-sharp' type='ionicon' /> }
@@ -50,7 +50,7 @@ const AdvancedApp = ({route, navigation}) => {
         headerLeft: () => (
           <Button
             type="clear"
-            onPress={() => {
+            onPressIn={() => {
               navigation.goBack()
             }}
             icon={<Icon name='close-sharp' type='ionicon' /> }

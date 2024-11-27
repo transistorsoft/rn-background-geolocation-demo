@@ -84,7 +84,7 @@ const RegistrationView = ({route, navigation}) => {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Button onPress={onClickRegister} title="Register" />
+        <Button onPressIn={onClickRegister} title="Register" />
       ),
     });
   }, [navigation, org, username]);

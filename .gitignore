@@ -65,7 +65,7 @@ yarn-error.log
 
 # For running ./scripts/bundle-install, we manually create this folder
 android/app/src/main/assets
-
+android/app/.cxx/
 # Yarn
 .yarn/*
 !.yarn/patches

@@ -54,27 +54,18 @@ BackgroundGeolocation.registerHeadlessTask(BackgroundGeolocationHeadlessTask);
 */
 const BackgroundFetchHeadlessTask = async (event) => {
   console.log('[BackgroundFetch HeadlessTask] start', event.taskId);
-
+  /*
   if (event.taskId == 'react-native-background-fetch') {
     const location = await BackgroundGeolocation.getCurrentPosition({
-      samples: 2,
+      samples: 1,
       extras: {
         event: 'background-fetch',
         headless: true
       }
     });
-    console.log('[BackgroundFetch] getCurrentPosition: ', location);
-
-    /*
-    await BackgroundFetch.scheduleTask({
-      taskId: 'com.transistorsoft.customtask',
-      delay: 5000,
-      stopOnTerminate: false,
-      enableHeadless: true,
-      forceAlarmManager: true
-    });
-    */
+    console.log('[BackgroundFetch] getCurrentPosition: ', location);    
   }
+  */
   // Important:  await asychronous tasks when using HeadlessJS.
   /* DISABLED
   const location = await BackgroundGeolocation.getCurrentPosition({persist: false, samples: 1});

@@ -59,7 +59,7 @@ const GeofenceView = ({route, navigation}) => {
     navigation.setOptions({
       title: 'Add Geofence',
       headerRight: () => (
-        <Button onPress={onClickAdd} title="Add" containerStyle={{width: 75}}/>
+        <Button onPressIn={onClickAdd} title="Add" containerStyle={{width: 75}}/>
       ),
     });
   }, [navigation, identifier, radius, identifierError, notifyOnEntry, notifyOnExit, notifyOnDwell, loiteringDelay]);

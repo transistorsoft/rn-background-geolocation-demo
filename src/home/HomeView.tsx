@@ -59,6 +59,7 @@ const HomeView= ({route, navigation}) => {
   }, [navigation]);
 
   const onClickRegister = () => {
+    console.log('onRegister');
     settingsService.playSound('OPEN');
     navigation.navigate('Registration', {org: org, username: username});
   };

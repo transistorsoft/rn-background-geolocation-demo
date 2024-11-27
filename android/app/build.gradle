@@ -84,8 +84,8 @@ android {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 371
-        versionName "4.16.3"
+        versionCode 372
+        versionName "4.17.5"
         resConfigs "en", "US"
     }
 
