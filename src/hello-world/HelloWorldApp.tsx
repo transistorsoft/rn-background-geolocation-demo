@@ -20,7 +20,7 @@ const HelloWorldApp = ({route, navigation}) => {
         headerLeft: () => (
           <Button
             type="clear"
-            onPress={() => {
+            onPressIn={() => {
               navigation.goBack()
             }}
             icon={<Icon name='home-sharp' type='ionicon' /> }

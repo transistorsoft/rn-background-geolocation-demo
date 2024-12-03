@@ -46,7 +46,7 @@ const HomeApp = ({navigation}) => {
           headerLeft: () => (
             <Button
               type="clear"
-              onPress={() => {
+              onPressIn={() => {
                 navigation.goBack()
               }}
               icon={<Icon name='close-sharp' type='ionicon' /> }

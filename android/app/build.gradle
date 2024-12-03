@@ -60,7 +60,7 @@ react {
 /**
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -84,8 +84,8 @@ android {
         applicationId "com.transistorsoft.backgroundgeolocation.react"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 371
-        versionName "4.16.3"
+        versionCode 372
+        versionName "4.17.5"
         resConfigs "en", "US"
     }
 
@@ -117,7 +117,6 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             shrinkResources false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            proguardFiles "${background_geolocation.projectDir}/proguard-rules.pro"
         }
         /*
         releaseStaging {

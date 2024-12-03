@@ -13,40 +13,56 @@ import ENV from './src/ENV';
 
 AppRegistry.registerComponent(appName, () => App);
 
-/**
-* BackgroundGeolocation Headless JS task.
-* For more information, see:  https://github.com/transistorsoft/react-native-background-geolocation/wiki/Android-Headless-Mode
-*/
-const BackgroundGeolocationHeadlessTask = async (event) => {
-  let params = event.params;
-  console.log('[BackgroundGeolocation HeadlessTask] -', event.name, params);
-
-  switch (event.name) {
-    case 'heartbeat':
-      /**
-      * Enable this block to execute #getCurrentPosition in headless heartbeat event (will consume more power)
-      */
-      // Use await for async tasks
-      const location = await BackgroundGeolocation.getCurrentPosition({
-        samples: 2,
-        persist: true,
-        extras: {
-          event: 'heartbeat',
-          headless: true
-        }
-      });
-      console.log('[BackgroundGeolocation HeadlessTask] - getCurrentPosition:', location);
-      break;
-    case 'authorization':
-      BackgroundGeolocation.setConfig({
-        url: ENV.TRACKER_HOST + '/api/locations'
-      });
-      break;
-  }
+// [Android-only] See API docs Config.enableHeadless.  This method MUST exist here in index.js.
+// An Android Headless Task will receive all events emitted by the background-geolocation plugin while
+// your app is terminated.
+//
+const bgGeoHeadlessTask = async (event) => {
+  const params     = event.params; // <-- our event-data from the BG Geo SDK.
+  const eventName  = event.name;
+  const taskId     = event.taskId; // <-- very important!
+  
+  console.log(`[BGGeoHeadlessTask] ${eventName}, taskId: ${taskId}`, params);
+  await doWork(eventName);
+  
+  // Signal completion of our RN HeadlessTask.
+  BackgroundGeolocation.finishHeadlessTask(event.taskId);
 }
+BackgroundGeolocation.registerHeadlessTask(bgGeoHeadlessTask);
 
-
-BackgroundGeolocation.registerHeadlessTask(BackgroundGeolocationHeadlessTask);
+// Example "work" function where you might perform a long-running task (such as an HTTP request).
+// Uses a simple JS setTimeout timer to simulate work.
+const doWork = async (eventName) => {
+  return new Promise(async (resolve, reject) => {
+    if (eventName == 'terminate') {
+      // When app terminates, fetch the location.
+      const location = await BackgroundGeolocation.getCurrentPosition({
+        samples: 1, 
+        persist: true,
+        extras: {event: 'terminate'}
+      });
+      console.log('[BGGeoHeadlessTask][doWork] getCurrentPosition: ', location);
+      resolve();
+    } else if (eventName == 'providerchange') {
+      // Perform a weird action (for testing) with an interval timer and .startBackgroundTask.
+      const bgTaskId = await BackgroundGeolocation.startBackgroundTask();
+      // Print * tick * to log every second.
+      const timer = setInterval(() => {
+        console.log('[BGGeoHeadlessTask][doWork] * tick *');
+      }, 1000);
+      // After 10s, stop the interval and stop our background-task.
+      setTimeout(() => {
+        clearInterval(timer);
+        BackgroundGeolocation.stopBackgroundTask(bgTaskId);
+        resolve();
+      }, 10000);
+    } else {
+      // do nothing
+      console.log('[BGGeoHeadlessTask][doWork]', eventName);
+      resolve();
+    }
+  });
+}
 
 /**
 * BackgroundFetch Headless JS Task.
@@ -54,35 +70,18 @@ BackgroundGeolocation.registerHeadlessTask(BackgroundGeolocationHeadlessTask);
 */
 const BackgroundFetchHeadlessTask = async (event) => {
   console.log('[BackgroundFetch HeadlessTask] start', event.taskId);
-
+  
   if (event.taskId == 'react-native-background-fetch') {
     const location = await BackgroundGeolocation.getCurrentPosition({
-      samples: 2,
+      samples: 1,
       extras: {
         event: 'background-fetch',
         headless: true
       }
     });
-    console.log('[BackgroundFetch] getCurrentPosition: ', location);
-
-    /*
-    await BackgroundFetch.scheduleTask({
-      taskId: 'com.transistorsoft.customtask',
-      delay: 5000,
-      stopOnTerminate: false,
-      enableHeadless: true,
-      forceAlarmManager: true
-    });
-    */
+    console.log('[BackgroundFetch] getCurrentPosition: ', location);    
   }
-  // Important:  await asychronous tasks when using HeadlessJS.
-  /* DISABLED
-  const location = await BackgroundGeolocation.getCurrentPosition({persist: false, samples: 1});
-  console.log('- current position: ', location);
-  // Required:  Signal to native code that your task is complete.
-  // If you don't do this, your app could be terminated and/or assigned
-  // battery-blame for consuming too much time in background.
-  */
+    
   console.log('[BackgroundFetch HeadlessTask] finished');
 
   BackgroundFetch.finish(event.taskId);
