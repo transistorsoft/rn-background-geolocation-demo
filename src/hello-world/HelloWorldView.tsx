@@ -127,6 +127,7 @@ const HelloWorldView = ({route, navigation}) => {
       logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
       transistorAuthorizationToken: token,
       distanceFilter: 10,
+      enableHeadless: true,
       stopOnTerminate: false,
       startOnBoot: true
     });

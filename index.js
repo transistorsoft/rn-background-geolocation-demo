@@ -22,7 +22,8 @@ const bgGeoHeadlessTask = async (event) => {
   const eventName  = event.name;
   const taskId     = event.taskId; // <-- very important!
   
-  console.log(`[BGGeoHeadlessTask] ${eventName}, taskId: ${taskId}`, params);
+  console.log(`[BGGeoHeadlessTask] ${eventName}, taskId: ${taskId}`, JSON.stringify(params));
+  // You MUST await your work before signalling completion of your task.
   await doWork(eventName);
   
   // Signal completion of our RN HeadlessTask.
@@ -30,11 +31,13 @@ const bgGeoHeadlessTask = async (event) => {
 }
 BackgroundGeolocation.registerHeadlessTask(bgGeoHeadlessTask);
 
+let doWorkCounter = 0;
 // Example "work" function where you might perform a long-running task (such as an HTTP request).
 // Uses a simple JS setTimeout timer to simulate work.
 const doWork = async (eventName) => {
   return new Promise(async (resolve, reject) => {
     if (eventName == 'terminate') {
+      /*
       // When app terminates, fetch the location.
       const location = await BackgroundGeolocation.getCurrentPosition({
         samples: 1, 
@@ -42,13 +45,15 @@ const doWork = async (eventName) => {
         extras: {event: 'terminate'}
       });
       console.log('[BGGeoHeadlessTask][doWork] getCurrentPosition: ', location);
+      */
       resolve();
     } else if (eventName == 'providerchange') {
+      doWorkCounter = 0;
       // Perform a weird action (for testing) with an interval timer and .startBackgroundTask.
       const bgTaskId = await BackgroundGeolocation.startBackgroundTask();
       // Print * tick * to log every second.
       const timer = setInterval(() => {
-        console.log('[BGGeoHeadlessTask][doWork] * tick *');
+        console.log(`[BGGeoHeadlessTask][doWork] * tick ${++doWorkCounter}/10 *`);
       }, 1000);
       // After 10s, stop the interval and stop our background-task.
       setTimeout(() => {
@@ -56,6 +61,8 @@ const doWork = async (eventName) => {
         BackgroundGeolocation.stopBackgroundTask(bgTaskId);
         resolve();
       }, 10000);
+
+
     } else {
       // do nothing
       console.log('[BGGeoHeadlessTask][doWork]', eventName);
