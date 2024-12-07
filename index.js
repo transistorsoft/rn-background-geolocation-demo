@@ -2,7 +2,11 @@
  * @format
  */
 
+
 import {AppRegistry} from 'react-native';
+
+
+
 import App from './App';
 import {name as appName} from './app.json';
 
@@ -22,32 +26,23 @@ const bgGeoHeadlessTask = async (event) => {
   const eventName  = event.name;
   const taskId     = event.taskId; // <-- very important!
   
-  console.log(`[BGGeoHeadlessTask] ${eventName}, taskId: ${taskId}`, JSON.stringify(params));
-  // You MUST await your work before signalling completion of your task.
-  await doWork(eventName);
-  
-  // Signal completion of our RN HeadlessTask.
-  BackgroundGeolocation.finishHeadlessTask(event.taskId);
+  console.log(`[BGGeoHeadlessTask] ${eventName}`, JSON.stringify(params));
+  // You MUST await your work!
+  // HeadlessTasks are automatically terminated after execution of the last line of your function.
+  await doWork(eventName);    
 }
+
 BackgroundGeolocation.registerHeadlessTask(bgGeoHeadlessTask);
 
+///
+/// A stupid little "long running task" simulator for headless-tasks.
+/// Uses a simple JS setTimeout timer to simulate work.
+/// 
 let doWorkCounter = 0;
-// Example "work" function where you might perform a long-running task (such as an HTTP request).
-// Uses a simple JS setTimeout timer to simulate work.
+
 const doWork = async (eventName) => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve, reject) => {    
     if (eventName == 'terminate') {
-      /*
-      // When app terminates, fetch the location.
-      const location = await BackgroundGeolocation.getCurrentPosition({
-        samples: 1, 
-        persist: true,
-        extras: {event: 'terminate'}
-      });
-      console.log('[BGGeoHeadlessTask][doWork] getCurrentPosition: ', location);
-      */
-      resolve();
-    } else if (eventName == 'providerchange') {
       doWorkCounter = 0;
       // Perform a weird action (for testing) with an interval timer and .startBackgroundTask.
       const bgTaskId = await BackgroundGeolocation.startBackgroundTask();
@@ -61,7 +56,6 @@ const doWork = async (eventName) => {
         BackgroundGeolocation.stopBackgroundTask(bgTaskId);
         resolve();
       }, 10000);
-
 
     } else {
       // do nothing
