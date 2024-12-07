@@ -2039,14 +2039,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-async-storage/async-storage@npm:^1.22.0":
-  version: 1.24.0
-  resolution: "@react-native-async-storage/async-storage@npm:1.24.0"
+"@react-native-async-storage/async-storage@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@react-native-async-storage/async-storage@npm:2.1.0"
   dependencies:
     merge-options: "npm:^3.0.4"
   peerDependencies:
-    react-native: ^0.0.0-0 || >=0.60 <1.0
-  checksum: 10c0/cad2098ef84251f2ab8ebc07b750e585a20ac7ca07f26e5441e957a76f2b66f01d10ef5fbddb63d675431377b31beb5208548093e1eb17d262d2184b51133f4d
+    react-native: ^0.0.0-0 || >=0.65 <1.0
+  checksum: 10c0/76a81a55059e93e256f6e9cf3f33a49d24ba83ce2f88e52343107953a66168c533bb387111a88708247c926297ee93c681c4936bcb66993dba78ea7fb28c9fdf
   languageName: node
   linkType: hard
 
@@ -3036,7 +3036,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/runtime": "npm:^7.25.0"
     "@expo/react-native-action-sheet": "npm:^4.0.1"
-    "@react-native-async-storage/async-storage": "npm:^1.22.0"
+    "@react-native-async-storage/async-storage": "npm:^2.1.0"
     "@react-native-community/cli": "npm:15.0.1"
     "@react-native-community/cli-platform-android": "npm:15.0.1"
     "@react-native-community/cli-platform-ios": "npm:15.0.1"
@@ -3058,8 +3058,8 @@ __metadata:
     prettier: "npm:^2.8.8"
     react: "npm:18.3.1"
     react-native: "npm:^0.76.3"
-    react-native-background-fetch: "npm:^4.2.6"
-    react-native-background-geolocation: "npm:^4.18.0"
+    react-native-background-fetch: "npm:^4.2.7"
+    react-native-background-geolocation: "npm:^4.18.2"
     react-native-dropdown-picker: "npm:^5.4.6"
     react-native-elements: "npm:^3.4.3"
     react-native-haptic-feedback: "npm:^2.2.0"
@@ -8178,19 +8178,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-background-fetch@npm:^4.2.6, react-native-background-fetch@npm:~4.2.6":
+"react-native-background-fetch@npm:^4.2.7":
+  version: 4.2.7
+  resolution: "react-native-background-fetch@npm:4.2.7"
+  checksum: 10c0/308a2dcf20c4586f928fabbd80ce7c626b6660f62c9d6eaa7d26bd886405e0c49a8b590a3b562595144734424ddb71bc985004ea355ddfdd31f4108afcdd4ee9
+  languageName: node
+  linkType: hard
+
+"react-native-background-fetch@npm:~4.2.6":
   version: 4.2.6
   resolution: "react-native-background-fetch@npm:4.2.6"
   checksum: 10c0/5fb8b27a2d0bbe8f26de96dc64b6005f3f4ad7af178da3fdd4c089de34d0bc77a45703ac3e48391f971b75d3433cdc57a1d47a05cd6f947afe5818164a1c8322
   languageName: node
   linkType: hard
 
-"react-native-background-geolocation@npm:^4.18.0":
-  version: 4.18.0
-  resolution: "react-native-background-geolocation@npm:4.18.0"
+"react-native-background-geolocation@npm:^4.18.2":
+  version: 4.18.2
+  resolution: "react-native-background-geolocation@npm:4.18.2"
   dependencies:
     react-native-background-fetch: "npm:~4.2.6"
-  checksum: 10c0/ce9bc4db01296f713ccc41408708fe024e39d3e1ac32446aac0913351f873892964e630ea8495d0be1cb760c8f8f45458e6d97b7aeffddea9bf948c458205d9a
+  checksum: 10c0/16a414f8d0b9cb89f492f7b41ffc25bb055b8d2c98e13c1877839009461fd7aaf42e15f853fb633b49904da1f7c492bfa232455651e3e08020b1d9e8165c0815
   languageName: node
   linkType: hard
 
