@@ -51,7 +51,7 @@ const AdvancedApp = ({route, navigation}) => {
           <Button
             type="clear"
             onPressIn={() => {
-              navigation.goBack()
+              navigation.pop();
             }}
             icon={<Icon name='close-sharp' type='ionicon' /> }
           />

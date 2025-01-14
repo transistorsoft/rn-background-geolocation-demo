@@ -71,6 +71,7 @@ const App = () => {
   return (
     <NavigationContainer
       initialState={initialState}
+      navigationInChildEnabled={true}
       onStateChange={(state) => {
         AsyncStorage.setItem(NAVIGATION_KEY, JSON.stringify(state));
       }}

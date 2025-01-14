@@ -278,8 +278,15 @@ const SettingsView = ({route, navigation}) => {
     )
   };
 
-  const onChangeGeofence = () => {
-
+  const onChangeGeofence = (setting, value) => {
+    // Update state.
+    setState((prevState:any) => ({
+      ...prevState,
+      [setting.name]: {
+        ...prevState[setting.name],
+        value: value
+      }
+    }));
   }
 
   const getGeofenceTestSettings = () => {

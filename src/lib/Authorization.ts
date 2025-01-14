@@ -20,7 +20,6 @@ async function register(navigation:any):Promise<TransistorAuthorizationToken> {
   let username = await AsyncStorage.getItem("@transistorsoft:username");
   if (orgname == null || username == null) {
     // TODO
-    //Util.navigateHome(navigation);
     return {
       accessToken: "DUMMY_TOKEN",
       refreshToken: "DUMMY_TOKEN",
