@@ -174,6 +174,7 @@ const TSMapView = (props) => {
     onGeofence();
   }, [geofenceEvent]);
 
+
   /// onGeofencesChange effect
   ///
   React.useEffect(() => {
@@ -197,6 +198,7 @@ const TSMapView = (props) => {
   ///
   const onGeofence = () => {
     const location:Location = geofenceEvent.location;
+
     // Push our geofence event coordinate onto the Polyline -- BGGeo deosn't fire onLocation for geofence events.
     setCoordinates(previous => [...previous, {
       latitude: location.coords.latitude,
@@ -206,6 +208,7 @@ const TSMapView = (props) => {
     const marker = geofences.find((m:any) => {
       return m.identifier === geofenceEvent.identifier;
     });
+
 
     if (!marker) { return; }
 
@@ -249,32 +252,38 @@ const TSMapView = (props) => {
   /// Renders/removes geofence markers to/from MapView
   ///
   const onGeofencesChange = () => {
-    let on  = geofencesChangeEvent.on;
-    let off = geofencesChangeEvent.off;
+    const on  = geofencesChangeEvent.on;
+    const off = geofencesChangeEvent.off;
 
-    // Filter out all "off" geofences.
-    let geofencesOn = geofences.filter((geofence:Geofence) => {
-      return off.indexOf(geofence.identifier) < 0;
-    });
-    let polygonsOn = polygonGeofences.filter((geofence:Geofence) => {
-      return (off.indexOf(geofence.identifier) < 0);
-    });
+    let geofencesOn = [];
+    let polygonsOn = [];
 
-    // Add new "on" geofences.
-    on.forEach((geofence:Geofence) => {
-      const circularGeofenceMarker = geofencesOn.find((m:Geofence) => { return m.identifier === geofence.identifier;});
-      if (!circularGeofenceMarker) {
-        geofencesOn.push(createGeofenceMarker(geofence));        
-      }
-      if (geofence.vertices.length > 0) {
-        const polygonGeofenceMarker = polygonsOn.find((m:Geofence) => { 
-          return m.identifier === geofence.identifier; 
-        });
-        if (!polygonGeofenceMarker) {
-          polygonsOn.push(createPolygonGeofenceMarker(geofence));
+    if ((on.length > 0) || (off.length > 0)) {
+      // Filter out all "off" geofences.
+      geofencesOn = geofences.filter((geofence:Geofence) => {
+        return off.indexOf(geofence.identifier) < 0;
+      });
+      polygonsOn = polygonGeofences.filter((geofence:Geofence) => {
+        return (off.indexOf(geofence.identifier) < 0);
+      });
+
+      // Add new "on" geofences.
+      on.forEach((geofence:Geofence) => {
+        const circularGeofenceMarker = geofencesOn.find((m:Geofence) => { return m.identifier === geofence.identifier;});
+        if (!circularGeofenceMarker) {
+          geofencesOn.push(createGeofenceMarker(geofence));
         }
-      }
-    });
+        if (geofence.vertices.length > 0) {
+          const polygonGeofenceMarker = polygonsOn.find((m:Geofence) => {
+            return m.identifier === geofence.identifier;
+          });
+          if (!polygonGeofenceMarker) {
+            polygonsOn.push(createPolygonGeofenceMarker(geofence));
+          }
+        }
+      });
+    }
+
     setGeofences(geofencesOn);
     setPolygonGeofences(polygonsOn);    
   }
@@ -445,7 +454,7 @@ const TSMapView = (props) => {
       let markerStyle = {
         backgroundColor: color
       };
-            
+
       return (
         <View key={event.key}>
           <Polyline
@@ -723,8 +732,9 @@ const TSMapView = (props) => {
         {renderLocationMarkers()}
         {renderStopZoneMarkers()}
         {renderActiveGeofences()}
-        {renderActivePolygonGeofences()}        
-        {renderGeofencesHitEvents()}        
+        {renderActivePolygonGeofences()}
+        {renderGeofencesHit()}
+        {renderGeofencesHitEvents()}
       </MapView>
     </View>
   )

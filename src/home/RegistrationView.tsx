@@ -71,7 +71,7 @@ const RegistrationView = ({route, navigation}) => {
       transistorAuthorizationToken: token
     });
 
-    navigation.navigate('Home', {
+    navigation.popTo('Home', {
       org: org,
       username: username
     })

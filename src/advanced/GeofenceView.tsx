@@ -62,6 +62,7 @@ const GeofenceView = ({route, navigation}) => {
         <Button onPressIn={onClickAdd} title="Add" containerStyle={{width: 75}}/>
       ),
     });
+
   }, [navigation, identifier, radius, identifierError, notifyOnEntry, notifyOnExit, notifyOnDwell, loiteringDelay]);
 
   React.useEffect(() => {
@@ -96,7 +97,7 @@ const GeofenceView = ({route, navigation}) => {
 
     BackgroundGeolocation.addGeofence(geofence).then((result) => {
       settingsService.playSound('ADD_GEOFENCE');
-      navigation.goBack();
+      navigation.pop();
     }).catch((error) => {
       settingsService.alert('Add Geofence Error', error);
     });
